@@ -39,3 +39,9 @@
 
 # debug information files
 *.dwo
+
+_build
+_build/
+
+other/
+other
