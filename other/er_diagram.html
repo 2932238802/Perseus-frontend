@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perseus IDE — ER 图设计参考</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0d1117;
+  color: #e2e8f0;
+  font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Consolas', monospace;
+  font-size: 13px;
+  min-height: 100vh;
+  padding: 28px 20px 60px;
+}
+
+/* ── Header ─────────────────────────────── */
+.page-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.page-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.page-header p {
+  color: #64748b;
+  font-size: 13px;
+}
+.page-header .badges {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+.chip {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid;
+}
+.chip-blue   { color: #60a5fa; border-color: #1e3a5f; background: #0f2440; }
+.chip-green  { color: #34d399; border-color: #064e3b; background: #022c22; }
+.chip-amber  { color: #fbbf24; border-color: #78350f; background: #1c0d00; }
+.chip-purple { color: #a78bfa; border-color: #3b1f7a; background: #160b3a; }
+
+/* ── Canvas ──────────────────────────────── */
+#canvas {
+  position: relative;
+  width: 1260px;
+  height: 980px;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+#svg-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Entity cards ───────────────────────── */
+.ent {
+  position: absolute;
+  width: 230px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.03);
+  z-index: 2;
+}
+
+.ent-head {
+  padding: 9px 13px;
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  user-select: none;
+}
+
+.ent-field {
+  padding: 5px 12px;
+  border-top: 1px solid rgba(255,255,255,0.045);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  background: #141b27;
+  transition: background 0.15s;
+}
+.ent-field:hover { background: #1a2438; }
+
+.badge {
+  font-size: 9px;
+  font-weight: 800;
+  padding: 1px 4px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  letter-spacing: 0.4px;
+}
+.pk { background: #f59e0b; color: #1a0500; }
+.fk { background: #6366f1; color: #fff; }
+
+.fn { color: #e2e8f0; flex: 1; }
+.ft { color: #475569; font-size: 10.5px; white-space: nowrap; }
+.fnote { color: #374151; font-size: 10px; margin-left: 2px; font-style: italic; }
+
+/* ── Color themes (header backgrounds) ─── */
+.c-project .ent-head { background: linear-gradient(135deg, #1a44a8 0%, #2563eb 100%); }
+.c-file    .ent-head { background: linear-gradient(135deg, #065f46 0%, #059669 100%); }
+.c-editor  .ent-head { background: linear-gradient(135deg, #5b21b6 0%, #7c3aed 100%); }
+.c-build   .ent-head { background: linear-gradient(135deg, #92400e 0%, #d97706 100%); color: #1a0500; }
+.c-diag    .ent-head { background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%); }
+.c-conf    .ent-head { background: linear-gradient(135deg, #0e4e6e 0%, #0891b2 100%); }
+.c-recent  .ent-head { background: linear-gradient(135deg, #1f2937 0%, #4b5563 100%); }
+
+/* ── Legend ──────────────────────────────── */
+.legend-wrap {
+  width: 1260px;
+  margin: 20px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 20px;
+  background: #111827;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.leg-sep { width: 100%; border: none; border-top: 1px solid rgba(255,255,255,0.04); margin: 2px 0; }
+
+.leg-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+.leg-dot {
+  width: 11px; height: 11px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.leg-line {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* ── Relation table ─────────────────────── */
+.rel-wrap {
+  width: 1260px;
+  margin: 20px auto 0;
+  background: #111827;
+  border-radius: 10px;
+  padding: 20px 24px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.rel-wrap h2 {
+  font-size: 14px;
+  color: #e2e8f0;
+  margin-bottom: 14px;
+  letter-spacing: 0.3px;
+}
+.rel-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.rel-table th {
+  text-align: left;
+  padding: 7px 14px;
+  background: #1a2438;
+  color: #64748b;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.rel-table td {
+  padding: 7px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: #cbd5e1;
+}
+.rel-table tr:last-child td { border-bottom: none; }
+.rel-table tr:hover td { background: rgba(255,255,255,0.015); }
+.rel-type {
+  font-weight: 700;
+  color: #60a5fa;
+  font-family: 'Consolas', monospace;
+  font-size: 13px;
+}
+.note-self { color: #34d399; font-size: 11px; }
+.note-opt  { color: #f87171; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Perseus IDE — ER 图设计参考</h1>
+  <p>C++ IDE 项目 · 实体关系设计 · 基于 Qt6 / C++17</p>
+  <div class="badges">
+    <span class="chip chip-blue">9 个实体</span>
+    <span class="chip chip-green">文件系统</span>
+    <span class="chip chip-purple">编辑器状态</span>
+    <span class="chip chip-amber">编译构建</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════ CANVAS ═══════════════════════ -->
+<div id="canvas">
+
+<!-- ─── SVG Connection Lines ─── -->
+<svg id="svg-overlay" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Generic arrowhead (small, clean) -->
+    <marker id="arr-blue"   markerWidth="7" markerHeight="7" refX="5.5" refY="2.5" orient="auto">
+      <path d="M0,0 L0,5 L7,2.5 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arr-green"  markerWidth="7" markerHeight="7" refX="5.5" refY="2.5" orient="auto">
+      <path d="M0,0 L0,5 L7,2.5 z" fill="#10b981"/>
+    </marker>
+    <marker id="arr-amber"  markerWidth="7" markerHeight="7" refX="5.5" refY="2.5" orient="auto">
+      <path d="M0,0 L0,5 L7,2.5 z" fill="#d97706"/>
+    </marker>
+    <marker id="arr-purple" markerWidth="7" markerHeight="7" refX="5.5" refY="2.5" orient="auto">
+      <path d="M0,0 L0,5 L7,2.5 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arr-red"    markerWidth="7" markerHeight="7" refX="5.5" refY="2.5" orient="auto">
+      <path d="M0,0 L0,5 L7,2.5 z" fill="#e11d48"/>
+    </marker>
+    <marker id="arr-gray"   markerWidth="7" markerHeight="7" refX="5.5" refY="2.5" orient="auto">
+      <path d="M0,0 L0,5 L7,2.5 z" fill="#4b5563"/>
+    </marker>
+    <!-- Glow filter for emphasis -->
+    <filter id="glow-blue" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- ① Project → FileNode  (1:N, blue) -->
+  <path d="M 640 248 C 640 272, 385 272, 385 295"
+        stroke="#3b82f6" stroke-width="1.8" fill="none"
+        marker-end="url(#arr-blue)"/>
+  <rect x="489" y="258" width="28" height="14" rx="3" fill="#0d1f3c"/>
+  <text x="503" y="269" fill="#3b82f6" font-size="10" font-weight="700" text-anchor="middle">1:N</text>
+
+  <!-- ② Project → BuildConfig  (1:N, amber) -->
+  <path d="M 685 248 L 685 295"
+        stroke="#d97706" stroke-width="1.8" fill="none"
+        marker-end="url(#arr-amber)"/>
+  <rect x="690" y="263" width="28" height="14" rx="3" fill="#1c0d00"/>
+  <text x="704" y="274" fill="#d97706" font-size="10" font-weight="700">1:N</text>
+
+  <!-- ③ Project → Session  (1:N, purple) -->
+  <path d="M 730 248 C 730 272, 995 272, 995 295"
+        stroke="#7c3aed" stroke-width="1.8" fill="none"
+        marker-end="url(#arr-purple)"/>
+  <rect x="843" y="258" width="28" height="14" rx="3" fill="#160b3a"/>
+  <text x="857" y="269" fill="#a78bfa" font-size="10" font-weight="700" text-anchor="middle">1:N</text>
+
+  <!-- ④ FileNode self-ref  (parent→child, green) -->
+  <path d="M 270 385 C 210 385, 210 480, 270 480"
+        stroke="#059669" stroke-width="1.8" fill="none"
+        marker-end="url(#arr-green)"/>
+  <rect x="182" y="424" width="28" height="14" rx="3" fill="#022c22"/>
+  <text x="196" y="435" fill="#34d399" font-size="10" font-weight="700" text-anchor="middle">父子</text>
+
+  <!-- ⑤ FileNode → EditorTab  (1:N, green, routes below BuildConfig) -->
+  <path d="M 500 430 C 690 560, 690 677, 880 677"
+        stroke="#059669" stroke-width="1.8" fill="none"
+        marker-end="url(#arr-green)"/>
+  <rect x="676" y="588" width="28" height="14" rx="3" fill="#022c22"/>
+  <text x="690" y="599" fill="#34d399" font-size="10" font-weight="700" text-anchor="middle">1:N</text>
+
+  <!-- ⑥ FileNode → Diagnostic  (0..N optional, green dashed) -->
+  <path d="M 385 565 L 385 635"
+        stroke="#059669" stroke-width="1.8" fill="none"
+        stroke-dasharray="5,3"
+        marker-end="url(#arr-green)"/>
+  <rect x="390" y="595" width="38" height="14" rx="3" fill="#022c22"/>
+  <text x="409" y="606" fill="#34d399" font-size="10" font-weight="700" text-anchor="middle">0..N</text>
+
+  <!-- ⑦ Session → EditorTab  (1:N, purple) -->
+  <path d="M 995 487 L 995 555"
+        stroke="#7c3aed" stroke-width="1.8" fill="none"
+        marker-end="url(#arr-purple)"/>
+  <rect x="1000" y="517" width="28" height="14" rx="3" fill="#160b3a"/>
+  <text x="1014" y="528" fill="#a78bfa" font-size="10" font-weight="700">1:N</text>
+
+  <!-- ⑧ BuildConfig → BuildRecord  (1:N, amber) -->
+  <path d="M 685 539 L 685 610"
+        stroke="#d97706" stroke-width="1.8" fill="none"
+        marker-end="url(#arr-amber)"/>
+  <rect x="690" y="571" width="28" height="14" rx="3" fill="#1c0d00"/>
+  <text x="704" y="582" fill="#d97706" font-size="10" font-weight="700">1:N</text>
+
+  <!-- ⑨ BuildRecord → Diagnostic  (1:N, red) -->
+  <path d="M 570 719 C 537 719, 537 757, 500 757"
+        stroke="#e11d48" stroke-width="1.8" fill="none"
+        marker-end="url(#arr-red)"/>
+  <rect x="508" y="731" width="28" height="14" rx="3" fill="#300010"/>
+  <text x="522" y="742" fill="#f43f5e" font-size="10" font-weight="700" text-anchor="middle">1:N</text>
+
+  <!-- Project left → RecentProject  (ref, gray dashed) -->
+  <path d="M 570 160 C 500 160, 500 375, 260 375"
+        stroke="#4b5563" stroke-width="1.4" fill="none"
+        stroke-dasharray="4,3"
+        marker-end="url(#arr-gray)"/>
+  <rect x="400" y="248" width="40" height="14" rx="3" fill="#111827"/>
+  <text x="420" y="259" fill="#6b7280" font-size="10" text-anchor="middle">ref</text>
+</svg>
+
+
+<!-- ═══════════════════════ ENTITIES ═══════════════════════ -->
+
+<!-- Project -->
+<div class="ent c-project" style="left:570px; top:30px">
+  <div class="ent-head">🗂 Project（工程项目）</div>
+  <div class="ent-body">
+    <div class="ent-field"><span class="badge pk">PK</span><span class="fn">id</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">name</span><span class="ft">TEXT</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">root_path</span><span class="ft">TEXT</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">language</span><span class="ft">TEXT</span><span class="fnote">cpp/c</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">cmake_file</span><span class="ft">TEXT</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">created_at</span><span class="ft">DATETIME</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">updated_at</span><span class="ft">DATETIME</span></div>
+  </div>
+</div>
+
+<!-- FileNode -->
+<div class="ent c-file" style="left:270px; top:295px">
+  <div class="ent-head">📄 FileNode（文件节点）</div>
+  <div class="ent-body">
+    <div class="ent-field"><span class="badge pk">PK</span><span class="fn">id</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge fk">FK</span><span class="fn">project_id</span><span class="ft">→ Project</span></div>
+    <div class="ent-field"><span class="badge fk">FK</span><span class="fn">parent_id</span><span class="ft">→ self</span><span class="fnote">nullable</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">name</span><span class="ft">TEXT</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">rel_path</span><span class="ft">TEXT</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">node_type</span><span class="ft">ENUM</span><span class="fnote">file/dir</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">file_ext</span><span class="ft">TEXT</span><span class="fnote">.cpp/.h/.cmake</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">size</span><span class="ft">INTEGER</span><span class="fnote">nullable</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">last_modified</span><span class="ft">DATETIME</span></div>
+  </div>
+</div>
+
+<!-- BuildConfig -->
+<div class="ent c-build" style="left:570px; top:295px">
+  <div class="ent-head">⚙️ BuildConfig（构建配置）</div>
+  <div class="ent-body">
+    <div class="ent-field"><span class="badge pk">PK</span><span class="fn">id</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge fk">FK</span><span class="fn">project_id</span><span class="ft">→ Project</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">name</span><span class="ft">TEXT</span><span class="fnote">Debug/Release</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">build_dir</span><span class="ft">TEXT</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">compiler</span><span class="ft">TEXT</span><span class="fnote">g++/clang++</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">std_version</span><span class="ft">TEXT</span><span class="fnote">c++17/c++20</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">cmake_args</span><span class="ft">TEXT</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">is_active</span><span class="ft">BOOL</span></div>
+  </div>
+</div>
+
+<!-- Session -->
+<div class="ent c-editor" style="left:880px; top:295px">
+  <div class="ent-head">💾 Session（编辑器会话）</div>
+  <div class="ent-body">
+    <div class="ent-field"><span class="badge pk">PK</span><span class="fn">id</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge fk">FK</span><span class="fn">project_id</span><span class="ft">→ Project</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">created_at</span><span class="ft">DATETIME</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">last_accessed</span><span class="ft">DATETIME</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">layout_state</span><span class="ft">JSON</span><span class="fnote">分割比例等</span></div>
+    <div class="ent-field"><span class="badge fk">FK</span><span class="fn">active_tab_id</span><span class="ft">→ EditorTab</span><span class="fnote">nullable</span></div>
+  </div>
+</div>
+
+<!-- BuildRecord -->
+<div class="ent c-build" style="left:570px; top:610px">
+  <div class="ent-head">🔨 BuildRecord（构建记录）</div>
+  <div class="ent-body">
+    <div class="ent-field"><span class="badge pk">PK</span><span class="fn">id</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge fk">FK</span><span class="fn">config_id</span><span class="ft">→ BuildConfig</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">started_at</span><span class="ft">DATETIME</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">ended_at</span><span class="ft">DATETIME</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">status</span><span class="ft">ENUM</span><span class="fnote">ok/fail/cancel</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">exit_code</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">log_path</span><span class="ft">TEXT</span></div>
+  </div>
+</div>
+
+<!-- EditorTab -->
+<div class="ent c-editor" style="left:880px; top:555px">
+  <div class="ent-head">📑 EditorTab（标签页）</div>
+  <div class="ent-body">
+    <div class="ent-field"><span class="badge pk">PK</span><span class="fn">id</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge fk">FK</span><span class="fn">session_id</span><span class="ft">→ Session</span></div>
+    <div class="ent-field"><span class="badge fk">FK</span><span class="fn">file_id</span><span class="ft">→ FileNode</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">tab_order</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">is_modified</span><span class="ft">BOOL</span><span class="fnote">未保存标记</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">cursor_line</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">cursor_col</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">scroll_top</span><span class="ft">INTEGER</span></div>
+  </div>
+</div>
+
+<!-- Diagnostic -->
+<div class="ent c-diag" style="left:270px; top:635px">
+  <div class="ent-head">🔴 Diagnostic（诊断信息）</div>
+  <div class="ent-body">
+    <div class="ent-field"><span class="badge pk">PK</span><span class="fn">id</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge fk">FK</span><span class="fn">record_id</span><span class="ft">→ BuildRecord</span></div>
+    <div class="ent-field"><span class="badge fk">FK</span><span class="fn">file_id</span><span class="ft">→ FileNode</span><span class="fnote">nullable</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">level</span><span class="ft">ENUM</span><span class="fnote">error/warn/info</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">line</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">column</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">message</span><span class="ft">TEXT</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">source</span><span class="ft">TEXT</span><span class="fnote">compiler/cmake</span></div>
+  </div>
+</div>
+
+<!-- RecentProject -->
+<div class="ent c-recent" style="left:30px; top:295px">
+  <div class="ent-head">🕘 RecentProject（最近项目）</div>
+  <div class="ent-body">
+    <div class="ent-field"><span class="badge pk">PK</span><span class="fn">id</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">name</span><span class="ft">TEXT</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">path</span><span class="ft">TEXT</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">last_opened</span><span class="ft">DATETIME</span></div>
+  </div>
+</div>
+
+<!-- AppSettings -->
+<div class="ent c-conf" style="left:30px; top:500px">
+  <div class="ent-head">🎨 AppSettings（全局设置）</div>
+  <div class="ent-body">
+    <div class="ent-field"><span class="badge pk">PK</span><span class="fn">id</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">theme</span><span class="ft">TEXT</span><span class="fnote">dark/light</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">font_family</span><span class="ft">TEXT</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">font_size</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">tab_size</span><span class="ft">INTEGER</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">auto_save</span><span class="ft">BOOL</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">show_line_numbers</span><span class="ft">BOOL</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">syntax_highlight</span><span class="ft">BOOL</span></div>
+    <div class="ent-field"><span class="badge" style="visibility:hidden">PK</span><span class="fn">ui_language</span><span class="ft">TEXT</span></div>
+  </div>
+</div>
+
+</div><!-- end #canvas -->
+
+
+<!-- ═══════════════════════ LEGEND ═══════════════════════ -->
+<div class="legend-wrap">
+  <div class="leg-item"><div class="leg-dot" style="background:#2563eb"></div>Project — 工程主体</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#059669"></div>File — 文件系统</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#7c3aed"></div>Editor — 编辑器状态</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#d97706"></div>Build — 编译构建</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#e11d48"></div>Diagnostic — 诊断信息</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#0891b2"></div>Settings — 全局设置</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#4b5563"></div>Recent — 最近记录</div>
+  <hr class="leg-sep"/>
+  <div class="leg-line">
+    <svg width="44" height="14"><line x1="2" y1="7" x2="36" y2="7" stroke="#60a5fa" stroke-width="1.8"
+      marker-end="url(#arr-blue2)"/><defs><marker id="arr-blue2" markerWidth="7" markerHeight="7" refX="5.5" refY="2.5" orient="auto"><path d="M0,0 L0,5 L7,2.5 z" fill="#60a5fa"/></marker></defs></svg>
+    实线 = 强 FK 关系
+  </div>
+  <div class="leg-line">
+    <svg width="44" height="14"><line x1="2" y1="7" x2="36" y2="7" stroke="#4b5563" stroke-width="1.8"
+      stroke-dasharray="4,2"
+      marker-end="url(#arr-gray2)"/><defs><marker id="arr-gray2" markerWidth="7" markerHeight="7" refX="5.5" refY="2.5" orient="auto"><path d="M0,0 L0,5 L7,2.5 z" fill="#4b5563"/></marker></defs></svg>
+    虚线 = 可选关系（nullable FK / ref）
+  </div>
+  <div class="leg-item" style="color:#64748b; font-size:11px">
+    <span style="color:#f59e0b; font-weight:700; font-size:10px; background:#1c0d00; padding:1px 5px; border-radius:3px;">PK</span>
+    主键
+  </div>
+  <div class="leg-item" style="color:#64748b; font-size:11px">
+    <span style="color:#fff; font-weight:700; font-size:10px; background:#4f46e5; padding:1px 5px; border-radius:3px;">FK</span>
+    外键
+  </div>
+</div>
+
+
+<!-- ═══════════════════════ RELATION TABLE ═══════════════════════ -->
+<div class="rel-wrap">
+  <h2>📋 关系说明一览</h2>
+  <table class="rel-table">
+    <thead>
+      <tr>
+        <th>主表（One）</th>
+        <th style="width:80px">关系</th>
+        <th>从表（Many）</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Project</td>
+        <td><span class="rel-type">1 : N</span></td>
+        <td>FileNode</td>
+        <td>一个工程包含多个文件 / 目录节点（通过 <code>project_id</code>）</td>
+      </tr>
+      <tr>
+        <td>Project</td>
+        <td><span class="rel-type">1 : N</span></td>
+        <td>BuildConfig</td>
+        <td>一个工程可拥有多套构建配置（Debug、Release、自定义…）</td>
+      </tr>
+      <tr>
+        <td>Project</td>
+        <td><span class="rel-type">1 : N</span></td>
+        <td>Session</td>
+        <td>一个工程可保存多次编辑器会话记录（用于恢复上次状态）</td>
+      </tr>
+      <tr>
+        <td>FileNode</td>
+        <td><span class="rel-type">1 : N</span> <span class="note-self">自关联</span></td>
+        <td>FileNode</td>
+        <td>目录树自关联：<code>parent_id → id</code>，根节点 parent_id = NULL</td>
+      </tr>
+      <tr>
+        <td>FileNode</td>
+        <td><span class="rel-type">1 : N</span></td>
+        <td>EditorTab</td>
+        <td>同一文件可在多个标签页中打开（通过 <code>file_id</code>）</td>
+      </tr>
+      <tr>
+        <td>FileNode</td>
+        <td><span class="rel-type">1 : 0..N</span> <span class="note-opt">可选</span></td>
+        <td>Diagnostic</td>
+        <td>编译错误/警告可定位到具体文件（<code>file_id</code> 允许 NULL）</td>
+      </tr>
+      <tr>
+        <td>Session</td>
+        <td><span class="rel-type">1 : N</span></td>
+        <td>EditorTab</td>
+        <td>一个会话包含多个已打开的编辑器标签页</td>
+      </tr>
+      <tr>
+        <td>BuildConfig</td>
+        <td><span class="rel-type">1 : N</span></td>
+        <td>BuildRecord</td>
+        <td>每次点击"编译/运行"生成一条构建记录（日志、状态、耗时）</td>
+      </tr>
+      <tr>
+        <td>BuildRecord</td>
+        <td><span class="rel-type">1 : N</span></td>
+        <td>Diagnostic</td>
+        <td>一次构建执行产生多条编译诊断信息（错误 / 警告 / 提示）</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Note about storage strategy -->
+<div style="width:1260px; margin:20px auto 0; padding:14px 20px; background:#111827; border-radius:10px; border:1px solid rgba(255,255,255,0.05); font-size:12px; color:#64748b; line-height:1.8;">
+  <strong style="color:#94a3b8">💡 存储建议：</strong>
+  Perseus 是桌面应用，推荐使用 <strong style="color:#60a5fa">SQLite</strong>（Qt 内置 QSqlite 驱动），
+  通过 <code>QSqlDatabase</code> + <code>QSqlQuery</code> / ORM 访问。
+  <code>AppSettings</code> 也可改用 <code>QSettings</code>（INI / 注册表）存储，无需进入数据库。
+  <code>layout_state</code> 字段建议存为 JSON 字符串，利用 <code>QJsonDocument</code> 序列化/反序列化。
+</div>
+
+</body>
+</html>
