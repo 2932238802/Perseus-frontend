@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>CppEditor - C++ IDE</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Consolas', 'Courier New', monospace; background: #1e1e1e; color: #d4d4d4; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* 菜单栏 */
+  .menubar { background: #3c3c3c; height: 30px; display: flex; align-items: center; padding: 0 8px; gap: 4px; border-bottom: 1px solid #555; flex-shrink: 0; }
+  .menubar span { padding: 4px 10px; font-size: 13px; cursor: pointer; border-radius: 3px; }
+  .menubar span:hover { background: #505050; }
+
+  /* 工具栏 */
+  .toolbar { background: #2d2d2d; height: 36px; display: flex; align-items: center; padding: 0 8px; gap: 6px; border-bottom: 1px solid #444; flex-shrink: 0; }
+  .toolbar button { background: #3a3a3a; border: 1px solid #555; color: #d4d4d4; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 4px; }
+  .toolbar button:hover { background: #505050; }
+  .toolbar button.run { background: #0e7a0e; border-color: #1a9e1a; }
+  .toolbar button.run:hover { background: #1a9e1a; }
+  .toolbar button.stop { background: #8b0000; border-color: #b00000; }
+  .toolbar .sep { width: 1px; height: 20px; background: #555; margin: 0 4px; }
+
+  /* 主体区域 */
+  .main { display: flex; flex: 1; overflow: hidden; }
+
+  /* 左侧文件树 */
+  .sidebar { width: 220px; background: #252526; border-right: 1px solid #3c3c3c; display: flex; flex-direction: column; flex-shrink: 0; }
+  .sidebar-title { padding: 10px 12px; font-size: 11px; color: #bbb; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #3c3c3c; }
+  .file-tree { flex: 1; overflow-y: auto; padding: 4px 0; }
+  .tree-item { padding: 4px 12px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+  .tree-item:hover { background: #2a2d2e; }
+  .tree-item.active { background: #094771; }
+  .tree-item.folder { color: #e8c07d; }
+  .tree-item.file-cpp { color: #75beff; }
+  .tree-item.file-h { color: #c586c0; }
+  .tree-item.file-cmake { color: #4ec9b0; }
+  .tree-indent { padding-left: 28px; }
+
+  /* 编辑区 */
+  .editor-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* 标签页 */
+  .tabs { background: #2d2d2d; display: flex; border-bottom: 1px solid #3c3c3c; flex-shrink: 0; overflow-x: auto; }
+  .tab { padding: 8px 16px; font-size: 13px; cursor: pointer; border-right: 1px solid #3c3c3c; display: flex; align-items: center; gap: 8px; white-space: nowrap; color: #969696; }
+  .tab:hover { background: #2a2a2a; }
+  .tab.active { background: #1e1e1e; color: #d4d4d4; border-top: 1px solid #0078d4; }
+  .tab .close { opacity: 0; font-size: 14px; }
+  .tab:hover .close { opacity: 1; }
+  .tab-cpp { color: #75beff; }
+  .tab-h { color: #c586c0; }
+
+  /* 代码编辑器 */
+  .editor-wrapper { flex: 1; display: flex; overflow: hidden; }
+  .line-numbers { background: #1e1e1e; color: #858585; padding: 12px 8px; text-align: right; font-size: 13px; line-height: 1.6; min-width: 48px; border-right: 1px solid #3c3c3c; user-select: none; overflow: hidden; }
+  .line-numbers div { height: 20.8px; }
+  .code-content { flex: 1; padding: 12px; font-size: 13px; line-height: 1.6; overflow: auto; background: #1e1e1e; }
+  .code-content pre { margin: 0; white-space: pre; }
+
+  /* 语法高亮颜色 */
+  .kw { color: #569cd6; font-weight: bold; }   /* 关键字 蓝色 */
+  .type { color: #4ec9b0; }                     /* 类型 青色 */
+  .str { color: #ce9178; }                      /* 字符串 橙色 */
+  .num { color: #b5cea8; }                      /* 数字 绿色 */
+  .cmt { color: #6a9955; font-style: italic; }  /* 注释 绿色 */
+  .pre { color: #c586c0; }                      /* 预处理 紫色 */
+  .fn  { color: #dcdcaa; }                      /* 函数 黄色 */
+  .cls { color: #4ec9b0; }                      /* 类名 青色 */
+  .op  { color: #d4d4d4; }                      /* 操作符 */
+
+  /* 底部面板 */
+  .bottom-panel { height: 180px; background: #1e1e1e; border-top: 1px solid #3c3c3c; display: flex; flex-direction: column; flex-shrink: 0; }
+  .panel-tabs { background: #2d2d2d; display: flex; border-bottom: 1px solid #3c3c3c; }
+  .panel-tab { padding: 6px 14px; font-size: 12px; cursor: pointer; color: #969696; }
+  .panel-tab.active { color: #d4d4d4; border-bottom: 2px solid #0078d4; }
+  .panel-content { flex: 1; padding: 8px 12px; font-size: 12px; overflow-y: auto; }
+  .output-line { line-height: 1.7; }
+  .output-line.success { color: #4ec9b0; }
+  .output-line.error   { color: #f44747; }
+  .output-line.warning { color: #cca700; }
+  .output-line.info    { color: #9cdcfe; }
+  .output-line.normal  { color: #d4d4d4; }
+
+  /* 状态栏 */
+  .statusbar { background: #0078d4; height: 22px; display: flex; align-items: center; padding: 0 12px; font-size: 12px; color: #fff; gap: 16px; flex-shrink: 0; }
+  .statusbar .right { margin-left: auto; display: flex; gap: 16px; }
+
+  /* 滚动条 */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: #1e1e1e; }
+  ::-webkit-scrollbar-thumb { background: #424242; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+  /* 光标行高亮 */
+  .cursor-line { background: #2a2a2a; }
+</style>
+</head>
+<body>
+
+<!-- 菜单栏 -->
+<div class="menubar">
+  <span>📁 文件</span>
+  <span>✏️ 编辑</span>
+  <span>🔍 查找</span>
+  <span>▶ 运行</span>
+  <span>🔧 工具</span>
+  <span>❓ 帮助</span>
+</div>
+
+<!-- 工具栏 -->
+<div class="toolbar">
+  <button>📄 新建</button>
+  <button>📂 打开</button>
+  <button>💾 保存</button>
+  <div class="sep"></div>
+  <button>↩ 撤销</button>
+  <button>↪ 重做</button>
+  <div class="sep"></div>
+  <button>🔍 查找</button>
+  <div class="sep"></div>
+  <button class="run">▶ 编译运行</button>
+  <button>🔨 仅编译</button>
+  <button class="stop">⏹ 停止</button>
+</div>
+
+<!-- 主体 -->
+<div class="main">
+
+  <!-- 左侧文件树 -->
+  <div class="sidebar">
+    <div class="sidebar-title">📁 资源管理器</div>
+    <div class="file-tree">
+      <div class="tree-item folder">▼ 📁 CppEditor</div>
+      <div class="tree-item folder tree-indent">▼ 📁 src</div>
+      <div class="tree-item file-cpp tree-indent active" style="padding-left:44px">📄 main.cpp</div>
+      <div class="tree-item file-cpp tree-indent" style="padding-left:44px">📄 mainwindow.cpp</div>
+      <div class="tree-item file-h tree-indent" style="padding-left:44px">📄 mainwindow.h</div>
+      <div class="tree-item file-cpp tree-indent" style="padding-left:44px">📄 codeeditor.cpp</div>
+      <div class="tree-item file-h tree-indent" style="padding-left:44px">📄 codeeditor.h</div>
+      <div class="tree-item file-cpp tree-indent" style="padding-left:44px">📄 highlighter.cpp</div>
+      <div class="tree-item file-h tree-indent" style="padding-left:44px">📄 highlighter.h</div>
+      <div class="tree-item file-cmake tree-indent">📄 CMakeLists.txt</div>
+      <div class="tree-item folder tree-indent">▶ 📁 build</div>
+      <div class="tree-item folder tree-indent">▶ 📁 resources</div>
+    </div>
+  </div>
+
+  <!-- 编辑区 -->
+  <div class="editor-area">
+
+    <!-- 标签页 -->
+    <div class="tabs">
+      <div class="tab active"><span class="tab-cpp">●</span> main.cpp <span class="close">✕</span></div>
+      <div class="tab"><span class="tab-h">●</span> mainwindow.h <span class="close">✕</span></div>
+      <div class="tab"><span class="tab-cpp">●</span> codeeditor.cpp <span class="close">✕</span></div>
+      <div class="tab"><span class="tab-h">●</span> highlighter.h <span class="close">✕</span></div>
+    </div>
+
+    <!-- 代码编辑器 -->
+    <div class="editor-wrapper">
+      <div class="line-numbers" id="lineNumbers"></div>
+      <div class="code-content">
+<pre><span class="pre">#include</span> <span class="str">&lt;QApplication&gt;</span>
+<span class="pre">#include</span> <span class="str">"mainwindow.h"</span>
+
+<span class="cmt">/**
+ * CppEditor - A simple C++ IDE built with Qt
+ * Author: shengjie.lin
+ */</span>
+
+<span class="kw">int</span> <span class="fn">main</span>(<span class="kw">int</span> argc, <span class="kw">char</span> *argv[])
+{
+    <span class="cls">QApplication</span> app(argc, argv);
+
+    <span class="cmt">// 设置应用信息</span>
+    app.<span class="fn">setApplicationName</span>(<span class="str">"CppEditor"</span>);
+    app.<span class="fn">setApplicationVersion</span>(<span class="str">"1.0.0"</span>);
+    app.<span class="fn">setOrganizationName</span>(<span class="str">"LosAngelous"</span>);
+
+    <span class="cls">MainWindow</span> window;
+    window.<span class="fn">resize</span>(<span class="num">1280</span>, <span class="num">800</span>);
+    window.<span class="fn">setWindowTitle</span>(<span class="str">"CppEditor"</span>);
+    window.<span class="fn">show</span>();
+
+    <span class="kw">return</span> app.<span class="fn">exec</span>();
+}
+</pre>
+      </div>
+    </div>
+
+    <!-- 底部面板 -->
+    <div class="bottom-panel">
+      <div class="panel-tabs">
+        <div class="panel-tab active">📋 输出</div>
+        <div class="panel-tab">⚠️ 问题</div>
+        <div class="panel-tab">💻 终端</div>
+      </div>
+      <div class="panel-content">
+        <div class="output-line info">[ 信息 ] 正在使用编译器: g++ (GCC) 13.2.0</div>
+        <div class="output-line info">[ 信息 ] 编译命令: g++ -std=c++17 -o build/CppEditor src/main.cpp</div>
+        <div class="output-line normal">─────────────────────────────────────</div>
+        <div class="output-line success">[ 成功 ] ✅ 编译完成！耗时 0.83s</div>
+        <div class="output-line success">[ 运行 ] ▶ 正在运行 build/CppEditor ...</div>
+        <div class="output-line normal">─────────────────────────────────────</div>
+        <div class="output-line normal">Hello from CppEditor!</div>
+        <div class="output-line normal">─────────────────────────────────────</div>
+        <div class="output-line success">[ 完成 ] 程序退出，返回值: 0</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 状态栏 -->
+<div class="statusbar">
+  <span>🔀 main</span>
+  <span>⚙️ C++17</span>
+  <span>✅ 0 错误  0 警告</span>
+  <div class="right">
+    <span>main.cpp</span>
+    <span>行 10, 列 24</span>
+    <span>UTF-8</span>
+    <span>CRLF</span>
+    <span>C++</span>
+  </div>
+</div>
+
+<script>
+  // 生成行号
+  const lineNumbers = document.getElementById('lineNumbers');
+  for (let i = 1; i <= 40; i++) {
+    const div = document.createElement('div');
+    div.textContent = i;
+    if (i === 10) div.style.color = '#c6c6c6'; // 当前行高亮
+    lineNumbers.appendChild(div);
+  }
+
+  // 标签页切换
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // 底部面板切换
+  document.querySelectorAll('.panel-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // 文件树点击
+  document.querySelectorAll('.tree-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.tree-item').forEach(t => t.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+[
+{
+  "directory": "/home/losangelous/LosAngelous/Pro/Perseus/_build",
+  "command": "/usr/bin/clang++-18 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -std=gnu++17 -fPIC -o CMakeFiles/Perseus.dir/Perseus_autogen/mocs_compilation.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/mocs_compilation.cpp",
+  "file": "/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/mocs_compilation.cpp",
+  "output": "CMakeFiles/Perseus.dir/Perseus_autogen/mocs_compilation.cpp.o"
+},
+{
+  "directory": "/home/losangelous/LosAngelous/Pro/Perseus/_build",
+  "command": "/usr/bin/clang++-18 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -std=gnu++17 -fPIC -o CMakeFiles/Perseus.dir/src/Perseus.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus/src/Perseus.cpp",
+  "file": "/home/losangelous/LosAngelous/Pro/Perseus/src/Perseus.cpp",
+  "output": "CMakeFiles/Perseus.dir/src/Perseus.cpp.o"
+},
+{
+  "directory": "/home/losangelous/LosAngelous/Pro/Perseus/_build",
+  "command": "/usr/bin/clang++-18 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -std=gnu++17 -fPIC -o CMakeFiles/Perseus.dir/src/main.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus/src/main.cpp",
+  "file": "/home/losangelous/LosAngelous/Pro/Perseus/src/main.cpp",
+  "output": "CMakeFiles/Perseus.dir/src/main.cpp.o"
+},
+{
+  "directory": "/home/losangelous/LosAngelous/Pro/Perseus/_build",
+  "command": "/usr/bin/clang++-18 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -std=gnu++17 -fPIC -o CMakeFiles/Perseus.dir/src/models/LosFileContext/LosFileContext.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFileContext/LosFileContext.cpp",
+  "file": "/home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFileContext/LosFileContext.cpp",
+  "output": "CMakeFiles/Perseus.dir/src/models/LosFileContext/LosFileContext.cpp.o"
+},
+{
+  "directory": "/home/losangelous/LosAngelous/Pro/Perseus/_build",
+  "command": "/usr/bin/clang++-18 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -std=gnu++17 -fPIC -o CMakeFiles/Perseus.dir/src/models/LosFileNode/LosFileNode.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFileNode/LosFileNode.cpp",
+  "file": "/home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFileNode/LosFileNode.cpp",
+  "output": "CMakeFiles/Perseus.dir/src/models/LosFileNode/LosFileNode.cpp.o"
+},
+{
+  "directory": "/home/losangelous/LosAngelous/Pro/Perseus/_build",
+  "command": "/usr/bin/clang++-18 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -std=gnu++17 -fPIC -o CMakeFiles/Perseus.dir/src/models/LosFilePath/LosFilePath.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFilePath/LosFilePath.cpp",
+  "file": "/home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFilePath/LosFilePath.cpp",
+  "output": "CMakeFiles/Perseus.dir/src/models/LosFilePath/LosFilePath.cpp.o"
+},
+{
+  "directory": "/home/losangelous/LosAngelous/Pro/Perseus/_build",
+  "command": "/usr/bin/clang++-18 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -std=gnu++17 -fPIC -o CMakeFiles/Perseus.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFileTreeModel/LosFileTreeModel.cpp",
+  "file": "/home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFileTreeModel/LosFileTreeModel.cpp",
+  "output": "CMakeFiles/Perseus.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o"
+},
+{
+  "directory": "/home/losangelous/LosAngelous/Pro/Perseus/_build",
+  "command": "/usr/bin/clang++-18 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -std=gnu++17 -fPIC -o CMakeFiles/Perseus.dir/src/ui/LosEditorTabUi/LosEditorTabUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorTabUi/LosEditorTabUi.cpp",
+  "file": "/home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorTabUi/LosEditorTabUi.cpp",
+  "output": "CMakeFiles/Perseus.dir/src/ui/LosEditorTabUi/LosEditorTabUi.cpp.o"
+},
+{
+  "directory": "/home/losangelous/LosAngelous/Pro/Perseus/_build",
+  "command": "/usr/bin/clang++-18 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -std=gnu++17 -fPIC -o CMakeFiles/Perseus.dir/src/ui/LosEditorUi/LosEditorUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorUi/LosEditorUi.cpp",
+  "file": "/home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorUi/LosEditorUi.cpp",
+  "output": "CMakeFiles/Perseus.dir/src/ui/LosEditorUi/LosEditorUi.cpp.o"
+},
+{
+  "directory": "/home/losangelous/LosAngelous/Pro/Perseus/_build",
+  "command": "/usr/bin/clang++-18 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork -std=gnu++17 -fPIC -o CMakeFiles/Perseus.dir/Perseus_autogen/EWIEGA46WW/qrc_resources.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/EWIEGA46WW/qrc_resources.cpp",
+  "file": "/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/EWIEGA46WW/qrc_resources.cpp",
+  "output": "CMakeFiles/Perseus.dir/Perseus_autogen/EWIEGA46WW/qrc_resources.cpp.o"
+}
+]

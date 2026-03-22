@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>运动场所预约系统 ER 图</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1a2e;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+  }
+  h1 {
+    color: #00d4ff;
+    font-size: 24px;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+  }
+  .subtitle {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 30px;
+  }
+  .er-container {
+    background: #16213e;
+    border: 1px solid #0f3460;
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 1400px;
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.1);
+  }
+  .mermaid {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* 图例 */
+  .legend {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #aaa;
+    font-size: 13px;
+  }
+  .legend-line {
+    width: 40px;
+    height: 2px;
+    background: #00d4ff;
+  }
+  .legend-line.one-many {
+    background: linear-gradient(90deg, #00d4ff, #ff6b6b);
+  }
+
+  /* 实体统计 */
+  .stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .stat-card {
+    background: #0f3460;
+    border: 1px solid #1a5276;
+    border-radius: 10px;
+    padding: 10px 20px;
+    text-align: center;
+    min-width: 100px;
+  }
+  .stat-card .num {
+    font-size: 22px;
+    font-weight: bold;
+    color: #00d4ff;
+  }
+  .stat-card .label {
+    font-size: 12px;
+    color: #888;
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+
+<h1>🏟️ 运动场所预约系统</h1>
+<p class="subtitle">Entity Relationship Diagram</p>
+
+<div class="stats">
+  <div class="stat-card"><div class="num">7</div><div class="label">实体数量</div></div>
+  <div class="stat-card"><div class="num">9</div><div class="label">关联关系</div></div>
+  <div class="stat-card"><div class="num">6</div><div class="label">数据库表</div></div>
+</div>
+
+<div class="er-container">
+  <div class="mermaid">
+erDiagram
+
+    USER {
+        bigint      id              PK  "用户ID"
+        varchar     username            "用户名"
+        varchar     password            "密码"
+        varchar     phone               "手机号"
+        varchar     email               "邮箱"
+        varchar     avatar              "头像"
+        tinyint     role                "角色 0用户 1管理员 2超管"
+        tinyint     status              "状态 0正常 1封禁"
+        datetime    created_at          "创建时间"
+        datetime    updated_at          "更新时间"
+    }
+
+    STADIUM {
+        bigint      id              PK  "场馆ID"
+        varchar     name                "场馆名称"
+        varchar     address             "地址"
+        text        description         "简介"
+        varchar     cover_image         "封面图"
+        time        open_time           "开放时间"
+        time        close_time          "关闭时间"
+        tinyint     status              "状态 0营业 1暂停"
+        bigint      manager_id      FK  "管理员ID"
+        datetime    created_at          "创建时间"
+        datetime    updated_at          "更新时间"
+    }
+
+    VENUE {
+        bigint      id              PK  "场地ID"
+        bigint      stadium_id      FK  "场馆ID"
+        varchar     name                "场地名称"
+        varchar     sport_type          "运动类型"
+        int         capacity            "容纳人数"
+        decimal     price_per_hour      "每小时价格"
+        text        description         "描述"
+        tinyint     status              "状态 0可用 1维修"
+        datetime    created_at          "创建时间"
+        datetime    updated_at          "更新时间"
+    }
+
+    EQUIPMENT {
+        bigint      id              PK  "器材ID"
+        bigint      stadium_id      FK  "所属场馆ID"
+        varchar     name                "器材名称"
+        varchar     type                "器材类型"
+        int         quantity            "数量"
+        tinyint     status              "状态 0正常 1损坏"
+        datetime    created_at          "创建时间"
+        datetime    updated_at          "更新时间"
+    }
+
+    RESERVATION {
+        bigint      id              PK  "预约ID"
+        varchar     reservation_no      "预约单号"
+        bigint      user_id         FK  "用户ID"
+        bigint      venue_id        FK  "场地ID"
+        date        date                "预约日期"
+        time        start_time          "开始时间"
+        time        end_time            "结束时间"
+        decimal     total_price         "总价"
+        tinyint     status              "状态 0待支付 1已确认 2已取消 3已完成"
+        varchar     remark              "备注"
+        datetime    created_at          "创建时间"
+        datetime    updated_at          "更新时间"
+    }
+
+    ORDER_PAY {
+        bigint      id              PK  "订单ID"
+        varchar     order_no            "订单号"
+        bigint      reservation_id  FK  "预约ID"
+        bigint      user_id         FK  "用户ID"
+        decimal     amount              "支付金额"
+        tinyint     pay_type            "支付方式 0微信 1支付宝 2现金"
+        tinyint     pay_status          "支付状态 0待支付 1已支付 2已退款"
+        datetime    pay_time            "支付时间"
+        datetime    created_at          "创建时间"
+        datetime    updated_at          "更新时间"
+    }
+
+    ANNOUNCEMENT {
+        bigint      id              PK  "公告ID"
+        bigint      stadium_id      FK  "场馆ID"
+        varchar     title               "标题"
+        text        content             "内容"
+        tinyint     type                "类型 0通知 1活动"
+        datetime    created_at          "创建时间"
+        datetime    updated_at          "更新时间"
+    }
+
+    %% 关联关系
+    USER            ||--o{    STADIUM         : "管理(1:N)"
+    USER            ||--o{    RESERVATION     : "发起预约(1:N)"
+    STADIUM         ||--o{    VENUE           : "包含场地(1:N)"
+    STADIUM         ||--o{    EQUIPMENT       : "拥有器材(1:N)"
+    STADIUM         ||--o{    ANNOUNCEMENT    : "发布公告(1:N)"
+    VENUE           ||--o{    RESERVATION     : "被预约(1:N)"
+    RESERVATION     ||--||    ORDER_PAY       : "对应订单(1:1)"
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <span style="color:#00d4ff">||</span>
+      <span>一（强制）</span>
+    </div>
+    <div class="legend-item">
+      <span style="color:#00d4ff">o{</span>
+      <span>多（可选）</span>
+    </div>
+    <div class="legend-item">
+      <span style="color:#00d4ff">PK</span>
+      <span>主键</span>
+    </div>
+    <div class="legend-item">
+      <span style="color:#ff6b6b">FK</span>
+      <span>外键</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    er: {
+      diagramPadding: 30,
+      layoutDirection: 'TB',
+      minEntityWidth: 100,
+      minEntityHeight: 75,
+      entityPadding: 15,
+      useMaxWidth: true,
+    },
+    themeVariables: {
+      primaryColor: '#0f3460',
+      primaryTextColor: '#00d4ff',
+      primaryBorderColor: '#00d4ff',
+      lineColor: '#00d4ff',
+      secondaryColor: '#16213e',
+      tertiaryColor: '#1a1a2e',
+      edgeLabelBackground: '#16213e',
+      attributeBackgroundColorEven: '#16213e',
+      attributeBackgroundColorOdd: '#1a1a2e',
+    }
+  });
+</script>
+</body>
+</html>
