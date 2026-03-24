@@ -12,11 +12,8 @@ namespace LosModel {
 class LosFileContext {
 
 public:
-  bool load(const QString &file_path);
-  bool save(const QString &file_path);
-  bool save();
-  QString getContent() const;
-  void setContent(const QString &content);
+  QString load(const QString &file_path);
+  bool save(const QString &content, const QString &file_path);
   bool isDirty() const;
   void setDirty(bool dirty);
   bool isLoaded() const;
@@ -26,7 +23,6 @@ public:
  
 private:
   QString L_content = "";
-  QString L_curFilePath = "";
   bool L_isDirty = false;
   bool L_isLoaded = false;
 };

@@ -21,7 +21,7 @@ void LosRunManager::execute(const QString &file_path) {
 
   LosModel::LosFilePath path(file_path);
   if (!path.isExist()) {
-    emit _appendErr("error, path does not exist!" + file_path);
+    ERR("error, path does not exist!" + file_path, "LosRunManager");
     return;
   }
 
@@ -29,21 +29,16 @@ void LosRunManager::execute(const QString &file_path) {
     if (file_path.endsWith(".cpp") || file_path.endsWith(".cc")) {
       LOS_runner = new LosSingleCppRunner(file_path, this);
     } else {
-      emit _appendErr("compiling this type of file is not currently supported");
+      ERR("compiling this type of file is not currently supported",
+          "LosRunManager");
     }
   } else if (path.isDir()) {
-    emit _appendErr(
-        u8"folder-level overall builds (CMake) are not yet implemented!");
+    ERR(u8"folder-level overall builds (CMake) are not yet implemented!",
+        "LosRunManager");
     return;
   }
 
   if (LOS_runner) {
-    connect(LOS_runner, &LosSingleCppRunner::_appendErr, this,
-            &LosRunManager::_appendErr);
-    connect(LOS_runner, &LosSingleCppRunner::_appendLog, this,
-            &LosRunManager::_appendLog);
-    connect(LOS_runner, &LosSingleCppRunner::_buildOver, this,
-            &LosRunManager::_buildOver);
     LOS_runner->start();
   }
 }

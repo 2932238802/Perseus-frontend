@@ -1,16 +1,15 @@
 
 #pragma once
 
-#include "ui/LosEditorUi/LosEditorUi.h"
-#include <QWidget>
+#include "view/LosEditorUi/LosEditorUi.h"
 #include <QDebug>
+#include <QObject>
+#include <QWidget>
 #include <qglobal.h>
 #include <qmessagebox.h>
-#include <QObject>
 #include <qsharedpointer.h>
 #include <qtablewidget.h>
 #include <qtabwidget.h>
-#include <QWidget>
 
 namespace LosView {
 class LosEditorTabUi : public QWidget {
@@ -36,8 +35,15 @@ private slots: // chs
   void onEditDirty(bool is_dirty);
   void onCtrlSToSaveCurFile();
 
+signals:
+  void _textChangedForLsp(const QString &file_path,
+                          const QString &file_content);
+  void _completionRequest(const QString &file_path, int line, int col);
+  void _openFileForLsp(const QString &file_path, const QString &file_content);
+
 private: // init
   void initConnect();
+  void initEditor(LosEditorUi*);
 
 private: // params
   QTabWidget *L_tabWidget;

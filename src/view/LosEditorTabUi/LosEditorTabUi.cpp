@@ -1,7 +1,8 @@
 
 #include "LosEditorTabUi.h"
 #include "models/LosFileContext/LosFileContext.h"
-#include "ui/LosEditorUi/LosEditorUi.h"
+#include "models/LosFilePath/LosFilePath.h"
+#include "view/LosEditorUi/LosEditorUi.h"
 #include <qglobal.h>
 #include <qmessagebox.h>
 #include <qobject.h>
@@ -15,7 +16,15 @@ LosEditorTabUi::LosEditorTabUi(QTabWidget *tab_widget, QWidget *parent)
 
 LosEditorTabUi::~LosEditorTabUi() {}
 
+/**
+关闭标签页
+*/
 void LosEditorTabUi::closeTab(int index) {}
+
+
+/**
+保存标签页
+*/
 void LosEditorTabUi::saveTab() {
   if (nullptr == L_tabWidget) {
     return;
@@ -29,6 +38,10 @@ void LosEditorTabUi::saveTab() {
   }
 }
 
+
+/**
+保存所有的标签页
+*/
 void LosEditorTabUi::saveAllTabs() {
   if (nullptr == L_tabWidget) {
     QMessageBox::critical(this, "error", "error in saveTab: nullptr");
@@ -57,17 +70,13 @@ void LosEditorTabUi::openFile(const QString &file_path) {
     L_tabWidget->setCurrentWidget(editor);
     return;
   }
-
   LosEditorUi *editor = LosEditorUi::create(this);
-  connect(editor, &LosEditorUi::_editorDirty, this,
-          &LosEditorTabUi::onEditDirty);
+  // 自己 处理 标签
+  initEditor(editor);
   LosModel::LosFileContext *context = LosModel::LosFileContext::create();
-  if (!context->load(file_path)) {
-    delete editor;
-    delete context;
-    return;
-  }
-  editor->loadContext(context);
+  LosModel::LosFilePath *file = new LosModel::LosFilePath(file_path);
+  context->load(file_path);
+  editor->loadContextAndPath(context, file);
   L_tabWidget->addTab(editor, QFileInfo(file_path).fileName());
   LOS_pathToUi.insert(file_path, editor);
   L_tabWidget->setCurrentWidget(editor); // 补充 直接 把界面切过去
@@ -105,23 +114,23 @@ void LosEditorTabUi::onTabCloseRequested(int index) {
   if (!wi)
     return;
   LosEditorUi *editor = qobject_cast<LosEditorUi *>(wi);
-
   // 补充
-  if (editor->isDirty()) {    
+  if (editor->isDirty()) {
     QString fileName = L_tabWidget->tabText(index);
-    fileName.replace(" *", ""); 
+    fileName.replace(" *", "");
     QMessageBox::StandardButton res = QMessageBox::warning(
         this, "save tips",
         QString("file '%1' has been modified. save changes?").arg(fileName),
         QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel,
         QMessageBox::Save);
     if (res == QMessageBox::Save) {
-        if (!editor->save()) {
-            QMessageBox::critical(this, "error", "save failed, unable to close the tab!");
-            return; 
-        }
+      if (!editor->save()) {
+        QMessageBox::critical(this, "error",
+                              "save failed, unable to close the tab!");
+        return;
+      }
     } else if (res == QMessageBox::Cancel) {
-        return; 
+      return;
     }
   }
   QString filePath = LOS_pathToUi.key(editor);
@@ -171,4 +180,17 @@ void LosEditorTabUi::initConnect() {
   connect(L_tabWidget, &QTabWidget::tabCloseRequested, this,
           &LosEditorTabUi::onTabCloseRequested);
 }
+
+void LosEditorTabUi::initEditor(LosEditorUi *editor) {
+  connect(editor, &LosEditorUi::_editorDirty, this,
+          &LosEditorTabUi::onEditDirty);
+  // 让上层 显示 ui提示
+  connect(editor, &LosEditorUi::_completionRequest, this,
+          &LosEditorTabUi::_completionRequest);
+  connect(editor, &LosEditorUi::_openFileForLsp, this,
+          &LosEditorTabUi::_openFileForLsp);
+  connect(editor, &LosEditorUi::_textChangedForLsp, this,
+          &LosEditorTabUi::_textChangedForLsp);
+}
+
 } // namespace LosView

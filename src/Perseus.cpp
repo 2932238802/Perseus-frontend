@@ -1,9 +1,8 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
-#include <qdebug.h>
-#include <qkeysequence.h>
-#include <qnamespace.h>
-#include <qshortcut.h>
+#include "core/log/LosLog/LosLog.h"
+#include "core/lsp/LosLspManager/LosLspManager.h"
+#include "view/LosEditorTabUi/LosEditorTabUi.h"
 
 /**
 构造
@@ -101,30 +100,58 @@ void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index) {
 void Perseus::onRunSingleFileBtnClicked() {
   auto curWidget = LOS_tabUi->getCurEditor();
   if (!curWidget) {
-    ui->output_plaintextedit->appendPlainText(
-        u8"[error]> internal editor error ...");
+    ERR("internal editor error ...", "Perseus");
     return;
   }
   auto curPath = LOS_tabUi->getCurFilePath();
   LOS_tabUi->saveTab();
   ui->bottom_tabwidget->setCurrentIndex(LosCommon::BottomTabWidget::OUTPUT);
   ui->output_plaintextedit->clear();
-  ui->output_plaintextedit->appendPlainText(
-      u8"[info]> starting compilation ...");
+  INF("starting compilation ...", "Perseus");
   LOS_runMgr->execute(curPath);
 }
 
-void Perseus::onAppendErr(const QString &str) {
-  ui->output_plaintextedit->appendPlainText(u8"[error]>" + str);
-}
+void Perseus::onAppendErr(const QString &str) { ERR(str, "Perseus"); }
 
-void Perseus::onAppendLog(const QString &str) {
-  ui->output_plaintextedit->appendPlainText(u8"[info]>" + str);
-}
+void Perseus::onAppendLog(const QString &str) { INF(str, "Perseus"); }
 
 void Perseus::onBuildOver(bool ok) {
   QString msg(ok == true ? "suc!" : "failed!");
-  ui->output_plaintextedit->appendPlainText(u8"build " + msg);
+  INF("build" + msg, "Perseus");
+}
+
+void Perseus::onCompletionTips(const QStringList &list) {
+  auto curEditor = LOS_tabUi->getCurEditor();
+  if (curEditor) {
+    curEditor->showCompletion(list);
+  }
+}
+
+void Perseus::onTextChange_LSP(const QString &filePath, const QString &text) {
+  LOS_lspMgr->changeFile(filePath, text);
+}
+
+void Perseus::onCompletionRequest_LSP(const QString &filePath, int line,
+                                      int col) {
+  LOS_lspMgr->requestCompletion(filePath, line, col);
+}
+
+void Perseus::onOpenFile_LSP(const QString &file_path,
+                             const QString &file_content) {
+  qDebug() << "open file for lsp";
+  LOS_lspMgr->openFile(file_path, file_content);
+}
+
+void Perseus::onDiagnostics(const QString &file_path,
+                            const QList<LosCommon::LosDiagnostic> &diags) {
+
+  auto curWidget = LOS_tabUi->getCurEditor();
+  if (nullptr != curWidget)
+    curWidget->showDiagnostic(file_path, diags);
+}
+
+void Perseus::onLog(const QString &log) {
+  ui->output_plaintextedit->appendHtml(log);
 }
 
 /**
@@ -133,18 +160,26 @@ void Perseus::onBuildOver(bool ok) {
 void Perseus::initConnect() {
   LOS_tabUi = new LosView::LosEditorTabUi(ui->editor_tabwidget, this);
   LOS_runMgr = new LosCore::LosRunManager(this);
+  LOS_lspMgr = new LosCore::LosLspManager(this);
+  LOS_lspMgr->start();
   connect(ui->files_btn, &QPushButton::clicked, this,
           &Perseus::onFilesBtnClicked);
   connect(ui->explorer_treeview, &QTreeView::doubleClicked, this,
           &Perseus::onExplorerFileDoubleClicked);
   connect(ui->run_singleFile_btn, &QPushButton::clicked, this,
           &Perseus::onRunSingleFileBtnClicked);
-  connect(LOS_runMgr, &LosCore::LosRunManager::_appendErr, this,
-          &Perseus::onAppendErr);
-  connect(LOS_runMgr, &LosCore::LosRunManager::_appendLog, this,
-          &Perseus::onAppendLog);
-  connect(LOS_runMgr, &LosCore::LosRunManager::_buildOver, this,
-          &Perseus::onBuildOver);
+  connect(LOS_lspMgr, &LosCore::LosLspManager::_completion, this,
+          &Perseus::onCompletionTips);
+  connect(LOS_lspMgr, &LosCore::LosLspManager::_diagnostics, this,
+          &Perseus::onDiagnostics);
+  connect(LOS_tabUi, &LosView::LosEditorTabUi::_textChangedForLsp, this,
+          &Perseus::onTextChange_LSP);
+  connect(LOS_tabUi, &LosView::LosEditorTabUi::_completionRequest, this,
+          &Perseus::onCompletionRequest_LSP);
+  connect(LOS_tabUi, &LosView::LosEditorTabUi::_openFileForLsp, this,
+          &Perseus::onOpenFile_LSP);
+  connect(&LosCore::LosLog::instance(), &LosCore::LosLog::_sendLog, this,
+          &Perseus::onLog);
 }
 
 /**
@@ -159,9 +194,7 @@ void Perseus::initStyle() {
   ui->bottom_tabwidget->setTabText(0, QString::fromUtf8(u8"output"));
   ui->bottom_tabwidget->setTabText(1, QString::fromUtf8(u8"issues"));
   ui->bottom_tabwidget->setTabText(2, QString::fromUtf8(u8"terminal"));
-  ui->output_plaintextedit->appendPlainText(
-      u8"[info]>perseus Engine Initialized ... ");
-  ui->output_plaintextedit->appendPlainText(u8"[info]> ... ");
+  INF("perseus Engine Initialized ... ", "Perseus");
   this->setStyleSheet(LosStyle::perseus_getStyle());
 }
 
@@ -171,13 +204,14 @@ void Perseus::initStyle() {
 void Perseus::initShotcut() {
   QShortcut *shortcutSave = new QShortcut(QKeySequence::Save, this);
   shortcutSave->setContext(Qt::WindowShortcut);
-  QShortcut* ctrl_f5 = new QShortcut(QKeySequence(Qt::CTRL| Qt::Key_F5),this);
+  QShortcut *ctrl_f5 = new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F5), this);
   connect(shortcutSave, &QShortcut::activated, this, [=]() {
     if (LOS_tabUi) {
       LOS_tabUi->saveTab();
     }
   });
-  connect(ctrl_f5,&QShortcut::activated,this,&Perseus::onRunSingleFileBtnClicked);
+  connect(ctrl_f5, &QShortcut::activated, this,
+          &Perseus::onRunSingleFileBtnClicked);
 }
 
 /**

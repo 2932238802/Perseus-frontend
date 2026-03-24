@@ -64,6 +64,66 @@ build CMakeFiles/Perseus.dir/src/Perseus.cpp.o: CXX_COMPILER__Perseus_unscanned_
   TARGET_COMPILE_PDB = CMakeFiles/Perseus.dir/
   TARGET_PDB = Perseus.pdb
 
+build CMakeFiles/Perseus.dir/src/core/log/LosLog/LosLog.cpp.o: CXX_COMPILER__Perseus_unscanned_ /home/losangelous/LosAngelous/Pro/Perseus/src/core/log/LosLog/LosLog.cpp || cmake_object_order_depends_target_Perseus
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Perseus.dir/src/core/log/LosLog/LosLog.cpp.o.d
+  FLAGS = -std=gnu++17 -fPIC
+  INCLUDES = -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork
+  OBJECT_DIR = CMakeFiles/Perseus.dir
+  OBJECT_FILE_DIR = CMakeFiles/Perseus.dir/src/core/log/LosLog
+  TARGET_COMPILE_PDB = CMakeFiles/Perseus.dir/
+  TARGET_PDB = Perseus.pdb
+
+build CMakeFiles/Perseus.dir/src/core/lsp/LosLspClient/LosLspClient.cpp.o: CXX_COMPILER__Perseus_unscanned_ /home/losangelous/LosAngelous/Pro/Perseus/src/core/lsp/LosLspClient/LosLspClient.cpp || cmake_object_order_depends_target_Perseus
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Perseus.dir/src/core/lsp/LosLspClient/LosLspClient.cpp.o.d
+  FLAGS = -std=gnu++17 -fPIC
+  INCLUDES = -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork
+  OBJECT_DIR = CMakeFiles/Perseus.dir
+  OBJECT_FILE_DIR = CMakeFiles/Perseus.dir/src/core/lsp/LosLspClient
+  TARGET_COMPILE_PDB = CMakeFiles/Perseus.dir/
+  TARGET_PDB = Perseus.pdb
+
+build CMakeFiles/Perseus.dir/src/core/lsp/LosLspManager/LosLspManager.cpp.o: CXX_COMPILER__Perseus_unscanned_ /home/losangelous/LosAngelous/Pro/Perseus/src/core/lsp/LosLspManager/LosLspManager.cpp || cmake_object_order_depends_target_Perseus
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Perseus.dir/src/core/lsp/LosLspManager/LosLspManager.cpp.o.d
+  FLAGS = -std=gnu++17 -fPIC
+  INCLUDES = -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork
+  OBJECT_DIR = CMakeFiles/Perseus.dir
+  OBJECT_FILE_DIR = CMakeFiles/Perseus.dir/src/core/lsp/LosLspManager
+  TARGET_COMPILE_PDB = CMakeFiles/Perseus.dir/
+  TARGET_PDB = Perseus.pdb
+
+build CMakeFiles/Perseus.dir/src/core/run/LosAbstractRunner/LosAbstractRunner.cpp.o: CXX_COMPILER__Perseus_unscanned_ /home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosAbstractRunner/LosAbstractRunner.cpp || cmake_object_order_depends_target_Perseus
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Perseus.dir/src/core/run/LosAbstractRunner/LosAbstractRunner.cpp.o.d
+  FLAGS = -std=gnu++17 -fPIC
+  INCLUDES = -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork
+  OBJECT_DIR = CMakeFiles/Perseus.dir
+  OBJECT_FILE_DIR = CMakeFiles/Perseus.dir/src/core/run/LosAbstractRunner
+  TARGET_COMPILE_PDB = CMakeFiles/Perseus.dir/
+  TARGET_PDB = Perseus.pdb
+
+build CMakeFiles/Perseus.dir/src/core/run/LosRunManager/LosRunManager.cpp.o: CXX_COMPILER__Perseus_unscanned_ /home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosRunManager/LosRunManager.cpp || cmake_object_order_depends_target_Perseus
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Perseus.dir/src/core/run/LosRunManager/LosRunManager.cpp.o.d
+  FLAGS = -std=gnu++17 -fPIC
+  INCLUDES = -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork
+  OBJECT_DIR = CMakeFiles/Perseus.dir
+  OBJECT_FILE_DIR = CMakeFiles/Perseus.dir/src/core/run/LosRunManager
+  TARGET_COMPILE_PDB = CMakeFiles/Perseus.dir/
+  TARGET_PDB = Perseus.pdb
+
+build CMakeFiles/Perseus.dir/src/core/run/LosSingleCppRunner/LosSingleCppRunner.cpp.o: CXX_COMPILER__Perseus_unscanned_ /home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosSingleCppRunner/LosSingleCppRunner.cpp || cmake_object_order_depends_target_Perseus
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Perseus.dir/src/core/run/LosSingleCppRunner/LosSingleCppRunner.cpp.o.d
+  FLAGS = -std=gnu++17 -fPIC
+  INCLUDES = -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork
+  OBJECT_DIR = CMakeFiles/Perseus.dir
+  OBJECT_FILE_DIR = CMakeFiles/Perseus.dir/src/core/run/LosSingleCppRunner
+  TARGET_COMPILE_PDB = CMakeFiles/Perseus.dir/
+  TARGET_PDB = Perseus.pdb
+
 build CMakeFiles/Perseus.dir/src/main.cpp.o: CXX_COMPILER__Perseus_unscanned_ /home/losangelous/LosAngelous/Pro/Perseus/src/main.cpp || cmake_object_order_depends_target_Perseus
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
   DEP_FILE = CMakeFiles/Perseus.dir/src/main.cpp.o.d
@@ -114,23 +174,33 @@ build CMakeFiles/Perseus.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o:
   TARGET_COMPILE_PDB = CMakeFiles/Perseus.dir/
   TARGET_PDB = Perseus.pdb
 
-build CMakeFiles/Perseus.dir/src/ui/LosEditorTabUi/LosEditorTabUi.cpp.o: CXX_COMPILER__Perseus_unscanned_ /home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorTabUi/LosEditorTabUi.cpp || cmake_object_order_depends_target_Perseus
+build CMakeFiles/Perseus.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.o: CXX_COMPILER__Perseus_unscanned_ /home/losangelous/LosAngelous/Pro/Perseus/src/view/LosCompleterUi/LosCompleterUi.cpp || cmake_object_order_depends_target_Perseus
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/Perseus.dir/src/ui/LosEditorTabUi/LosEditorTabUi.cpp.o.d
+  DEP_FILE = CMakeFiles/Perseus.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.o.d
   FLAGS = -std=gnu++17 -fPIC
   INCLUDES = -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork
   OBJECT_DIR = CMakeFiles/Perseus.dir
-  OBJECT_FILE_DIR = CMakeFiles/Perseus.dir/src/ui/LosEditorTabUi
+  OBJECT_FILE_DIR = CMakeFiles/Perseus.dir/src/view/LosCompleterUi
   TARGET_COMPILE_PDB = CMakeFiles/Perseus.dir/
   TARGET_PDB = Perseus.pdb
 
-build CMakeFiles/Perseus.dir/src/ui/LosEditorUi/LosEditorUi.cpp.o: CXX_COMPILER__Perseus_unscanned_ /home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorUi/LosEditorUi.cpp || cmake_object_order_depends_target_Perseus
+build CMakeFiles/Perseus.dir/src/view/LosEditorTabUi/LosEditorTabUi.cpp.o: CXX_COMPILER__Perseus_unscanned_ /home/losangelous/LosAngelous/Pro/Perseus/src/view/LosEditorTabUi/LosEditorTabUi.cpp || cmake_object_order_depends_target_Perseus
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
-  DEP_FILE = CMakeFiles/Perseus.dir/src/ui/LosEditorUi/LosEditorUi.cpp.o.d
+  DEP_FILE = CMakeFiles/Perseus.dir/src/view/LosEditorTabUi/LosEditorTabUi.cpp.o.d
   FLAGS = -std=gnu++17 -fPIC
   INCLUDES = -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork
   OBJECT_DIR = CMakeFiles/Perseus.dir
-  OBJECT_FILE_DIR = CMakeFiles/Perseus.dir/src/ui/LosEditorUi
+  OBJECT_FILE_DIR = CMakeFiles/Perseus.dir/src/view/LosEditorTabUi
+  TARGET_COMPILE_PDB = CMakeFiles/Perseus.dir/
+  TARGET_PDB = Perseus.pdb
+
+build CMakeFiles/Perseus.dir/src/view/LosEditorUi/LosEditorUi.cpp.o: CXX_COMPILER__Perseus_unscanned_ /home/losangelous/LosAngelous/Pro/Perseus/src/view/LosEditorUi/LosEditorUi.cpp || cmake_object_order_depends_target_Perseus
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB
+  DEP_FILE = CMakeFiles/Perseus.dir/src/view/LosEditorUi/LosEditorUi.cpp.o.d
+  FLAGS = -std=gnu++17 -fPIC
+  INCLUDES = -I/home/losangelous/LosAngelous/Pro/Perseus/_build/Perseus_autogen/include -I/home/losangelous/LosAngelous/Pro/Perseus/src -isystem /usr/include/x86_64-linux-gnu/qt6/QtCore -isystem /usr/include/x86_64-linux-gnu/qt6 -isystem /usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++ -isystem /usr/include/x86_64-linux-gnu/qt6/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt6/QtGui -isystem /usr/include/x86_64-linux-gnu/qt6/QtNetwork
+  OBJECT_DIR = CMakeFiles/Perseus.dir
+  OBJECT_FILE_DIR = CMakeFiles/Perseus.dir/src/view/LosEditorUi
   TARGET_COMPILE_PDB = CMakeFiles/Perseus.dir/
   TARGET_PDB = Perseus.pdb
 
@@ -152,7 +222,7 @@ build CMakeFiles/Perseus.dir/Perseus_autogen/EWIEGA46WW/qrc_resources.cpp.o: CXX
 #############################################
 # Link the executable Perseus
 
-build Perseus: CXX_EXECUTABLE_LINKER__Perseus_ CMakeFiles/Perseus.dir/Perseus_autogen/mocs_compilation.cpp.o CMakeFiles/Perseus.dir/src/Perseus.cpp.o CMakeFiles/Perseus.dir/src/main.cpp.o CMakeFiles/Perseus.dir/src/models/LosFileContext/LosFileContext.cpp.o CMakeFiles/Perseus.dir/src/models/LosFileNode/LosFileNode.cpp.o CMakeFiles/Perseus.dir/src/models/LosFilePath/LosFilePath.cpp.o CMakeFiles/Perseus.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o CMakeFiles/Perseus.dir/src/ui/LosEditorTabUi/LosEditorTabUi.cpp.o CMakeFiles/Perseus.dir/src/ui/LosEditorUi/LosEditorUi.cpp.o CMakeFiles/Perseus.dir/Perseus_autogen/EWIEGA46WW/qrc_resources.cpp.o | /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Network.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Gui.so.6.4.2 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libQt6Core.so.6.4.2 || Perseus_autogen Perseus_autogen_timestamp_deps
+build Perseus: CXX_EXECUTABLE_LINKER__Perseus_ CMakeFiles/Perseus.dir/Perseus_autogen/mocs_compilation.cpp.o CMakeFiles/Perseus.dir/src/Perseus.cpp.o CMakeFiles/Perseus.dir/src/core/log/LosLog/LosLog.cpp.o CMakeFiles/Perseus.dir/src/core/lsp/LosLspClient/LosLspClient.cpp.o CMakeFiles/Perseus.dir/src/core/lsp/LosLspManager/LosLspManager.cpp.o CMakeFiles/Perseus.dir/src/core/run/LosAbstractRunner/LosAbstractRunner.cpp.o CMakeFiles/Perseus.dir/src/core/run/LosRunManager/LosRunManager.cpp.o CMakeFiles/Perseus.dir/src/core/run/LosSingleCppRunner/LosSingleCppRunner.cpp.o CMakeFiles/Perseus.dir/src/main.cpp.o CMakeFiles/Perseus.dir/src/models/LosFileContext/LosFileContext.cpp.o CMakeFiles/Perseus.dir/src/models/LosFileNode/LosFileNode.cpp.o CMakeFiles/Perseus.dir/src/models/LosFilePath/LosFilePath.cpp.o CMakeFiles/Perseus.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o CMakeFiles/Perseus.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.o CMakeFiles/Perseus.dir/src/view/LosEditorTabUi/LosEditorTabUi.cpp.o CMakeFiles/Perseus.dir/src/view/LosEditorUi/LosEditorUi.cpp.o CMakeFiles/Perseus.dir/Perseus_autogen/EWIEGA46WW/qrc_resources.cpp.o | /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Network.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Gui.so.6.4.2 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libQt6Core.so.6.4.2 || Perseus_autogen Perseus_autogen_timestamp_deps
   LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2  /usr/lib/x86_64-linux-gnu/libQt6Network.so.6.4.2  /usr/lib/x86_64-linux-gnu/libQt6Gui.so.6.4.2  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libOpenGL.so  /usr/lib/x86_64-linux-gnu/libQt6Core.so.6.4.2
   OBJECT_DIR = CMakeFiles/Perseus.dir
   POST_BUILD = :
@@ -236,7 +306,7 @@ build Perseus_autogen_timestamp_deps: phony CMakeFiles/Perseus_autogen_timestamp
 #############################################
 # Utility command for Perseus_autogen
 
-build Perseus_autogen: phony CMakeFiles/Perseus_autogen Perseus_autogen/include/src/ui/ui_Perseus.h Perseus_autogen/timestamp Perseus_autogen/mocs_compilation.cpp Perseus_autogen_timestamp_deps
+build Perseus_autogen: phony CMakeFiles/Perseus_autogen Perseus_autogen/include/src/view/ui_Perseus.h Perseus_autogen/timestamp Perseus_autogen/mocs_compilation.cpp Perseus_autogen_timestamp_deps
 
 
 #############################################
@@ -261,13 +331,13 @@ build Perseus_autogen/EWIEGA46WW/qrc_resources.cpp | ${cmake_ninja_workdir}Perse
 #############################################
 # Phony custom command for CMakeFiles/Perseus_autogen_timestamp_deps
 
-build CMakeFiles/Perseus_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/Perseus_autogen_timestamp_deps: phony /usr/lib/qt6/libexec/moc /usr/lib/x86_64-linux-gnu/libQt6Core.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Network.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2 /usr/lib/qt6/libexec/uic
+build CMakeFiles/Perseus_autogen_timestamp_deps | ${cmake_ninja_workdir}CMakeFiles/Perseus_autogen_timestamp_deps: phony /usr/lib/qt6/libexec/moc /usr/lib/qt6/libexec/uic /usr/lib/x86_64-linux-gnu/libQt6Core.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2 /usr/lib/x86_64-linux-gnu/libQt6Network.so.6.4.2
 
 
 #############################################
 # Phony custom command for CMakeFiles/Perseus_autogen
 
-build CMakeFiles/Perseus_autogen Perseus_autogen/include/src/ui/ui_Perseus.h | ${cmake_ninja_workdir}CMakeFiles/Perseus_autogen ${cmake_ninja_workdir}Perseus_autogen/include/src/ui/ui_Perseus.h: phony Perseus_autogen/timestamp || Perseus_autogen_timestamp_deps
+build CMakeFiles/Perseus_autogen Perseus_autogen/include/src/view/ui_Perseus.h | ${cmake_ninja_workdir}CMakeFiles/Perseus_autogen ${cmake_ninja_workdir}Perseus_autogen/include/src/view/ui_Perseus.h: phony Perseus_autogen/timestamp || Perseus_autogen_timestamp_deps
 
 # =============================================================================
 # Target aliases.

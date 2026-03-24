@@ -289,15 +289,69 @@
 			null
 		],
 		[
-			"/home/losangelous/LosAngelous/Pro/Perseus/src/common/constants/LiasType.h",
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/common/constants/ConstantsClass.h",
 			"MU",
-			"C26H3K3CMV/moc_LiasType.cpp",
+			"C26H3K3CMV/moc_ConstantsClass.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/common/constants/ConstantsErr.h",
+			"MU",
+			"C26H3K3CMV/moc_ConstantsErr.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/common/constants/ConstantsNum.h",
+			"MU",
+			"C26H3K3CMV/moc_ConstantsNum.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/common/constants/ConstantsStr.h",
+			"MU",
+			"C26H3K3CMV/moc_ConstantsStr.cpp",
 			null
 		],
 		[
 			"/home/losangelous/LosAngelous/Pro/Perseus/src/common/enum/LosFileType.h",
 			"MU",
 			"BFUFRYBW5V/moc_LosFileType.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/core/log/LosLog/LosLog.h",
+			"MU",
+			"37ULGQWTBH/moc_LosLog.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/core/lsp/LosLspClient/LosLspClient.h",
+			"MU",
+			"J7R6UEKEBV/moc_LosLspClient.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/core/lsp/LosLspManager/LosLspManager.h",
+			"MU",
+			"GBFPN2OZOE/moc_LosLspManager.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosAbstractRunner/LosAbstractRunner.h",
+			"MU",
+			"D56QGPBIXN/moc_LosAbstractRunner.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosRunManager/LosRunManager.h",
+			"MU",
+			"KLDVJ2IK7P/moc_LosRunManager.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosSingleCppRunner/LosSingleCppRunner.h",
+			"MU",
+			"NE5MQMGE2T/moc_LosSingleCppRunner.cpp",
 			null
 		],
 		[
@@ -325,21 +379,33 @@
 			null
 		],
 		[
-			"/home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorTabUi/LosEditorTabUi.h",
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/view/LosCompleterUi/LosCompleterUi.h",
 			"MU",
-			"E55L7CYTPC/moc_LosEditorTabUi.cpp",
+			"HWGCIUQZNF/moc_LosCompleterUi.cpp",
 			null
 		],
 		[
-			"/home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorUi/LosEditorUi.h",
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/view/LosEditorTabUi/LosEditorTabUi.h",
 			"MU",
-			"BAHRZXN6QD/moc_LosEditorUi.cpp",
+			"B4YLXS6QQA/moc_LosEditorTabUi.cpp",
 			null
 		],
 		[
-			"/home/losangelous/LosAngelous/Pro/Perseus/src/ui/style/perseus_style.h",
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/view/LosEditorUi/LosEditorUi.h",
 			"MU",
-			"YMIYO7M3TO/moc_perseus_style.cpp",
+			"67H6ZZAY6D/moc_LosEditorUi.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/view/style/LosCompleterUi_style.h",
+			"MU",
+			"EJ4VAXFKT7/moc_LosCompleterUi_style.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/view/style/perseus_style.h",
+			"MU",
+			"EJ4VAXFKT7/moc_perseus_style.cpp",
 			null
 		]
 	],
@@ -415,6 +481,36 @@
 			"MU",
 			null
 		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/core/log/LosLog/LosLog.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/core/lsp/LosLspClient/LosLspClient.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/core/lsp/LosLspManager/LosLspManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosAbstractRunner/LosAbstractRunner.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosRunManager/LosRunManager.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosSingleCppRunner/LosSingleCppRunner.cpp",
+			"MU",
+			null
+		],
 		[ "/home/losangelous/LosAngelous/Pro/Perseus/src/main.cpp", "MU", null ],
 		[
 			"/home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFileContext/LosFileContext.cpp",
@@ -437,18 +533,23 @@
 			null
 		],
 		[
-			"/home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorTabUi/LosEditorTabUi.cpp",
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/view/LosCompleterUi/LosCompleterUi.cpp",
 			"MU",
 			null
 		],
 		[
-			"/home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorUi/LosEditorUi.cpp",
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/view/LosEditorTabUi/LosEditorTabUi.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus/src/view/LosEditorUi/LosEditorUi.cpp",
 			"MU",
 			null
 		]
 	],
 	"UIC_OPTIONS" : [],
-	"UIC_SEARCH_PATHS" : [ "/home/losangelous/LosAngelous/Pro/Perseus/src/ui" ],
+	"UIC_SEARCH_PATHS" : [ "/home/losangelous/LosAngelous/Pro/Perseus/src/view" ],
 	"UIC_SKIP" : [],
 	"UIC_UI_FILES" : [],
 	"VERBOSITY" : 0

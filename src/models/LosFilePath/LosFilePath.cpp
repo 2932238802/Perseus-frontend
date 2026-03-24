@@ -24,7 +24,8 @@ void LosFilePath::loadFile(const QString &file_path) {
   } else if (fileInfo.isFile()) {
     LOS_fileType = LosCommon::GetFileType(fileInfo.suffix());
   } else {
-    qWarning() << "LosFilePath::loadFile: unrecognized file type -> " << file_path;
+    qWarning() << "LosFilePath::loadFile: unrecognized file type -> "
+               << file_path;
   }
 }
 
@@ -58,6 +59,13 @@ QDebug operator<<(QDebug debug, const LosFilePath &path) {
 QStringList &operator<<(QStringList &list, const LosFilePath &path) {
   list.append(path.getFilePath());
   return list;
+}
+
+/**
+对比
+*/
+bool LosFilePath::operator==(const QString &str) const {
+  return L_filePath == str;
 }
 
 } // namespace LosModel

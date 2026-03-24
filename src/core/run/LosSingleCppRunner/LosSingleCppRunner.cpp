@@ -55,12 +55,12 @@ void LosSingleCppRunner::stop() {
 */
 void LosSingleCppRunner::start() {
   if (!LOS_filePath.isExist()) {
-    emit _appendErr(u8"The file to be executed does not exist...");
+    ERR("The file to be executed does not exist...", "LosSingleCppRunner");
     return;
   }
 
   if (!LOS_filePath.isFile()) {
-    emit _appendErr(u8"unknown content");
+    ERR("unknown content", "LosSingleCppRunner");
     return;
   }
 
@@ -76,49 +76,48 @@ void LosSingleCppRunner::start() {
 */
 void LosSingleCppRunner::initConnect() {
   connect(L_gxxPro, &QProcess::readyReadStandardError, this, [=]() {
-    emit _appendLog(QString::fromLocal8Bit(L_gxxPro->readAllStandardError()));
+    INF(QString::fromLocal8Bit(L_gxxPro->readAllStandardError()),
+        "LosSingleCppRunner");
   });
 
   connect(L_gxxPro, &QProcess::finished, this,
           [=](int exit_code, QProcess::ExitStatus exitStatus) {
             if (exit_code == 0) {
-              emit _appendLog(u8"editing successful!");
-
+              SUC("editing successful!", "LosSingleCppRunner");
               L_runPro->setWorkingDirectory(LOS_filePath.getAbsolutePath());
               L_runPro->start(L_exePath);
             } else {
-              emit _appendErr(u8"compilation failed...");
+              ERR("compilation failed...", "LosSingleCppRunner");
             }
           });
   connect(L_gxxPro, &QProcess::errorOccurred, this,
           [=](QProcess::ProcessError error) {
-            emit _appendErr(u8"The compiler failed to start (possibly due to "
-                            u8"g++ not being installed or an invalid path)");
+            ERR("The compiler failed to start (possibly due to "
+                u8"g++ not being installed or an invalid path)",
+                "LosSingleCppRunner");
           });
 
   connect(L_runPro, &QProcess::readyReadStandardOutput, this, [=]() {
-    emit _appendLog(
-        QString(R"(
-==============================  out put 
-      %1
-==============================  out end
-      )")
-            .arg(QString::fromLocal8Bit(L_runPro->readAllStandardOutput())));
+    INF(QString("result:\n%1")
+            .arg(QString::fromLocal8Bit(L_runPro->readAllStandardOutput())),
+        "LosSingleCppRunner");
   });
 
   connect(L_runPro, &QProcess::readyReadStandardError, this, [=]() {
-    emit _appendErr(QString::fromLocal8Bit(L_runPro->readAllStandardError()));
+    ERR(QString::fromLocal8Bit(L_runPro->readAllStandardError()),
+        "LosSingleCppRunner");
   });
 
   connect(L_runPro, &QProcess::finished, this,
           [=](int exitCode, QProcess::ExitStatus exitStatus) {
-            emit _appendLog(u8"\n process terminated (exit code: " +
-                            QString::number(exitCode) + ")");
+            INF("\n process terminated (exit code: " +
+                    QString::number(exitCode) + ")",
+                "LosSingleCppRunner");
           });
 
   connect(L_runPro, &QProcess::errorOccurred, this,
           [=](QProcess::ProcessError error) {
-            emit _appendErr(u8"The compiled program failed to start");
+            ERR("The compiled program failed to start", "LosSingleCppRunner");
           });
 }
 

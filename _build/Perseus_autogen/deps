@@ -6,8 +6,23 @@ Perseus_autogen/timestamp: \
 	/home/losangelous/LosAngelous/Pro/Perseus/resources.qrc \
 	/home/losangelous/LosAngelous/Pro/Perseus/src/Perseus.cpp \
 	/home/losangelous/LosAngelous/Pro/Perseus/src/Perseus.h \
-	/home/losangelous/LosAngelous/Pro/Perseus/src/common/constants/LiasType.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/common/constants/ConstantsClass.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/common/constants/ConstantsErr.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/common/constants/ConstantsNum.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/common/constants/ConstantsStr.h \
 	/home/losangelous/LosAngelous/Pro/Perseus/src/common/enum/LosFileType.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/core/log/LosLog/LosLog.cpp \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/core/log/LosLog/LosLog.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/core/lsp/LosLspClient/LosLspClient.cpp \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/core/lsp/LosLspClient/LosLspClient.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/core/lsp/LosLspManager/LosLspManager.cpp \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/core/lsp/LosLspManager/LosLspManager.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosAbstractRunner/LosAbstractRunner.cpp \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosAbstractRunner/LosAbstractRunner.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosRunManager/LosRunManager.cpp \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosRunManager/LosRunManager.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosSingleCppRunner/LosSingleCppRunner.cpp \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/core/run/LosSingleCppRunner/LosSingleCppRunner.h \
 	/home/losangelous/LosAngelous/Pro/Perseus/src/main.cpp \
 	/home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFileContext/LosFileContext.cpp \
 	/home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFileContext/LosFileContext.h \
@@ -17,11 +32,14 @@ Perseus_autogen/timestamp: \
 	/home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFilePath/LosFilePath.h \
 	/home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFileTreeModel/LosFileTreeModel.cpp \
 	/home/losangelous/LosAngelous/Pro/Perseus/src/models/LosFileTreeModel/LosFileTreeModel.h \
-	/home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorTabUi/LosEditorTabUi.cpp \
-	/home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorTabUi/LosEditorTabUi.h \
-	/home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorUi/LosEditorUi.cpp \
-	/home/losangelous/LosAngelous/Pro/Perseus/src/ui/LosEditorUi/LosEditorUi.h \
-	/home/losangelous/LosAngelous/Pro/Perseus/src/ui/style/perseus_style.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/view/LosCompleterUi/LosCompleterUi.cpp \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/view/LosCompleterUi/LosCompleterUi.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/view/LosEditorTabUi/LosEditorTabUi.cpp \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/view/LosEditorTabUi/LosEditorTabUi.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/view/LosEditorUi/LosEditorUi.cpp \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/view/LosEditorUi/LosEditorUi.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/view/style/LosCompleterUi_style.h \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/view/style/perseus_style.h \
 	/usr/include/alloca.h \
 	/usr/include/asm-generic/errno-base.h \
 	/usr/include/asm-generic/errno.h \
@@ -327,16 +345,25 @@ Perseus_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
 	/usr/include/x86_64-linux-gnu/gnu/stubs.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QAbstractItemModel \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/QDateTime \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/QDebug \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QDir \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QEvent \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QFile \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QFileInfo \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/QJsonArray \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/QJsonDocument \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/QJsonObject \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QList \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QObject \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/QProcess \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QRect \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QSize \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QSizeF \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/QString \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/QStringList \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/QStringListModel \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/QTimer \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qabstractitemmodel.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qalgorithms.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qanystringview.h \
@@ -345,12 +372,15 @@ Perseus_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qarraydatapointer.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qatomic.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbasicatomic.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbasictimer.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbindingstorage.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearray.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearrayalgorithms.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearraylist.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qbytearrayview.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qcalendar.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qcborcommon.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qcborvalue.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qchar.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qcompare.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qcompare_impl.h \
@@ -382,6 +412,10 @@ Perseus_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qitemselectionmodel.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qiterable.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qiterator.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qjsonarray.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qjsondocument.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qjsonobject.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qjsonvalue.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qline.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qlist.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qlocale.h \
@@ -401,6 +435,7 @@ Perseus_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qpair.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qpoint.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qpointer.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qprocess.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qprocessordetection.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qrect.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qrefcount.h \
@@ -418,6 +453,7 @@ Perseus_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qstringconverter_base.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qstringfwd.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qstringlist.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qstringlistmodel.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qstringliteral.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qstringmatcher.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qstringtokenizer.h \
@@ -429,15 +465,21 @@ Perseus_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qtcore-config.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qtcoreexports.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qtextstream.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/qtimer.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qtmetamacros.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qtypeinfo.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qurl.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qutf8stringview.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtCore/quuid.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qvariant.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qvarlengtharray.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtCore/qversiontagging.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/QDesktopServices \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/QKeyEvent \
+	/usr/include/x86_64-linux-gnu/qt6/QtGui/QKeySequence \
+	/usr/include/x86_64-linux-gnu/qt6/QtGui/QShortcut \
+	/usr/include/x86_64-linux-gnu/qt6/QtGui/QTextBlock \
+	/usr/include/x86_64-linux-gnu/qt6/QtGui/QTextCursor \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/QTransform \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qabstractfileiconprovider.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qabstracttextdocumentlayout.h \
@@ -473,10 +515,12 @@ Perseus_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qrgb.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qrgba64.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qscreen.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtGui/qshortcut.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qtextcursor.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qtextdocument.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qtextformat.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qtextlayout.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtGui/qtextobject.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qtextoption.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qtgui-config.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qtguiexports.h \
@@ -486,11 +530,14 @@ Perseus_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qvector2d.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qvectornd.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtGui/qwindowdefs.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QAbstractItemView \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QApplication \
+	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QCompleter \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QFileDialog \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QFileIconProvider \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QMainWindow \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QMessageBox \
+	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QScrollBar \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/QWidget \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractitemdelegate.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractitemview.h \
@@ -498,6 +545,7 @@ Perseus_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractslider.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qabstractspinbox.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qapplication.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qcompleter.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qdialog.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qfiledialog.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qfileiconprovider.h \
@@ -506,6 +554,7 @@ Perseus_autogen/timestamp: \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qmessagebox.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qplaintextedit.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qrubberband.h \
+	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qscrollbar.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qsizepolicy.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qslider.h \
 	/usr/include/x86_64-linux-gnu/qt6/QtWidgets/qstyle.h \
@@ -726,5 +775,5 @@ Perseus_autogen/timestamp: \
 	/usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake \
 	/usr/share/cmake-3.28/Modules/Platform/Linux.cmake \
 	/usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake \
-	/home/losangelous/LosAngelous/Pro/Perseus/src/ui/Perseus.ui \
+	/home/losangelous/LosAngelous/Pro/Perseus/src/view/Perseus.ui \
 	/usr/bin/cmake

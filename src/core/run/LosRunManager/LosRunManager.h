@@ -18,10 +18,5 @@ public: // tool
 
 private: // param
   LosAbstractRunner *LOS_runner = nullptr;
-
-signals:
-  void _appendLog(const QString &log);
-  void _appendErr(const QString &err);
-  void _buildOver(bool is_ok);
 };
 } // namespace LosCore

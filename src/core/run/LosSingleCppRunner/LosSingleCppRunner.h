@@ -3,6 +3,8 @@
 #pragma once
 #include "core/run/LosAbstractRunner/LosAbstractRunner.h"
 #include "models/LosFilePath/LosFilePath.h"
+#include "core/log/LosLog/LosLog.h"
+
 #include <QObject>
 #include <QProcess>
 #include <qobject.h>
