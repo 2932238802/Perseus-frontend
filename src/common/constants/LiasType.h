@@ -2,6 +2,6 @@
 #include <string>
 #include <QString>
 
-namespace Common{
+namespace LosCommon{
     
 }

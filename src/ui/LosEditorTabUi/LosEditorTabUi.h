@@ -3,10 +3,14 @@
 
 #include "ui/LosEditorUi/LosEditorUi.h"
 #include <QWidget>
-#include <qobject.h>
+#include <QDebug>
+#include <qglobal.h>
+#include <qmessagebox.h>
+#include <QObject>
+#include <qsharedpointer.h>
 #include <qtablewidget.h>
 #include <qtabwidget.h>
-#include <qwidget.h>
+#include <QWidget>
 
 namespace LosView {
 class LosEditorTabUi : public QWidget {
@@ -24,7 +28,8 @@ public: // tool
 
 public: // get
   LosEditorUi *getCurEditor();
-  int tabCount();
+  int tabCount() const;
+  QString getCurFilePath() const;
 
 private slots: // chs
   void onTabCloseRequested(int index);

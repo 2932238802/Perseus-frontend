@@ -4,7 +4,9 @@
 
 namespace LosCommon{
 
-
+/**
+文件类型
+*/
 enum class LOS_ENUM_FileType{
     FT_CPP = 0,
     FT_H,

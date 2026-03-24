@@ -25,7 +25,8 @@ file(GLOB_RECURSE PROJECT_SOURCES
     "src/models/*.cpp"
     "src/models/*.h"
     "src/ui/*.ui"
-    "src/ui/style/*.h"
+    "src/ui/*.cpp"
+    "src/ui/*.h"
     resources.qrc
 )
 
