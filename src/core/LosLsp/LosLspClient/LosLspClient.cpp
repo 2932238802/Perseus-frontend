@@ -1,6 +1,6 @@
 
 
-#include "core/lsp/LosLspClient/LosLspClient.h"
+#include "core/LosLsp/LosLspClient/LosLspClient.h"
 #include "common/constants/ConstantsClass.h"
 #include <qcoreapplication.h>
 #include <qglobal.h>

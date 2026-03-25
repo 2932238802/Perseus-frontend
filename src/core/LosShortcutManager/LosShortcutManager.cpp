@@ -29,7 +29,7 @@ void LosShortcutManager::reg(const QString &key, QWidget *parent, const std::fun
         WAR("this shortcut key has already been occupied", "LosShortcutManager");
         return;
     }
-    QShortcut *cur = new QShortcut(parent);
+    QShortcut *cur = new QShortcut(QKeySequence(key), parent);
     cur->setContext(Qt::WindowShortcut);
     connect(cur, &QShortcut::activated, this, action);
     L_strToCuts.insert(key, cur);

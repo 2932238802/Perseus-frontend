@@ -2,7 +2,7 @@
 #include "./ui_Perseus.h"
 #include "core/LosShortcutManager/LosShortcutManager.h"
 #include "core/log/LosLog/LosLog.h"
-#include "core/lsp/LosLspManager/LosLspManager.h"
+#include "core/LosLsp/LosLspManager/LosLspManager.h"
 #include "view/LosEditorTabUi/LosEditorTabUi.h"
 #include "view/LosIssuesUi/LosIssuesUi.h"
 

@@ -1,7 +1,7 @@
 
 
-#include "core/lsp/LosLspManager/LosLspManager.h"
-#include "core/lsp/LosLspClient/LosLspClient.h"
+#include "core/LosLsp/LosLspManager/LosLspManager.h"
+#include "core/LosLsp/LosLspClient/LosLspClient.h"
 #include <qglobal.h>
 
 namespace LosCore {

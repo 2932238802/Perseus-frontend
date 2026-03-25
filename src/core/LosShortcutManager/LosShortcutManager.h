@@ -15,7 +15,6 @@ class LosShortcutManager : public QObject
     Q_OBJECT
   public:
     static LosShortcutManager &instance();
-    static 
     void reg(const QString &key, QWidget *parent, const std::function<void()> &action, const QString &des = "");
 
   private:
