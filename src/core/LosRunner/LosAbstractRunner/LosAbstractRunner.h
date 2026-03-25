@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <qtmetamacros.h>
+
 namespace LosCore {
 class LosAbstractRunner : public QObject {
   Q_OBJECT

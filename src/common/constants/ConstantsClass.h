@@ -4,12 +4,7 @@
 
 namespace LosCommon {
 
-enum DiagnosticSeverity{
-    Error = 1,
-    Warning,
-    Information,
-    Hint
-};
+enum DiagnosticSeverity { Error = 1, Warning, Information, Hint };
 
 struct LosDiagnostic {
     int startLine;

@@ -2,7 +2,7 @@
 #pragma once
 
 #include "common/constants/ConstantsClass.h"
-#include "core/lsp/LosLspClient/LosLspClient.h"
+#include "core/LosLsp/LosLspClient/LosLspClient.h"
 
 namespace LosCore {
 class LosLspManager : public QObject {

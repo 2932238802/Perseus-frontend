@@ -1,7 +1,7 @@
 
 
 #pragma once
-#include "core/run/LosAbstractRunner/LosAbstractRunner.h"
+#include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include "core/log/LosLog/LosLog.h"
 

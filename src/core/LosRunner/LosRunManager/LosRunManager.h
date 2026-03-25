@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/run/LosAbstractRunner/LosAbstractRunner.h"
+#include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
 #include <QObject>
 #include <qtmetamacros.h>
 namespace LosCore {

@@ -2,6 +2,10 @@
 #pragma once
 
 #include "view/LosEditorUi/LosEditorUi.h"
+#include "core/LosShortcutManager/LosShortcutManager.h"
+
+#include "common/constants/ConstantsStr.h"
+
 #include <QDebug>
 #include <QObject>
 #include <QWidget>

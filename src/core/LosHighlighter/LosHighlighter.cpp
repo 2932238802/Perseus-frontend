@@ -8,7 +8,7 @@ namespace LosCore {
 LosHighlighter::LosHighlighter(QTextDocument *doc) : QSyntaxHighlighter{doc} {
   initRule();
 }
-LosHighlighter::~LosHighlighter() {}
+
 
 void LosHighlighter::highlightBlock(const QString &str) {
   // 传入的就是当前行的内容

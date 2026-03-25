@@ -2,8 +2,4 @@
 
 #pragma once
 
-
-namespace LosCommon{
-
-
-};
+namespace LosCommon {};
