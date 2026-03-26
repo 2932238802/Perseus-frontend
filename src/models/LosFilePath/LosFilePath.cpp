@@ -24,8 +24,8 @@ LosFilePath::LosFilePath(const QString &file_path)
 void LosFilePath::loadFile(const QString &file_path)
 {
     L_filePath = QDir::fromNativeSeparators(file_path);
-    QFileInfo fileInfo(file_path);
-    L_fileName = QFileInfo(file_path).fileName();
+    QFileInfo fileInfo(L_filePath);
+    L_fileName = QFileInfo(L_filePath).fileName();
 
     if (fileInfo.isDir())
     {
@@ -37,6 +37,7 @@ void LosFilePath::loadFile(const QString &file_path)
     }
     else
     {
+        LOS_fileType = LosCommon::LOS_ENUM_FileType::FT_OTHER;
         WAR("unrecognized file type ->" + file_path, "LosFilePath");
     }
 }
@@ -118,6 +119,10 @@ QDebug operator<<(QDebug debug, const LosFilePath &path)
 
 
 
+/**
+支持 QStringList的流式操作
+
+*/
 QStringList &operator<<(QStringList &list, const LosFilePath &path)
 {
     list.append(path.getFilePath());

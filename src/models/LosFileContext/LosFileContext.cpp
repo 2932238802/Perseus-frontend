@@ -60,20 +60,37 @@ bool LosFileContext::isDirty() const
 {
     return L_isDirty;
 }
+
 bool LosFileContext::isLoaded() const
 {
     return L_isLoaded;
 }
+
+
+
+/**
+set
+*/
 void LosFileContext::setDirty(bool dirty)
 {
     L_isDirty = dirty;
 }
 
+
+
+/**
+
+*/
 bool LosFileContext::isEmpty() const
 {
     return L_content.isEmpty();
 }
 
+
+
+/**
+获取内容
+*/
 const QString& LosFileContext::getContent() const
 {
     return L_content;

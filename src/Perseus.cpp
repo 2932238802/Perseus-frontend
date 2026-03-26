@@ -56,12 +56,12 @@ void Perseus::OnFileLoaded(bool isc)
         if (LOS_rootNode != nullptr)
         {
             delete LOS_rootNode;
-            LOS_rootNode = nullptr;
         }
+        LOS_rootNode = nullptr;
 
         LOS_rootNode = LosModel::LosFileNode::create(curPath, nullptr);
         LosModel::LosFileNode::build(LOS_rootNode, curPath);
-        LOS_treeModel = LosModel::LosFileTreeModel::create(LOS_rootNode, nullptr);
+        LOS_treeModel = new LosModel::LosFileTreeModel(LOS_rootNode, nullptr);
         updateExplorer();
         QMessageBox::information(this, "info", "load project suc:" + curPath);
     }
@@ -94,6 +94,8 @@ void Perseus::onFilesBtnClicked()
 
 /**
 双击文件
+- 修复 展开的问题
+- 默认已经有 展开的问题
 */
 void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
 {
@@ -102,18 +104,6 @@ void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
     LosModel::LosFileNode *fileNode = LOS_treeModel->nodeFromIndex(index);
     if (!fileNode)
         return;
-    if (fileNode->getFileType() == LosCommon::LOS_ENUM_FileType::FT_FOLDER)
-    {
-        if (ui->explorer_treeview->isExpanded(index))
-        {
-            ui->explorer_treeview->collapse(index);
-        }
-        else
-        {
-            ui->explorer_treeview->expand(index);
-        }
-        return;
-    }
     LOS_tabUi->openFile(fileNode->getFilePath());
 }
 

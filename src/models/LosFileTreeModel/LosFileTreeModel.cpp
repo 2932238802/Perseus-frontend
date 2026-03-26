@@ -11,14 +11,17 @@
 namespace LosModel
 {
 
-LosFileTreeModel::LosFileTreeModel(LosFileNode *rootNode, QObject *parent) : QAbstractItemModel{parent}, LOS_rootNode(rootNode){};
-LosFileTreeModel::~LosFileTreeModel(){};
-LosFileTreeModel *LosFileTreeModel::create(LosFileNode *file_node, QObject *parent)
-{
-    LosFileTreeModel *tree = new LosFileTreeModel(file_node, parent);
-    return tree;
-}
+LosFileTreeModel::LosFileTreeModel(LosFileNode *rootNode, QObject *parent)
+    : QAbstractItemModel{parent}, LOS_rootNode(rootNode){};
 
+LosFileTreeModel::~LosFileTreeModel()
+{
+    if (LOS_rootNode)
+    {
+        delete LOS_rootNode;
+        LOS_rootNode = nullptr;
+    }
+};
 
 
 /**
@@ -72,6 +75,36 @@ QModelIndex LosFileTreeModel::parent(const QModelIndex &child) const
     }
 
     return createIndex(parentNode->row(), 0, parentNode);
+}
+
+
+
+/**
+判断孩子
+*/
+bool LosFileTreeModel::hasChildren(const QModelIndex &parent) const
+{
+    if (parent.isValid())
+    {
+        LosFileNode *node = static_cast<LosFileNode *>(parent.internalPointer());
+        if (node && node->getFileType() == LosCommon::LOS_ENUM_FileType::FT_FOLDER)
+        {
+            return true;
+        }
+    }
+    return QAbstractItemModel::hasChildren(parent);
+}
+
+
+
+/**
+设置节点的交互标志 允许被选中和点击
+*/
+Qt::ItemFlags LosFileTreeModel::flags(const QModelIndex &index) const
+{
+    if (!index.isValid())
+        return Qt::NoItemFlags;
+    return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
 

@@ -53,7 +53,7 @@ void LosFileNode::clear()
 
 
 /**
-
+设置 父亲 节点
 */
 void LosFileNode::setParentNode(LosFileNode *node)
 {
@@ -68,6 +68,7 @@ build
 void LosFileNode::build(LosFileNode *root, const QString &cur)
 {
     QDir dir(cur);
+    INF(cur,"debug")
     dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
     dir.setSorting(QDir::DirsFirst | QDir::Name | QDir::IgnoreCase);
     QFileInfoList fileList(dir.entryInfoList());
