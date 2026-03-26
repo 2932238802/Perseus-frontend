@@ -56,15 +56,7 @@ class Perseus : public QMainWindow
     void onAppendErr(const QString &);
     void onAppendLog(const QString &);
     void onBuildOver(bool);
-    void onCompletionTips(const QStringList &);
-    void onTextChange_LSP(const QString &filePath, const QString &text);
-    void onCompletionRequest_LSP(const QString &filePath, int line, int col);
-    void onOpenFile_LSP(const QString &file_path, const QString &file_content);
-    void onWhereDefine_LSP(int line, int col, const QString &file_path);
-    void onDiagnostics(const QString &file_path, const QList<LosCommon::LosDiagnostic> &);
     void onLog(const QString &log);
-    void onDoubleClickedIssuesUi(const QString &file_path, int line);
-    void onDefinitionResult(const QString &file_path, int line);
 
   private:
     Ui::Perseus *ui;

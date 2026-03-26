@@ -60,12 +60,6 @@ private: // tool
   void processRawData(const QByteArray &data);
   void dealLspMessage(const QJsonObject &obj);
 
-signals: // 补全 诊断 定位位置
-  void _completion(const QStringList &words);
-  void _diagnostics(const QString &file_path,
-                    const QList<LosCommon::LosDiagnostic> &diags);
-  void _definitionResult(const QString &file_name, int line);
-
 private:
   std::atomic<int> L_id{1};
   std::atomic<int> L_versionId{2};

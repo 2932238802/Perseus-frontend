@@ -1,8 +1,9 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
+#include "core/LosLsp/LosLspManager/LosLspManager.h"
+#include "core/LosRouter/LosRouter.h"
 #include "core/LosShortcutManager/LosShortcutManager.h"
 #include "core/log/LosLog/LosLog.h"
-#include "core/LosLsp/LosLspManager/LosLspManager.h"
 #include "view/LosEditorTabUi/LosEditorTabUi.h"
 #include "view/LosIssuesUi/LosIssuesUi.h"
 
@@ -150,74 +151,11 @@ void Perseus::onBuildOver(bool ok)
     INF("build" + msg, "Perseus");
 }
 
-void Perseus::onCompletionTips(const QStringList &list)
-{
-    auto curEditor = LOS_tabUi->getCurEditor();
-    if (curEditor)
-    {
-        curEditor->showCompletion(list);
-    }
-}
 
-void Perseus::onTextChange_LSP(const QString &filePath, const QString &text)
-{
-    LOS_lspMgr->changeFile(filePath, text);
-}
-
-void Perseus::onCompletionRequest_LSP(const QString &filePath, int line, int col)
-{
-    LOS_lspMgr->requestCompletion(filePath, line, col);
-}
-
-void Perseus::onOpenFile_LSP(const QString &file_path, const QString &file_content)
-{
-    INF("open file for lsp", "Perseus");
-    LOS_lspMgr->openFile(file_path, file_content);
-}
-
-void Perseus::onWhereDefine_LSP(int line, int col, const QString &file_path)
-{
-    LOS_lspMgr->toDefineRequest(line, col, file_path);
-}
-
-void Perseus::onDiagnostics(const QString &file_path, const QList<LosCommon::LosDiagnostic> &diags)
-{
-
-    auto curWidget = LOS_tabUi->getCurEditor();
-    if (nullptr != curWidget)
-        curWidget->showDiagnostic(file_path, diags);
-    ui->tab_problems->updateTable(file_path, diags);
-}
 
 void Perseus::onLog(const QString &log)
 {
     ui->output_plaintextedit->appendHtml(log);
-}
-
-/**
-- 双击错误 定位
-*/
-void Perseus::onDoubleClickedIssuesUi(const QString &file_path, int line)
-{
-    LOS_tabUi->openFile(file_path);
-    auto editor = LOS_tabUi->getCurEditor();
-    if (editor)
-    {
-        editor->gotoLine(line);
-    }
-}
-
-/**
-- 跳转定义的逻辑 和 上面类似
-*/
-void Perseus::onDefinitionResult(const QString &file_path, int line)
-{
-    LOS_tabUi->openFile(file_path);
-    auto editor = LOS_tabUi->getCurEditor();
-    if (editor)
-    {
-        editor->gotoLine(line);
-    }
 }
 
 /**
@@ -230,16 +168,10 @@ void Perseus::initConnect()
     LOS_lspMgr = new LosCore::LosLspManager(this);
     LOS_lspMgr->start();
     connect(ui->files_btn, &QPushButton::clicked, this, &Perseus::onFilesBtnClicked);
-    connect(ui->explorer_treeview, &QTreeView::doubleClicked, this, &Perseus::onExplorerFileDoubleClicked);
+    // enter 自动触发 actived
+    connect(ui->explorer_treeview, &QTreeView::activated, this, &Perseus::onExplorerFileDoubleClicked);
+    // connect(ui->explorer_treeview, &QTreeView::doubleClicked, this, &Perseus::onExplorerFileDoubleClicked);
     connect(ui->run_singleFile_btn, &QPushButton::clicked, this, &Perseus::onRunSingleFileBtnClicked);
-    connect(LOS_lspMgr, &LosCore::LosLspManager::_completion, this, &Perseus::onCompletionTips);
-    connect(LOS_lspMgr, &LosCore::LosLspManager::_diagnostics, this, &Perseus::onDiagnostics);
-    connect(LOS_lspMgr, &LosCore::LosLspManager::_definitionResult, this, &Perseus::onDefinitionResult);
-    connect(ui->tab_problems, &LosView::LosIssuesUi::_gotoFile, this, &Perseus::onDoubleClickedIssuesUi);
-    connect(LOS_tabUi, &LosView::LosEditorTabUi::_textChangedForLsp, this, &Perseus::onTextChange_LSP);
-    connect(LOS_tabUi, &LosView::LosEditorTabUi::_completionRequest, this, &Perseus::onCompletionRequest_LSP);
-    connect(LOS_tabUi, &LosView::LosEditorTabUi::_openFileForLsp, this, &Perseus::onOpenFile_LSP);
-    connect(LOS_tabUi, &LosView::LosEditorTabUi::_whereDefine, this, &Perseus::onWhereDefine_LSP);
     connect(&LosCore::LosLog::instance(), &LosCore::LosLog::_sendLog, this, &Perseus::onLog);
 }
 
@@ -267,6 +199,8 @@ void Perseus::initShotcut()
 {
     LosCore::LosShortcutManager::instance().reg(
         LosCommon::ShortCut::RUN_SINGLE_FILE, this, [=]() { onRunSingleFileBtnClicked(); }, "run single file");
+    LosCore::LosShortcutManager::instance().reg(
+        LosCommon::ShortCut::FILE_OPEN, this, [=]() { onFilesBtnClicked(); }, "open folder");
 }
 
 /**

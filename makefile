@@ -1,0 +1,3 @@
+run:
+	@./_build/Perseus
+

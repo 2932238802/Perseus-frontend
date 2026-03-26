@@ -2,16 +2,19 @@
 
 #include "core/LosLsp/LosLspManager/LosLspManager.h"
 #include "core/LosLsp/LosLspClient/LosLspClient.h"
+#include "core/LosRouter/LosRouter.h"
 #include <qglobal.h>
 
-namespace LosCore {
+namespace LosCore
+{
 
 /**
 默认构造
 */
-LosLspManager::LosLspManager(QObject *parent) : QObject(parent) {
-  LOS_client = new LosLspClient(this);
-  initConnect();
+LosLspManager::LosLspManager(QObject *parent) : QObject(parent)
+{
+    LOS_client = new LosLspClient(this);
+    initConnect();
 }
 
 /**
@@ -22,47 +25,48 @@ LosLspManager::~LosLspManager() {}
 /**
 开启服务
 */
-void LosLspManager::start() { LOS_client->start(); }
+void LosLspManager::start()
+{
+    LOS_client->start();
+}
 
 /**
 打开文件
 */
-void LosLspManager::openFile(const QString &file_path,
-                             const QString &file_context) {
-  LOS_client->didOpen(file_path, file_context);
+void LosLspManager::openFile(const QString &file_path, const QString &file_context)
+{
+    LOS_client->didOpen(file_path, file_context);
 }
 
 /**
 改变文件信号
 */
-void LosLspManager::changeFile(const QString &file_path,
-                               const QString &file_context) {
-  LOS_client->didChange(file_path, file_context);
+void LosLspManager::changeFile(const QString &file_path, const QString &file_context)
+{
+    LOS_client->didChange(file_path, file_context);
 }
 
 /**
 请求 完成
 */
-void LosLspManager::requestCompletion(const QString &file_path, int line,
-                                      int col) {
-  LOS_client->sendRequestForCompletion(file_path, line, col);
+void LosLspManager::requestCompletion(const QString &file_path, int line, int col)
+{
+    LOS_client->sendRequestForCompletion(file_path, line, col);
 }
 
-void LosLspManager::toDefineRequest(int line, int col,
-                                    const QString &file_path) {
-  LOS_client->defineRequest(line, col, file_path);
+void LosLspManager::toDefineRequest(int line, int col, const QString &file_path)
+{
+    LOS_client->defineRequest(line, col, file_path);
 }
 
 /**
 初始化链接
 */
-void LosLspManager::initConnect() {
-  connect(LOS_client, &LosLspClient::_completion, this,
-          &LosLspManager::_completion);
-  connect(LOS_client, &LosLspClient::_diagnostics, this,
-          &LosLspManager::_diagnostics);
-  connect(LOS_client, &LosLspClient::_definitionResult, this,
-          &LosLspManager::_definitionResult);
+void LosLspManager::initConnect()
+{
+    connect(&LosRouter::instance(), &LosRouter::_cmd_lsp_request_openFile, this, &LosLspManager::openFile);
+    connect(&LosRouter::instance(), &LosRouter::_cmd_lsp_request_textChanged, this, &LosLspManager::changeFile);
+    connect(&LosRouter::instance(), &LosRouter::_cmd_lsp_request_completeion, this, &LosLspManager::requestCompletion);
 }
 
 } // namespace LosCore

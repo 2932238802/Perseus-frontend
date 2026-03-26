@@ -1,11 +1,8 @@
 
 #include "LosEditorTabUi.h"
-#include "models/LosFileContext/LosFileContext.h"
-#include "models/LosFilePath/LosFilePath.h"
+#include "core/LosRouter/LosRouter.h"
 #include "view/LosEditorUi/LosEditorUi.h"
-#include <qglobal.h>
-#include <qmessagebox.h>
-#include <qobject.h>
+
 
 namespace LosView
 {
@@ -196,24 +193,76 @@ void LosEditorTabUi::onCtrlSToSaveCurFile()
     }
 }
 
+
+/**
+ */
+void LosEditorTabUi::onDefineResult(const QString &file_path, int line)
+{
+    openFile(file_path);
+    if (nullptr != getCurEditor())
+    {
+        getCurEditor()->gotoLine(line);
+    }
+}
+
+
+void LosEditorTabUi::onCompletionResult(const QStringList &list)
+{
+    auto curEditor = getCurEditor();
+    if (curEditor)
+    {
+        curEditor->showCompletion(list);
+    }
+}
+
+
+void LosEditorTabUi::onDiagnosticsResult(const QString &file_path, const QList<LosCommon::LosDiagnostic> &diags)
+{
+
+    auto curWidget = getCurEditor();
+    if (nullptr != curWidget)
+        curWidget->showDiagnostic(file_path, diags);
+}
+
+
+void LosEditorTabUi::onDoubleClickedOnIssue(const QString &file_path, int line)
+{
+    openFile(file_path);
+    auto editor = getCurEditor();
+    if (editor)
+    {
+        editor->gotoLine(line);
+    }
+}
+
+
+
 /**
 初始化
 */
 void LosEditorTabUi::initConnect()
 {
     connect(L_tabWidget, &QTabWidget::tabCloseRequested, this, &LosEditorTabUi::onTabCloseRequested);
+    LosCore::LosShortcutManager::instance().reg(
+        LosCommon::ShortCut::FILE_SAVE, this, [=]() { saveTab(); }, "run single file");
+    // 收到 定义 结果 就去处理
+    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_definition, this,
+            &LosEditorTabUi::onDefineResult);
+
+    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_completion, this,
+            &LosEditorTabUi::onCompletionResult);
+
+    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this,
+            &LosEditorTabUi::onDiagnosticsResult);
+            
+    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_gotoFile, this,
+            &LosEditorTabUi::onDoubleClickedOnIssue);
 }
 
 void LosEditorTabUi::initEditor(LosEditorUi *editor)
 {
     connect(editor, &LosEditorUi::_editorDirty, this, &LosEditorTabUi::onEditDirty);
     // 让上层 显示 ui提示
-    connect(editor, &LosEditorUi::_completionRequest, this, &LosEditorTabUi::_completionRequest);
-    connect(editor, &LosEditorUi::_openFileForLsp, this, &LosEditorTabUi::_openFileForLsp);
-    connect(editor, &LosEditorUi::_textChangedForLsp, this, &LosEditorTabUi::_textChangedForLsp);
-    connect(editor, &LosEditorUi::_whereDefine, this, &LosEditorTabUi::_whereDefine);
-    LosCore::LosShortcutManager::instance().reg(
-        LosCommon::ShortCut::RUN_SINGLE_FILE, this, [=]() { saveTab(); }, "run single file");
 }
 
 } // namespace LosView

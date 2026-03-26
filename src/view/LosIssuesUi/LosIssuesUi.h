@@ -19,9 +19,6 @@ public:
   void updateTable(const QString &file_path,
                    const QList<LosCommon::LosDiagnostic> &diags);
 
-signals:
-  void _gotoFile(const QString &file_path, int line);
-
 private slots:
   void onTableDoubleClicked(int row, int colume);
 
