@@ -30,12 +30,12 @@ bool LosFormatManager::format(QString *out, const QString &file_path, const QStr
     QProcess process;
     QStringList args;
 
-    args << LosCommon::LosFormatManage_Constants::ASSUME_FILENAME_ASRS + file_path;
-    args << LosCommon::LosFormatManage_Constants::STYLE_ASRS + QString(LosCommon::LLVM_formatStyle::FORMAT_STYLE);
+    args << LosCommon::LosFormatManager_Constants::ASSUME_FILENAME_ASRS + file_path;
+    args << LosCommon::LosFormatManager_Constants::STYLE_ASRS + QString(LosCommon::LLVM_formatStyle::FORMAT_STYLE);
 
-    process.start(LosCommon::LosFormatManage_Constants::CLANG_FORMAT, args);
+    process.start(LosCommon::LosFormatManager_Constants::CLANG_FORMAT, args);
 
-    if (!process.waitForStarted(LosCommon::LosFormatManage_Constants::WAITFORSTARTED_TIME_MS))
+    if (!process.waitForStarted(LosCommon::LosFormatManager_Constants::WAITFORSTARTED_TIME_MS))
     {
         ERR("failed to start clang-format", "LosFormatManager");
         return false;
@@ -45,7 +45,7 @@ bool LosFormatManager::format(QString *out, const QString &file_path, const QStr
     process.write(inputData);
     process.closeWriteChannel();
 
-    if (!process.waitForFinished(LosCommon::LosFormatManage_Constants::WAITFORFINISHED_TIME_MS))
+    if (!process.waitForFinished(LosCommon::LosFormatManager_Constants::WAITFORFINISHED_TIME_MS))
     {
         ERR("clang-format timeout!", "LosFormatManager");
         process.kill();

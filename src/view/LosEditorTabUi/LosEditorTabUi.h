@@ -46,12 +46,11 @@ class LosEditorTabUi : public QWidget
     void onCtrlSToSaveCurFile();
     void onDefineResult(const QString &file_path, int line);
     void onCompletionResult(const QStringList &);
-    void onDiagnosticsResult(const QString &file_path, const QList<LosCommon::LosDiagnostic> &diags);
+    void onDiagnosticsResult(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags);
     void onDoubleClickedOnIssue(const QString &file_path, int line);
 
   private: // init
     void initConnect();
-    void initEditor(LosEditorUi *);
 
   private: // params
     QTabWidget *L_tabWidget;

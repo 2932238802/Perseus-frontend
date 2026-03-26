@@ -1,6 +1,7 @@
 
 
 #include "LosFileContext.h"
+#include <optional>
 
 namespace LosModel
 {
@@ -9,12 +10,18 @@ LosFileContext::LosFileContext(const QString &file_path)
 {
     load(file_path);
 }
+
+
+
 LosFileContext::LosFileContext(const LosModel::LosFilePath &path)
 {
     load(path.getFilePath());
 }
 
+
+
 LosFileContext::LosFileContext() {}
+
 
 
 LosFileContext *LosFileContext::create()
@@ -23,21 +30,24 @@ LosFileContext *LosFileContext::create()
     return text;
 }
 
-QString LosFileContext::load(const QString &file_path)
+
+
+std::optional<QString> LosFileContext::load(const QString &file_path)
 {
     QFile file(file_path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        return "wrong in open:" + file_path;
+        return std::nullopt;
     }
     QTextStream in(&file);
     in.setEncoding(QStringConverter::Utf8);
     L_content = in.readAll();
     file.close();
-    L_isDirty  = false;
     L_isLoaded = true;
     return L_content;
 }
+
+
 
 bool LosFileContext::save(const QString &content, const QString &file_path)
 {
@@ -52,28 +62,15 @@ bool LosFileContext::save(const QString &content, const QString &file_path)
     out.setEncoding(QStringConverter::Utf8);
     out << content;
     file.close();
-    L_isDirty = false;
     return true;
 }
 
-bool LosFileContext::isDirty() const
-{
-    return L_isDirty;
-}
+
+
 
 bool LosFileContext::isLoaded() const
 {
     return L_isLoaded;
-}
-
-
-
-/**
-set
-*/
-void LosFileContext::setDirty(bool dirty)
-{
-    L_isDirty = dirty;
 }
 
 
@@ -91,7 +88,7 @@ bool LosFileContext::isEmpty() const
 /**
 获取内容
 */
-const QString& LosFileContext::getContent() const
+const QString &LosFileContext::getContent() const
 {
     return L_content;
 }

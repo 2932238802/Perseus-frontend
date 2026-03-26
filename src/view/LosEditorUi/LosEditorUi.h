@@ -48,13 +48,13 @@ class LosEditorUi : public QPlainTextEdit
 
   public: // tool
     void showCompletion(const QStringList &list);
-    void showDiagnostic(const QString &file_path, const QList<LosCommon::LosDiagnostic> &);
+    void showDiagnostic(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &);
     void gotoLine(int line);
     void format();
 
   public: // get
-    bool isDirty() const;
     QString getWordUnderCursor() const;
+    bool isDirty() const;
 
   public: // set
     void loadContextAndPath(LosModel::LosFileContext *context, LosModel::LosFilePath *file_path);
@@ -73,16 +73,13 @@ class LosEditorUi : public QPlainTextEdit
     void keyPressEvent(QKeyEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
 
-  signals:
   private: // param
+    bool L_dirty                          = false;
     QString L_oldWord                     = "";
     QTimer *L_timer                       = nullptr;
     LosModel::LosFileContext *LOS_context = nullptr;
     LosModel::LosFilePath *LOS_filePath   = nullptr;
     LosView::LosCompleterUi *LOS_completer;
     LosCore::LosHighlighter *LOS_highlighter = nullptr;
-
-  signals:
-    void _editorDirty(bool is_dirty);
 };
 } // namespace LosView

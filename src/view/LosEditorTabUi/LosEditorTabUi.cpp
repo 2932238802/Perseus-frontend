@@ -23,6 +23,8 @@ LosEditorTabUi::~LosEditorTabUi() {}
 */
 void LosEditorTabUi::closeTab(int index) {}
 
+
+
 /**
 保存标签页
 */
@@ -39,9 +41,11 @@ void LosEditorTabUi::saveTab()
     }
     if (!widget->save())
     {
-        QMessageBox::critical(this, "error", "failed to save file");
+        ERR("failed to save file", "LosEditorTabUi");
     }
 }
+
+
 
 /**
 保存所有的标签页
@@ -50,7 +54,7 @@ void LosEditorTabUi::saveAllTabs()
 {
     if (nullptr == L_tabWidget)
     {
-        QMessageBox::critical(this, "error", "error in saveTab: nullptr");
+        ERR("error in saveTab: nullptr", "LosEditorTabUi");
         return;
     }
     for (int i = 0; i < L_tabWidget->count(); i++)
@@ -62,11 +66,12 @@ void LosEditorTabUi::saveAllTabs()
         }
         if (!a->save())
         {
-            QMessageBox::warning(this, "warning",
-                                 "error in saveAllTabs: save file [" + LOS_pathToUi.key(a) + "] failed!");
+            WAR("error in saveAllTabs: save file [" + LOS_pathToUi.key(a) + "] failed!", "LosEditorTabUi")
         }
     }
 }
+
+
 
 /**
 tool
@@ -80,9 +85,7 @@ void LosEditorTabUi::openFile(const QString &file_path)
         L_tabWidget->setCurrentWidget(editor);
         return;
     }
-    LosEditorUi *editor = new LosEditorUi(this);
-    // 自己 处理 标签
-    initEditor(editor);
+    LosEditorUi *editor               = new LosEditorUi(this);
     LosModel::LosFileContext *context = LosModel::LosFileContext::create();
     LosModel::LosFilePath *file       = new LosModel::LosFilePath(file_path);
     context->load(file_path);
@@ -217,6 +220,9 @@ void LosEditorTabUi::onDefineResult(const QString &file_path, int line)
 }
 
 
+/**
+
+*/
 void LosEditorTabUi::onCompletionResult(const QStringList &list)
 {
     auto curEditor = getCurEditor();
@@ -227,7 +233,12 @@ void LosEditorTabUi::onCompletionResult(const QStringList &list)
 }
 
 
-void LosEditorTabUi::onDiagnosticsResult(const QString &file_path, const QList<LosCommon::LosDiagnostic> &diags)
+
+/**
+解析结果
+*/
+void LosEditorTabUi::onDiagnosticsResult(const QString &file_path,
+                                         const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags)
 {
     auto curWidget = getCurEditor();
     if (nullptr != curWidget)
@@ -235,6 +246,10 @@ void LosEditorTabUi::onDiagnosticsResult(const QString &file_path, const QList<L
 }
 
 
+
+/**
+双击
+*/
 void LosEditorTabUi::onDoubleClickedOnIssue(const QString &file_path, int line)
 {
     openFile(file_path);
@@ -253,8 +268,6 @@ void LosEditorTabUi::onDoubleClickedOnIssue(const QString &file_path, int line)
 void LosEditorTabUi::initConnect()
 {
     connect(L_tabWidget, &QTabWidget::tabCloseRequested, this, &LosEditorTabUi::onTabCloseRequested);
-    LosCore::LosShortcutManager::instance().reg(
-        LosCommon::ShortCut::FILE_SAVE, this, [=]() { saveTab(); }, "run single file");
     // 收到 定义 结果 就去处理
     connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_definition, this,
             &LosEditorTabUi::onDefineResult);
@@ -269,12 +282,7 @@ void LosEditorTabUi::initConnect()
             &LosEditorTabUi::onDoubleClickedOnIssue);
 
     connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_codeFormat, this, &LosEditorTabUi::formatTab);
-}
 
-void LosEditorTabUi::initEditor(LosEditorUi *editor)
-{
-    connect(editor, &LosEditorUi::_editorDirty, this, &LosEditorTabUi::onEditDirty);
-    // 让上层 显示 ui提示
+    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_fileDirty, this, &LosEditorTabUi::onEditDirty);
 }
-
 } // namespace LosView

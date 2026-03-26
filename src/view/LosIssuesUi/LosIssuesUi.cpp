@@ -21,7 +21,7 @@ LosIssuesUi::LosIssuesUi(QWidget *parent) : QWidget(parent)
     initConnect();
 }
 LosIssuesUi::~LosIssuesUi() {}
-void LosIssuesUi::updateTable(const QString &file_path, const QList<LosCommon::LosDiagnostic> &diags)
+void LosIssuesUi::updateTable(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags)
 {
     if (!L_table)
         return;
@@ -31,7 +31,7 @@ void LosIssuesUi::updateTable(const QString &file_path, const QList<LosCommon::L
     {
         const auto &diag = diags[i];
         L_table->insertRow(i);
-        bool isErr               = diag.ds == LosCommon::DiagnosticSeverity::Error;
+        bool isErr               = diag.ds == LosCommon::LosLsp_Constants::DiagnosticSeverity::Error;
         QString level            = isErr ? "Err" : "War";
         QTableWidgetItem *item_1 = new QTableWidgetItem(level);
         item_1->setForeground(isErr ? Qt::red : QColor(255, 165, 0));

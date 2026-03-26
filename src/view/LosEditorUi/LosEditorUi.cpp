@@ -1,4 +1,5 @@
 #include "LosEditorUi.h"
+#include "core/LosRouter/LosRouter.h"
 
 
 namespace LosView
@@ -17,6 +18,7 @@ LosEditorUi::~LosEditorUi()
         LOS_context = nullptr;
     }
 }
+
 
 
 /**
@@ -48,7 +50,8 @@ void LosEditorUi::showCompletion(const QStringList &list)
 /**
 展示错误
 */
-void LosEditorUi::showDiagnostic(const QString &file_path, const QList<LosCommon::LosDiagnostic> &dias)
+void LosEditorUi::showDiagnostic(const QString &file_path,
+                                 const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &dias)
 {
     if (getWordUnderCursor() != L_oldWord)
     {
@@ -67,22 +70,22 @@ void LosEditorUi::showDiagnostic(const QString &file_path, const QList<LosCommon
         QTextEdit::ExtraSelection selections;
         switch (a.ds)
         {
-        case LosCommon::DiagnosticSeverity::Information:
+        case LosCommon::LosLsp_Constants::DiagnosticSeverity::Information:
         {
             format.setUnderlineColor(Qt::blue);
             break;
         }
-        case LosCommon::DiagnosticSeverity::Error:
+        case LosCommon::LosLsp_Constants::DiagnosticSeverity::Error:
         {
             format.setUnderlineColor(Qt::red);
             break;
         }
-        case LosCommon::DiagnosticSeverity::Hint:
+        case LosCommon::LosLsp_Constants::DiagnosticSeverity::Hint:
         {
             format.setUnderlineColor(Qt::gray);
             break;
         }
-        case LosCommon::DiagnosticSeverity::Warning:
+        case LosCommon::LosLsp_Constants::DiagnosticSeverity::Warning:
         {
             format.setUnderlineColor(QColor(255, 165, 0));
             break;
@@ -112,6 +115,8 @@ void LosEditorUi::showDiagnostic(const QString &file_path, const QList<LosCommon
     this->setExtraSelections(selectionsList);
 }
 
+
+
 /**
 跳转到指定的行
 */
@@ -131,6 +136,7 @@ void LosEditorUi::gotoLine(int line)
         this->setFocus();
     }
 }
+
 
 
 void LosEditorUi::format()
@@ -162,12 +168,23 @@ void LosEditorUi::loadContextAndPath(LosModel::LosFileContext *context, LosModel
     LOS_context  = context;
     LOS_filePath = file_path;
     blockSignals(true);
-    QString text = LOS_context->load(LOS_filePath->getFilePath());
+    auto op      = LOS_context->load(LOS_filePath->getFilePath());
+    QString text = "";
+    if (op)
+    {
+        QString text = *op;
+    }
+    else
+    {
+        return;
+    }
     setPlainText(text);
     blockSignals(false);
-    qDebug() << "[Editor] emit open signals:" << LOS_filePath->getFilePath();
+    INF("emit open signals:" + LOS_filePath->getFilePath(), "LosEditorUi");
     emit LosCore::LosRouter::instance()._cmd_lsp_request_openFile(LOS_filePath -> getFilePath(), this->toPlainText());
 }
+
+
 
 /**
 词汇补全
@@ -180,6 +197,9 @@ void LosEditorUi::insertCompletion(const QString &completion)
     setTextCursor(qtc); // 为什么 这里还要 setTextCursor
 }
 
+
+
+
 /**
 调用 LosContext 接口
 */
@@ -190,19 +210,13 @@ bool LosEditorUi::save()
     bool ok = LOS_context->save(this->toPlainText(), LOS_filePath->getFilePath());
     if (ok)
     {
-        LOS_context->setDirty(false);
-        emit _editorDirty(false);
+        L_dirty = false;
+        emit LosCore::LosRouter::instance()._cmd_fileDirty(false);
     }
     return ok;
 }
 
-/**
-是不是脏的
-*/
-bool LosEditorUi::isDirty() const
-{
-    return LOS_context->isDirty();
-}
+
 
 /**
 get
@@ -210,18 +224,26 @@ get
 */
 QString LosEditorUi::getWordUnderCursor() const
 {
-     QTextCursor cursor = this->textCursor();
-    QString text = cursor.block().text();
-    int col = cursor.positionInBlock();
-    int start = col;
-    while (start > 0) {
+    QTextCursor cursor = this->textCursor();
+    QString text       = cursor.block().text();
+    int col            = cursor.positionInBlock();
+    int start          = col;
+    while (start > 0)
+    {
         QChar c = text.at(start - 1);
-        if (!c.isLetterOrNumber() && c != '_') {
+        if (!c.isLetterOrNumber() && c != '_')
+        {
             break;
         }
         start--;
     }
     return text.mid(start, col - start);
+}
+
+
+bool LosEditorUi::isDirty() const
+{
+    return L_dirty;
 }
 
 /**
@@ -242,6 +264,8 @@ void LosEditorUi::initConnect()
     connect(L_timer, &QTimer::timeout, this, &LosEditorUi::onDebounceTimeout);
 }
 
+
+
 /**
 - 初始化样式
 */
@@ -252,6 +276,8 @@ void LosEditorUi::initStyle()
     this->setTabStopDistance(tab);
 }
 
+
+
 /**
 - 变脏的信号
 */
@@ -259,13 +285,15 @@ void LosEditorUi::onTextChanged()
 {
     if (!LOS_context)
         return;
-    if (!LOS_context->isDirty())
+    if (!L_dirty)
     {
-        LOS_context->setDirty(true);
-        emit _editorDirty(true);
+        L_dirty = true;
+        emit LosCore::LosRouter::instance()._cmd_fileDirty(true);
     }
     L_timer->start(200);
 }
+
+
 
 /**
 - 防抖
@@ -293,6 +321,8 @@ void LosEditorUi::onDebounceTimeout()
     emit LosCore::LosRouter::instance()._cmd_lsp_request_completeion(LOS_filePath -> getFilePath(), line, col);
 }
 
+
+
 /**
 光标拦截
 */
@@ -316,6 +346,8 @@ void LosEditorUi::keyPressEvent(QKeyEvent *event)
     }
     QPlainTextEdit::keyPressEvent(event);
 }
+
+
 
 /**
 按键拦截

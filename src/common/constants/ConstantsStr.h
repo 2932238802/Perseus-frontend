@@ -2,18 +2,6 @@
 
 namespace LosCommon
 {
-#ifdef Q_OS_WIN
-inline constexpr const char *GXX = "g++.exe";
-#else
-inline constexpr const char *GXX = "g++";
-#endif
-
-inline constexpr const char *CXX_17         = "-std=c++17";
-inline constexpr const char *CMD_OBJECT     = "-o";
-inline constexpr const char *LINUX_EXE      = ".out";
-inline constexpr const char *WIN_EXE        = ".exe";
-inline constexpr const char *CONTENT_LENGTH = "Content-Length: ";
-inline constexpr const char *LSP_RNRN       = "\r\n\r\n";
 
 /**
 - 快捷键的设置
@@ -46,6 +34,7 @@ inline constexpr const char *FOCUS_TERMINAL      = "Ctrl+`";       // 聚焦到�
 } // namespace ShortCut
 
 
+
 /**
 格式化文本的 format 内容
 TODO: 之后 可以 自定义
@@ -72,7 +61,37 @@ inline constexpr const char *FORMAT_STYLE = R"({
 } // namespace LLVM_formatStyle
 
 
-namespace LosFormatManage_Constants
+
+/**
+- 单个文件的运行
+*/
+namespace LosRunner_Constants
+{
+#ifdef Q_OS_WIN
+inline constexpr const char *GXX = "g++.exe";
+#else
+inline constexpr const char *GXX = "g++";
+#endif
+inline constexpr const char *CXX_17     = "-std=c++17";
+inline constexpr const char *CMD_OBJECT = "-o";
+inline constexpr const char *LINUX_EXE  = ".out";
+inline constexpr const char *WIN_EXE    = ".exe";
+
+
+} // namespace LosRunner_Constants
+
+
+
+namespace LosLsp_Constants
+{
+inline constexpr const char *CONTENT_LENGTH = "Content-Length: ";
+inline constexpr const char *LSP_RNRN       = "\r\n\r\n";
+
+} // namespace LosLsp_Constants
+
+
+
+namespace LosFormatManager_Constants
 {
 inline constexpr const char *ASSUME_FILENAME_ASRS = "-assume-filename=";
 inline constexpr const char *STYLE_ASRS           = "-style=";
@@ -82,7 +101,19 @@ inline constexpr const char *CLANG_FORMAT = "clang-format.exe";
 inline constexpr const char *CLANG_FORMAT = "clang-format";
 #endif
 
-} // namespace LosFormatManage_Constants
+} // namespace LosFormatManager_Constants
 
+
+
+namespace LosConfig_Constants
+{
+inline constexpr const char *CMAKE                   = "cmake";
+inline constexpr const char *SRC_DIR                 = ".";
+inline constexpr const char *CMD_SOURCE              = "-S";
+inline constexpr const char *CMD_TARGET              = "-B";
+inline constexpr const char *BUILD_NAME              = "build";
+inline constexpr const char *COMPILE_COMMANDS_OPTION = "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON";
+inline constexpr const char *COMPILE_COMMANDS_FILE   = "compile_commands.json";
+} // namespace LosConfig_Constants
 
 } // namespace LosCommon

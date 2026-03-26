@@ -141,7 +141,7 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QTreeView" name="explorer_treeview">
+      <widget class="LosView::LosFileTreeUi" name="explorer_treeview">
        <property name="minimumSize">
         <size>
          <width>200</width>
@@ -235,6 +235,11 @@
    <extends>QWidget</extends>
    <header location="global">view/LosIssuesUi/LosIssuesUi.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LosView::LosFileTreeUi</class>
+   <extends>QTreeView</extends>
+   <header>view/LosFileTreeUi/LosFileTreeUi.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

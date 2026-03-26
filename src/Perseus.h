@@ -1,6 +1,7 @@
 #pragma once
 #include "common/constants/ConstantsClass.h"
 #include "common/constants/ConstantsNum.h"
+#include "core/LosConfig/LosConfigManager/LosConfigManager.h"
 #include "core/LosLsp/LosLspClient/LosLspClient.h"
 #include "core/LosLsp/LosLspManager/LosLspManager.h"
 #include "core/LosRunner/LosRunManager/LosRunManager.h"
@@ -46,7 +47,6 @@ class Perseus : public QMainWindow
     void initConnect();
     void initStyle();
     void initShotcut();
-    void updateExplorer();
 
   public slots:
     void OnFileLoaded(bool isc);
@@ -66,4 +66,5 @@ class Perseus : public QMainWindow
     LosView::LosEditorTabUi *LOS_tabUi        = nullptr;
     LosCore::LosRunManager *LOS_runMgr        = nullptr;
     LosCore::LosLspManager *LOS_lspMgr        = nullptr;
+    LosCore::LosConfigManager *LOS_configMgr  = nullptr;
 };

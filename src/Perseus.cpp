@@ -1,10 +1,13 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
+#include "common/constants/ConstantsClass.h"
 #include "common/constants/ConstantsStr.h"
+#include "core/LosConfig/LosConfigManager/LosConfigManager.h"
 #include "core/LosLsp/LosLspManager/LosLspManager.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosShortcutManager/LosShortcutManager.h"
 #include "core/log/LosLog/LosLog.h"
+#include "models/LosFilePath/LosFilePath.h"
 #include "view/LosEditorTabUi/LosEditorTabUi.h"
 #include "view/LosIssuesUi/LosIssuesUi.h"
 
@@ -27,17 +30,17 @@ Perseus::~Perseus()
     delete ui;
 }
 
+
+
 /**
 esc 关闭程序
 */
 void Perseus::keyPressEvent(QKeyEvent *e)
 {
-    if (e->key() == Qt::Key_Escape)
-    {
-        QApplication::exit(0);
-    }
-    QMainWindow::keyPressEvent(e); // 补充
+    QMainWindow::keyPressEvent(e);
 }
+
+
 
 /**
 文件 加载完毕
@@ -50,47 +53,63 @@ void Perseus::OnFileLoaded(bool isc)
         QString curPath = LOS_projectFilepath.getFilePath();
         if (LOS_treeModel != nullptr)
         {
-            delete LOS_treeModel;
+            // 修复
+            ui->explorer_treeview->setModel(nullptr);
+            LOS_treeModel->deleteLater();
             LOS_treeModel = nullptr;
-        }
-        if (LOS_rootNode != nullptr)
-        {
-            delete LOS_rootNode;
+            LOS_rootNode  = nullptr;
         }
         LOS_rootNode = nullptr;
-
         LOS_rootNode = LosModel::LosFileNode::create(curPath, nullptr);
         LosModel::LosFileNode::build(LOS_rootNode, curPath);
         LOS_treeModel = new LosModel::LosFileTreeModel(LOS_rootNode, nullptr);
-        updateExplorer();
-        QMessageBox::information(this, "info", "load project suc:" + curPath);
+        ui->explorer_treeview->updateExplorer(LOS_treeModel);
+        INF("load project suc:" + curPath, "Perseus");
+        LOS_configMgr->create(curPath);
+        LOS_configMgr->analyse(curPath);
     }
     else
     {
-        QMessageBox::critical(this, "error", "load file failed!");
+        ERR("load file failed!", "Perseus");
     }
 }
 
+
+
 /**
 文件按钮 被点击
+支持导入文件和文件夹
 */
 void Perseus::onFilesBtnClicked()
 {
     QFileDialog dialog(this, "choose file/filefolder");
-    dialog.setFileMode(QFileDialog::Directory);
+    dialog.setFileMode(QFileDialog::AnyFile);
     dialog.setOption(QFileDialog::DontUseNativeDialog, false);
     // 只能显示 文件夹
-    dialog.setOption(QFileDialog::ShowDirsOnly, true);
     dialog.setAcceptMode(
         // 要么是打开 要么就是保存的形式
         QFileDialog::AcceptOpen);
     if (dialog.exec() == QDialog::Accepted)
     {
-        LOS_projectFilepath.loadFile(dialog.selectedFiles().first());
-        bool isSuc = LOS_projectFilepath.isExist();
-        this->OnFileLoaded(isSuc);
+        QString filePathChoose = dialog.selectedFiles().first();
+        LosModel::LosFilePath path(filePathChoose);
+        if (path.isFile())
+        {
+            QString projectDirOfPath = path.getAbsolutePath();
+            LOS_projectFilepath.loadFile(projectDirOfPath);
+            bool isSuc = LOS_projectFilepath.isExist();
+            this->OnFileLoaded(isSuc);
+        }
+        else if (path.isDir())
+        {
+            LOS_projectFilepath.loadFile(filePathChoose);
+            bool isSuc = LOS_projectFilepath.isExist();
+            this->OnFileLoaded(isSuc);
+        }
     }
 }
+
+
 
 /**
 双击文件
@@ -106,6 +125,8 @@ void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
         return;
     LOS_tabUi->openFile(fileNode->getFilePath());
 }
+
+
 
 /**
 点击运行按钮
@@ -126,16 +147,27 @@ void Perseus::onRunSingleFileBtnClicked()
     LOS_runMgr->execute(curPath);
 }
 
+
+
+/**
+ */
 void Perseus::onAppendErr(const QString &str)
 {
     ERR(str, "Perseus");
 }
+
+
 
 void Perseus::onAppendLog(const QString &str)
 {
     INF(str, "Perseus");
 }
 
+
+
+/**
+建立完毕
+*/
 void Perseus::onBuildOver(bool ok)
 {
     QString msg(ok == true ? "suc!" : "failed!");
@@ -155,9 +187,10 @@ void Perseus::onLog(const QString &log)
 */
 void Perseus::initConnect()
 {
-    LOS_tabUi  = new LosView::LosEditorTabUi(ui->editor_tabwidget, this);
-    LOS_runMgr = new LosCore::LosRunManager(this);
-    LOS_lspMgr = new LosCore::LosLspManager(this);
+    LOS_tabUi     = new LosView::LosEditorTabUi(ui->editor_tabwidget, this);
+    LOS_runMgr    = new LosCore::LosRunManager(this);
+    LOS_lspMgr    = new LosCore::LosLspManager(this);
+    LOS_configMgr = new LosCore::LosConfigManager(this);
     LOS_lspMgr->start();
     connect(ui->files_btn, &QPushButton::clicked, this, &Perseus::onFilesBtnClicked);
     // enter 自动触发 actived
@@ -165,6 +198,9 @@ void Perseus::initConnect()
     // connect(ui->explorer_treeview, &QTreeView::doubleClicked, this, &Perseus::onExplorerFileDoubleClicked);
     connect(ui->run_singleFile_btn, &QPushButton::clicked, this, &Perseus::onRunSingleFileBtnClicked);
     connect(&LosCore::LosLog::instance(), &LosCore::LosLog::_sendLog, this, &Perseus::onLog);
+    connect(
+        &LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_fileSystemChanged, this,
+        [=]() { OnFileLoaded(true); }, Qt::QueuedConnection);
 }
 
 /**
@@ -196,15 +232,19 @@ void Perseus::initShotcut()
     LosCore::LosShortcutManager::instance().reg(
         LosCommon::ShortCut::CODE_FORMAT, this, [=]() { emit LosCore::LosRouter::instance()._cmd_codeFormat(); },
         "format text");
-}
-
-/**
-更新文件夹
-*/
-void Perseus::updateExplorer()
-{
-    ui->explorer_treeview->setModel(LOS_treeModel);
-    ui->explorer_treeview->setHeaderHidden(true);
-    ui->explorer_treeview->setAnimated(true);
-    ui->explorer_treeview->setIndentation(15);
+    LosCore::LosShortcutManager::instance().reg(
+        LosCommon::ShortCut::FILE_SAVE, this,
+        [=]()
+        {
+            if (LOS_tabUi)
+                LOS_tabUi->saveTab();
+            if (LOS_configMgr->isInFiles(LosModel::LosFilePath(LOS_tabUi->getCurFilePath()).getBaseFileName()))
+            {
+                INF("rebuild..", "Perseus");
+                emit LosCore::LosRouter::instance()._cmd_lsp_msg_didChangeWatchedFiles(
+                    LOS_tabUi -> getCurFilePath(),
+                    LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Changed);
+            };
+        },
+        "run single file");
 }

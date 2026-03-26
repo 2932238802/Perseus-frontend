@@ -21,7 +21,7 @@ public: // tool
 signals:
   void _completion(const QStringList &words);
   void _diagnostics(const QString &file_path,
-                    const QList<LosCommon::LosDiagnostic> &diags);
+                    const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags);
   void _definitionResult(const QString &file_name, int line);
 
 private:

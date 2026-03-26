@@ -22,7 +22,8 @@ LosSingleCppRunner::LosSingleCppRunner(const QString &file_path, QObject *parent
 #ifdef Q_OS_WIN
     L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() + LosCommon::WIN_EXE;
 #elif defined(Q_OS_LINUX) || defined(Q_OS_MAC)
-    L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() + LosCommon::LINUX_EXE;
+    L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() +
+                LosCommon::LosRunner_Constants::LINUX_EXE;
 #else
     L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() + LosCommon::LINUX_EXE;
 #endif
@@ -72,8 +73,9 @@ void LosSingleCppRunner::start()
 
     L_gxxPro->setWorkingDirectory(LOS_filePath.getAbsolutePath());
     QStringList args;
-    args << LOS_filePath << LosCommon::CXX_17 << LosCommon::CMD_OBJECT << L_exePath;
-    L_gxxPro->start(LosCommon::GXX, args);
+    args << LOS_filePath << LosCommon::LosRunner_Constants::CXX_17 << LosCommon::LosRunner_Constants::CMD_OBJECT
+         << L_exePath;
+    L_gxxPro->start(LosCommon::LosRunner_Constants::GXX, args);
 }
 
 /**
@@ -98,7 +100,7 @@ void LosSingleCppRunner::initConnect()
                     ERR("compilation failed...", "LosSingleCppRunner");
                 }
             });
-            
+
     connect(L_gxxPro, &QProcess::errorOccurred, this,
             [=](QProcess::ProcessError error)
             {

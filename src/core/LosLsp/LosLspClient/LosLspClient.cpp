@@ -66,7 +66,8 @@ void LosLspClient::sendRequest(const QString &method, const QJsonObject &params,
     QJsonDocument doc(request);
     // 必须是紧凑才行
     QByteArray jb     = doc.toJson(QJsonDocument::Compact);
-    QByteArray header = LosCommon::CONTENT_LENGTH + QByteArray::number(jb.size()) + LosCommon::LSP_RNRN;
+    QByteArray header = LosCommon::LosLsp_Constants::CONTENT_LENGTH + QByteArray::number(jb.size()) +
+                        LosCommon::LosLsp_Constants::LSP_RNRN;
     L_process->write(header + jb);
 }
 
@@ -88,6 +89,24 @@ void LosLspClient::sendRequestForCompletion(const QString &file_path, int line, 
     sendRequest("textDocument/completion", params, LosLspType::REQ_COMPLETION);
 }
 
+
+
+void LosLspClient::sendMsgForDidChangeWatchedFiles(
+    const QString &compile_commands_file_path,
+    LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type type)
+{
+    QJsonObject params;
+    QJsonArray changes;
+    QJsonObject change;
+    change["uri"]  = compile_commands_file_path;
+    change["type"] = static_cast<int>(type);
+    changes.append(change);
+    params["changes"] = changes;
+    sendMsg("workspace/didChangeWatchedFiles", params);
+}
+
+
+
 /**
 - 发送不带 id 的信息
 */
@@ -99,7 +118,8 @@ void LosLspClient::sendMsg(const QString &method, const QJsonObject &param)
     req["params"]  = param;
     QJsonDocument doc(req);
     QByteArray jb     = doc.toJson(QJsonDocument::Compact);
-    QByteArray header = LosCommon::CONTENT_LENGTH + QByteArray::number(jb.size()) + LosCommon::LSP_RNRN;
+    QByteArray header = LosCommon::LosLsp_Constants::CONTENT_LENGTH + QByteArray::number(jb.size()) +
+                        LosCommon::LosLsp_Constants::LSP_RNRN;
     L_process->write(header + jb);
     INF("[lsp]: " + method, "LosLspClient");
 }
@@ -124,7 +144,6 @@ void LosLspClient::didOpen(const QString &file_path, const QString &text)
 */
 void LosLspClient::didChange(const QString &file_path, const QString &text)
 {
-
     QJsonArray contentChanges;
     QJsonObject contentChangesObject;
     contentChangesObject["text"] = text;
@@ -215,6 +234,8 @@ void LosLspClient::initConnect()
             });
 
     connect(&LosRouter::instance(), &LosRouter::_cmd_whereDefine, this, &LosLspClient::defineRequest);
+    connect(&LosRouter::instance(), &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this,
+            &LosLspClient::sendMsgForDidChangeWatchedFiles);
 }
 
 /**
@@ -373,13 +394,13 @@ void LosLspClient::dealLspMessage(const QJsonObject &obj)
             QString uri            = params["uri"].toString();
             QString filePath       = QUrl(uri).toLocalFile(); // 把 URI 转成本地文件路径
             QJsonArray diagnostics = params["diagnostics"].toArray();
-            QList<LosCommon::LosDiagnostic> diagList;
+            QList<LosCommon::LosLsp_Constants::LosDiagnostic> diagList;
             for (int i = 0; i < diagnostics.size(); i++)
             {
                 QJsonObject diagObj = diagnostics[i].toObject();
-                LosCommon::LosDiagnostic d;
-                d.message         = diagObj["message"].toString();
-                d.ds              = static_cast<LosCommon::DiagnosticSeverity>(diagObj["severity"].toInt());
+                LosCommon::LosLsp_Constants::LosDiagnostic d;
+                d.message = diagObj["message"].toString();
+                d.ds      = static_cast<LosCommon::LosLsp_Constants::DiagnosticSeverity>(diagObj["severity"].toInt());
                 QJsonObject range = diagObj["range"].toObject();
                 QJsonObject start = range["start"].toObject();
                 QJsonObject end   = range["end"].toObject();
