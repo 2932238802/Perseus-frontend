@@ -33,14 +33,14 @@ jobs:
     - name: 打包依赖 (windeployqt)
       run: |
         cd build
-        windeployqt --compiler-runtime LosEditor.exe
+        windeployqt --compiler-runtime Perseus.exe
 
     - name: 上传最终的压缩包
       uses: actions/upload-artifact@v4
       with:
-        name: LosEditor-Windows-Portable
+        name: Perseus-Windows-Portable
         path: |
-          build/LosEditor.exe
+          build/Perseus.exe
           build/*.dll
           build/platforms/
           build/styles/
