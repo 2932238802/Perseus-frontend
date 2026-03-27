@@ -20,12 +20,12 @@ LosSingleCppRunner::LosSingleCppRunner(const QString &file_path, QObject *parent
     L_runPro = new QProcess(this);
 
 #ifdef Q_OS_WIN
-    L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() + LosCommon::WIN_EXE;
+    L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() + LosCommon::LosRunner_Constants::WIN_EXE;
 #elif defined(Q_OS_LINUX) || defined(Q_OS_MAC)
     L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() +
                 LosCommon::LosRunner_Constants::LINUX_EXE;
 #else
-    L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() + LosCommon::LINUX_EXE;
+    L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() + LosCommon::LosRunner_Constants::LINUX_EXE;
 #endif
     initConnect();
 }
