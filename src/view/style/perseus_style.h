@@ -1,9 +1,11 @@
 #pragma once
 #include <QString>
 
-namespace LosStyle {
+namespace LosStyle
+{
 
-inline const QString perseus_getStyle() {
+inline const QString perseus_getStyle()
+{
     return QString(R"(
 
         QMainWindow {
@@ -11,7 +13,7 @@ inline const QString perseus_getStyle() {
         }
         
         * {
-            outline: none;
+            outline: none;  
         }
 
         QToolTip {
@@ -21,7 +23,7 @@ inline const QString perseus_getStyle() {
             border-radius: 4px;
             padding: 4px 8px;
             font-family: "Microsoft YaHei", sans-serif;
-            font-size: 12px;
+            font-size: 0.9em;
         }
 
         #toolbar_widget {
@@ -35,7 +37,7 @@ inline const QString perseus_getStyle() {
             color: #cdd6f4; 
             border-radius: 4px;
             padding: 4px 12px; 
-            font-size: 13px;   
+            font-size: 16px;
             font-family: "Microsoft YaHei", sans-serif;
         }
         
@@ -45,14 +47,13 @@ inline const QString perseus_getStyle() {
             padding: 4px 0px;   
             min-width: 32px;     
             text-align: center;  
-            font-size: 15px; 
+            font-size: 1.15em; 
         }
-
 
         #icon_btn:hover, #files_btn:hover, #run_singleFile_btn:hover {
             background-color: #313244;
             border: 1px solid #313244;
-            color: #ffffff; /* 鼠标放上去时，字体变亮，增加交互感 */
+            color: #ffffff; 
         }
         #icon_btn:pressed, #files_btn:pressed, #run_singleFile_btn:pressed {
             background-color: #45475a;
@@ -71,7 +72,6 @@ inline const QString perseus_getStyle() {
             background-color: #181825;
             color: #bac2de; 
             border: none;
-            font-size: 13px;
             show-decoration-selected: 1; 
         }
         QTreeView::item {
@@ -105,7 +105,6 @@ inline const QString perseus_getStyle() {
             padding: 8px 16px;
             border: none;
             border-right: 1px solid #1e1e2e; 
-            font-size: 13px;
             min-width: 90px;
         }
         #editor_tabwidget QTabBar::tab:selected {
@@ -139,7 +138,7 @@ inline const QString perseus_getStyle() {
             padding: 4px 16px 2px 16px; 
             border: none;
             border-bottom: 2px solid transparent;
-            font-size: 12px;
+            font-size: 0.9em; /* 👈 修改：原来12px */
             text-transform: uppercase; 
         }
         #bottom_tabwidget QTabBar::tab:selected {
@@ -155,7 +154,7 @@ inline const QString perseus_getStyle() {
             color: #cdd6f4;
             border: none;
             font-family: "JetBrains Mono", "Consolas", monospace;
-            font-size: 14px;
+            font-size: 1.1em; /* 👈 修改：原来14px，让代码区域稍大于基础字体 */
             selection-background-color: #45475a;
             selection-color: #cdd6f4;
             padding: 4px;
@@ -163,9 +162,9 @@ inline const QString perseus_getStyle() {
         
         #output_plaintextedit {
             background-color: #181825;
-            font-size: 13px; 
         }
 
+        /* 滚动条部分保持不变... */
         QScrollBar:vertical {
             background-color: transparent;
             width: 12px;

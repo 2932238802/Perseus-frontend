@@ -11,6 +11,11 @@ LosConfigManager::LosConfigManager(QObject *parent) : QObject{parent}
 }
 
 
+
+
+/**
+分析项目结构
+*/
 void LosConfigManager::analyse(const QString &absolute_path)
 {
     if (LOS_config)
@@ -18,12 +23,20 @@ void LosConfigManager::analyse(const QString &absolute_path)
 }
 
 
+
+/**
+创建
+*/
 void LosConfigManager::create(const QString &file_path)
 {
     LOS_config = LosConfigFactory::instance().create(file_path, this);
 }
 
 
+
+/**
+判断是不是 在文件内
+*/
 bool LosConfigManager::isInFiles(const QString &file_name)
 {
     if (LOS_config)
@@ -33,6 +46,10 @@ bool LosConfigManager::isInFiles(const QString &file_name)
 }
 
 
+
+/**
+初始化 连接
+*/
 void LosConfigManager::initConnect() {}
 
 } // namespace LosCore

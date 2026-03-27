@@ -3,7 +3,6 @@
 #include <QString>
 #include <functional>
 #include <qglobal.h>
-#include <string>
 
 namespace LosCore
 {

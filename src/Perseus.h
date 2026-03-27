@@ -53,10 +53,8 @@ class Perseus : public QMainWindow
     void onFilesBtnClicked();                                   // 打开本地文件夹
     void onExplorerFileDoubleClicked(const QModelIndex &index); // 打开本地文件夹
     void onRunSingleFileBtnClicked();                           // 运行一个文本
-    void onAppendErr(const QString &);
-    void onAppendLog(const QString &);
-    void onBuildOver(bool);
     void onLog(const QString &log);
+    void onZoomUi(int delta);
 
   private:
     Ui::Perseus *ui;

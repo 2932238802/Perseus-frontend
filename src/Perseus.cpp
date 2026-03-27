@@ -10,6 +10,7 @@
 #include "models/LosFilePath/LosFilePath.h"
 #include "view/LosEditorTabUi/LosEditorTabUi.h"
 #include "view/LosIssuesUi/LosIssuesUi.h"
+#include <qapplication.h>
 
 /**
 构造
@@ -79,6 +80,7 @@ void Perseus::OnFileLoaded(bool isc)
 /**
 文件按钮 被点击
 支持导入文件和文件夹
+修复 相关问题
 */
 void Perseus::onFilesBtnClicked()
 {
@@ -93,19 +95,14 @@ void Perseus::onFilesBtnClicked()
     {
         QString filePathChoose = dialog.selectedFiles().first();
         LosModel::LosFilePath path(filePathChoose);
+        QString projectDirOfPath = "";
         if (path.isFile())
         {
-            QString projectDirOfPath = path.getAbsolutePath();
-            LOS_projectFilepath.loadFile(projectDirOfPath);
-            bool isSuc = LOS_projectFilepath.isExist();
-            this->OnFileLoaded(isSuc);
+            projectDirOfPath = path.getAbsolutePath();
         }
-        else if (path.isDir())
-        {
-            LOS_projectFilepath.loadFile(filePathChoose);
-            bool isSuc = LOS_projectFilepath.isExist();
-            this->OnFileLoaded(isSuc);
-        }
+        LOS_projectFilepath.loadFile(projectDirOfPath);
+        bool isSuc = LOS_projectFilepath.isExist();
+        this->OnFileLoaded(isSuc);
     }
 }
 
@@ -148,37 +145,28 @@ void Perseus::onRunSingleFileBtnClicked()
 }
 
 
-
-/**
- */
-void Perseus::onAppendErr(const QString &str)
-{
-    ERR(str, "Perseus");
-}
-
-
-
-void Perseus::onAppendLog(const QString &str)
-{
-    INF(str, "Perseus");
-}
-
-
-
-/**
-建立完毕
-*/
-void Perseus::onBuildOver(bool ok)
-{
-    QString msg(ok == true ? "suc!" : "failed!");
-    INF("build" + msg, "Perseus");
-}
-
-
-
 void Perseus::onLog(const QString &log)
 {
     ui->output_plaintextedit->appendHtml(log);
+}
+
+
+/**
+- 字体缩放实现
+- this->setStyleSheet(this->styleSheet()); 增加对应的 格式 修复
+
+*/
+void Perseus::onZoomUi(int delta)
+{
+    QFont font  = QApplication::font();
+    int newSize = font.pointSize() + delta;
+    if (newSize < 8)
+        newSize = 8;
+    if (newSize > 48)
+        newSize = 48;
+    font.setPointSize(newSize);
+    QApplication::setFont(font);
+    this->setStyleSheet(this->styleSheet());
 }
 
 
@@ -208,6 +196,9 @@ void Perseus::initConnect()
 */
 void Perseus::initStyle()
 {
+    QFont defaultFont = QApplication::font();
+    defaultFont.setPointSize(11);
+    QApplication::setFont(defaultFont);
     ui->editor_tabwidget->setTabsClosable(true);
     ui->main_splitter->setStretchFactor(0, 1);
     ui->main_splitter->setStretchFactor(1, 4);
@@ -247,4 +238,16 @@ void Perseus::initShotcut()
             };
         },
         "run single file");
+    LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::FONT_ZOOM_IN, this,
+                                                [=]()
+                                                {
+                                                    INF("larger...", "Perseus");
+                                                    this->onZoomUi(2);
+                                                });
+    LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::FONT_ZOOM_OUT, this,
+                                                [=]()
+                                                {
+                                                    INF("smaller...", "Perseus");
+                                                    this->onZoomUi(-2);
+                                                });
 }

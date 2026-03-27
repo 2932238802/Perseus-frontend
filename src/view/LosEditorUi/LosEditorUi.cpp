@@ -180,7 +180,6 @@ void LosEditorUi::loadContextAndPath(LosModel::LosFileContext *context, LosModel
     }
     setPlainText(text);
     blockSignals(false);
-    INF("emit open signals:" + LOS_filePath->getFilePath(), "LosEditorUi");
     emit LosCore::LosRouter::instance()._cmd_lsp_request_openFile(LOS_filePath -> getFilePath(), this->toPlainText());
 }
 
@@ -196,7 +195,6 @@ void LosEditorUi::insertCompletion(const QString &completion)
     qtc.insertText(completion.right(needLenth));
     setTextCursor(qtc); // 为什么 这里还要 setTextCursor
 }
-
 
 
 
@@ -239,7 +237,6 @@ QString LosEditorUi::getWordUnderCursor() const
     }
     return text.mid(start, col - start);
 }
-
 
 
 
@@ -371,4 +368,18 @@ void LosEditorUi::mousePressEvent(QMouseEvent *event)
     QPlainTextEdit::mousePressEvent(event);
 }
 
+
+/**
+- 暂时先 监听 字体变化 然后修改 tab 按键的效果
+*/
+void LosEditorUi::changeEvent(QEvent *e)
+{
+    if (e->type() == QEvent::FontChange)
+    {
+        QFontMetrics met(this->font());
+        int tab = 4 * met.horizontalAdvance(" ");
+        this->setTabStopDistance(tab);
+    }
+    QPlainTextEdit::changeEvent(e);
+}
 } // namespace LosView

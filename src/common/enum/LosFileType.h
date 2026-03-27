@@ -1,4 +1,4 @@
-
+#pragma once
 #include <QString>
 #include <regex>
 
@@ -20,7 +20,7 @@ enum class LOS_ENUM_FileType{
 inline LOS_ENUM_FileType GetFileType(const QString & suffix)
 {
     QString suffix_to_lower = suffix.toLower();
-    std::regex rCpp(R"(^(cpp|cc|cxx|)$)");
+    std::regex rCpp(R"(^(cpp|cc|cxx)$)");
     std::regex rH(R"(hpp|h)");
 
     if(std::regex_match(suffix_to_lower.toStdString(),rCpp))

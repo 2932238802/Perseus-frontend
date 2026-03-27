@@ -19,6 +19,7 @@
 #include <QTextBlock>
 #include <QTextCursor>
 #include <QTimer>
+#include <qcoreevent.h>
 #include <qfontmetrics.h>
 #include <qglobal.h>
 #include <qnamespace.h>
@@ -72,6 +73,7 @@ class LosEditorUi : public QPlainTextEdit
   protected: // override
     void keyPressEvent(QKeyEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
+    void changeEvent(QEvent *e) override;
 
   private: // param
     bool L_dirty                          = false;
