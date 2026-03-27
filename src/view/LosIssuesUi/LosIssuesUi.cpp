@@ -8,6 +8,7 @@
 #include <qboxlayout.h>
 #include <qcolor.h>
 #include <qnamespace.h>
+#include <qtableview.h>
 #include <qtablewidget.h>
 namespace LosView
 {
@@ -21,7 +22,9 @@ LosIssuesUi::LosIssuesUi(QWidget *parent) : QWidget(parent)
     initConnect();
 }
 LosIssuesUi::~LosIssuesUi() {}
-void LosIssuesUi::updateTable(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags)
+
+void LosIssuesUi::onUpdateTable(const QString &file_path,
+                                const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags)
 {
     if (!L_table)
         return;
@@ -83,6 +86,8 @@ void LosIssuesUi::initStyle()
 void LosIssuesUi::initConnect()
 {
     connect(L_table, &QTableWidget::cellDoubleClicked, this, &LosIssuesUi::onTableDoubleClicked);
+    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this,
+            &LosIssuesUi::onUpdateTable);
 }
 
 } // namespace LosView

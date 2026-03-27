@@ -124,6 +124,8 @@ void LosLspClient::sendMsg(const QString &method, const QJsonObject &param)
     INF("[lsp]: " + method, "LosLspClient");
 }
 
+
+
 /**
 文件打开
 */
@@ -138,6 +140,8 @@ void LosLspClient::didOpen(const QString &file_path, const QString &text)
     params["textDocument"] = textDocument;
     sendMsg("textDocument/didOpen", params);
 }
+
+
 
 /**
 文件修改
@@ -157,6 +161,8 @@ void LosLspClient::didChange(const QString &file_path, const QString &text)
     params["contentChanges"] = contentChanges;
     sendMsg("textDocument/didChange", params);
 }
+
+
 
 /**
 定位 定位
@@ -238,6 +244,8 @@ void LosLspClient::initConnect()
             &LosLspClient::sendMsgForDidChangeWatchedFiles);
 }
 
+
+
 /**
 发送 初始化 请求
 */
@@ -253,10 +261,15 @@ void LosLspClient::sendInitializeRequest()
     sendRequest("initialize", params, LosLspType::REQ_INITIALIZE);
 }
 
+
+
+
 void LosLspClient::sendInitializedMsg()
 {
     sendMsg("initialized", QJsonObject());
 }
+
+
 
 /**
 - 处理原始数据

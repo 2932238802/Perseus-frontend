@@ -193,19 +193,6 @@ void LosEditorTabUi::onEditDirty(bool is_dirty)
     }
 }
 
-/**
-保存的逻辑
-*/
-void LosEditorTabUi::onCtrlSToSaveCurFile()
-{
-    auto curWidget = qobject_cast<LosEditorUi *>(L_tabWidget->currentWidget());
-    if (!curWidget || !curWidget->isDirty())
-        return;
-    if (!curWidget->save())
-    {
-        QMessageBox::critical(this, "error", "error in save file");
-    }
-}
 
 
 /**
@@ -217,32 +204,6 @@ void LosEditorTabUi::onDefineResult(const QString &file_path, int line)
     {
         getCurEditor()->gotoLine(line);
     }
-}
-
-
-/**
-
-*/
-void LosEditorTabUi::onCompletionResult(const QStringList &list)
-{
-    auto curEditor = getCurEditor();
-    if (curEditor)
-    {
-        curEditor->showCompletion(list);
-    }
-}
-
-
-
-/**
-解析结果
-*/
-void LosEditorTabUi::onDiagnosticsResult(const QString &file_path,
-                                         const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags)
-{
-    auto curWidget = getCurEditor();
-    if (nullptr != curWidget)
-        curWidget->showDiagnostic(file_path, diags);
 }
 
 
@@ -271,12 +232,6 @@ void LosEditorTabUi::initConnect()
     // 收到 定义 结果 就去处理
     connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_definition, this,
             &LosEditorTabUi::onDefineResult);
-
-    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_completion, this,
-            &LosEditorTabUi::onCompletionResult);
-
-    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this,
-            &LosEditorTabUi::onDiagnosticsResult);
 
     connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_gotoFile, this,
             &LosEditorTabUi::onDoubleClickedOnIssue);

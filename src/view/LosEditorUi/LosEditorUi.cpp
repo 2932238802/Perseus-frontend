@@ -210,6 +210,7 @@ bool LosEditorUi::save()
     {
         L_dirty = false;
         emit LosCore::LosRouter::instance()._cmd_fileDirty(false);
+        emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(LOS_filePath -> getFilePath(), toPlainText());
     }
     return ok;
 }
@@ -263,8 +264,13 @@ void LosEditorUi::initConnect()
             &LosEditorUi::insertCompletion);
     connect(this->document(), &QTextDocument::contentsChanged, this, &LosEditorUi::onTextChanged);
     connect(L_timer, &QTimer::timeout, this, &LosEditorUi::onDebounceTimeout);
-}
+    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this,
+            &LosEditorUi::showDiagnostic);
+            
+    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_completion, this,
+            &LosEditorUi::showCompletion);
 
+}
 
 
 /**
@@ -290,6 +296,7 @@ void LosEditorUi::onTextChanged()
     {
         L_dirty = true;
         emit LosCore::LosRouter::instance()._cmd_fileDirty(true);
+        emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(LOS_filePath -> getFilePath(), toPlainText());
     }
     L_timer->start(200);
 }

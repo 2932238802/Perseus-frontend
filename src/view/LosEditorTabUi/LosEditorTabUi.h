@@ -39,18 +39,15 @@ class LosEditorTabUi : public QWidget
     int tabCount() const;
     QString getCurFilePath() const;
 
-
   private slots: // chs
     void onTabCloseRequested(int index);
     void onEditDirty(bool is_dirty);
-    void onCtrlSToSaveCurFile();
     void onDefineResult(const QString &file_path, int line);
-    void onCompletionResult(const QStringList &);
-    void onDiagnosticsResult(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags);
     void onDoubleClickedOnIssue(const QString &file_path, int line);
 
   private: // init
     void initConnect();
+
 
   private: // params
     QTabWidget *L_tabWidget;

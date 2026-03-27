@@ -18,10 +18,10 @@ class LosIssuesUi : public QWidget
     explicit LosIssuesUi(QWidget *parent = nullptr);
     ~LosIssuesUi();
 
-    void updateTable(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags);
 
   private slots:
     void onTableDoubleClicked(int row, int colume);
+    void onUpdateTable(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags);
 
   private:
     void initUi();

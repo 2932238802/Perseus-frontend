@@ -238,16 +238,20 @@ void Perseus::initShotcut()
             };
         },
         "run single file");
-    LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::FONT_ZOOM_IN, this,
-                                                [=]()
-                                                {
-                                                    INF("larger...", "Perseus");
-                                                    this->onZoomUi(2);
-                                                });
-    LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::FONT_ZOOM_OUT, this,
-                                                [=]()
-                                                {
-                                                    INF("smaller...", "Perseus");
-                                                    this->onZoomUi(-2);
-                                                });
+    LosCore::LosShortcutManager::instance().reg(
+        LosCommon::ShortCut::FONT_ZOOM_IN, this,
+        [=]()
+        {
+            INF("larger...", "Perseus");
+            this->onZoomUi(2);
+        },
+        "zoom in");
+    LosCore::LosShortcutManager::instance().reg(
+        LosCommon::ShortCut::FONT_ZOOM_OUT, this,
+        [=]()
+        {
+            INF("smaller...", "Perseus");
+            this->onZoomUi(-2);
+        },
+        "zoom out");
 }
