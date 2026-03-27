@@ -20,15 +20,19 @@ LosSingleCppRunner::LosSingleCppRunner(const QString &file_path, QObject *parent
     L_runPro = new QProcess(this);
 
 #ifdef Q_OS_WIN
-    L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() + LosCommon::LosRunner_Constants::WIN_EXE;
+    L_exePath =
+        LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() + LosCommon::LosRunner_Constants::WIN_EXE;
 #elif defined(Q_OS_LINUX) || defined(Q_OS_MAC)
     L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() +
                 LosCommon::LosRunner_Constants::LINUX_EXE;
 #else
-    L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() + LosCommon::LosRunner_Constants::LINUX_EXE;
+    L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() +
+                LosCommon::LosRunner_Constants::LINUX_EXE;
 #endif
     initConnect();
 }
+
+
 
 /**
 析构
@@ -38,6 +42,8 @@ LosSingleCppRunner::~LosSingleCppRunner()
 {
     stop();
 }
+
+
 
 /**
 停止
@@ -53,6 +59,8 @@ void LosSingleCppRunner::stop()
         L_runPro->kill();
     }
 }
+
+
 
 /*
 运行
@@ -110,9 +118,20 @@ void LosSingleCppRunner::initConnect()
             });
 
     connect(L_runPro, &QProcess::readyReadStandardOutput, this,
-            [=]() {
-                INF(QString("result:\n%1").arg(QString::fromLocal8Bit(L_runPro->readAllStandardOutput())),
-                    "LosSingleCppRunner");
+            [=]()
+            {
+                QString msg{"==== result ===="};
+                while (L_runPro->canReadLine())
+                {
+                    QByteArray rawData = L_runPro->readLine();
+                    QString lineStr    = QString::fromLocal8Bit(rawData).trimmed();
+                    if (!lineStr.isEmpty())
+                    {
+                        msg += QString("\n%1").arg(lineStr);
+                    }
+                }
+                msg += "\n================\n";
+                INF(msg, "LosSingleCppRunner");
             });
 
     connect(L_runPro, &QProcess::readyReadStandardError, this,

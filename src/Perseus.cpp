@@ -62,12 +62,15 @@ void Perseus::OnFileLoaded(bool isc)
         }
         LOS_rootNode = nullptr;
         LOS_rootNode = LosModel::LosFileNode::create(curPath, nullptr);
-        LosModel::LosFileNode::build(LOS_rootNode, curPath);
-        LOS_treeModel = new LosModel::LosFileTreeModel(LOS_rootNode, nullptr);
-        ui->explorer_treeview->updateExplorer(LOS_treeModel);
-        INF("load project suc:" + curPath, "Perseus");
-        LOS_configMgr->create(curPath);
-        LOS_configMgr->analyse(curPath);
+        LosModel::LosFileNode::build(LOS_rootNode, curPath,
+                                     [this, curPath]()
+                                     {
+                                         LOS_treeModel = new LosModel::LosFileTreeModel(LOS_rootNode, nullptr);
+                                         ui->explorer_treeview->updateExplorer(LOS_treeModel);
+                                         INF("load project suc:" + curPath, "Perseus");
+                                         LOS_configMgr->create(curPath);
+                                         LOS_configMgr->analyse(curPath);
+                                     });
     }
     else
     {
@@ -78,9 +81,10 @@ void Perseus::OnFileLoaded(bool isc)
 
 
 /**
-文件按钮 被点击
-支持导入文件和文件夹
-修复 相关问题
+- 文件按钮 被点击
+- 支持导入文件和文件夹
+- 修复 相关问题
+- 仅仅 支持 文件选择 默认 生成 一个 文件夹
 */
 void Perseus::onFilesBtnClicked()
 {
@@ -95,11 +99,7 @@ void Perseus::onFilesBtnClicked()
     {
         QString filePathChoose = dialog.selectedFiles().first();
         LosModel::LosFilePath path(filePathChoose);
-        QString projectDirOfPath = "";
-        if (path.isFile())
-        {
-            projectDirOfPath = path.getAbsolutePath();
-        }
+        QString projectDirOfPath = path.getAbsolutePath();
         LOS_projectFilepath.loadFile(projectDirOfPath);
         bool isSuc = LOS_projectFilepath.isExist();
         this->OnFileLoaded(isSuc);

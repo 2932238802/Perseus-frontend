@@ -2,8 +2,11 @@
 #include "models/LosFileContext/LosFileContext.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include <QDir>
+#include <QFuture>
+#include <QFutureWatcher>
 #include <QList>
 #include <QString>
+#include <QtConcurrent>
 #include <memory>
 
 namespace LosModel
@@ -20,7 +23,8 @@ class LosFileNode
     void appendChild(LosFileNode *node);
     void clear();
     void setParentNode(LosFileNode *node);
-    static void build(LosFileNode *root, const QString &cur);
+    static void build(LosFileNode *root, const QString &cur,std::function<void()> on_finished);
+    static void buildImpl(LosFileNode *, const QString &);
 
   public: // get
     int getChildCount() const;
