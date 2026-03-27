@@ -25,6 +25,7 @@ void LosLog::log(LogType type, const QString &msg, const QString &comp) {
   QString timeStr = QDateTime::currentDateTime().toString("HH:mm:ss");
   QString color = getColor(type);
   QString prefix = getPrefix(type);
+  QString msgToHtml = msg.toHtmlEscaped().replace("\n","<br>");
   QString html = QString("<span style='color:gray;'>[%1]</span> "
                          "<span style='color:#569CD6;'>[%2]</span> "
                          "<span style='color:%3;'><b>%4</b> %5</span>")
@@ -32,11 +33,16 @@ void LosLog::log(LogType type, const QString &msg, const QString &comp) {
                      .arg(comp)
                      .arg(color)
                      .arg(prefix)
-                     .arg(msg.toHtmlEscaped());
+                     .arg(msgToHtml);
 
   emit _sendLog(html);
 }
 
+
+/**
+- 获取对应的 水平的颜色
+- 
+*/
 QString LosLog::getColor(LogType level) {
   switch (level) {
   case LogType::INFO:
@@ -52,6 +58,10 @@ QString LosLog::getColor(LogType level) {
   }
 }
 
+
+/**
+- 获取 打印的 前后缀
+*/
 QString LosLog::getPrefix(LogType level) {
   switch (level) {
   case LogType::INFO:
@@ -66,6 +76,7 @@ QString LosLog::getPrefix(LogType level) {
     return "";
   }
 }
+
 
 LosLog::LosLog(QObject *parent) : QObject(parent) {}
 

@@ -66,5 +66,14 @@ struct ConfigItem
 } // namespace LosConfig_Constants
 
 
+namespace LosSession_Constants
+{
+struct Config
+{
+    QStringList L_curFilePaths{};
+    QString L_curProDir = "";
+};
+
+} // namespace LosSession_Constants
 
 } // namespace LosCommon

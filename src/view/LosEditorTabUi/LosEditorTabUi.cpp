@@ -133,6 +133,14 @@ QString LosEditorTabUi::getCurFilePath() const
     return widget != nullptr ? LOS_pathToUi.key(widget) : "";
 }
 
+
+
+QStringList LosEditorTabUi::getOpenFiles() const
+{
+    return LOS_pathToUi.keys();
+}
+
+
 /**
 关闭 ui 点击
 */

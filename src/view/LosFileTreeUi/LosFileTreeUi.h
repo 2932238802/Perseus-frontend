@@ -27,11 +27,11 @@ class LosFileTreeUi : public QTreeView
     explicit LosFileTreeUi(QWidget *parent = nullptr);
     ~LosFileTreeUi() = default;
 
-
   public: // tool
-    void updateExplorer(LosModel::LosFileTreeModel *model);
-    void copyFileOrFolder(const QString &src_path, const QString &des_path);
-    void deleteFileOrFolder(const QString &file_path);
+    void updateExplorer(LosModel::LosFileTreeModel *);
+    void copyFileOrFolder(const QString &, const QString &);
+    void deleteFileOrFolder(const QString &);
+    bool expandToFile(const QString &);
 
   public slots: // chs
     void onCustomContextMenu(const QPoint &pos);
@@ -39,5 +39,8 @@ class LosFileTreeUi : public QTreeView
   private:
     void initConnect();
     void initStyle();
+
+  private: // innner tool
+    QModelIndex findAndExpand(LosModel::LosFileNode *, const QString &, const QModelIndex &);
 };
 } // namespace LosView

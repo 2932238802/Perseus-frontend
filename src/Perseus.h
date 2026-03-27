@@ -5,6 +5,7 @@
 #include "core/LosLsp/LosLspClient/LosLspClient.h"
 #include "core/LosLsp/LosLspManager/LosLspManager.h"
 #include "core/LosRunner/LosRunManager/LosRunManager.h"
+#include "core/LosSesssion/LosSesssion.h"
 #include "core/LosShortcutManager/LosShortcutManager.h"
 #include "core/log/LosLog/LosLog.h"
 #include "models/LosFileNode/LosFileNode.h"
@@ -47,6 +48,10 @@ class Perseus : public QMainWindow
     void initConnect();
     void initStyle();
     void initShotcut();
+    void initSession();
+
+  private: // tool
+    LosCommon::LosSession_Constants::Config collectConfig();
 
   public slots:
     void OnFileLoaded(bool isc);

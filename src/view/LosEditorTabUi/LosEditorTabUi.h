@@ -38,6 +38,7 @@ class LosEditorTabUi : public QWidget
     LosEditorUi *getCurEditor();
     int tabCount() const;
     QString getCurFilePath() const;
+    QStringList getOpenFiles() const;
 
   private slots: // chs
     void onTabCloseRequested(int index);

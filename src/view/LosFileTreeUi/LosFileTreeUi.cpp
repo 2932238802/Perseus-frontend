@@ -1,9 +1,11 @@
-
-
 #include "LosFileTreeUi.h"
 #include "core/LosRouter/LosRouter.h"
+#include "core/log/LosLog/LosLog.h"
+#include "models/LosFileNode/LosFileNode.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include "models/LosFileTreeModel/LosFileTreeModel.h"
+#include <qabstractitemmodel.h>
+#include <qabstractitemview.h>
 #include <qaction.h>
 #include <qdir.h>
 #include <qevent.h>
@@ -103,8 +105,7 @@ void LosFileTreeUi::onCustomContextMenu(const QPoint &pos)
     if (selectedAction == newFileAct)
     {
         bool ok;
-        QString fileName =
-            QInputDialog::getText(this, "New File", "please input", QLineEdit::Normal, "", &ok);
+        QString fileName = QInputDialog::getText(this, "New File", "please input", QLineEdit::Normal, "", &ok);
         if (ok && !fileName.trimmed().isEmpty())
         {
             QString newFilePath = QDir(targetDir).filePath(fileName.trimmed());
@@ -244,4 +245,62 @@ void LosFileTreeUi::deleteFileOrFolder(const QString &file_path)
         QFile::remove(file_path);
     }
 }
+
+
+/**
+- 展开到 指定的文件
+*/
+bool LosFileTreeUi::expandToFile(const QString &file_path)
+{
+    auto *treeModel = qobject_cast<LosModel::LosFileTreeModel *>(model());
+    if (nullptr == treeModel)
+    {
+        return false;
+    }
+    LosModel::LosFileNode *rootNode = treeModel->getRoot();
+    QModelIndex index               = findAndExpand(rootNode, file_path, QModelIndex());
+    if (!index.isValid())
+    {
+        ERR("the specified file was not found", "LosFileTreeUi");
+        return false;
+    }
+    scrollTo(index, QAbstractItemView::EnsureVisible);
+    return true;
+}
+
+
+/**
+- 找到 对应的 index
+*/
+QModelIndex LosFileTreeUi::findAndExpand(LosModel::LosFileNode *node, const QString &path,
+                                         const QModelIndex &parent_index)
+{
+    if (nullptr == node)
+        return QModelIndex();
+
+    if (node->getFilePath() == path)
+    {
+        QModelIndex cur = parent_index;
+        while (cur.isValid())
+        {
+            expand(cur);
+            cur = cur.parent();
+        }
+        return parent_index;
+    };
+
+    for (int i = 0; i < node->getChildCount(); i++)
+    {
+        LosModel::LosFileNode *child = node->getChild(i);
+        QModelIndex childIndex       = model()->index(i, 0, childIndex);
+        QModelIndex rst              = findAndExpand(child, path, parent_index);
+        {
+            if (rst.isValid())
+                return rst;
+        }
+    }
+    return QModelIndex();
+}
+
+
 } // namespace LosView

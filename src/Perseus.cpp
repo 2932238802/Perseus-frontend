@@ -1,5 +1,11 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
+#include "common/constants/ConstantsClass.h"
+#include "core/LosRouter/LosRouter.h"
+#include "core/LosSesssion/LosSesssion.h"
+#include "core/log/LosLog/LosLog.h"
+#include "models/LosFilePath/LosFilePath.h"
+
 
 /**
 构造
@@ -10,6 +16,7 @@ Perseus::Perseus(QWidget *parent) : QMainWindow(parent), ui(new Ui::Perseus)
     initConnect();
     initStyle();
     initShotcut();
+    QTimer::singleShot(100, this, &Perseus::initSession);
 }
 
 /**
@@ -17,6 +24,7 @@ Perseus::Perseus(QWidget *parent) : QMainWindow(parent), ui(new Ui::Perseus)
 */
 Perseus::~Perseus()
 {
+    LosCore::LosSession::instance().saveConfig(collectConfig());
     delete ui;
 }
 
@@ -59,6 +67,7 @@ void Perseus::OnFileLoaded(bool isc)
                                          INF("load project suc:" + curPath, "Perseus");
                                          LOS_configMgr->create(curPath);
                                          LOS_configMgr->analyse(curPath);
+                                         emit LosCore::LosRouter::instance()._cmd_fileTreeDone();
                                      });
     }
     else
@@ -243,4 +252,50 @@ void Perseus::initShotcut()
             this->onZoomUi(-2);
         },
         "zoom out");
+}
+
+
+
+/**
+- 初始化会话
+*/
+void Perseus::initSession()
+{
+    LosCommon::LosSession_Constants::Config conf;
+    if (!LosCore::LosSession::instance().loadConfig(&conf))
+        return;
+
+    LOS_projectFilepath.loadFile(conf.L_curProDir);
+    bool isSuc = LOS_projectFilepath.isExist();
+    OnFileLoaded(isSuc);
+    if (!LOS_tabUi)
+        return;
+
+    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_fileTreeDone, this,
+            [=]()
+            {
+                for (const auto &file : conf.L_curFilePaths)
+                {
+                    LOS_tabUi->openFile(file);
+                }
+                if (conf.L_curProDir.isEmpty())
+                    return;
+                ui->explorer_treeview->expandToFile(conf.L_curFilePaths.first());
+            });
+}
+
+
+
+/**
+- 收集当前的配置
+*/
+LosCommon::LosSession_Constants::Config Perseus::collectConfig()
+{
+    LosCommon::LosSession_Constants::Config conf;
+    for (const auto &path : LOS_tabUi->getOpenFiles())
+    {
+        conf.L_curFilePaths.append(path);
+    }
+    conf.L_curProDir = LOS_projectFilepath.getFilePath();
+    return conf;
 }

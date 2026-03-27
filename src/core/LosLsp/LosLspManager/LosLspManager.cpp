@@ -1,9 +1,7 @@
 
 
 #include "core/LosLsp/LosLspManager/LosLspManager.h"
-#include "core/LosLsp/LosLspClient/LosLspClient.h"
-#include "core/LosRouter/LosRouter.h"
-#include <qglobal.h>
+
 
 namespace LosCore
 {
@@ -30,6 +28,8 @@ void LosLspManager::start()
     LOS_client->start();
 }
 
+
+
 /**
 打开文件
 */
@@ -37,6 +37,8 @@ void LosLspManager::openFile(const QString &file_path, const QString &file_conte
 {
     LOS_client->didOpen(file_path, file_context);
 }
+
+
 
 /**
 改变文件信号

@@ -1,6 +1,4 @@
 #include "LosConfigManager.h"
-#include "core/LosConfig/LosConfigFactory/LosConfigFactory.h"
-#include <qstringliteral.h>
 
 namespace LosCore
 {
@@ -9,7 +7,6 @@ LosConfigManager::LosConfigManager(QObject *parent) : QObject{parent}
 {
     initConnect();
 }
-
 
 
 

@@ -115,7 +115,7 @@ void LosSingleCppRunner::initConnect()
     connect(L_runPro, &QProcess::readyReadStandardOutput, this,
             [=]()
             {
-                QString msg{"==== result ===="};
+                QString msg{"\n==== result ===="};
                 while (L_runPro->canReadLine())
                 {
                     QByteArray rawData = L_runPro->readLine();
@@ -133,7 +133,7 @@ void LosSingleCppRunner::initConnect()
             [=]() { ERR(QString::fromLocal8Bit(L_runPro->readAllStandardError()), "LosSingleCppRunner"); });
 
     connect(L_runPro, &QProcess::finished, this, [=](int exitCode, QProcess::ExitStatus exitStatus)
-            { INF("\n process terminated (exit code: " + QString::number(exitCode) + ")", "LosSingleCppRunner"); });
+            { INF("process terminated (exit code: " + QString::number(exitCode) + ")", "LosSingleCppRunner"); });
 
     connect(L_runPro, &QProcess::errorOccurred, this,
             [=](QProcess::ProcessError error) { ERR("The compiled program failed to start", "LosSingleCppRunner"); });

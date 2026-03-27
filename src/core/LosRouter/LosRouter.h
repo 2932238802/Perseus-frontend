@@ -39,6 +39,8 @@ class LosRouter : public QObject
     void _cmd_codeFormat();
     void _cmd_fileDirty(bool dirty);
 
-    void _cmd_fileSystemChanged();
+    void _cmd_fileTreeDone();   // filetree 建立完毕 发送信号 就是左侧的文件树
+
+    void _cmd_fileSystemChanged(); // 
 };
 } // namespace LosCore

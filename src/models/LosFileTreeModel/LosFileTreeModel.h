@@ -38,6 +38,8 @@ class LosFileTreeModel : public QAbstractItemModel
 
     LosFileNode *nodeFromIndex(const QModelIndex &index);
 
+    LosModel::LosFileNode* getRoot() const ;
+
   private:
     LosModel::LosFileNode *LOS_rootNode;
 };

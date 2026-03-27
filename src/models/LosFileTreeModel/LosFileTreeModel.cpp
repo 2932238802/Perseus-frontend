@@ -22,7 +22,6 @@ LosFileTreeModel::~LosFileTreeModel()
 */
 QModelIndex LosFileTreeModel::index(int row, int column, const QModelIndex &parent) const
 {
-
     if (!hasIndex(row, column, parent))
     {
         return QModelIndex();
@@ -179,6 +178,16 @@ LosFileNode *LosFileTreeModel::nodeFromIndex(const QModelIndex &index)
     if (!index.isValid())
         return LOS_rootNode;
     return static_cast<LosFileNode *>(index.internalPointer());
+}
+
+
+
+/**
+- 获取 根节点
+*/
+LosModel::LosFileNode *LosFileTreeModel::getRoot() const
+{
+    return LOS_rootNode;
 }
 
 } // namespace LosModel
