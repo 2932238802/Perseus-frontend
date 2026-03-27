@@ -24,26 +24,39 @@ LosEditorUi::~LosEditorUi()
 /**
 展示弹窗
 */
+/**
+展示弹窗
+*/
 void LosEditorUi::showCompletion(const QStringList &list)
 {
-    if (list.empty() || nullptr == LOS_completer)
+    if (!this->hasFocus()) 
         return;
+
+    if (list.empty() || nullptr == LOS_completer)
+    {
+        if (LOS_completer && LOS_completer->popup()) {
+            LOS_completer->popup()->hide();
+        }
+        return;
+    }
+    LOS_completer->updateCompletionList(list);
     QString prefix = getWordUnderCursor();
     if (prefix != LOS_completer->completionPrefix())
     {
         LOS_completer->setCompletionPrefix(prefix);
     }
-    LOS_completer->updateCompletionList(list);
     QRect r = cursorRect();
     QFontMetrics fm(this->font());
     int prefixPixelWidth = fm.horizontalAdvance(prefix);
-    r.translate(-prefixPixelWidth, 0);                             // 移动到当前 单词的开头
-    int idealWidth = LOS_completer->popup()->sizeHintForColumn(0); // 设置
+    r.translate(-prefixPixelWidth, 0);                           
+    int idealWidth = LOS_completer->popup()->sizeHintForColumn(0);
     int padding    = 25;
     int finalWidth = qMin(idealWidth + padding, 500);
     r.setWidth(finalWidth);
     LOS_completer->complete(r);
+    L_showComplete = true;
 }
+
 
 
 
@@ -194,6 +207,7 @@ void LosEditorUi::insertCompletion(const QString &completion)
     int needLenth   = completion.size() - LOS_completer->completionPrefix().size();
     qtc.insertText(completion.right(needLenth));
     setTextCursor(qtc); // 为什么 这里还要 setTextCursor
+    L_showComplete = false;
 }
 
 
@@ -266,10 +280,9 @@ void LosEditorUi::initConnect()
     connect(L_timer, &QTimer::timeout, this, &LosEditorUi::onDebounceTimeout);
     connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this,
             &LosEditorUi::showDiagnostic);
-            
+
     connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_completion, this,
             &LosEditorUi::showCompletion);
-
 }
 
 
@@ -298,6 +311,8 @@ void LosEditorUi::onTextChanged()
         emit LosCore::LosRouter::instance()._cmd_fileDirty(true);
         emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(LOS_filePath -> getFilePath(), toPlainText());
     }
+    LOS_completer->popup()->hide();
+    L_showComplete = false;
     L_timer->start(200);
 }
 
@@ -340,9 +355,15 @@ void LosEditorUi::keyPressEvent(QKeyEvent *event)
     {
         switch (event->key())
         {
+        case Qt::Key_Escape:
+        {
+            LOS_completer->popup()->hide();
+            L_showComplete = false;
+            event->ignore();
+            return;
+        }
         case Qt::Key_Enter:
         case Qt::Key_Return:
-        case Qt::Key_Escape:
         case Qt::Key_Tab:
         case Qt::Key_Backtab:
             // 悬浮框显示时，把这些按键让给悬浮框去处理

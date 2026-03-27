@@ -19,6 +19,8 @@
 #include <QTextBlock>
 #include <QTextCursor>
 #include <QTimer>
+#include <QWidget>
+#include <atomic>
 #include <qcoreevent.h>
 #include <qfontmetrics.h>
 #include <qglobal.h>
@@ -76,6 +78,7 @@ class LosEditorUi : public QPlainTextEdit
     void changeEvent(QEvent *e) override;
 
   private: // param
+    std::atomic<bool> L_showComplete      = false;
     bool L_dirty                          = false;
     QString L_oldWord                     = "";
     QTimer *L_timer                       = nullptr;

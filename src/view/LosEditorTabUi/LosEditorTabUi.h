@@ -22,7 +22,6 @@ namespace LosView
 class LosEditorTabUi : public QWidget
 {
     Q_OBJECT
-
   public: // construct
     explicit LosEditorTabUi(QTabWidget *tabWidget, QWidget *object = nullptr);
     ~LosEditorTabUi() override;
