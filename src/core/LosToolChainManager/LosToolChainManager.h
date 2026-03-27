@@ -15,7 +15,7 @@ class LosToolChainManager : public QObject
     ~LosToolChainManager() = default;
 
   public slots:
-    void onCheckToolchain(LosCommon::LosToolChain_Constants::LosLanguage);
+    // void onCheckToolchain(LosCommon::LosToolChain_Constants::LosLanguage);
 
   private:
     void initConfig();
