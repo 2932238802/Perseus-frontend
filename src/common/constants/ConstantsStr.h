@@ -69,11 +69,6 @@ inline constexpr const char *FORMAT_STYLE = R"({
 */
 namespace LosRunner_Constants
 {
-#ifdef Q_OS_WIN
-inline constexpr const char *GXX = "g++.exe";
-#else
-inline constexpr const char *GXX = "g++";
-#endif
 inline constexpr const char *CXX_17     = "-std=c++17";
 inline constexpr const char *CMD_OBJECT = "-o";
 inline constexpr const char *LINUX_EXE  = ".out";

@@ -1,4 +1,4 @@
-#include "core/log/LosLog/LosLog.h"
+#include "core/LosLog/LosLog.h"
 #include "models/LosFileNode/LosFileNode.h"
 #include "models/LosFileTreeModel/LosFileTreeModel.h"
 #include <QClipboard>

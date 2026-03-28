@@ -1,8 +1,5 @@
 
 #include "core/LosShortcutManager/LosShortcutManager.h"
-#include <qnamespace.h>
-#include <qobject.h>
-#include <qshortcut.h>
 
 
 namespace LosCore

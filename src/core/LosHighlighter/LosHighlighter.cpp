@@ -1,8 +1,5 @@
 #include "core/LosHighlighter/LosHighlighter.h"
-#include <qfont.h>
-#include <qnamespace.h>
-#include <qregularexpression.h>
-#include <qtextdocument.h>
+
 
 namespace LosCore
 {

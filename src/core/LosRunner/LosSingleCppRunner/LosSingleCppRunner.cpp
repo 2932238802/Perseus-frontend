@@ -1,4 +1,3 @@
-
 #include "LosSingleCppRunner.h"
 
 
@@ -8,22 +7,10 @@ namespace LosCore
 /**
 默认构造和初始化
 */
-LosSingleCppRunner::LosSingleCppRunner(const QString &file_path, QObject *parent) : LosAbstractRunner{parent}
+LosSingleCppRunner::LosSingleCppRunner(QObject *parent) : LosAbstractRunner{parent}
 {
-    LOS_filePath.loadFile(file_path);
     L_gxxPro = new QProcess(this);
     L_runPro = new QProcess(this);
-
-#ifdef Q_OS_WIN
-    L_exePath =
-        LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() + LosCommon::LosRunner_Constants::WIN_EXE;
-#elif defined(Q_OS_LINUX) || defined(Q_OS_MAC)
-    L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() +
-                LosCommon::LosRunner_Constants::LINUX_EXE;
-#else
-    L_exePath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() +
-                LosCommon::LosRunner_Constants::LINUX_EXE;
-#endif
     initConnect();
 }
 
@@ -55,13 +42,31 @@ void LosSingleCppRunner::stop()
     }
 }
 
+void LosSingleCppRunner::setExePath(const QString &exe_path)
+{
+    L_exePath = exe_path;
+}
 
 
 /*
 运行
 */
-void LosSingleCppRunner::start()
+void LosSingleCppRunner::start(const QString &file_path)
 {
+    LOS_filePath.loadFile(file_path);
+
+
+#ifdef Q_OS_WIN
+    L_outPutPath = LOS_filePath.ge tAbsolutePath() + "/" + LOS_filePath.getBaseFileName() +
+                   LosCommon::LosRunner_Constants::WIN_EXE;
+#elif defined(Q_OS_LINUX) || defined(Q_OS_MAC)
+    L_outPutPath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() +
+                   LosCommon::LosRunner_Constants::LINUX_EXE;
+#else
+    L_outPutPath = LOS_filePath.getAbsolutePath() + "/" + LOS_filePath.getBaseFileName() +
+                   LosCommon::LosRunner_Constants::LINUX_EXE;
+#endif
+
     if (!LOS_filePath.isExist())
     {
         ERR("The file to be executed does not exist...", "LosSingleCppRunner");
@@ -77,9 +82,11 @@ void LosSingleCppRunner::start()
     L_gxxPro->setWorkingDirectory(LOS_filePath.getAbsolutePath());
     QStringList args;
     args << LOS_filePath << LosCommon::LosRunner_Constants::CXX_17 << LosCommon::LosRunner_Constants::CMD_OBJECT
-         << L_exePath;
-    L_gxxPro->start(LosCommon::LosRunner_Constants::GXX, args);
+         << L_outPutPath;
+    L_gxxPro->start(L_exePath, args);
 }
+
+
 
 /**
 - 建立联系
@@ -96,7 +103,7 @@ void LosSingleCppRunner::initConnect()
                 {
                     SUC("editing successful!", "LosSingleCppRunner");
                     L_runPro->setWorkingDirectory(LOS_filePath.getAbsolutePath());
-                    L_runPro->start(L_exePath);
+                    L_runPro->start(L_outPutPath);
                 }
                 else
                 {

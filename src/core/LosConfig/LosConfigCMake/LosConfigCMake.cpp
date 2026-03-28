@@ -1,18 +1,11 @@
 
 #include "LosConfigCMake.h"
-#include "common/constants/ConstantsStr.h"
-#include "core/LosRouter/LosRouter.h"
-#include "core/log/LosLog/LosLog.h"
-#include "models/LosFilePath/LosFilePath.h"
-#include <qprocess.h>
-#include <qurl.h>
+
 namespace LosCore
 {
 
 static struct regis_t<LosConfigCMake> reg_cmake("CMake");
-
 QStringList LosConfigCMake::files{"CMakeLists.txt"};
-
 LosConfigCMake::LosConfigCMake(QObject *parent) : LosConfig(parent) {}
 
 

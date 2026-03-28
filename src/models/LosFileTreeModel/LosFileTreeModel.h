@@ -22,7 +22,7 @@ class LosFileTreeModel : public QAbstractItemModel
 
     // 找爸爸
     QModelIndex parent(const QModelIndex &child) const override;
-    
+
     bool hasChildren(const QModelIndex &parent = QModelIndex()) const override;
 
     Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -38,7 +38,7 @@ class LosFileTreeModel : public QAbstractItemModel
 
     LosFileNode *nodeFromIndex(const QModelIndex &index);
 
-    LosModel::LosFileNode* getRoot() const ;
+    LosModel::LosFileNode *getRoot() const;
 
   private:
     LosModel::LosFileNode *LOS_rootNode;

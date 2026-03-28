@@ -1,5 +1,6 @@
 
 #include "LosEditorTabUi.h"
+#include "common/util/CheckLang.h"
 #include "core/LosFormatManager/LosFormatManager.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/log/LosLog/LosLog.h"
@@ -79,6 +80,10 @@ tool
 */
 void LosEditorTabUi::openFile(const QString &file_path)
 {
+    // 呼叫 解释器 呼叫 运行其
+    emit LosCore::LosRouter::instance()._cmd_checkLspTool(LosCommon::CheckLang(file_path));
+    emit LosCore::LosRouter::instance()._cmd_checkToolchain(LosCommon::CheckLang(file_path));
+
     if (LOS_pathToUi.contains(file_path))
     {
         LosEditorUi *editor = LOS_pathToUi.value(file_path);
@@ -150,7 +155,7 @@ void LosEditorTabUi::onTabCloseRequested(int index)
     if (!wi)
         return;
     LosEditorUi *editor = qobject_cast<LosEditorUi *>(wi);
-    
+
     // 补充
     if (editor->isDirty())
     {

@@ -3,8 +3,10 @@
 #include "common/constants/ConstantsClass.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosSesssion/LosSesssion.h"
+#include "core/LosToolChainManager/LosToolChainManager.h"
 #include "core/log/LosLog/LosLog.h"
 #include "models/LosFilePath/LosFilePath.h"
+#include <qradiobutton.h>
 
 
 /**
@@ -143,6 +145,12 @@ void Perseus::onRunSingleFileBtnClicked()
 }
 
 
+    void Perseus::onProjectBtnClicked()
+    {
+
+    }
+
+
 void Perseus::onLog(const QString &log)
 {
     ui->output_plaintextedit->appendHtml(log);
@@ -177,16 +185,16 @@ void Perseus::initConnect()
     LOS_runMgr    = new LosCore::LosRunManager(this);
     LOS_lspMgr    = new LosCore::LosLspManager(this);
     LOS_configMgr = new LosCore::LosConfigManager(this);
-    LOS_lspMgr->start();
+    LOS_manager   = new LosCore::LosToolChainManager(this);
     connect(ui->files_btn, &QPushButton::clicked, this, &Perseus::onFilesBtnClicked);
     // enter 自动触发 actived
     connect(ui->explorer_treeview, &QTreeView::activated, this, &Perseus::onExplorerFileDoubleClicked);
-    // connect(ui->explorer_treeview, &QTreeView::doubleClicked, this, &Perseus::onExplorerFileDoubleClicked);
     connect(ui->run_singleFile_btn, &QPushButton::clicked, this, &Perseus::onRunSingleFileBtnClicked);
     connect(&LosCore::LosLog::instance(), &LosCore::LosLog::_sendLog, this, &Perseus::onLog);
     connect(
         &LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_fileSystemChanged, this,
         [=]() { OnFileLoaded(true); }, Qt::QueuedConnection);
+        connect(ui->project_btn,&QRadioButton::toggle,this,&Perseus::onProjectBtnClicked);
 }
 
 /**

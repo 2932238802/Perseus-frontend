@@ -1,81 +1,57 @@
-
-
 #pragma once
 #include "common/constants/ConstantsClass.h"
 #include "common/constants/ConstantsStr.h"
-#include "core/LosRouter/LosRouter.h"
-#include "core/log/LosLog/LosLog.h"
-
+#include "core/LosLog/LosLog.h"
+#include <QByteArray>
 #include <QDebug>
-#include <QDir>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QMap>
 #include <QObject>
 #include <QProcess>
-#include <QTimer>
+#include <QRegularExpression>
+#include <QUrl>
 #include <atomic>
-#include <qcoreapplication.h>
-#include <qglobal.h>
-#include <qjsonarray.h>
-#include <qjsondocument.h>
-#include <qjsonobject.h>
-#include <qjsonvalue.h>
-#include <qobject.h>
-#include <qprocess.h>
-#include <qregularexpression.h>
-#include <qsharedpointer.h>
-#include <qurl.h>
+#include <utility>
 
 namespace LosCore
 {
+using LosLspType = LosCommon::LosLsp_Constants::LosLspType;
 
 class LosLspClient : public QObject
 {
     Q_OBJECT
-
-  public: // enum
-    enum LosLspType
-    {
-        // 初始化
-        REQ_INITIALIZE,
-        // 语法补全
-        REQ_COMPLETION,
-        // 语法报错
-        REQ_CHECK,
-        REQ_HOVER,
-        REQ_DIFINE,
-    };
-
-  public: // const
+  public:
     explicit LosLspClient(QObject *parent = nullptr);
-    ~LosLspClient();
+    virtual ~LosLspClient();
 
-  public: // tool
-    void start();
-    void sendRequest(const QString &method, const QJsonObject &params, LosLspType type);
-    void sendRequestForCompletion(const QString &file_path, int line, int character);
-    void sendMsgForDidChangeWatchedFiles(const QString &file_id,
-                                         LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type type);
-    void sendMsg(const QString &method, const QJsonObject &param);
-    void didOpen(const QString &file_path, const QString &text);
+    virtual void start(const QStringList &start_up_args, const QString &exe_path) = 0;
+    virtual void dealLspMessage(const QJsonObject &obj)                           = 0;
+
+    void didOpen(const QString &file_path, const QString &text, const QString &languageId);
     void didChange(const QString &file_path, const QString &text);
-    void defineRequest(int line, int col, const QString &file_path);
+    void requestCompletion(const QString &file_path, int line, int character);
+    void requestDefinition(const QString &file_path, int line, int character);
+    void didChangeWatchedFiles(const QString &filePath,
+                               LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type type);
 
-  public: // init
-    void initConnect();
-    void sendInitializeRequest();
-    void sendInitializedMsg();
+  protected:
+    void sendRequest(const QString &method, const QJsonObject &params, LosLspType type);
+    void sendNotification(const QString &method, const QJsonObject &params);
 
-  private: // tool
-    void processRawData(const QByteArray &data);
-    void dealLspMessage(const QJsonObject &obj);
+  private slots:
+    void processRawData();
 
-  private:
-    std::atomic<int> L_id{1};
-    std::atomic<int> L_versionId{2};
+  protected:
+    bool L_isinit = false;
+    QList<LosCommon::LosLsp_Constants::PendingRequest> L_pendings;
+
     QProcess *L_process;
-    QMap<int, LosLspType> L_idToType;
     QByteArray L_rawData;
+    std::atomic<int> L_id;
+    std::atomic<int> L_versionId;
+    QMap<int, LosLspType> L_idToType;
 };
+
 } // namespace LosCore

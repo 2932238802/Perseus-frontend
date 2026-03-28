@@ -10,6 +10,17 @@ namespace LosCore
 class LosConfig;
 }
 
+
+namespace LosCommon
+{
+enum class FindFileType
+{
+    SYSTEM_TOOLCHAIN_CONFIG_JSON = 1,
+    COMMON
+};
+}; // namespace LosCommon
+
+
 namespace LosCommon
 {
 
@@ -25,6 +36,25 @@ enum DiagnosticSeverity
     Warning,
     Information,
     Hint
+};
+
+enum LosLspType
+{
+    // 初始化
+    REQ_INITIALIZE,
+    // 语法补全
+    REQ_COMPLETION,
+    // 语法报错
+    REQ_CHECK,
+    REQ_HOVER,
+    REQ_DIFINE,
+};
+
+struct PendingRequest
+{
+    QString L_filePath;
+    QString L_content;
+    QString L_langId;
 };
 
 /**
@@ -90,16 +120,31 @@ enum class LosLanguage
     RUST,
     JAVA,
     PYTHON,
+    CSHARP,
+    UNKNOWN,
+};
+
+enum class ToolCategory
+{
+    LSP,       // 语言服务器
+    Compiler,  // 编译器
+    Formatter, // 格式化工具
+    Linter,    // 静态分析
+    Debugger,  // 调试器
+    BuildTool
 };
 
 struct ToolChainConfig
 {
-    LosLanguage LOS_language;
-    QString L_name;
-    QStringList L_exeName;
-    QString L_version;
-    QString L_validateKey;
-    QString L_downUrl;
+    LosLanguage LOS_language;     // 属于什么语
+    ToolCategory L_category;      // 是什么类型的工具
+    QString L_name;               // 工具标识名 (如 "clangd")
+    QStringList L_exeName;        // 跨平台可执行文件名
+    QStringList L_startupArgs;    // 默认启动参数
+    bool L_requireNodeJs = false; // 是否依赖 Node 环境  有些需要
+    QString L_version;            // 版本号
+    QString L_downUrl;            // 下载直链
+    QString L_validateKey;        // 文件的验证码 这个
 };
 
 } // namespace LosToolChain_Constants

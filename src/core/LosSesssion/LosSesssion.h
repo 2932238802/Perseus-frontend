@@ -1,10 +1,9 @@
 #pragma once
+#include "common/constants/ConstantsClass.h"
+#include "core/LosLog/LosLog.h"
 #include <QDir>
 #include <QStandardPaths>
 #include <QString>
-
-#include "common/constants/ConstantsClass.h"
-#include "core/log/LosLog/LosLog.h"
 
 namespace LosCore
 {

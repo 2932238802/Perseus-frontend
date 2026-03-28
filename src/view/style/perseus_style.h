@@ -60,10 +60,64 @@ inline const QString perseus_getStyle()
             border: 1px solid #45475a;
         }
 
+        #project_btn {
+            background-color: transparent;
+            color: #6c7086; 
+            border: none;
+            padding: 6px 16px;
+            font-size: 14px;
+            font-family: "Microsoft YaHei", sans-serif;
+            spacing: 8px; 
+        }
+
+        #project_btn:hover {
+            color: #cdd6f4;  
+        }
+
+        #project_btn:checked {
+            color: #89b4fa;  
+            font-weight: bold;
+        }
+
+        #project_btn::indicator {
+            width: 16px;
+            height: 16px;
+            border-radius: 8px;
+            border: 2px solid #45475a; 
+            background-color: transparent;
+        }
+
+        #project_btn::indicator:hover {
+            border-color: #6c7086; 
+        }
+
+        #project_btn::indicator:checked {
+            border-color: #89b4fa; 
+            background-color: #89b4fa; 
+            background: qradialgradient(
+                cx: 0.5, cy: 0.5, radius: 0.5,
+                fx: 0.5, fy: 0.5,
+                stop: 0 #cdd6f4,  
+                stop: 0.4 #89b4fa,  
+                stop: 1 #89b4fa      
+            );
+        }
+
+        #project_btn::indicator:checked:hover {
+            background: qradialgradient(
+                cx: 0.5, cy: 0.5, radius: 0.5,
+                fx: 0.5, fy: 0.5,
+                stop: 0 #ffffff,      
+                stop: 0.4 #74c7ec,   
+                stop: 1 #74c7ec
+            );
+        }
+
         QSplitter::handle {
             background-color: #1e1e2e;
             margin: 1px;
         }
+            
         QSplitter::handle:horizontal:hover, QSplitter::handle:vertical:hover {
             background-color: #89b4fa;
         }
@@ -138,7 +192,7 @@ inline const QString perseus_getStyle()
             padding: 4px 16px 2px 16px; 
             border: none;
             border-bottom: 2px solid transparent;
-            font-size: 0.9em; /* 👈 修改：原来12px */
+            font-size: 0.9em;
             text-transform: uppercase; 
         }
         #bottom_tabwidget QTabBar::tab:selected {
@@ -154,7 +208,7 @@ inline const QString perseus_getStyle()
             color: #cdd6f4;
             border: none;
             font-family: "JetBrains Mono", "Consolas", monospace;
-            font-size: 1.1em; /* 👈 修改：原来14px，让代码区域稍大于基础字体 */
+            font-size: 1.1em;
             selection-background-color: #45475a;
             selection-color: #cdd6f4;
             padding: 4px;
@@ -164,7 +218,6 @@ inline const QString perseus_getStyle()
             background-color: #181825;
         }
 
-        /* 滚动条部分保持不变... */
         QScrollBar:vertical {
             background-color: transparent;
             width: 12px;

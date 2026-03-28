@@ -1,7 +1,7 @@
 #pragma once
 #include "common/constants/ConstantsNum.h"
 #include "common/constants/ConstantsStr.h"
-#include "core/log/LosLog/LosLog.h"
+#include "core/LosLog/LosLog.h"
 #include "models/LosFileContext/LosFileContext.h"
 
 #include <QObject>

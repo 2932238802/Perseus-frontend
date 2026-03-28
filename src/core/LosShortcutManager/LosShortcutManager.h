@@ -1,5 +1,4 @@
 #pragma once
-
 #include <QObject>
 #include <QString>
 #include <functional>
@@ -7,8 +6,7 @@
 #include <qobject.h>
 #include <qshortcut.h>
 #include <qwidget.h>
-
-#include "core/log/LosLog/LosLog.h"
+#include "core/LosLog/LosLog.h"
 
 namespace LosCore
 {

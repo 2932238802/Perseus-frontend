@@ -1,6 +1,6 @@
 #pragma once
 #include "common/enum/LosFileType.h"
-#include "core/log/LosLog/LosLog.h"
+#include "core/LosLog/LosLog.h"
 
 #include <QDebug>
 #include <QDir>

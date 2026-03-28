@@ -1,7 +1,5 @@
 
 #include "LosFormatManager.h"
-#include "common/constants/ConstantsNum.h"
-#include "common/constants/ConstantsStr.h"
 
 namespace LosCore
 {

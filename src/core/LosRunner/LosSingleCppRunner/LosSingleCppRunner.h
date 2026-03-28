@@ -2,8 +2,8 @@
 
 #pragma once
 #include "common/constants/ConstantsStr.h"
+#include "core/LosLog/LosLog.h"
 #include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
-#include "core/log/LosLog/LosLog.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include <QObject>
 #include <QProcess>
@@ -16,18 +16,20 @@ class LosSingleCppRunner : public LosAbstractRunner
 {
     Q_OBJECT
   public: // const
-    explicit LosSingleCppRunner(const QString &path, QObject *parent = nullptr);
+    explicit LosSingleCppRunner(QObject *parent = nullptr);
     ~LosSingleCppRunner() override;
 
   public: // tool
-    void start() override;
+    void start(const QString &path = "main.cpp") override;
     void stop() override;
+    void setExePath(const QString &exe_path);
 
   private: // init
     void initConnect();
 
   private:
     LosModel::LosFilePath LOS_filePath;
+    QString L_outPutPath;
     QString L_exePath;
     QProcess *L_gxxPro;
     QProcess *L_runPro;
