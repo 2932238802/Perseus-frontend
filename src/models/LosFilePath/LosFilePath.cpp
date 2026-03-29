@@ -1,4 +1,7 @@
 #include "LosFilePath.h"
+#include <qfileinfo.h>
+#include <qmimedatabase.h>
+#include <qmimetype.h>
 
 namespace LosModel
 {
@@ -12,6 +15,11 @@ LosFilePath::LosFilePath(const QString &file_path)
     loadFile(file_path);
 }
 
+LosFilePath::LosFilePath(const LosFilePath &file)
+    : L_filePath(file.L_filePath), L_fileName(file.L_fileName), LOS_fileType(file.LOS_fileType)
+{
+    loadFile(L_filePath);
+}
 
 
 /**
@@ -59,6 +67,10 @@ QString LosFilePath::getBaseFileName() const
     return QFileInfo(L_filePath).baseName();
 };
 
+QString LosFilePath::getSuffix() const
+{
+    return QFileInfo(L_filePath).suffix().toLower();
+}
 
 
 QString LosFilePath::getAbsolutePath() const
@@ -99,6 +111,18 @@ bool LosFilePath::isFile() const
 bool LosFilePath::isExist() const
 {
     return QFileInfo(L_filePath).exists();
+}
+
+
+/**
+- 文本文件”和“二进制文件
+- 用来标识文件或数据内容格式的一种标准方式
+*/
+bool LosFilePath::isBinary() const
+{
+    static QMimeDatabase db;
+    QMimeType type = db.mimeTypeForFile(L_filePath);
+    return !type.inherits("text/plain");
 }
 
 

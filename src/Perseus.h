@@ -12,8 +12,8 @@
 #include "models/LosFileTreeModel/LosFileTreeModel.h"
 #include "view/LosEditorTabUi/LosEditorTabUi.h"
 #include "view/LosEditorUi/LosEditorUi.h"
-#include "view/style/perseus_style.h"
 #include "view/LosToolMissUi/LosToolMissUi.h"
+#include "view/style/perseus_style.h"
 
 #include "common/constants/ConstantsClass.h"
 #include "core/LosRouter/LosRouter.h"
@@ -67,7 +67,7 @@ class Perseus : public QMainWindow
     void onProjectBtnClicked(bool checked);                     // 是否开启 项目 模式
     void onLog(const QString &log);
     void onZoomUi(int delta);
-    void onToolChainMissing(const  LosCommon::LosToolChain_Constants::ToolChainConfig&);
+    void onToolChainMissing(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
 
   private:
     Ui::Perseus *ui;

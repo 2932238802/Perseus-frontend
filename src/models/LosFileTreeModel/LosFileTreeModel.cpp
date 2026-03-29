@@ -147,7 +147,7 @@ QVariant LosFileTreeModel::data(const QModelIndex &index, int role) const
     {
     case Qt::DisplayRole:
     {
-        return node->getFileName();
+        return node->getFile().getFileName();
     }
     case Qt::DecorationRole:
     {
@@ -158,7 +158,28 @@ QVariant LosFileTreeModel::data(const QModelIndex &index, int role) const
         }
         else
         {
-            return iconProvider.icon(QFileIconProvider::File);
+            auto file      = node->getFile();
+            QString suffix = file.getSuffix();
+            if (suffix == "cpp" || suffix == "cc" || suffix == "cxx")
+            {
+                return QIcon(":/icons/cpp_white.png");
+            }
+            else if (suffix == "h" || suffix == "hpp")
+            {
+                return QIcon(":/icons/h_white.png");
+            }
+            else if (suffix == "md")
+            {
+                return QIcon(":/icons/md_white.png");
+            }
+            else if (suffix == "txt")
+            {
+                return QIcon(":/icons/txt_white.png");
+            }
+            else
+            {
+                return iconProvider.icon(QFileIconProvider::File);
+            }
         }
     }
     default:

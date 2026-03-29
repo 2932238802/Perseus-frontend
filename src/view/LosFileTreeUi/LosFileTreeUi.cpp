@@ -44,7 +44,7 @@ void LosFileTreeUi::onCustomContextMenu(const QPoint &pos)
     LosModel::LosFileNode *treeNode = treeModel->nodeFromIndex(index);
     if (!treeNode)
         return;
-    QString clickedPath = treeNode->getFilePath();
+    QString clickedPath = treeNode->getFile().getFilePath();
     bool isFolder       = (treeNode->getFileType() == LosCommon::LOS_ENUM_FileType::FT_FOLDER);
     QString targetDir;
     if (isClickingValidItem)
@@ -261,7 +261,7 @@ QModelIndex LosFileTreeUi::findAndExpand(LosModel::LosFileNode *node, const QStr
     if (nullptr == node)
         return QModelIndex();
 
-    if (node->getFilePath() == path)
+    if (node->getFile().getFileName() == path)
     {
         QModelIndex cur = parent_index;
         while (cur.isValid())

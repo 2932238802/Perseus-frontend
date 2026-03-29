@@ -1,5 +1,6 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
+#include "common/constants/ConstantsNum.h"
 #include "common/constants/ConstantsStr.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosState/LosState.h"
@@ -15,7 +16,10 @@ Perseus::Perseus(QWidget *parent) : QMainWindow(parent), ui(new Ui::Perseus)
     initConnect();
     initStyle();
     initShotcut();
-    QTimer::singleShot(100, this, &Perseus::initSession);
+    // 等待 100 毫秒后，
+    // 调用当前对象的 initSession () 函数
+    // 只执行一次执行完就结束
+    QTimer::singleShot(LosCommon::Perseus_Constants::WAIT_FOR_SESSION_TIME_MS, this, &Perseus::initSession);
 }
 
 /**
@@ -103,7 +107,7 @@ void Perseus::onFilesBtnClicked()
         QString filePathChoose = dialog.selectedFiles().first();
         LosModel::LosFilePath path(filePathChoose);
         QString projectDirOfPath = path.isFile() ? path.getAbsolutePath() : path.getFilePath();
-        INF(projectDirOfPath,"Perseus");
+        INF(projectDirOfPath, "Perseus");
         LosModel::LosFilePath projectFilepath(projectDirOfPath);
         bool isSuc = projectFilepath.isExist();
         LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR,
@@ -126,7 +130,11 @@ void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
     LosModel::LosFileNode *fileNode = LOS_treeModel->nodeFromIndex(index);
     if (!fileNode)
         return;
-    LOS_tabUi->openFile(fileNode->getFilePath());
+    const auto &file = fileNode->getFile();
+    if (file.isFile())
+    {
+        LOS_tabUi->openFile(file);
+    }
 }
 
 
@@ -144,7 +152,7 @@ void Perseus::onRunSingleFileBtnClicked()
     }
     auto curPath = LOS_tabUi->getCurFilePath();
     LOS_tabUi->saveTab();
-    ui->bottom_tabwidget->setCurrentIndex(LosCommon::BottomTabWidget::OUTPUT);
+    ui->bottom_tabwidget->setCurrentIndex(LosCommon::Perseus_Constants::BottomTabWidget::OUTPUT);
     ui->output_plaintextedit->clear();
     INF("starting compilation ...", "Perseus");
     LOS_runMgr->execute(curPath, L_project);
@@ -180,10 +188,10 @@ void Perseus::onZoomUi(int delta)
 {
     QFont font  = QApplication::font();
     int newSize = font.pointSize() + delta;
-    if (newSize < 8)
-        newSize = 8;
-    if (newSize > 48)
-        newSize = 48;
+    if (newSize < LosCommon::Perseus_Constants::ZOOM_MIN)
+        newSize = LosCommon::Perseus_Constants::ZOOM_MIN;
+    if (newSize > LosCommon::Perseus_Constants::ZOOM_MAX)
+        newSize = LosCommon::Perseus_Constants::ZOOM_MAX;
     font.setPointSize(newSize);
     QApplication::setFont(font);
     this->setStyleSheet(this->styleSheet());

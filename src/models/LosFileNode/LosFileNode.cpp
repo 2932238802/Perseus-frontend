@@ -1,4 +1,5 @@
 #include "LosFileNode.h"
+#include "models/LosFilePath/LosFilePath.h"
 
 namespace LosModel
 {
@@ -145,9 +146,9 @@ LosFileNode *LosFileNode::getParent() const
 /**
 获取完整的路径
 */
-const QString &LosFileNode::getFilePath() const
+const LosModel::LosFilePath &LosFileNode::getFile() const
 {
-    return LOS_filePath.getFilePath();
+    return LOS_filePath;
 }
 
 
@@ -163,13 +164,6 @@ int LosFileNode::row() const
     {
         return 0;
     }
-}
-
-
-
-const QString &LosFileNode::getFileName() const
-{
-    return LOS_filePath.getFileName();
 }
 
 

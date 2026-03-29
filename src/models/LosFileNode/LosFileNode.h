@@ -23,7 +23,7 @@ class LosFileNode
     void appendChild(LosFileNode *node);
     void clear();
     void setParentNode(LosFileNode *node);
-    static void build(LosFileNode *root, const QString &cur,std::function<void()> on_finished);
+    static void build(LosFileNode *root, const QString &cur, std::function<void()> on_finished);
     static void buildImpl(LosFileNode *, const QString &);
 
   public: // get
@@ -31,8 +31,7 @@ class LosFileNode
     LosFileNode *getChild(int index) const;
     LosFileNode *getParent() const;
     int row() const;
-    const QString &getFileName() const;
-    const QString &getFilePath() const;
+    const LosModel::LosFilePath &getFile() const;
     LosCommon::LOS_ENUM_FileType getFileType() const;
 
   private:

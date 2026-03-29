@@ -3,6 +3,7 @@
 #include "common/constants/ConstantsClass.h"
 #include "common/util/CheckLang.h"
 #include "core/LosRouter/LosRouter.h"
+#include "models/LosFilePath/LosFilePath.h"
 
 
 namespace LosView
@@ -71,28 +72,34 @@ void LosEditorTabUi::saveAllTabs()
 
 
 /**
-tool
-打开文件
+- tool
+- 打开文件
+- 只能打开 非 二进制文件
 */
-void LosEditorTabUi::openFile(const QString &file_path)
+void LosEditorTabUi::openFile(const LosModel::LosFilePath &file)
 {
     // 呼叫 解释器 呼叫 运行其
-    checkLspAnsFormat(file_path);
-
-    if (LOS_pathToUi.contains(file_path))
+    if (file.isBinary())
     {
-        LosEditorUi *editor = LOS_pathToUi.value(file_path);
+        return;
+    }
+    auto filePath = file.getFilePath();
+    checkLspAnsFormat(filePath);
+
+    if (LOS_pathToUi.contains(filePath))
+    {
+        LosEditorUi *editor = LOS_pathToUi.value(filePath);
         L_tabWidget->setCurrentWidget(editor);
         return;
     }
     LosEditorUi *editor               = new LosEditorUi(this);
     LosModel::LosFileContext *context = LosModel::LosFileContext::create();
-    LosModel::LosFilePath *file       = new LosModel::LosFilePath(file_path);
-    context->load(file_path);
-    editor->loadContextAndPath(context, file);
-    L_tabWidget->addTab(editor, QFileInfo(file_path).fileName());
-    LOS_pathToUi.insert(file_path, editor);
-    L_tabWidget->setCurrentWidget(editor); // 补充 直接 把界面切过去
+    context->load(filePath);
+    LosModel::LosFilePath fileCopy(file);
+    editor->loadContextAndPath(context, &fileCopy);
+    L_tabWidget->addTab(editor, QFileInfo(filePath).fileName());
+    LOS_pathToUi.insert(filePath, editor);
+    L_tabWidget->setCurrentWidget(editor);
 }
 
 

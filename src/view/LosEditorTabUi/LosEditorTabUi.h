@@ -34,7 +34,7 @@ class LosEditorTabUi : public QWidget
     void closeTab(int index);
     void saveTab();
     void saveAllTabs();
-    void openFile(const QString &file_path);
+    void openFile(const LosModel::LosFilePath &file);
     void formatTab();
 
   public: // get

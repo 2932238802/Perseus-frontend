@@ -4,6 +4,7 @@
 
 #include <QDebug>
 #include <QDir>
+#include <QMimeDatabase>
 #include <QObject>
 #include <QString>
 #include <QStringList>
@@ -16,7 +17,8 @@ class LosFilePath
 {
   public:
     LosFilePath();
-    explicit LosFilePath(const QString &);
+    LosFilePath(const QString &);
+    LosFilePath(const LosFilePath &);
     ~LosFilePath() = default;
 
   public: // init
@@ -28,10 +30,12 @@ class LosFilePath
     QString getAbsolutePath() const;
     QString getAbsoluteFilePath() const;
     QString getBaseFileName() const;
+    QString getSuffix() const;
     LosCommon::LOS_ENUM_FileType getFileType() const;
     bool isDir() const;
     bool isFile() const;
     bool isExist() const;
+    bool isBinary() const;
 
   protected:
     bool operator==(const QString &str) const;

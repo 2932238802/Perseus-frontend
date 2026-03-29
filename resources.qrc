@@ -1,5 +1,13 @@
 <RCC>
-    <qresource prefix="/">
-        <file>resources/icons/close.png</file>
+    <qresource prefix="/icons">
+        <file alias="close.png">resources/icons/close.png</file>
+        <file alias="cpp_black.png">resources/icons/cpp_black.png</file>
+        <file alias="cpp_white.png">resources/icons/cpp_white.png</file>
+        <file alias="h_black.png">resources/icons/h_black.png</file>
+        <file alias="h_white.png">resources/icons/h_white.png</file>
+        <file alias="md_black.png">resources/icons/md_black.png</file>
+        <file alias="md_white.png">resources/icons/md_white.png</file>
+        <file alias="txt_black.png">resources/icons/txt_black.png</file>
+        <file alias="txt_white.png">resources/icons/txt_white.png</file>
     </qresource>
 </RCC>

@@ -47,18 +47,18 @@ else()
     endif()
 endif()
 
-target_include_directories(Perseus PRIVATE 
+target_include_directories(Perseus PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-target_link_libraries(Perseus PRIVATE 
+target_link_libraries(Perseus PRIVATE
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Network
     Qt${QT_VERSION_MAJOR}::Concurrent
 )
 
 if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.Perseus)
+    set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.Perseus)
 endif()
 set_target_properties(Perseus PROPERTIES
     ${BUNDLE_ID_OPTION}
