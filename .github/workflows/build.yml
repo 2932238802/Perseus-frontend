@@ -8,29 +8,31 @@ on:
 
 jobs:
   build-windows:
-    name: Build on Windows
+    name: Build on Windows (MSVC)
     runs-on: windows-latest
 
     steps:
     - name: 拉取最新代码
       uses: actions/checkout@v4
-
+    - name: 启用 MSVC 编译环境
+      uses: ilammy/msvc-dev-cmd@v1
     - name: 自动配置 Qt 6 环境
       uses: jurplel/install-qt-action@v3
       with:
         version: '6.4.2' 
         host: 'windows'
         target: 'desktop'
-        arch: 'win64_mingw' 
+        arch: 'win64_msvc2019_64'             
+        modules: 'qtwebengine qtwebchannel'  
 
     - name: 编译项目
       run: |
         mkdir build
         cd build
-        cmake .. -DCMAKE_BUILD_TYPE=Release -G "MinGW Makefiles"
-        cmake --build . --config Release -j4
+        cmake .. -DCMAKE_BUILD_TYPE=Release -G Ninja
+        cmake --build . --config Release
 
-    - name: 打包依赖 (windeployqt)
+    - name: 打包依赖
       run: |
         cd build
         windeployqt --compiler-runtime Perseus.exe
@@ -38,9 +40,12 @@ jobs:
     - name: 上传最终的压缩包
       uses: actions/upload-artifact@v4
       with:
-        name: Perseus-1.02
+        name: Perseus-Windows-Release
         path: |
           build/Perseus.exe
           build/*.dll
           build/platforms/
           build/styles/
+          build/QtWebEngineProcess.exe   # ⚠️ WebEngine 的多进程核心程序 (必带)
+          build/resources/               # ⚠️ WebEngine 渲染依赖的 pak 资源包 (必带)
+          build/translations/            # ⚠️ WebEngine 的本地化翻译 (必带)

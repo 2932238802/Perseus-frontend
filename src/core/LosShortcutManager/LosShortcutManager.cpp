@@ -1,4 +1,3 @@
-
 #include "core/LosShortcutManager/LosShortcutManager.h"
 
 
@@ -31,9 +30,8 @@ void LosShortcutManager::reg(const QString &key, QWidget *parent, const std::fun
     connect(cur, &QShortcut::activated, this, action);
     L_strToCuts.insert(key, cur);
     L_strToDes.insert(key, des);
-    SUC("Shortcut registered successfully: " + key + " -> " + des, "LosShortcutManager");
+    SUC("shortcut registered successfully: " + key + " -> " + des, "LosShortcutManager");
 }
-
 
 
 } // namespace LosCore
