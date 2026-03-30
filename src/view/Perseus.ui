@@ -182,7 +182,7 @@
        </widget>
        <widget class="QTabWidget" name="bottom_tabwidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="documentMode">
          <bool>true</bool>
@@ -224,7 +224,7 @@
           <string/>
          </attribute>
         </widget>
-        <widget class="QWidget" name="tab_terminal">
+        <widget class="LosView::LosTerminalUi" name="tab_terminal">
          <attribute name="title">
           <string/>
          </attribute>
@@ -247,6 +247,12 @@
    <class>LosView::LosFileTreeUi</class>
    <extends>QTreeView</extends>
    <header>view/LosFileTreeUi/LosFileTreeUi.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LosView::LosTerminalUi</class>
+   <extends>QWidget</extends>
+   <header location="global">view/LosTerminalUi/LosTerminalUi.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

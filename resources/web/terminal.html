@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="xterm/xterm.css" />
+    <script src="xterm/xterm.js"></script>
+    <script src="xterm/addon-fit.min.js"></script>
+
+    <script src="qrc:/qtwebchannel/qwebchannel.js"></script>
+
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: #1e1e1e;
+        }
+
+        #terminal-container {
+            width: 100%;
+            height: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="terminal-container"></div>
+
+    <script>
+        const term = new Terminal({
+            cursorBlink: true,
+            theme: { background: '#1e1e1e', foreground: '#cccccc' },
+            fontFamily: 'Consolas, "Courier New", monospace',
+            fontSize: 14,
+            convertEol: true
+        });
+
+        const fitAddon = new FitAddon.FitAddon();
+        term.loadAddon(fitAddon);
+        term.open(document.getElementById('terminal-container'));
+
+        setTimeout(() => { fitAddon.fit(); }, 50);
+        window.addEventListener('resize', () => fitAddon.fit());
+
+        document.addEventListener("DOMContentLoaded", function () {
+            if (typeof qt !== 'undefined' && qt.webChannelTransport) {
+                new QWebChannel(qt.webChannelTransport, function (channel) {
+                    const backend = channel.objects.backend;
+
+                    if (!backend) {
+                        term.write('\x1b[31m[Error] C++ Backend connection failed.\x1b[0m\r\n');
+                        return;
+                    }
+
+                    term.onData(data => {
+                        backend.write(data);
+                    });
+
+                    backend._cmd_sendToShell.connect(function (text) {
+                        term.write(text);
+                    });
+
+                    backend.onTerminalReady();
+                });
+            } else {
+                term.write('\x1b[33m[Warning] Running outside of Qt WebEngine. Waiting for C++...\x1b[0m\r\n');
+            }
+        });
+    </script>
+</body>
+
+</html>

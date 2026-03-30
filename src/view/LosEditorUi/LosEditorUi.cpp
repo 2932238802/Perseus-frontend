@@ -372,6 +372,7 @@ void LosEditorUi::keyPressEvent(QKeyEvent *event)
             break;
         }
     }
+    
     // 这个是 括号补全
     LosCore::LosBracketFormat::dealEvent(this, event);
     QPlainTextEdit::keyPressEvent(event);

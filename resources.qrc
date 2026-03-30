@@ -18,4 +18,10 @@
         <file alias="json_black.png">resources/icons/json_black.png</file>
         <file alias="json_white.png">resources/icons/json_white.png</file>
     </qresource>
+    <qresource prefix="/web">
+        <file>resources/web/xterm/addon-fit.min.js</file>
+        <file>resources/web/xterm/xterm.css</file>
+        <file>resources/web/xterm/xterm.js</file>
+        <file>resources/web/terminal.html</file>
+    </qresource>
 </RCC>

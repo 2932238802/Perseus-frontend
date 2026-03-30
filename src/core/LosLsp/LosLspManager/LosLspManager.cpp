@@ -14,15 +14,6 @@ LosLspManager::~LosLspManager() {}
 
 
 
-/**
-- start
-*/
-// void LosLspManager::start(const QString &file_path)
-// {
-//     LosCommon::LosToolChain_Constants::LosLanguage lang = LosCommon::CheckLang(file_path);
-//     emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(lang);
-// }
-
 
 //
 void LosLspManager::openFile(const QString &file_path, const QString &file_context)

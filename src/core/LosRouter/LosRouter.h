@@ -67,7 +67,7 @@ class LosRouter : public QObject
     void _cmd_changeLang(const QString &file_path);
 
     // 启动ui 督促 下载
-    void _cmd_toolChainMissing(const LosCommon::LosToolChain_Constants::ToolChainConfig&);
+    void _cmd_toolChainMissing(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
 
     // lsp
     void _cmd_lspReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath,
@@ -85,6 +85,8 @@ class LosRouter : public QObject
 
     void _cmd_checkSingleTool(LosCommon::LosToolChain_Constants::LosTool tool);
 
-    void _cmd_manuallySet(const LosCommon::LosToolChain_Constants::ToolChainConfig& config);
+    // 用户设定 信号 设置 要打开 设置窗口
+    void _cmd_manuallySet(const LosCommon::LosToolChain_Constants::ToolChainConfig &config);
+
 };
 } // namespace LosCore

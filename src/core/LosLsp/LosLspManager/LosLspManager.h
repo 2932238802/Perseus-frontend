@@ -22,7 +22,6 @@ class LosLspManager : public QObject
 
 
   public: // tool
-    // void start(const QString &); 
 
   private: // init
     void initConnect();
