@@ -4,12 +4,12 @@
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
+#include "core/LosRunner/LosCmakeRunner/LosCmakeRunner.h"
 #include "core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.h"
+#include "core/LosState/LosState.h"
 #include "models/LosFilePath/LosFilePath.h"
-#include <qsharedpointer.h>
-
-#include "common/constants/ConstantsClass.h"
 #include <QObject>
+#include <qsharedpointer.h>
 #include <qtmetamacros.h>
 
 namespace LosCore

@@ -127,6 +127,12 @@ bool LosFilePath::isBinary() const
 
 
 
+void LosFilePath::setFilePath(const QString &file)
+{
+    loadFile(file);
+}
+
+
 QDebug operator<<(QDebug debug, const LosFilePath &path)
 {
     QDebugStateSaver saver(debug);

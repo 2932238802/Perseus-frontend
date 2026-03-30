@@ -37,6 +37,9 @@ class LosFilePath
     bool isExist() const;
     bool isBinary() const;
 
+  public:
+    void setFilePath(const QString &);
+
   protected:
     bool operator==(const QString &str) const;
 

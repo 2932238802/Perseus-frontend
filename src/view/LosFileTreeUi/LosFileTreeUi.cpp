@@ -1,15 +1,14 @@
 #include "LosFileTreeUi.h"
+#include <qabstractitemview.h>
 
 namespace LosView
 {
 LosFileTreeUi::LosFileTreeUi(QWidget *parent) : QTreeView{parent}
 {
     this->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, &QTreeView::customContextMenuRequested, this, &LosFileTreeUi::onCustomContextMenu);
 
     initStyle();
     initConnect();
-
     setHeaderHidden(true);
     setAnimated(true);
     setIndentation(15);
@@ -25,9 +24,22 @@ void LosFileTreeUi::updateExplorer(LosModel::LosFileTreeModel *model)
 }
 
 
-void LosFileTreeUi::initConnect() {}
+/**
+- customContextMenuRequested 右键
+*/
+void LosFileTreeUi::initConnect()
+{
+    this->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
+    connect(this, &QTreeView::customContextMenuRequested, this, &LosFileTreeUi::onCustomContextMenu);
+}
 
+
+
+/**
+- 初始化
+*/
 void LosFileTreeUi::initStyle() {}
+
 
 
 /**
@@ -57,17 +69,27 @@ void LosFileTreeUi::onCustomContextMenu(const QPoint &pos)
     }
 
     // 这边是 画出来
+    // New File
+    // New Folder
+    // ----
+    // Copy
+    // Paste
+    // Rename
+    // ----
+    // delete
+
     QMenu menu(this);
     QAction *newFileAct   = menu.addAction("New File");
     QAction *newFolderAct = menu.addAction("New Folder");
     menu.addSeparator();
-    QAction *copyAct = nullptr;
-    QAction *delAct  = nullptr;
-
+    QAction *copyAct   = nullptr;
+    QAction *delAct    = nullptr;
+    QAction *renameAct = nullptr;
 
     if (isClickingValidItem)
     {
-        copyAct = menu.addAction("Copy");
+        copyAct   = menu.addAction("Copy");
+        renameAct = menu.addAction("Rename");
     }
     QAction *pasteAct         = menu.addAction("Paste");
     const QMimeData *clipData = QGuiApplication::clipboard()->mimeData();
@@ -184,6 +206,7 @@ void LosFileTreeUi::onCustomContextMenu(const QPoint &pos)
             emit LosCore::LosRouter::instance()._cmd_fileSystemChanged();
         }
     }
+    else if (selectedAction == renameAct) {}
 }
 
 

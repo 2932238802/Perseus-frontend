@@ -146,7 +146,7 @@ LosFileNode *LosFileNode::getParent() const
 /**
 获取完整的路径
 */
-const LosModel::LosFilePath &LosFileNode::getFile() const
+LosModel::LosFilePath &LosFileNode::getFile()
 {
     return LOS_filePath;
 }

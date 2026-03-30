@@ -10,14 +10,7 @@ LosEditorUi::LosEditorUi(QWidget *parent) : QPlainTextEdit{parent}
     initConnect();
     initStyle();
 }
-LosEditorUi::~LosEditorUi()
-{
-    if (LOS_context)
-    {
-        delete LOS_context;
-        LOS_context = nullptr;
-    }
-}
+LosEditorUi::~LosEditorUi() {}
 
 
 
@@ -174,7 +167,8 @@ void LosEditorUi::format()
 /**
 导入内容
 */
-void LosEditorUi::loadContextAndPath(LosModel::LosFileContext *context, LosModel::LosFilePath *file_path)
+void LosEditorUi::loadContextAndPath(QSharedPointer<LosModel::LosFileContext> context,
+                                     QSharedPointer<LosModel::LosFilePath> file_path)
 {
     if (!context || !file_path)
         return;
@@ -217,9 +211,12 @@ void LosEditorUi::insertCompletion(const QString &completion)
 */
 bool LosEditorUi::save()
 {
-    if (!LOS_context || !LOS_filePath)
+    if (LOS_context.isNull() || LOS_filePath.isNull())
         return false;
-    bool ok = LOS_context->save(this->toPlainText(), LOS_filePath->getFilePath());
+    QString filePath = LOS_filePath->getFilePath();
+    if (filePath.isEmpty())
+        return false;
+    bool ok = LOS_context->save(this->toPlainText(), filePath);
     if (ok)
     {
         L_dirty = false;

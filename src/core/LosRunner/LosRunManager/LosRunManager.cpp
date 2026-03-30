@@ -1,26 +1,22 @@
 
 #include "LosRunManager.h"
-#include "common/constants/ConstantsClass.h"
-#include "core/LosRouter/LosRouter.h"
-#include "core/LosRunner/LosCmakeRunner/LosCmakeRunner.h"
-#include "core/LosState/LosState.h"
-#include "models/LosFilePath/LosFilePath.h"
+
 
 namespace LosCore
 {
 /**
-构造函数
-
+- 构造函数
 */
 LosRunManager::LosRunManager(QObject *parent) : QObject{parent}
 {
     initConnect();
 }
-
 LosRunManager::~LosRunManager()
 {
     stop();
 }
+
+
 
 /**
 执行函数
@@ -63,6 +59,10 @@ void LosRunManager::execute(const QString &file_path, bool is_project)
 }
 
 
+
+/**
+- 全部暂停
+*/
 void LosRunManager::stop()
 {
     for (auto *runner : LOS_runners)
@@ -75,6 +75,10 @@ void LosRunManager::stop()
 }
 
 
+
+/**
+- 工具链 已完备
+*/
 void LosRunManager::onToolChainReady(LosCommon::LosToolChain_Constants::LosLanguage lan,
                                      LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath)
 {
@@ -102,7 +106,7 @@ void LosRunManager::onToolChainReady(LosCommon::LosToolChain_Constants::LosLangu
 
 
 /**
--
+- 构建工具 完毕
 */
 void LosRunManager::onBuildToolReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath,
                                      const QStringList &args)
@@ -159,6 +163,8 @@ LosAbstractRunner *LosRunManager::getCurRunner(const QString &file_path, bool is
 
     return nullptr;
 }
+
+
 
 /**
 连接

@@ -9,5 +9,13 @@
         <file alias="md_white.png">resources/icons/md_white.png</file>
         <file alias="txt_black.png">resources/icons/txt_black.png</file>
         <file alias="txt_white.png">resources/icons/txt_white.png</file>
+        <file alias="cmake_black.png">resources/icons/cmake_black.png</file>
+        <file alias="cmake_white.png">resources/icons/cmake_white.png</file>
+        <file alias="folder_black.png">resources/icons/folder_black.png</file>
+        <file alias="folder_white.png">resources/icons/folder_white.png</file>
+        <file alias="exe_black.png">resources/icons/exe_black.png</file>
+        <file alias="exe_white.png">resources/icons/exe_white.png</file>
+        <file alias="json_black.png">resources/icons/json_black.png</file>
+        <file alias="json_white.png">resources/icons/json_white.png</file>
     </qresource>
 </RCC>

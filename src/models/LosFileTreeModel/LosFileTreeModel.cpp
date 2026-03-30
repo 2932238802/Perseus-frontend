@@ -1,4 +1,8 @@
 #include "models/LosFileTreeModel/LosFileTreeModel.h"
+#include "core/LosRouter/LosRouter.h"
+#include "models/LosFileNode/LosFileNode.h"
+#include <qicon.h>
+#include <qnamespace.h>
 
 
 namespace LosModel
@@ -145,6 +149,7 @@ QVariant LosFileTreeModel::data(const QModelIndex &index, int role) const
     LosFileNode *node = static_cast<LosFileNode *>(index.internalPointer());
     switch (role)
     {
+    case Qt::EditRole:
     case Qt::DisplayRole:
     {
         return node->getFile().getFileName();
@@ -154,7 +159,7 @@ QVariant LosFileTreeModel::data(const QModelIndex &index, int role) const
         static QFileIconProvider iconProvider;
         if (node->getFileType() == LosCommon::LOS_ENUM_FileType::FT_FOLDER)
         {
-            return iconProvider.icon(QFileIconProvider::Folder);
+            return QIcon(":/icons/folder_white.png");
         }
         else
         {
@@ -163,6 +168,10 @@ QVariant LosFileTreeModel::data(const QModelIndex &index, int role) const
             if (suffix == "cpp" || suffix == "cc" || suffix == "cxx")
             {
                 return QIcon(":/icons/cpp_white.png");
+            }
+            else if (file.getFileName() == "CMakeLists.txt")
+            {
+                return QIcon(":/icons/cmake_white.png");
             }
             else if (suffix == "h" || suffix == "hpp")
             {
@@ -176,6 +185,14 @@ QVariant LosFileTreeModel::data(const QModelIndex &index, int role) const
             {
                 return QIcon(":/icons/txt_white.png");
             }
+            else if (suffix == "out" || suffix == "exe")
+            {
+                return QIcon(":/icons/exe_white.png");
+            }
+            else if (suffix == "json")
+            {
+                return QIcon(":/icons/json_white.png");
+            }
             else
             {
                 return iconProvider.icon(QFileIconProvider::File);
@@ -187,6 +204,52 @@ QVariant LosFileTreeModel::data(const QModelIndex &index, int role) const
         return QVariant();
     }
     }
+}
+
+
+
+/**
+- 设置数据
+*/
+bool LosFileTreeModel::setData(const QModelIndex &index, const QVariant &value, int role)
+{
+    if (!index.isValid() || role != Qt::EditRole)
+    {
+        return false;
+    }
+
+    LosFileNode *node = nodeFromIndex(index);
+    if (!node)
+        return false;
+    QString newName = value.toString().trimmed();
+    if (newName.isEmpty())
+        return false;
+
+    QString oldPath = node->getFile().getFilePath();
+    QFileInfo oldInfo(oldPath);
+    QString parentDir = oldInfo.absolutePath();
+    QString newPath   = QDir(parentDir).filePath(newName);
+
+    if (QFile::exists(newPath) || QDir(newPath).exists())
+    {
+        return false;
+    }
+    bool success = false;
+    if (node->getFileType() == LosCommon::LOS_ENUM_FileType::FT_FOLDER)
+    {
+        success = QDir().rename(oldPath, newPath);
+    }
+    else
+    {
+        success = QFile::rename(oldPath, newPath);
+    }
+    if (!success)
+        return false;
+
+    node->getFile().setFilePath(newPath);
+    emit dataChanged(index, index, {Qt::DisplayRole, Qt::EditRole});
+    emit LosCore::LosRouter::instance()._cmd_fileSystemChanged();
+    return true;
 }
 
 

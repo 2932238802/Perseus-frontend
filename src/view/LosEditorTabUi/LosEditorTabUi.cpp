@@ -3,6 +3,7 @@
 #include "common/constants/ConstantsClass.h"
 #include "common/util/CheckLang.h"
 #include "core/LosRouter/LosRouter.h"
+#include "models/LosFileContext/LosFileContext.h"
 #include "models/LosFilePath/LosFilePath.h"
 
 
@@ -92,11 +93,11 @@ void LosEditorTabUi::openFile(const LosModel::LosFilePath &file)
         L_tabWidget->setCurrentWidget(editor);
         return;
     }
-    LosEditorUi *editor               = new LosEditorUi(this);
-    LosModel::LosFileContext *context = LosModel::LosFileContext::create();
-    context->load(filePath);
-    LosModel::LosFilePath fileCopy(file);
-    editor->loadContextAndPath(context, &fileCopy);
+    LosEditorUi *editor = new LosEditorUi(this);
+    auto contextCopy    = QSharedPointer<LosModel::LosFileContext>::create();
+    contextCopy->load(filePath);
+    auto fileCopy = QSharedPointer<LosModel::LosFilePath>::create(filePath);
+    editor->loadContextAndPath(contextCopy, fileCopy);
     L_tabWidget->addTab(editor, QFileInfo(filePath).fileName());
     LOS_pathToUi.insert(filePath, editor);
     L_tabWidget->setCurrentWidget(editor);

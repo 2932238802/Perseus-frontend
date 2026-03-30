@@ -17,6 +17,7 @@
 #include <QFileInfo>
 #include <QObject>
 #include <QScrollBar>
+#include <QSharedPointer>
 #include <QTextBlock>
 #include <QTextCursor>
 #include <QTimer>
@@ -61,7 +62,8 @@ class LosEditorUi : public QPlainTextEdit
     bool isDirty() const;
 
   public: // set
-    void loadContextAndPath(LosModel::LosFileContext *context, LosModel::LosFilePath *file_path);
+    void loadContextAndPath(QSharedPointer<LosModel::LosFileContext> context,
+                            QSharedPointer<LosModel::LosFilePath> file_path);
     bool save();
     void insertCompletion(const QString &completion);
 
@@ -79,12 +81,12 @@ class LosEditorUi : public QPlainTextEdit
     void changeEvent(QEvent *e) override;
 
   private: // param
-    std::atomic<bool> L_showComplete      = false;
-    bool L_dirty                          = false;
-    QString L_oldWord                     = "";
-    QTimer *L_timer                       = nullptr;
-    LosModel::LosFileContext *LOS_context = nullptr;
-    LosModel::LosFilePath *LOS_filePath   = nullptr;
+    std::atomic<bool> L_showComplete = false;
+    bool L_dirty                     = false;
+    QString L_oldWord                = "";
+    QTimer *L_timer                  = nullptr;
+    QSharedPointer<LosModel::LosFileContext> LOS_context;
+    QSharedPointer<LosModel::LosFilePath> LOS_filePath;
     LosView::LosCompleterUi *LOS_completer;
     LosCore::LosHighlighter *LOS_highlighter = nullptr;
 };

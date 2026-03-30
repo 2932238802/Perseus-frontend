@@ -31,7 +31,7 @@ class LosFileNode
     LosFileNode *getChild(int index) const;
     LosFileNode *getParent() const;
     int row() const;
-    const LosModel::LosFilePath &getFile() const;
+    LosModel::LosFilePath &getFile();
     LosCommon::LOS_ENUM_FileType getFileType() const;
 
   private:

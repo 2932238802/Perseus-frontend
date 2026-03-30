@@ -6,6 +6,7 @@
 #include <QObject>
 #include <qabstractitemmodel.h>
 #include <qtmetamacros.h>
+#include <qvariant.h>
 
 namespace LosModel
 {
@@ -35,6 +36,7 @@ class LosFileTreeModel : public QAbstractItemModel
 
     // 要数据
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
     LosFileNode *nodeFromIndex(const QModelIndex &index);
 
