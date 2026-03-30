@@ -22,8 +22,8 @@ jobs:
         version: '6.4.2' 
         host: 'windows'
         target: 'desktop'
-        arch: 'win64_msvc2019_64'             
-        modules: 'qtwebengine qtwebchannel'  
+        arch: 'win64_msvc2022_64'             
+        modules: 'qtwebengine qtwebchannel qtpositioning qtdeclarative' 
 
     - name: 编译项目
       run: |
