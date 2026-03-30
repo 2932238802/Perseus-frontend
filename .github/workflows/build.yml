@@ -35,7 +35,7 @@ jobs:
     - name: 打包依赖
       run: |
         cd build
-        windeployqt --compiler-runtime Perseus.exe
+        windeployqt --release --compiler-runtime Perseus.exe
 
     - name: 上传最终的压缩包
       uses: actions/upload-artifact@v4
@@ -46,6 +46,8 @@ jobs:
           build/*.dll
           build/platforms/
           build/styles/
-          build/QtWebEngineProcess.exe   # ⚠️ WebEngine 的多进程核心程序 (必带)
-          build/resources/               # ⚠️ WebEngine 渲染依赖的 pak 资源包 (必带)
-          build/translations/            # ⚠️ WebEngine 的本地化翻译 (必带)
+          build/QtWebEngineProcess*.exe   
+          build/resources/               
+          build/translations/        
+          build/networkinformation
+          build/tls/ 

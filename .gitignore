@@ -42,3 +42,6 @@
 
 _build
 _build/
+
+.cache
+.cache/*

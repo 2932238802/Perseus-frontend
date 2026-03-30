@@ -22,6 +22,8 @@ Perseus::Perseus(QWidget *parent) : QMainWindow(parent), ui(new Ui::Perseus)
     QTimer::singleShot(LosCommon::Perseus_Constants::WAIT_FOR_SESSION_TIME_MS, this, &Perseus::initSession);
 }
 
+
+
 /**
 析构
 */
@@ -230,6 +232,8 @@ void Perseus::initConnect()
             &Perseus::onToolChainMissing);
 }
 
+
+
 /**
 初始化样式F
 */
@@ -249,6 +253,8 @@ void Perseus::initStyle()
     INF("perseus Engine Initialized ... ", "Perseus");
     this->setStyleSheet(LosStyle::perseus_getStyle());
 }
+
+
 
 /**
 快捷键

@@ -40,6 +40,7 @@ class LosLspManager : public QObject
 
   private:
     // 一个语言对应一个解释器
+    // LosTool 指定工具
     QMap<LosCommon::LosToolChain_Constants::LosTool, LosLspClient *> LOS_clients;
 };
 

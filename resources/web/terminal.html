@@ -52,20 +52,16 @@
             if (typeof qt !== 'undefined' && qt.webChannelTransport) {
                 new QWebChannel(qt.webChannelTransport, function (channel) {
                     const backend = channel.objects.backend;
-
                     if (!backend) {
-                        term.write('\x1b[31m[Error] C++ Backend connection failed.\x1b[0m\r\n');
+                        term.write('\x1b[31m[Error] C++ Backend connection failed\x1b[0m\r\n');
                         return;
                     }
-
                     term.onData(data => {
                         backend.write(data);
                     });
-
                     backend._cmd_sendToShell.connect(function (text) {
                         term.write(text);
                     });
-
                     backend.onTerminalReady();
                 });
             } else {

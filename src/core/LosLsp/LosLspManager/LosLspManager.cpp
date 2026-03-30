@@ -14,7 +14,6 @@ LosLspManager::~LosLspManager() {}
 
 
 
-
 //
 void LosLspManager::openFile(const QString &file_path, const QString &file_context)
 {
@@ -25,6 +24,8 @@ void LosLspManager::openFile(const QString &file_path, const QString &file_conte
     }
 }
 
+
+
 void LosLspManager::changeFile(const QString &file_path, const QString &file_context)
 {
     if (auto client = getClient(file_path))
@@ -32,6 +33,7 @@ void LosLspManager::changeFile(const QString &file_path, const QString &file_con
         client->didChange(file_path, file_context);
     }
 }
+
 
 
 void LosLspManager::requestCompletion(const QString &file_path, int line, int col)
@@ -42,6 +44,8 @@ void LosLspManager::requestCompletion(const QString &file_path, int line, int co
     }
 }
 
+
+
 void LosLspManager::toDefineRequest(int line, int col, const QString &file_path)
 {
     if (auto client = getClient(file_path))
@@ -49,6 +53,8 @@ void LosLspManager::toDefineRequest(int line, int col, const QString &file_path)
         client->requestDefinition(file_path, line, col);
     }
 }
+
+
 
 void LosLspManager::didChangeWatchedFiles(const QString &file_path, int type)
 {
@@ -61,6 +67,7 @@ void LosLspManager::didChangeWatchedFiles(const QString &file_path, int type)
         }
     }
 }
+
 
 
 void LosLspManager::initConnect()

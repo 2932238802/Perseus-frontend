@@ -1,4 +1,12 @@
 #include "LosEditorUi.h"
+#include "core/LosRouter/LosRouter.h"
+#include <algorithm>
+#include <qcoreevent.h>
+#include <qevent.h>
+#include <qkeysequence.h>
+#include <qplaintextedit.h>
+#include <qtextcursor.h>
+#include <qtooltip.h>
 
 
 
@@ -261,6 +269,7 @@ bool LosEditorUi::isDirty() const
 
 /**
 - 文字稍微 变动 就变脏
+- 绑定 悬停效果
 */
 void LosEditorUi::initConnect()
 {
@@ -277,10 +286,12 @@ void LosEditorUi::initConnect()
     connect(L_timer, &QTimer::timeout, this, &LosEditorUi::onDebounceTimeout);
     connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this,
             &LosEditorUi::showDiagnostic);
-
     connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_completion, this,
             &LosEditorUi::showCompletion);
+    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_hover, this,
+            &LosEditorUi::onHover_Clangd);
 }
+
 
 
 /**
@@ -291,6 +302,45 @@ void LosEditorUi::initStyle()
     QFontMetrics met(this->font());
     int tab = 4 * met.horizontalAdvance(" ");
     this->setTabStopDistance(tab);
+}
+
+
+
+/**
+- 自定义 工具 剪切
+*/
+void LosEditorUi::cutCurrentLine()
+{
+    QTextCursor cursor = textCursor();
+    cursor.movePosition(QTextCursor::StartOfBlock);
+    cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+    if (!cursor.atEnd())
+    {
+        // 吃掉 后面的 \n
+        cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+    }
+    setTextCursor(cursor);
+    cut();
+}
+
+
+
+/**
+- 复制 一行
+*/
+void LosEditorUi::copyCurrentLine()
+{
+    QTextCursor cursor         = textCursor();
+    QTextCursor originalCursor = cursor;
+    cursor.movePosition(QTextCursor::StartOfBlock);
+    cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+    if (!cursor.atEnd())
+    {
+        cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+    }
+    setTextCursor(cursor);
+    copy();
+    setTextCursor(originalCursor);
 }
 
 
@@ -344,10 +394,32 @@ void LosEditorUi::onDebounceTimeout()
 
 
 /**
+- clangd 语法补全
+*/
+void LosEditorUi::onHover_Clangd(const QString &markdownContent)
+{
+    if (markdownContent.isEmpty())
+    {
+        QToolTip::hideText();
+        return;
+    }
+    QString html = markdownContent;
+    html.replace("```cpp", "<pre style='color:#569cd6; font-family:Consolas;'>");
+    html.replace("```c", "<pre style='color:#569cd6; font-family:Consolas;'>");
+    html.replace("```", "</pre>");
+    html.replace("\n", "<br>");
+    html.replace("**", "<b>");
+    QToolTip::showText(L_lastHoverGlobal, html, this);
+}
+
+
+
+/**
 - 光标拦截
     - 弹出 语法补全
 - 同时 支持 括号补全
 */
+// 在 LosEditorUi.cpp 中
 void LosEditorUi::keyPressEvent(QKeyEvent *event)
 {
     if (LOS_completer && LOS_completer->popup() && LOS_completer->popup()->isVisible())
@@ -355,26 +427,59 @@ void LosEditorUi::keyPressEvent(QKeyEvent *event)
         switch (event->key())
         {
         case Qt::Key_Escape:
-        {
             LOS_completer->popup()->hide();
             L_showComplete = false;
             event->ignore();
             return;
-        }
         case Qt::Key_Enter:
         case Qt::Key_Return:
         case Qt::Key_Tab:
         case Qt::Key_Backtab:
-            // 悬浮框显示时，把这些按键让给悬浮框去处理
             event->ignore();
             return;
         default:
             break;
         }
     }
-    
-    // 这个是 括号补全
-    LosCore::LosBracketFormat::dealEvent(this, event);
+
+    if (event->matches(QKeySequence::Cut))
+    {
+        QTextCursor cursor = textCursor();
+        if (!cursor.hasSelection())
+        {
+            cutCurrentLine();
+            return;
+        }
+    }
+
+    if (event->matches(QKeySequence::Copy))
+    {
+        QTextCursor cursor = textCursor();
+        if (!cursor.hasSelection())
+        {
+            copyCurrentLine();
+            return;
+        }
+    }
+
+    static const QHash<QChar, QChar> AUTO_CLOSE_MAP{{'{', '}'}, {'[', ']'}, {'(', ')'}};
+    if (!event->text().isEmpty())
+    {
+        QChar inputChar = event->text().at(0);
+        if (AUTO_CLOSE_MAP.contains(inputChar))
+        {
+            QPlainTextEdit::keyPressEvent(event);
+
+            QTextCursor cursor = textCursor();
+            cursor.insertText(AUTO_CLOSE_MAP[inputChar]);
+
+            cursor.movePosition(QTextCursor::PreviousCharacter);
+            setTextCursor(cursor);
+
+            return;
+        }
+    }
+
     QPlainTextEdit::keyPressEvent(event);
 }
 
@@ -412,4 +517,25 @@ void LosEditorUi::changeEvent(QEvent *e)
     }
     QPlainTextEdit::changeEvent(e);
 }
+
+
+
+/**
+- 鼠标悬停的效果
+*/
+bool LosEditorUi::event(QEvent *event)
+{
+    if (event->type() == QEvent::ToolTip)
+    {
+        QHelpEvent *help   = static_cast<QHelpEvent *>(event);
+        QTextCursor cursor = cursorForPosition(help->pos());
+        int line           = cursor.blockNumber();
+        int col            = cursor.positionInBlock();
+        L_lastHoverGlobal  = help->globalPos();
+        emit LosCore::LosRouter::instance()._cmd_lsp_request_hover(LOS_filePath -> getFilePath(), line, col);
+        return true;
+    }
+    return QPlainTextEdit::event(event);
+}
+
 } // namespace LosView

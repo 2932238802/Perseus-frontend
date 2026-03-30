@@ -13,7 +13,7 @@ LosToolMissUi::LosToolMissUi(const LosCommon::LosToolChain_Constants::ToolChainC
 
 
 /**
-- 设置 央视
+- 设置 样式
 */
 void LosToolMissUi::initStyle(const LosCommon::LosToolChain_Constants::ToolChainConfig &config)
 {

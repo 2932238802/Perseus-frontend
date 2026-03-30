@@ -1,10 +1,5 @@
 
 #include "LosCmakeRunner.h"
-#include "common/constants/ConstantsClass.h"
-#include "common/constants/ConstantsStr.h"
-#include "core/LosState/LosState.h"
-#include "models/LosFilePath/LosFilePath.h"
-#include <qfileinfo.h>
 
 
 namespace LosCore
@@ -51,7 +46,6 @@ void LosCmakeRunner::start(const QString &cur_file_path)
         return;
     }
     L_cmake->setWorkingDirectory(buildPath);
-    ERR(buildPath,"11");
     QStringList args;
     args << "--build" << ".";
     L_cmake->start(L_cmakeExe, args);

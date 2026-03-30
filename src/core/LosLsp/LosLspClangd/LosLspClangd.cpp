@@ -1,4 +1,6 @@
 #include "LosLspClangd.h"
+#include "core/LosLsp/LosLspClient/LosLspClient.h"
+#include "core/LosRouter/LosRouter.h"
 
 namespace LosCore
 {
@@ -26,14 +28,17 @@ void LosLspClangd::start(const QStringList &start_up_args, const QString &exe_pa
 */
 void LosLspClangd::initConnect()
 {
+    auto &router = LosRouter::instance();
     connect(L_process, &QProcess::started, this, &LosLspClangd::sendInitializeRequest);
     connect(L_process, &QProcess::readyReadStandardError, this,
             [=]() { INF(QString::fromUtf8(L_process->readAllStandardError()), "LosLspClangd"); });
-    connect(&LosRouter::instance(), &LosRouter::_cmd_whereDefine, this,
+    connect(&router, &LosRouter::_cmd_whereDefine, this,
             [=](int line, int col, const QString &file_path) { this->requestDefinition(file_path, line, col); });
-    connect(&LosRouter::instance(), &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this,
+    connect(&router, &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this,
             [=](const QString &compile_commands_path, auto type)
             { this->didChangeWatchedFiles(compile_commands_path, type); });
+    connect(&router, &LosRouter::_cmd_lsp_request_hover, this,
+            [=](const QString &filePath, int line, int col) { this->requestHover(filePath, line, col); });
 }
 
 
@@ -49,6 +54,7 @@ void LosLspClangd::sendInitializeRequest()
     params["capabilities"] = QJsonObject();
     sendRequest("initialize", params, LosLspType::REQ_INITIALIZE);
 }
+
 
 
 /**
@@ -77,6 +83,7 @@ void LosLspClangd::dealLspMessage(const QJsonObject &obj)
         switch (type)
         {
         case LosLspType::REQ_COMPLETION:
+        {
             if (obj.contains("result"))
             {
                 QJsonObject result = obj["result"].toObject();
@@ -91,8 +98,9 @@ void LosLspClangd::dealLspMessage(const QJsonObject &obj)
                 emit LosRouter::instance()._cmd_lsp_result_completion(completionWords);
             }
             break;
-
+        }
         case LosLspType::REQ_INITIALIZE:
+        {
             SUC("handshake successful", "LosLspClangd");
             L_isinit = true;
             sendInitializedMsg();
@@ -102,7 +110,9 @@ void LosLspClangd::dealLspMessage(const QJsonObject &obj)
             }
             L_pendings.clear();
             break;
+        }
         case LosLspType::REQ_DIFINE:
+        {
             if (obj.contains("result") && obj["result"].isArray())
             {
                 QJsonArray arr = obj["result"].toArray();
@@ -116,7 +126,22 @@ void LosLspClangd::dealLspMessage(const QJsonObject &obj)
                 emit LosRouter::instance()._cmd_lsp_result_definition(targetFilePath, targetLine);
             }
             break;
-
+        }
+        case LosCore::LosLspType::REQ_HOVER:
+        {
+            if (obj.contains("result") && !obj["result"].isNull())
+            {
+                QJsonObject result   = obj["result"].toObject();
+                QJsonObject contents = result["contents"].toObject();
+                QString hoverText    = contents["value"].toString();
+                emit LosRouter::instance()._cmd_lsp_result_hover(hoverText);
+            }
+            else
+            {
+                emit LosRouter::instance()._cmd_lsp_result_hover("");
+            }
+            break;
+        }
         default:
             break;
         }

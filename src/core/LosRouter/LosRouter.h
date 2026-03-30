@@ -34,6 +34,9 @@ class LosRouter : public QObject
     // 语言补全
     void _cmd_lsp_request_completeion(const QString &file_path, int line, int col);
 
+    // 悬停
+    void _cmd_lsp_request_hover(const QString &file_path, int line, int col);
+
     // 文件树的修改
     void _cmd_lsp_msg_didChangeWatchedFiles(const QString &,
                                             LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type);
@@ -47,6 +50,8 @@ class LosRouter : public QObject
                                      // 文本定义的位置的返回 是lsp 返回
                                      const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags);
     void _cmd_lsp_result_definition(const QString &file_name, int line);
+
+    void _cmd_lsp_result_hover(const QString &md_content);
 
     // 从诊断的结果 ctrl 点击 跳转到指定位置
     void _cmd_gotoFile(const QString &file_path, int line);
@@ -87,6 +92,5 @@ class LosRouter : public QObject
 
     // 用户设定 信号 设置 要打开 设置窗口
     void _cmd_manuallySet(const LosCommon::LosToolChain_Constants::ToolChainConfig &config);
-
 };
 } // namespace LosCore

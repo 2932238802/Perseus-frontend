@@ -21,7 +21,7 @@ inline constexpr const char *CODE_FORMAT         = "Ctrl+K, Ctrl+O"; // 格式�
 inline constexpr const char *LINE_COMMENT        = "Ctrl+/";         // 单行注释/取消注释
 inline constexpr const char *BLOCK_COMMENT       = "Shift+Alt+A";    // 块注释 (/* ... */)
 inline constexpr const char *LINE_DUPLICATE      = "Ctrl+Shift+D";   // 向下复制当前行
-inline constexpr const char *LINE_DELETE         = "Ctrl+Shift+K";   // 删除当前行
+inline constexpr const char *LINE_DELETE         = "Ctrl+X";         // 删除当前行
 inline constexpr const char *LINE_MOVE_UP        = "Alt+Up";         // 将当前行向上移动
 inline constexpr const char *LINE_MOVE_DOWN      = "Alt+Down";       // 将当前行向下移动
 inline constexpr const char *SEARCH_FIND         = "Ctrl+F";         // 呼出页内查找
@@ -31,8 +31,8 @@ inline constexpr const char *GOTO_DEFINITION     = "F12";            // 跳转�
 inline constexpr const char *TOGGLE_EXPLORER     = "Ctrl+Shift+E";   // 显示/隐藏左侧文件树
 inline constexpr const char *TOGGLE_BOTTOM_PANEL = "Ctrl+J";         // 显示/隐藏底部面板 (Issues/Output)
 inline constexpr const char *FOCUS_TERMINAL      = "Ctrl+`";         // 聚焦到底部终端
-inline constexpr const char *FONT_ZOOM_IN        = "Ctrl+>";   // 放大字体 / 全局缩放增大
-inline constexpr const char *FONT_ZOOM_OUT       = "Ctrl+<";   // 缩小
+inline constexpr const char *FONT_ZOOM_IN        = "Ctrl+>";         // 放大字体 / 全局缩放增大
+inline constexpr const char *FONT_ZOOM_OUT       = "Ctrl+<";         // 缩小
 } // namespace ShortCut
 
 
@@ -115,8 +115,9 @@ inline constexpr const char *COMPILE_COMMANDS_FILE   = "compile_commands.json";
 
 
 namespace LosState_Constants
-{  
-enum class SG_STR{
+{
+enum class SG_STR
+{
     PROJECT_DIR,
 };
 

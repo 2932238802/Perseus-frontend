@@ -34,6 +34,9 @@ diagnotisc DiagnosticSeverity 程度
 */
 namespace LosLsp_Constants
 {
+
+
+
 enum DiagnosticSeverity
 {
     Error = 1,
@@ -41,6 +44,8 @@ enum DiagnosticSeverity
     Information,
     Hint
 };
+
+
 
 enum LosLspType
 {
@@ -54,12 +59,16 @@ enum LosLspType
     REQ_DIFINE,
 };
 
+
+
 struct PendingRequest
 {
     QString L_filePath;
     QString L_content;
     QString L_langId;
 };
+
+
 
 /**
 didChangeWatchedFiles 字段
@@ -71,6 +80,7 @@ enum LspJson_didChangeWatchedFiles_changes_type
     Created = 1,
     Changed = 2
 };
+
 
 
 struct LosDiagnostic
@@ -101,6 +111,7 @@ struct ConfigItem
 } // namespace LosConfig_Constants
 
 
+
 /**
 - 保留 会话 的固定字段
 */
@@ -113,6 +124,7 @@ struct Config
 };
 
 } // namespace LosSession_Constants
+
 
 
 namespace LosToolChain_Constants
@@ -128,6 +140,8 @@ enum class LosLanguage
     UNKNOWN,
 };
 
+
+
 enum class LosTool
 {
     CMAKE,
@@ -139,6 +153,8 @@ enum class LosTool
     UNKNOWN
 };
 
+
+
 enum class ToolCategory
 {
     LSP,       // 语言服务器
@@ -148,6 +164,8 @@ enum class ToolCategory
     Debugger,  // 调试器
     BuildTool
 };
+
+
 
 struct ToolChainConfig
 {

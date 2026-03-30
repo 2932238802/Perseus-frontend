@@ -1,4 +1,5 @@
 #include "LosLspClient.h"
+#include <qjsonobject.h>
 
 
 namespace LosCore
@@ -205,6 +206,25 @@ void LosLspClient::requestDefinition(const QString &file_path, int line, int cha
     params["position"]     = position;
     sendRequest("textDocument/definition", params, LosLspType::REQ_DIFINE);
 }
+
+
+
+/**
+- 鼠标悬停的效果
+*/
+void LosLspClient::requestHover(const QString &file_path, int line, int character)
+{
+    QJsonObject position;
+    position["line"]      = line;
+    position["character"] = character;
+    QJsonObject textDocument;
+    textDocument["uri"] = QUrl::fromLocalFile(file_path).toString();
+    QJsonObject params;
+    params["textDocument"] = textDocument;
+    params["position"]     = position;
+    sendRequest("textDocument/hover", params, LosLspType::REQ_HOVER);
+}
+
 
 
 /**

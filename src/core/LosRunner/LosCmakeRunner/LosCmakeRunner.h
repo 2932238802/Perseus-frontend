@@ -1,7 +1,11 @@
 #pragma once
+#include "common/constants/ConstantsClass.h"
+#include "common/constants/ConstantsStr.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
-
+#include "core/LosState/LosState.h"
+#include "models/LosFilePath/LosFilePath.h"
+#include <qfileinfo.h>
 #include "common/constants/ConstantsStr.h"
 #include "common/util/GetFilePath.h"
 #include "models/LosFilePath/LosFilePath.h"
