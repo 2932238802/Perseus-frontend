@@ -13,16 +13,6 @@ LosLspClient::LosLspClient(QObject *parent) : QObject(parent), L_id(1)
 {
     L_process = new QProcess(this);
     connect(L_process, &QProcess::readyReadStandardOutput, this, &LosLspClient::processRawData);
-
-    connect(L_process, &QProcess::readyReadStandardError, this,
-            [this]()
-            {
-                QByteArray err = L_process->readAllStandardError();
-                qDebug().noquote() << "[LSP STDERR (" << L_process->program() << ")]:\n" << err;
-            });
-
-    connect(L_process, &QProcess::errorOccurred, this, [this](QProcess::ProcessError error)
-            { qDebug() << "[QProcess ERROR (" << L_process->program() << ")]:" << error << L_process->errorString(); });
 }
 
 

@@ -97,8 +97,13 @@ inline constexpr const char *CLANG_FORMAT = "clang-format.exe";
 #else
 inline constexpr const char *CLANG_FORMAT = "clang-format";
 #endif
-
 } // namespace LosFormatManager_Constants
+
+
+namespace LosFNeocmakelsp_Constants {
+ 
+
+}
 
 
 

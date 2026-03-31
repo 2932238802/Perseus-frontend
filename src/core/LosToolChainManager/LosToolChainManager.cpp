@@ -214,7 +214,7 @@ bool LosToolChainManager::validateExecutable(const LosCommon::LosToolChain_Const
 
 
 /**
-- 解析 一个 config 解析
+- 解析 一个 toolIt config 解析
 */
 LosCommon::LosToolChain_Constants::ToolChainConfig LosToolChainManager::parseToolNode(const QJsonObject &toolObj,
                                                                                       const QString &toolName)

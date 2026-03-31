@@ -160,6 +160,7 @@ void LosEditorUi::format()
     {
         return;
     }
+    INF(out,"1");
     QTextCursor cur = textCursor();
     int outPos      = cur.position();
     cur.beginEditBlock();
