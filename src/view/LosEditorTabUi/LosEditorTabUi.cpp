@@ -305,6 +305,13 @@ void LosEditorTabUi::checkLspAnsFormat(const QString &file_path)
         L_checkedLanguage.insert(LosCommon::LosToolChain_Constants::LosLanguage::CXX);
         return;
     }
+    case LosCommon::LosToolChain_Constants::LosLanguage::RUST:
+    {
+        emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(
+            lang, LosCommon::LosToolChain_Constants::LosTool::RUST_ANALYZER);
+        emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(
+            lang, LosCommon::LosToolChain_Constants::LosTool::CARGO);
+    }
     default:
         break;
     }

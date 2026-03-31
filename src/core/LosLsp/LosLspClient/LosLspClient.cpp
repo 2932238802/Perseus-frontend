@@ -1,6 +1,5 @@
 #include "LosLspClient.h"
-#include <qjsonobject.h>
-#include <qprocess.h>
+
 
 
 namespace LosCore

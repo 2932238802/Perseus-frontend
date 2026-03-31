@@ -1,38 +1,36 @@
-
 #pragma once
-
-#include "common/util/DebugPJson.h"
 #include "core/LosLsp/LosLspClient/LosLspClient.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosState/LosState.h"
-#include "models/LosFilePath/LosFilePath.h"
+#include "models/LosFileNode/LosFileNode.h"
+
+#include <QCoreApplication>
 #include <QDir>
-#include <QJsonArray>
-#include <QJsonObject>
 #include <QObject>
-#include <QProcess>
-#include <qcoreapplication.h>
+#include <qjsonarray.h>
+#include <qjsonobject.h>
+#include <qjsonvalue.h>
+#include <qprocess.h>
 #include <qtmetamacros.h>
 
 namespace LosCore
 {
 
-class LosLspCMake : public LosLspClient
+class LosLspRust : public LosLspClient
 {
     Q_OBJECT
-  public:
-    explicit LosLspCMake(QObject *parent = nullptr);
+  public: // construct
+    explicit LosLspRust(QObject *parent = nullptr);
+    ~LosLspRust() = default;
+
+  public: // tool
     void start(const QStringList &start_up_args, const QString &exe_path) override;
     void dealLspMessage(const QJsonObject &obj) override;
-    ~LosLspCMake() override = default;
 
-
-  private: // init
-    void initConnect();
-
-  private: // tool
+  private:
     void sendInitializeRequest();
-    void sendInitializeMsg();
+    void sendInitializedMsg();
+    void initConnect();
 };
 
 

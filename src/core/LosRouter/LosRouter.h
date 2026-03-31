@@ -49,6 +49,7 @@ class LosRouter : public QObject
 
                                      // 文本定义的位置的返回 是lsp 返回
                                      const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags);
+                                     
     void _cmd_lsp_result_definition(const QString &file_name, int line);
 
     void _cmd_lsp_result_hover(const QString &md_content);

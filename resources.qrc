@@ -17,6 +17,8 @@
         <file alias="exe_white.png">resources/icons/exe_white.png</file>
         <file alias="json_black.png">resources/icons/json_black.png</file>
         <file alias="json_white.png">resources/icons/json_white.png</file>
+        <file alias="rust_black.png">resources/icons/rust_black.png</file>
+        <file alias="rust_white.png">resources/icons/rust_white.png</file>
     </qresource>
     <qresource prefix="/web">
         <file>resources/web/xterm/addon-fit.min.js</file>

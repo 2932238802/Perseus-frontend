@@ -18,6 +18,10 @@ inline LosCommon::LosToolChain_Constants::LosLanguage CheckLang(const QString &f
     {
         return LosCommon::LosToolChain_Constants::LosLanguage::CMAKE;
     }
+    else if (file_path.endsWith(".rs"))
+    {
+        return LosCommon::LosToolChain_Constants::LosLanguage::RUST;
+    }
     return LosCommon::LosToolChain_Constants::LosLanguage::UNKNOWN;
 }
 } // namespace LosCommon

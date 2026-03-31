@@ -1,9 +1,4 @@
 #include "LosLspManager.h"
-#include "common/constants/ConstantsClass.h"
-#include "core/LosLsp/LosLspCMake/LosLspCMake.h"
-#include "core/LosLsp/LosLspClangd/LosLspClangd.h"
-#include "core/LosRunner/LosCmakeRunner/LosCmakeRunner.h"
-#include "models/LosFilePath/LosFilePath.h"
 
 
 namespace LosCore
@@ -104,6 +99,10 @@ QString LosLspManager::getLangId(LosCommon::LosToolChain_Constants::LosLanguage 
     {
         return "cmake";
     }
+    case LosCommon::LosToolChain_Constants::LosLanguage::RUST:
+    {
+        return "rust";
+    }
     default:
         return "plaintext";
     }
@@ -128,13 +127,20 @@ LosLspClient *LosLspManager::getClient(const QString &file_path)
     {
         return LOS_clients.value(LosCommon::LosToolChain_Constants::LosTool::NEOCMAKELSP);
     }
+    else if (lang == LosCommon::LosToolChain_Constants::LosLanguage::RUST)
+    {
+        if (LOS_clients.contains(LosCommon::LosToolChain_Constants::LosTool::RUST_ANALYZER))
+        {
+            return LOS_clients.value(LosCommon::LosToolChain_Constants::LosTool::RUST_ANALYZER);
+        }
+    }
     return nullptr;
 }
 
 
 
 /**
-
+-
 */
 void LosLspManager::onLspReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath,
                                const QStringList &asgs)
@@ -151,6 +157,11 @@ void LosLspManager::onLspReady(LosCommon::LosToolChain_Constants::LosTool tool, 
         case LosCommon::LosToolChain_Constants::LosTool::NEOCMAKELSP:
         {
             LOS_clients[tool] = new LosLspCMake(this);
+            break;
+        }
+        case LosCommon::LosToolChain_Constants::LosTool::RUST_ANALYZER:
+        {
+            LOS_clients[tool] = new LosLspRust(this);
             break;
         }
         default:

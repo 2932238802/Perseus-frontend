@@ -67,6 +67,12 @@ void LosEditorUi::showCompletion(const QStringList &list)
 void LosEditorUi::showDiagnostic(const QString &file_path,
                                  const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &dias)
 {
+    for (auto a : dias)
+    {
+        qDebug() << a.message;
+        qDebug() << a.ds;
+    }
+
     if (getWordUnderCursor() != L_oldWord)
     {
         return;
@@ -160,7 +166,7 @@ void LosEditorUi::format()
     {
         return;
     }
-    INF(out,"1");
+    INF(out, "1");
     QTextCursor cur = textCursor();
     int outPos      = cur.position();
     cur.beginEditBlock();

@@ -1,15 +1,5 @@
 #include "LosLspCMake.h"
-#include "common/util/DebugPJson.h"
-#include "core/LosLsp/LosLspClient/LosLspClient.h"
-#include "core/LosRouter/LosRouter.h"
-#include "core/LosState/LosState.h"
-#include "models/LosFilePath/LosFilePath.h"
-#include <qcoreapplication.h>
-#include <qglobal.h>
-#include <qjsonarray.h>
-#include <qjsonobject.h>
-#include <qjsonvalue.h>
-#include <qprocess.h>
+
 
 namespace LosCore
 {

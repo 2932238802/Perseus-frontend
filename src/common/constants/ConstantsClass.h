@@ -152,6 +152,10 @@ enum class LosTool
     CLANGD,
     CLANG_FORMAT,
     NEOCMAKELSP,
+
+    RUST_ANALYZER,
+    CARGO,
+
     UNKNOWN
 };
 

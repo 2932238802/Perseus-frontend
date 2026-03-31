@@ -1,10 +1,7 @@
 
 
 #include "LosSesssion.h"
-#include <qdebug.h>
-#include <qjsonarray.h>
-#include <qjsondocument.h>
-#include <qjsonobject.h>
+
 
 namespace LosCore
 {
@@ -33,7 +30,7 @@ QString LosSession::getDefaultConfigAbsoluteFilePath()
 /**
 - 加载 config 文件
 */
-bool LosSession::loadConfig(LosCommon::LosSession_Constants::Config* conf) // 加载本地信息
+bool LosSession::loadConfig(LosCommon::LosSession_Constants::Config* conf) 
 {
     QString filePath = getDefaultConfigAbsoluteFilePath();
 
@@ -86,7 +83,7 @@ bool LosSession::loadConfig(LosCommon::LosSession_Constants::Config* conf) // �
 /**
 - 保存文件
 */
-bool LosSession::saveConfig(const LosCommon::LosSession_Constants::Config &conf) // 保存本地信息
+bool LosSession::saveConfig(const LosCommon::LosSession_Constants::Config &conf) 
 {
     QJsonObject obj;
     obj["projectPath"] = conf.L_curProDir;

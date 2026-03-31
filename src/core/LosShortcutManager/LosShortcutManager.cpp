@@ -5,7 +5,6 @@ namespace LosCore
 {
 
 LosShortcutManager::LosShortcutManager(QObject *parent) : QObject(parent) {}
-
 LosShortcutManager &LosShortcutManager::instance()
 {
     static LosShortcutManager m;

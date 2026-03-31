@@ -1,5 +1,6 @@
 #include "LosToolChainManager.h"
 #include "common/constants/ConstantsClass.h"
+#include "common/util/DebugPJson.h"
 #include "core/LosRouter/LosRouter.h"
 
 
@@ -58,6 +59,18 @@ void LosToolChainManager::onCheckSingleTool(LosCommon::LosToolChain_Constants::L
         {
             INF("need neocmakelsp...", "LosToolChainManager");
             emit LosCore::LosRouter::instance()._cmd_lspReady(tool, foundPath, config.L_startupArgs);
+            break;
+        }
+        case LosTool::RUST_ANALYZER:
+        {
+            INF("need rust-analyzer...", "LosToolChainManager");
+            emit LosCore::LosRouter::instance()._cmd_lspReady(tool, foundPath, config.L_startupArgs);
+            break;
+        }
+        case LosTool::CARGO:
+        {
+            INF("need cargo...", "LosToolChainManager");
+            emit LosCore::LosRouter::instance()._cmd_buildToolReady(tool, foundPath, config.L_startupArgs);
             break;
         }
         case LosTool::CMAKE:
@@ -154,6 +167,7 @@ void LosToolChainManager::initConfig()
     if (root.contains("toolchains") && root["toolchains"].isObject())
     {
         QJsonObject toolchains = root["toolchains"].toObject();
+
         for (auto langIt = toolchains.begin(); langIt != toolchains.end(); ++langIt)
         {
             auto lang = stringToLanguage(langIt.key());
@@ -161,6 +175,7 @@ void LosToolChainManager::initConfig()
                 continue;
 
             QJsonObject langObj = langIt.value().toObject();
+
             if (langObj.contains("tools") && langObj["tools"].isObject())
             {
                 QJsonObject tools = langObj["tools"].toObject();
@@ -318,6 +333,10 @@ LosCommon::LosToolChain_Constants::LosTool LosToolChainManager::stringToTool(con
         return LosTool::CLANGD;
     if (s == "clang-format" || s == "clang_format")
         return LosTool::CLANG_FORMAT;
+    if (s == "cargo")
+        return LosTool::CARGO;
+    if (s == "rust-analyzer")
+        return LosTool::RUST_ANALYZER;
     if (s == "neocmakelsp" || s == "neocmakelsp.exe")
         return LosTool::NEOCMAKELSP;
     return LosTool::UNKNOWN;

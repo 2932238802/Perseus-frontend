@@ -1,5 +1,6 @@
 
 #include "LosRunManager.h"
+#include "common/constants/ConstantsClass.h"
 
 
 namespace LosCore
@@ -39,6 +40,7 @@ void LosRunManager::execute(const QString &file_path, bool is_project)
                     lang, LosCommon::LosToolChain_Constants::LosTool::CMAKE);
                 return;
             }
+            LOS_runners[LosCommon::LosToolChain_Constants::LosTool::CMAKE]->start(file_path);
         }
         else
         {
@@ -48,6 +50,7 @@ void LosRunManager::execute(const QString &file_path, bool is_project)
                     lang, LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS);
                 return;
             }
+            LOS_runners[LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS]->start(file_path);
         }
         break;
     }
@@ -115,7 +118,6 @@ void LosRunManager::onBuildToolReady(LosCommon::LosToolChain_Constants::LosTool 
     {
         return;
     }
-
     switch (tool)
     {
     case LosCommon::LosToolChain_Constants::LosTool::CMAKE:
@@ -129,6 +131,11 @@ void LosRunManager::onBuildToolReady(LosCommon::LosToolChain_Constants::LosTool 
         {
             runner->start(porjectDir.getFilePath() + QDir::separator() + LosCommon::LosConfig_Constants::BUILD_NAME);
         }
+        break;
+    }
+    case LosCommon::LosToolChain_Constants::LosTool::CARGO:
+    {
+        // cargo
         break;
     }
     default:

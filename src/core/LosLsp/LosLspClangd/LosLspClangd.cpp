@@ -1,14 +1,13 @@
 #include "LosLspClangd.h"
-#include "core/LosLsp/LosLspClient/LosLspClient.h"
-#include "core/LosRouter/LosRouter.h"
 
 namespace LosCore
 {
-
 LosLspClangd::LosLspClangd(QObject *parent) : LosLspClient(parent)
 {
     initConnect();
 }
+
+
 
 /**
 开始
@@ -21,6 +20,7 @@ void LosLspClangd::start(const QStringList &start_up_args, const QString &exe_pa
         L_process->start(exe_path, start_up_args);
     }
 }
+
 
 
 /**

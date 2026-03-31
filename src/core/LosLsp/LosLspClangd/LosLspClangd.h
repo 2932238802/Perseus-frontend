@@ -1,7 +1,6 @@
 #pragma once
 #include "core/LosLsp/LosLspClient/LosLspClient.h"
 #include "core/LosRouter/LosRouter.h"
-
 #include <QCoreApplication>
 #include <QDir>
 

@@ -1,10 +1,14 @@
 #pragma once
 #include "common/constants/ConstantsClass.h"
 #include "common/util/CheckLang.h"
-#include "core/LosLsp/LosLspClangd/LosLspClangd.h" // 必须引入派生类才能 new
+#include "core/LosLsp/LosLspCMake/LosLspCMake.h"
+#include "core/LosLsp/LosLspClangd/LosLspClangd.h"
 #include "core/LosLsp/LosLspClient/LosLspClient.h"
+#include "core/LosLsp/LosLspRust/LosLspRust.h"
 #include "core/LosRouter/LosRouter.h"
+#include "core/LosRunner/LosCmakeRunner/LosCmakeRunner.h"
 #include "core/LosToolChainManager/LosToolChainManager.h"
+#include "models/LosFilePath/LosFilePath.h"
 
 #include <QFileInfo>
 #include <QObject>
@@ -21,8 +25,7 @@ class LosLspManager : public QObject
     ~LosLspManager() override;
 
 
-  public: // tool
-
+  public:  // tool
   private: // init
     void initConnect();
 

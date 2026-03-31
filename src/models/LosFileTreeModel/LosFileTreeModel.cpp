@@ -193,6 +193,10 @@ QVariant LosFileTreeModel::data(const QModelIndex &index, int role) const
             {
                 return QIcon(":/icons/json_white.png");
             }
+            else if (suffix == "rs")
+            {
+                return QIcon(":/icons/rust_white.png");
+            }
             else
             {
                 return iconProvider.icon(QFileIconProvider::File);
