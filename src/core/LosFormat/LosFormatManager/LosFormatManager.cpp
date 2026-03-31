@@ -1,5 +1,7 @@
 
 #include "LosFormatManager.h"
+#include "models/LosFilePath/LosFilePath.h"
+#include <qfileinfo.h>
 
 namespace LosCore
 {
@@ -16,9 +18,17 @@ LosFormatManager &LosFormatManager::instance()
 
 /**
 格式化文本
+- 暂时只是 处理 C++ 文件
 */
 bool LosFormatManager::format(QString *out, const QString &file_path, const QString &raw_content)
 {
+    auto sfx = LosModel::LosFilePath(file_path).getSuffix();
+    if (sfx != "cpp" || sfx != "cc" || sfx != "c")
+    {
+        *out = raw_content;
+        return true;
+    }
+
     if (raw_content.isEmpty())
     {
         WAR("the content to be formatted is empty", "LosFormatManage");

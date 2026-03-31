@@ -250,7 +250,7 @@
                         "neocmakelsp"
                     ],
                     "startupArgs": [
-                        "--stdio"
+                        "stdio"
                     ],
                     "requireNodeJs": false,
                     "versionArgs": "--version",

@@ -1,7 +1,11 @@
 #include "LosLspCMake.h"
+#include "common/util/DebugPJson.h"
 #include "core/LosLsp/LosLspClient/LosLspClient.h"
 #include "core/LosRouter/LosRouter.h"
+#include "core/LosState/LosState.h"
+#include "models/LosFilePath/LosFilePath.h"
 #include <qcoreapplication.h>
+#include <qglobal.h>
 #include <qjsonarray.h>
 #include <qjsonobject.h>
 #include <qjsonvalue.h>
@@ -10,14 +14,17 @@
 namespace LosCore
 {
 
-LosLspCMake::LosLspCMake(QObject *parent) : LosLspClient(parent) {}
+LosLspCMake::LosLspCMake(QObject *parent) : LosLspClient(parent)
+{
+    initConnect();
+}
 
 /**
 - 开始
 */
 void LosLspCMake::start(const QStringList &start_up_args, const QString &exe_path)
 {
-    if (nullptr != L_process && L_process->state() == QProcess::NotRunning)
+    if (L_process && L_process->state() == QProcess::NotRunning)
     {
         INF("LosLspCMake : " + exe_path, "LosLspCMake");
         L_process->start(exe_path, start_up_args);
@@ -53,12 +60,13 @@ void LosLspCMake::dealLspMessage(const QJsonObject &obj)
             SUC("handshake successful", "LosLspCMake");
             // 初始化的 回复
             L_isinit = true;
+            // 发送通知
+            sendInitializeMsg();
             for (const auto &con : L_pendings)
             {
                 didOpen(con.L_filePath, con.L_content, con.L_langId);
             }
-            // 发送通知
-            sendInitializeMsg();
+
             L_pendings.clear();
             break;
         }
@@ -88,14 +96,28 @@ void LosLspCMake::dealLspMessage(const QJsonObject &obj)
             // }
             if (!obj.contains("result"))
                 return;
-            QJsonObject result = obj["result"].toObject();
-            QJsonArray items   = result["items"].toArray();
+            QJsonValue resultVal = obj["result"];
+            QJsonArray items;
+            if (resultVal.isArray())
+            {
+                items = resultVal.toArray();
+            }
+            else if (resultVal.isObject())
+            {
+                items = resultVal.toObject()["items"].toArray();
+            }
             QStringList res;
-            res.clear();
             for (const auto &a : items)
             {
                 QString insertStr = a.toObject()["insertText"].toString();
-                res.append(insertStr);
+                if (insertStr.isEmpty())
+                {
+                    insertStr = a.toObject()["label"].toString();
+                }
+                if (!insertStr.isEmpty())
+                {
+                    res.append(insertStr);
+                }
             }
             // 去掉 重复的
             res.removeDuplicates();
@@ -150,7 +172,6 @@ void LosLspCMake::dealLspMessage(const QJsonObject &obj)
             {
                 return;
             }
-
             QJsonValue res = obj["result"];
             QJsonObject target;
 
@@ -212,24 +233,20 @@ void LosLspCMake::dealLspMessage(const QJsonObject &obj)
 
 
 /**
-
+- 初始化 连接
 */
 void LosLspCMake::initConnect()
 {
     // 开始的时候 发送 初始化 信息
     connect(L_process, &QProcess::started, this, &LosLspCMake::sendInitializeRequest);
-    connect(L_process, &QProcess::readyReadStandardOutput, this,
-            [=]() { INF(QString::fromLocal8Bit(L_process->readAllStandardOutput()), "LosLspCMake"); });
     connect(L_process, &QProcess::readyReadStandardError, this,
             [=]() { INF(QString::fromUtf8(L_process->readAllStandardError()), "LosLspCMake"); });
+    connect(L_process, &QProcess::errorOccurred, this,
+            [=](QProcess::ProcessError err) { INF("QProcess error: " + QString::number(err), "LosLspCMake"); });
+    connect(L_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this,
+            [=](int code, QProcess::ExitStatus status)
+            { INF("QProcess finished, code: " + QString::number(code), "LosLspCMake"); });
     auto &router = LosCore::LosRouter::instance();
-
-    connect(&router, &LosRouter::_cmd_lsp_result_completion, this,
-            [=](const QString &filePath, int line, int col) { this->requestCompletion(filePath, line, col); });
-
-    connect(&router, &LosRouter::_cmd_whereDefine, this,
-            [=](int line, int col, const QString &file_path) { this->requestDefinition(file_path, line, col); });
-
     connect(&router, &LosRouter::_cmd_lsp_request_hover, this,
             [=](const QString &filePath, int line, int col) { this->requestHover(filePath, line, col); });
 }
@@ -262,9 +279,18 @@ void LosLspCMake::initConnect()
 void LosLspCMake::sendInitializeRequest()
 {
     QJsonObject params;
-    params["processId"]    = QCoreApplication::applicationPid();
-    params["rootUri"]      = QUrl::fromLocalFile(QDir::currentPath()).toString();
-    params["capabilities"] = QJsonObject();
+    params["processId"] = QCoreApplication::applicationPid();
+    QString absPath     = LosCore::LosState::instance()
+                          .get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR)
+                          .getAbsoluteFilePath();
+    params["rootUri"] = QUrl::fromLocalFile(absPath).toString();
+    QJsonObject completion;
+    QJsonObject textDocument;
+    textDocument["completion"] = completion;
+    QJsonObject capabilities;
+    capabilities["textDocument"] = textDocument;
+    capabilities["workspace"]    = QJsonObject();
+    params["capabilities"]       = capabilities;
     sendRequest("initialize", params, LosLspType::REQ_INITIALIZE);
 }
 
@@ -280,5 +306,4 @@ void LosLspCMake::sendInitializeMsg()
 {
     sendNotification("initialized", QJsonObject());
 }
-
 } // namespace LosCore

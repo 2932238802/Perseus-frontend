@@ -1,6 +1,7 @@
 #pragma once
 #include "common/constants/ConstantsClass.h"
 #include "common/constants/ConstantsStr.h"
+#include "common/util/DebugPJson.h"
 #include "core/LosLog/LosLog.h"
 #include <QByteArray>
 #include <QDebug>
@@ -50,7 +51,7 @@ class LosLspClient : public QObject
     QProcess *L_process;
     QByteArray L_rawData;
     std::atomic<int> L_id;
-    std::atomic<int> L_versionId;
+    QHash<QString, int> L_fileVersions;
     QMap<int, LosLspType> L_idToType;
 };
 

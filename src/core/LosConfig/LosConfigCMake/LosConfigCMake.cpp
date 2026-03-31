@@ -49,10 +49,8 @@ void LosConfigCMake::analyse(const QString &projectPath)
                     QString jsonPath = QDir(projectPath).filePath(LosCommon::LosConfig_Constants::BUILD_NAME) +
                                        QDir::separator() + LosCommon::LosConfig_Constants::COMPILE_COMMANDS_FILE;
                     INF("the compile_commands.json: " + jsonPath, "LosConfigCMake");
-                    QString jsonPathToLocal = QUrl::fromLocalFile(jsonPath).toString();
                     emit LosRouter::instance()._cmd_lsp_msg_didChangeWatchedFiles(
-                        jsonPathToLocal,
-                        LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Created);
+                        jsonPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Created);
                 }
                 else
                 {

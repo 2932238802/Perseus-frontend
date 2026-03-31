@@ -1,0 +1,5 @@
+Content-Length: 595
+
+{"jsonrpc":"2.0","result":{"capabilities":{"codeActionProvider":true,"completionProvider":{"resolveProvider":false},"definitionProvider":true,"documentFormattingProvider":true,"documentLinkProvider":{"resolveProvider":true,"workDoneProgress":false},"documentSymbolProvider":true,"hoverProvider":true,"referencesProvider":true,"renameProvider":true,"textDocumentSync":{"change":1,"openClose":true,"save":true,"willSave":false,"willSaveWaitUntil":false},"workspace":{"workspaceFolders":{"changeNotifications":true,"supported":true}}},"serverInfo":{"name":"neocmakelsp","version":"0.10.1"}},"id":1}Content-Length: 83
+
+{"jsonrpc":"2.0","error":{"code":-32002,"message":"Server not initialized"},"id":2}

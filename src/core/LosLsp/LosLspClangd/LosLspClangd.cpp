@@ -33,9 +33,6 @@ void LosLspClangd::initConnect()
     connect(L_process, &QProcess::started, this, &LosLspClangd::sendInitializeRequest);
     connect(L_process, &QProcess::readyReadStandardError, this,
             [=]() { INF(QString::fromUtf8(L_process->readAllStandardError()), "LosLspClangd"); });
-
-    connect(&router, &LosRouter::_cmd_whereDefine, this,
-            [=](int line, int col, const QString &file_path) { this->requestDefinition(file_path, line, col); });
     connect(&router, &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this,
             [=](const QString &compile_commands_path, auto type)
             { this->didChangeWatchedFiles(compile_commands_path, type); });
@@ -84,19 +81,24 @@ void LosLspClangd::dealLspMessage(const QJsonObject &obj)
         {
         case LosLspType::REQ_COMPLETION:
         {
-            if (obj.contains("result"))
+            if (!obj.contains("result"))
+                return;
+            QJsonObject result = obj["result"].toObject();
+            QJsonArray items   = result["items"].toArray();
+            QStringList res;
+            res.clear();
+            for (const auto &a : items)
             {
-                QJsonObject result = obj["result"].toObject();
-                QJsonArray items   = result["items"].toArray();
-                QStringList completionWords;
-                for (int i = 0; i < items.size(); i++)
+                QJsonObject item  = a.toObject();
+                QString insertStr = item["insertText"].toString();
+                if (insertStr.isEmpty())
                 {
-                    QJsonObject item = items[i].toObject();
-                    completionWords.append(item["insertText"].toString());
+                    insertStr = item["label"].toString();
                 }
-                completionWords.removeDuplicates();
-                emit LosRouter::instance()._cmd_lsp_result_completion(completionWords);
+                res.append(insertStr);
             }
+            res.removeDuplicates();
+            emit LosRouter::instance()._cmd_lsp_result_completion(res);
             break;
         }
         // 有 id 的请求 就 一定会返回 有id 的回复
@@ -119,7 +121,6 @@ void LosLspClangd::dealLspMessage(const QJsonObject &obj)
                 QJsonArray arr = obj["result"].toArray();
                 if (arr.empty())
                     break;
-
                 QJsonObject target     = arr[0].toObject();
                 QString targetFilePath = QUrl(target["uri"].toString()).toLocalFile();
                 int targetLine         = target["range"].toObject()["start"].toObject()["line"].toInt();
@@ -134,7 +135,6 @@ void LosLspClangd::dealLspMessage(const QJsonObject &obj)
                 QJsonObject result   = obj["result"].toObject();
                 QJsonObject contents = result["contents"].toObject();
                 QString hoverText    = contents["value"].toString();
-
                 // 悬停 提示 前端 ui 进行渲染
                 emit LosRouter::instance()._cmd_lsp_result_hover(hoverText);
             }

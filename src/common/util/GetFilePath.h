@@ -17,7 +17,9 @@ inline std::optional<QString> GetFilePathFromUp(const QString &base_file_name, i
 {
     INF("find ... :" + base_file_name, "GetFilePathFromUp");
     QDir dir(QCoreApplication::applicationDirPath());
+
     QString targetPath = "";
+
     // 编译器 分支
     if constexpr (type == LosCommon::FindFileType::COMMON)
     {

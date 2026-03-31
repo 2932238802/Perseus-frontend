@@ -87,7 +87,6 @@ class LosRouter : public QObject
 
     void _cmd_checkLanguageToolchain(LosCommon::LosToolChain_Constants::LosLanguage lang,
                                      LosCommon::LosToolChain_Constants::LosTool tool);
-
     void _cmd_checkSingleTool(LosCommon::LosToolChain_Constants::LosTool tool);
 
     // 用户设定 信号 设置 要打开 设置窗口

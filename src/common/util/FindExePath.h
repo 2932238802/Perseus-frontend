@@ -20,23 +20,31 @@ inline std::optional<QString> FindExePath(const QString &exeName)
 #endif
     QString appDir = QCoreApplication::applicationDirPath();
     QDir toolsDir(appDir);
-    QString bundledPath = toolsDir.absoluteFilePath("tools/" + osSubDir + "/" + exeName);
-    QFileInfo bundledFile(bundledPath);
-    if (bundledFile.exists() && bundledFile.isExecutable())
+    for (int i = 0; i < 5; i++)
     {
-        return bundledPath;
-    }
-    QString sysPath = QStandardPaths::findExecutable(exeName);
-    if (!sysPath.isEmpty())
-    {
-#ifdef Q_OS_LINUX
-        if (sysPath.startsWith("/mnt/c/") || sysPath.startsWith("/mnt/d/") || sysPath.startsWith("/mnt/"))
+        QString bundledPath = toolsDir.absoluteFilePath("tools/" + osSubDir + "/" + exeName);
+        QFileInfo bundledFile(bundledPath);
+        if (bundledFile.exists() && bundledFile.isExecutable())
         {
-            return std::nullopt;
+            return bundledPath;
         }
+        QString sysPath = QStandardPaths::findExecutable(exeName);
+        if (!sysPath.isEmpty())
+        {
+#ifdef Q_OS_LINUX
+            if (sysPath.startsWith("/mnt/c/") || sysPath.startsWith("/mnt/d/") || sysPath.startsWith("/mnt/"))
+            {
+                return std::nullopt;
+            }
 #endif
-        return sysPath;
+            return sysPath;
+        }
+        if (!toolsDir.cdUp())
+        {
+            break;
+        }
     }
+
     return std::nullopt;
 }
 

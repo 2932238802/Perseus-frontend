@@ -137,6 +137,7 @@ enum class LosLanguage
     JAVA,
     PYTHON,
     CSHARP,
+    CMAKE,
     UNKNOWN,
 };
 

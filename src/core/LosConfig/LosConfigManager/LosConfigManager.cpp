@@ -2,7 +2,6 @@
 
 namespace LosCore
 {
-
 LosConfigManager::LosConfigManager(QObject *parent) : QObject{parent}
 {
     initConnect();

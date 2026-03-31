@@ -38,7 +38,7 @@ class LosToolChainManager : public QObject
   private:
     void initConfig();
     void initConnect();
-    bool validateExecutable(const QString &lastSavePath, const LosCommon::LosToolChain_Constants::ToolChainConfig &);
+    bool validateExecutable(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
 
   private:
     LosCommon::LosToolChain_Constants::ToolChainConfig parseToolNode(const QJsonObject &, const QString &);

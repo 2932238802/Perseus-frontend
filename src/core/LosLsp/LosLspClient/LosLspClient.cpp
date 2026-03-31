@@ -1,5 +1,6 @@
 #include "LosLspClient.h"
 #include <qjsonobject.h>
+#include <qprocess.h>
 
 
 namespace LosCore
@@ -8,10 +9,20 @@ namespace LosCore
 /**
 - construct
 */
-LosLspClient::LosLspClient(QObject *parent) : QObject(parent), L_id(1), L_versionId(1)
+LosLspClient::LosLspClient(QObject *parent) : QObject(parent), L_id(1)
 {
     L_process = new QProcess(this);
     connect(L_process, &QProcess::readyReadStandardOutput, this, &LosLspClient::processRawData);
+
+    connect(L_process, &QProcess::readyReadStandardError, this,
+            [this]()
+            {
+                QByteArray err = L_process->readAllStandardError();
+                qDebug().noquote() << "[LSP STDERR (" << L_process->program() << ")]:\n" << err;
+            });
+
+    connect(L_process, &QProcess::errorOccurred, this, [this](QProcess::ProcessError error)
+            { qDebug() << "[QProcess ERROR (" << L_process->program() << ")]:" << error << L_process->errorString(); });
 }
 
 
@@ -61,7 +72,6 @@ void LosLspClient::sendNotification(const QString &method, const QJsonObject &pa
     req["jsonrpc"] = "2.0";
     req["method"]  = method;
     req["params"]  = params;
-
     QJsonDocument doc(req);
     QByteArray jb     = doc.toJson(QJsonDocument::Compact);
     QByteArray header = LosCommon::LosLsp_Constants::CONTENT_LENGTH + QByteArray::number(jb.size()) +
@@ -78,13 +88,11 @@ void LosLspClient::processRawData()
 {
     QByteArray data = L_process->readAllStandardOutput();
     L_rawData.append(data);
-
     while (true)
     {
         auto pos = L_rawData.indexOf("\r\n\r\n");
         if (-1 == pos)
             break;
-
         int headerLenth    = pos;
         QByteArray headQba = L_rawData.left(headerLenth);
         QString headStr    = QString::fromUtf8(headQba);
@@ -102,17 +110,14 @@ void LosLspClient::processRawData()
             L_rawData.clear();
             break;
         }
-
         int allLenth = headerLenth + 4 + contentLenth;
         if (L_rawData.size() < allLenth)
         {
             break;
         }
-
         QByteArray rawJsonData = L_rawData.mid(headerLenth + 4, contentLenth);
         L_rawData.remove(0, allLenth);
         QJsonDocument doc = QJsonDocument::fromJson(rawJsonData);
-
         if (doc.isObject())
         {
             dealLspMessage(doc.object());
@@ -124,6 +129,7 @@ void LosLspClient::processRawData()
         }
     }
 }
+
 
 
 /**
@@ -140,11 +146,11 @@ void LosLspClient::didOpen(const QString &file_path, const QString &text, const 
         L_pendings.append(req);
         return;
     }
-
     QJsonObject textDocument;
     textDocument["uri"]        = QUrl::fromLocalFile(file_path).toString();
     textDocument["languageId"] = languageId;
     textDocument["version"]    = 1;
+    L_fileVersions[file_path]  = 1;
     textDocument["text"]       = text;
     QJsonObject params;
     params["textDocument"] = textDocument;
@@ -158,13 +164,27 @@ void LosLspClient::didOpen(const QString &file_path, const QString &text, const 
 */
 void LosLspClient::didChange(const QString &file_path, const QString &text)
 {
+    if (!L_isinit)
+    {
+        for (auto &req : L_pendings)
+        {
+            if (req.L_filePath == file_path)
+            {
+                req.L_content = text;
+                return;
+            }
+        }
+        return;
+    }
     QJsonArray contentChanges;
     QJsonObject contentChangesObject;
     contentChangesObject["text"] = text;
     contentChanges.append(contentChangesObject);
     QJsonObject textDocument;
-    textDocument["uri"]     = QUrl::fromLocalFile(file_path).toString();
-    textDocument["version"] = L_versionId.fetch_add(1);
+    int newVersion            = L_fileVersions[file_path] + 1;
+    L_fileVersions[file_path] = newVersion;
+    textDocument["uri"]       = QUrl::fromLocalFile(file_path).toString();
+    textDocument["version"]   = newVersion;
     QJsonObject params;
     params["textDocument"]   = textDocument;
     params["contentChanges"] = contentChanges;
@@ -178,6 +198,8 @@ void LosLspClient::didChange(const QString &file_path, const QString &text)
 */
 void LosLspClient::requestCompletion(const QString &file_path, int line, int character)
 {
+    if (!L_isinit)
+        return;
     QJsonObject textDocument;
     textDocument["uri"] = QUrl::fromLocalFile(file_path).toString();
     QJsonObject position;

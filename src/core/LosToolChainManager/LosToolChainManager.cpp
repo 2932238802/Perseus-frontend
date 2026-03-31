@@ -39,12 +39,9 @@ void LosToolChainManager::onCheckSingleTool(LosCommon::LosToolChain_Constants::L
     {
         return;
     }
-
     auto config = LOS_toolConfigs.value(tool);
-    QString expectedDir =
-        QCoreApplication::applicationDirPath() + QDir::separator() + "tool" + QDir::separator() + config.L_name;
 
-    if (validateExecutable(expectedDir, config))
+    if (validateExecutable(config))
     {
         QString foundPath = L_activeToolPath[tool];
         SUC("tool ready: " + config.L_name + " at " + foundPath, "LosToolChainManager");
@@ -199,8 +196,7 @@ void LosToolChainManager::initConnect()
 /**
 - 判断是不是 可以运行
 */
-bool LosToolChainManager::validateExecutable(const QString &expectedDir,
-                                             const LosCommon::LosToolChain_Constants::ToolChainConfig &config)
+bool LosToolChainManager::validateExecutable(const LosCommon::LosToolChain_Constants::ToolChainConfig &config)
 {
     auto toolEnum = stringToTool(config.L_name);
     for (const auto &exeName : config.L_exeName)
@@ -251,6 +247,11 @@ LosCommon::LosToolChain_Constants::ToolChainConfig LosToolChainManager::parseToo
     return config;
 }
 
+
+
+/**
+- 字符串 -> 具体枚举
+*/
 LosCommon::LosToolChain_Constants::LosLanguage LosToolChainManager::stringToLanguage(const QString &str)
 {
     using namespace LosCommon::LosToolChain_Constants;
@@ -267,9 +268,16 @@ LosCommon::LosToolChain_Constants::LosLanguage LosToolChainManager::stringToLang
         return LosLanguage::PYTHON;
     if (upperStr == "CSHARP")
         return LosLanguage::CSHARP;
+    if (upperStr == "CMAKE")
+        return LosLanguage::CMAKE;
     return LosLanguage::UNKNOWN;
 }
 
+
+
+/**
+- 字符串 转 具体 枚举
+*/
 LosCommon::LosToolChain_Constants::ToolCategory LosToolChainManager::stringToCategory(const QString &str)
 {
     using namespace LosCommon::LosToolChain_Constants;
@@ -289,6 +297,11 @@ LosCommon::LosToolChain_Constants::ToolCategory LosToolChainManager::stringToCat
     return ToolCategory::Compiler;
 }
 
+
+
+/**
+- 字符串 转 具体工具
+*/
 LosCommon::LosToolChain_Constants::LosTool LosToolChainManager::stringToTool(const QString &str)
 {
     using namespace LosCommon::LosToolChain_Constants;

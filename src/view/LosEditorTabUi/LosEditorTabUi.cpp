@@ -264,6 +264,7 @@ void LosEditorTabUi::onResetCheck(LosCommon::LosToolChain_Constants::LosLanguage
 }
 
 
+
 /**
 初始化
 */
@@ -302,10 +303,16 @@ void LosEditorTabUi::checkLspAnsFormat(const QString &file_path)
         emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(
             lang, LosCommon::LosToolChain_Constants::LosTool::CLANG_FORMAT);
         L_checkedLanguage.insert(LosCommon::LosToolChain_Constants::LosLanguage::CXX);
-        break;
+        return;
     }
     default:
         break;
+    }
+
+    if (LosModel::LosFilePath(file_path).getFileName() == "CMakeLists.txt")
+    {
+        emit LosCore::LosRouter::instance()._cmd_checkSingleTool(
+            LosCommon::LosToolChain_Constants::LosTool::NEOCMAKELSP);
     }
 }
 

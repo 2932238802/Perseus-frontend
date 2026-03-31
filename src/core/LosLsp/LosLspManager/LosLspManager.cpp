@@ -100,6 +100,10 @@ QString LosLspManager::getLangId(LosCommon::LosToolChain_Constants::LosLanguage 
     {
         return "python";
     }
+    case LosCommon::LosToolChain_Constants::LosLanguage::CMAKE:
+    {
+        return "cmake";
+    }
     default:
         return "plaintext";
     }
@@ -117,17 +121,21 @@ LosLspClient *LosLspManager::getClient(const QString &file_path)
     {
         if (LOS_clients.contains(LosCommon::LosToolChain_Constants::LosTool::CLANGD))
         {
-            return LOS_clients[LosCommon::LosToolChain_Constants::LosTool::CLANGD];
+            return LOS_clients.value(LosCommon::LosToolChain_Constants::LosTool::CLANGD);
         }
     }
     else if (LosModel::LosFilePath(file_path).getFileName() == "CMakeLists.txt")
     {
-        return LOS_clients[LosCommon::LosToolChain_Constants::LosTool::NEOCMAKELSP];
+        return LOS_clients.value(LosCommon::LosToolChain_Constants::LosTool::NEOCMAKELSP);
     }
     return nullptr;
 }
 
 
+
+/**
+
+*/
 void LosLspManager::onLspReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath,
                                const QStringList &asgs)
 {
