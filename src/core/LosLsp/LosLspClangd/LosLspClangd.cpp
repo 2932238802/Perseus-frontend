@@ -1,4 +1,8 @@
 #include "LosLspClangd.h"
+#include "core/LosLsp/LosLspClient/LosLspClient.h"
+#include "core/LosRouter/LosRouter.h"
+#include <qjsonarray.h>
+#include <qjsonobject.h>
 
 namespace LosCore
 {
@@ -48,9 +52,14 @@ void LosLspClangd::initConnect()
 void LosLspClangd::sendInitializeRequest()
 {
     QJsonObject params;
-    params["processId"]    = QCoreApplication::applicationPid();
-    params["rootUri"]      = QUrl::fromLocalFile(QDir::currentPath()).toString();
-    params["capabilities"] = QJsonObject();
+    params["processId"] = QCoreApplication::applicationPid();
+    params["rootUri"]   = QUrl::fromLocalFile(QDir::currentPath()).toString();
+    QJsonObject capabilities;
+    QJsonObject semanticTokens;
+    semanticTokens["dynamicRegistration"] = false;
+    semanticTokens["requests"]            = QJsonObject{{"full", true}};
+    capabilities["textDocument"]          = QJsonObject{{"semanticTokens", semanticTokens}};
+    params["capabilities"]                = capabilities;
     sendRequest("initialize", params, LosLspType::REQ_INITIALIZE);
 }
 
@@ -106,6 +115,29 @@ void LosLspClangd::dealLspMessage(const QJsonObject &obj)
         {
             SUC("handshake successful", "LosLspClangd");
             L_isinit = true;
+            if (obj.contains("result"))
+            {
+                QJsonObject result       = obj["result"].toObject();
+                QJsonObject capabilities = result["capabilities"].toObject();
+                if (capabilities.contains("semanticTokensProvider"))
+                {
+                    QJsonObject provider = capabilities["semanticTokensProvider"].toObject();
+                    QJsonObject legend   = provider["legend"].toObject();
+
+                    QStringList tokenTypes;
+                    for (const QJsonValue &val : legend["tokenTypes"].toArray())
+                    {
+                        tokenTypes.append(val.toString());
+                    }
+
+                    QStringList tokenModifiers;
+                    for (const QJsonValue &val : legend["tokenModifiers"].toArray())
+                    {
+                        tokenModifiers.append(val.toString());
+                    }
+                    emit LosRouter::instance()._cmd_lsp_result_semanticLegend(tokenTypes, tokenModifiers);
+                }
+            }
             sendInitializedMsg();
             for (const auto &con : L_pendings)
             {
@@ -141,6 +173,25 @@ void LosLspClangd::dealLspMessage(const QJsonObject &obj)
             else
             {
                 emit LosRouter::instance()._cmd_lsp_result_hover("");
+            }
+            break;
+        }
+        case LosCore::LosLspType::REQ_SEMANTIC_HIGHLIGHT:
+        {
+            // 这里是 语法 高亮
+            // [deltaLine, deltaChar, length, tokenType, modifiers]
+            // json 返回的 只是 数组 没有对应的字段
+            // 就是 纯 数字 所以需要自己进行解析
+            INF("11","11");
+            
+            if (obj.contains("result") && !obj["result"].isNull())
+            {
+                QJsonObject result = obj["result"].toObject();
+                if (result.contains("data"))
+                {
+                    QJsonArray data = result["data"].toArray();
+                    emit LosRouter::instance()._cmd_lsp_result_semanticTokens(data);
+                }
             }
             break;
         }

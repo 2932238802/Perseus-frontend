@@ -1,5 +1,6 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
+#include "core/LosRouter/LosRouter.h"
 #include <qtabwidget.h>
 
 
@@ -88,28 +89,32 @@ void Perseus::OnFileLoaded(bool isc)
 /**
 - 文件按钮 被点击
 - 支持导入文件和文件夹
-- 修复 相关问题
-- 仅仅 支持 文件选择 默认 生成 一个 文件夹
+- 以文件夹所在的绝对位置 作为 项目根目录
+- 切换目录时关闭其它 Tab
 */
 void Perseus::onFilesBtnClicked()
 {
-    QFileDialog dialog(this, "choose file/filefolder");
-    dialog.setFileMode(QFileDialog::AnyFile);
-    dialog.setOption(QFileDialog::DontUseNativeDialog, false);
-    // 只能显示 文件夹
-    dialog.setAcceptMode(
-        // 要么是打开 要么就是保存的形式
-        QFileDialog::AcceptOpen);
-    if (dialog.exec() == QDialog::Accepted)
+    QString pathChoose = QFileDialog::getExistingDirectory(
+        this, tr("Open Project Folder"), "", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    if (pathChoose.isEmpty())
     {
-        QString filePathChoose = dialog.selectedFiles().first();
-        LosModel::LosFilePath path(filePathChoose);
-        QString projectDirOfPath = path.isFile() ? path.getAbsolutePath() : path.getFilePath();
-        INF(projectDirOfPath, "Perseus");
-        LosModel::LosFilePath projectFilepath(projectDirOfPath);
+        QString filePath = QFileDialog::getOpenFileName(this, tr("Select a file to open its directory"));
+        if (filePath.isEmpty())
+            return;
+        pathChoose = QFileInfo(filePath).absolutePath();
+        return;
+    }
+    if (!pathChoose.isEmpty())
+    {
+        if (LOS_tabUi)
+        {
+            LOS_tabUi->closeAllTabs();
+        }
+        LosModel::LosFilePath projectFilepath(pathChoose);
         bool isSuc = projectFilepath.isExist();
         LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR,
                                                                  projectFilepath);
+        SUC("load " + pathChoose, "Perseus");
         this->OnFileLoaded(isSuc);
     }
 }
@@ -175,6 +180,7 @@ void Perseus::onLog(const QString &log)
 {
     ui->output_plaintextedit->appendHtml(log);
 }
+
 
 
 /**
@@ -310,16 +316,23 @@ void Perseus::initShotcut()
 */
 void Perseus::initSession()
 {
+    // 加载 这个 conf
     LosCommon::LosSession_Constants::Config conf;
     if (!LosCore::LosSession::instance().loadConfig(&conf))
         return;
+
+    // 打开 file
+    // 存到 全局
     LosModel::LosFilePath file(conf.L_curProDir);
     bool isSuc = file.isExist();
     LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, file);
+
+    // 更新全局 状态
     OnFileLoaded(isSuc);
     if (!LOS_tabUi)
         return;
 
+    // 更新左侧 树
     connect(
         &LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_fileTreeDone, this,
         [conf, this]()
@@ -330,7 +343,11 @@ void Perseus::initSession()
             }
             if (conf.L_curProDir.isEmpty())
                 return;
-            ui->explorer_treeview->expandToFile(conf.L_curFilePaths.first());
+            if (!conf.L_curFilePaths.isEmpty())
+            {
+                // 打开 右侧 默认打开的其中一个文件
+                ui->explorer_treeview->expandToFile(conf.L_curFilePaths.first());
+            }
         },
         Qt::SingleShotConnection);
 }

@@ -239,6 +239,20 @@ void LosLspClient::requestHover(const QString &file_path, int line, int characte
 
 
 /**
+- 发送 语法 高亮的补全
+*/
+void LosLspClient::requestSemantic(const QString &file_path)
+{
+    QJsonObject params;
+    QJsonObject textDocument;
+    textDocument["uri"]    = QUrl::fromLocalFile(file_path).toString();
+    params["textDocument"] = textDocument;
+    sendRequest("textDocument/semanticTokens/full", params, LosLspType::REQ_SEMANTIC_HIGHLIGHT);
+}
+
+
+
+/**
 文件树的变化
 */
 void LosLspClient::didChangeWatchedFiles(const QString &filePath,

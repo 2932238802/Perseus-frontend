@@ -1,4 +1,5 @@
 #include "LosLspManager.h"
+#include "core/LosRouter/LosRouter.h"
 
 
 namespace LosCore
@@ -59,6 +60,9 @@ void LosLspManager::toDefineRequest(int line, int col, const QString &file_path)
 
 
 
+/**
+- 监听 文件结构 改变
+*/
 void LosLspManager::didChangeWatchedFiles(const QString &file_path, int type)
 {
     if (file_path.contains("compile_commands.json"))
@@ -73,6 +77,19 @@ void LosLspManager::didChangeWatchedFiles(const QString &file_path, int type)
 
 
 
+/**
+- 发送 语法 高亮请求
+*/
+void LosLspManager::onSemantic(const QString &file_paht)
+{
+    if (auto client = getClient(file_paht))
+    {
+        client->requestSemantic(file_paht);
+    }
+}
+
+
+
 void LosLspManager::initConnect()
 {
     auto &router = LosRouter::instance();
@@ -82,6 +99,7 @@ void LosLspManager::initConnect()
     connect(&router, &LosRouter::_cmd_whereDefine, this, &LosLspManager::toDefineRequest);
     connect(&router, &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this, &LosLspManager::didChangeWatchedFiles);
     connect(&router, &LosRouter::_cmd_lspReady, this, &LosLspManager::onLspReady);
+    connect(&router, &LosRouter::_cmd_lsp_request_semantic, this, &LosLspManager::onSemantic);
 }
 
 

@@ -41,6 +41,7 @@ void LosEditorUi::showCompletion(const QStringList &list)
         }
         return;
     }
+
     LOS_completer->updateCompletionList(list);
     QString prefix = getWordUnderCursor();
     if (prefix != LOS_completer->completionPrefix())
@@ -67,19 +68,9 @@ void LosEditorUi::showCompletion(const QStringList &list)
 void LosEditorUi::showDiagnostic(const QString &file_path,
                                  const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &dias)
 {
-    for (auto a : dias)
-    {
-        qDebug() << a.message;
-        qDebug() << a.ds;
-    }
-
-    if (getWordUnderCursor() != L_oldWord)
-    {
-        return;
-    }
-
     if (file_path != LOS_filePath->getFilePath())
         return;
+
     QList<QTextEdit::ExtraSelection> selectionsList;
 
     for (const auto &a : dias)
@@ -159,14 +150,26 @@ void LosEditorUi::gotoLine(int line)
 
 
 
+/**
+if (out == currentText)
+    {
+        return;
+    }
+- 增加防抖
+*/
 void LosEditorUi::format()
 {
     QString out{""};
+    QString currentText = toPlainText();
     if (!LosCore::LosFormatManager::instance().format(&out, LOS_filePath->getFilePath(), toPlainText()))
     {
         return;
     }
-    INF(out, "1");
+    // fix
+    if (out == currentText)
+    {
+        return;
+    }
     QTextCursor cur = textCursor();
     int outPos      = cur.position();
     cur.beginEditBlock();
@@ -189,7 +192,7 @@ void LosEditorUi::loadContextAndPath(QSharedPointer<LosModel::LosFileContext> co
         return;
     LOS_context  = context;
     LOS_filePath = file_path;
-    blockSignals(true);
+    this->document()->blockSignals(true);
     auto op      = LOS_context->load(LOS_filePath->getFilePath());
     QString text = "";
     if (op)
@@ -201,8 +204,10 @@ void LosEditorUi::loadContextAndPath(QSharedPointer<LosModel::LosFileContext> co
         return;
     }
     setPlainText(text);
-    blockSignals(false);
-    emit LosCore::LosRouter::instance()._cmd_lsp_request_openFile(LOS_filePath -> getFilePath(), this->toPlainText());
+    this->document()->blockSignals(false);
+    QString filePath = LOS_filePath->getFilePath();
+    emit LosCore::LosRouter::instance()._cmd_lsp_request_openFile(filePath, this -> toPlainText());
+    emit LosCore::LosRouter::instance()._cmd_lsp_request_semantic(filePath);
 }
 
 
@@ -231,11 +236,12 @@ bool LosEditorUi::save()
     QString filePath = LOS_filePath->getFilePath();
     if (filePath.isEmpty())
         return false;
+    format();
     bool ok = LOS_context->save(this->toPlainText(), filePath);
     if (ok)
     {
         // 保存的时候 自动格式化
-        format();
+        this->document()->setModified(false);
         L_dirty = false;
         emit LosCore::LosRouter::instance()._cmd_fileDirty(LOS_filePath -> getFilePath(), false);
 
@@ -287,21 +293,25 @@ void LosEditorUi::initConnect()
 {
     L_timer = new QTimer(this);
     L_timer->setSingleShot(true);
+
+    // 语法补全的弹窗
     LOS_completer = new LosView::LosCompleterUi(this);
     LOS_completer->setWidget(this);
+
+    // 语法高亮
     LOS_highlighter = new LosCore::LosHighlighter(this->document());
 
     // activated 有两种
+    auto &router = LosCore::LosRouter::instance();
     connect(LOS_completer, QOverload<const QString &>::of(&QCompleter::activated), this,
             &LosEditorUi::insertCompletion);
     connect(this->document(), &QTextDocument::contentsChanged, this, &LosEditorUi::onTextChanged);
     connect(L_timer, &QTimer::timeout, this, &LosEditorUi::onDebounceTimeout);
-    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this,
-            &LosEditorUi::showDiagnostic);
-    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_completion, this,
-            &LosEditorUi::showCompletion);
-    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_hover, this,
-            &LosEditorUi::onHover_Clangd);
+    connect(&router, &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this, &LosEditorUi::showDiagnostic);
+    connect(&router, &LosCore::LosRouter::_cmd_lsp_result_completion, this, &LosEditorUi::showCompletion);
+    connect(&router, &LosCore::LosRouter::_cmd_lsp_result_hover, this, &LosEditorUi::onHover_Clangd);
+    connect(&router, &LosCore::LosRouter::_cmd_lsp_result_semanticLegend, this, &LosEditorUi::onSemanticLegend);
+    connect(&router, &LosCore::LosRouter::_cmd_lsp_result_semanticTokens, this, &LosEditorUi::onSemanticTokens);
 }
 
 
@@ -359,19 +369,20 @@ void LosEditorUi::copyCurrentLine()
 
 /**
 - 变脏的信号
+- 修复 防止 抖动的逻辑
 */
 void LosEditorUi::onTextChanged()
 {
     if (!LOS_context)
         return;
-    if (!L_dirty)
+    if (!L_dirty && this->document()->isModified())
     {
-        L_dirty = true;
-        emit LosCore::LosRouter::instance()._cmd_fileDirty(LOS_filePath -> getFilePath(), true);
-        emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(LOS_filePath -> getFilePath(), toPlainText());
+        L_dirty          = true;
+        QString filePath = LOS_filePath->getFilePath();
+        emit LosCore::LosRouter::instance()._cmd_fileDirty(filePath, true);
+        emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(filePath, this -> toPlainText());
+        emit LosCore::LosRouter::instance()._cmd_lsp_request_semantic(filePath);
     }
-    LOS_completer->popup()->hide();
-    L_showComplete = false;
     L_timer->start(200);
 }
 
@@ -384,7 +395,7 @@ void LosEditorUi::onDebounceTimeout()
 {
     QTextCursor cursor = this->textCursor();
     int line           = cursor.blockNumber();
-    int col            = cursor.positionInBlock(); // 这个从 0 开始
+    int col            = cursor.positionInBlock();
     if (col == 0)
         return;
     QString currentLineText = cursor.block().text();
@@ -398,7 +409,6 @@ void LosEditorUi::onDebounceTimeout()
     if (lastChar == ':' && (col < 2 || currentLineText.at(col - 2) != ':'))
         return;
 
-    // 获取 上一个 字符
     L_oldWord = getWordUnderCursor();
     emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(LOS_filePath -> getFilePath(),
                                                                      this->toPlainText());
@@ -424,6 +434,26 @@ void LosEditorUi::onHover_Clangd(const QString &markdownContent)
     html.replace("\n", "<br>");
     html.replace("**", "<b>");
     QToolTip::showText(L_lastHoverGlobal, html, this);
+}
+
+
+
+/**
+- 更新 初始化 样式表
+*/
+void LosEditorUi::onSemanticLegend(const QStringList &token_types, const QStringList &legend_token_modifiers)
+{
+    LOS_highlighter->initSemanticLegend(token_types, legend_token_modifiers);
+}
+
+
+
+/**
+- 更新 颜色
+*/
+void LosEditorUi::onSemanticTokens(const QJsonArray &data)
+{
+    LOS_highlighter->updateSemanticTokens(data);
 }
 
 
@@ -498,13 +528,16 @@ void LosEditorUi::keyPressEvent(QKeyEvent *event)
 }
 
 
-
 /**
 按键拦截
 */
 void LosEditorUi::mousePressEvent(QMouseEvent *event)
 {
     // QApplication::keyboardModifiers()  获取当前所有 被 按住的键
+    if (LOS_completer && LOS_completer->popup())
+    {
+        LOS_completer->popup()->hide();
+    }
     if (event->button() == Qt::LeftButton && (QApplication::keyboardModifiers() & Qt::ControlModifier))
     {
         QTextCursor cur = this->cursorForPosition(event->pos());

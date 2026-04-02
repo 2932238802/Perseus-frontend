@@ -15,7 +15,6 @@ LosConfigCMake::LosConfigCMake(QObject *parent) : LosConfig(parent) {}
 */
 void LosConfigCMake::analyse(const QString &projectPath)
 {
-
     QString buildPath = QDir(projectPath).filePath(LosCommon::LosConfig_Constants::BUILD_NAME);
     makeCMakeQueryDir(buildPath);
     QProcess *pro = new QProcess(this);

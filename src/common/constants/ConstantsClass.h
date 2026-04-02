@@ -53,6 +53,7 @@ enum LosLspType
     REQ_CHECK,
     REQ_HOVER,
     REQ_DEFINE,
+    REQ_SEMANTIC_HIGHLIGHT
 };
 
 
@@ -148,10 +149,8 @@ enum class LosTool
     CLANGD,
     CLANG_FORMAT,
     NEOCMAKELSP,
-
     RUST_ANALYZER,
     CARGO,
-
     UNKNOWN
 };
 
@@ -183,4 +182,16 @@ struct ToolChainConfig
 };
 
 } // namespace LosToolChain_Constants
+
+
+
+namespace LosHighligher_Constants
+{
+struct SemanticToken
+{
+    int L_startChar;
+    int L_lenth;
+    int L_tokenType;
+};
+} // namespace LosHighligher_Constants
 } // namespace LosCommon

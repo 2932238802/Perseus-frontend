@@ -46,7 +46,6 @@ namespace LosView
 class LosEditorUi : public QPlainTextEdit
 {
     Q_OBJECT
-
   public: // construct
     ~LosEditorUi() override;
     explicit LosEditorUi(QWidget *parent = nullptr);
@@ -76,9 +75,11 @@ class LosEditorUi : public QPlainTextEdit
     void copyCurrentLine();
 
   private slots: // chs
-    void onTextChanged(); 
+    void onTextChanged();
     void onDebounceTimeout();
     void onHover_Clangd(const QString &markdownContent);
+    void onSemanticLegend(const QStringList &, const QStringList &);
+    void onSemanticTokens(const QJsonArray &);
 
   protected: // override
     void keyPressEvent(QKeyEvent *event) override;
@@ -89,6 +90,7 @@ class LosEditorUi : public QPlainTextEdit
   private: // param
     std::atomic<bool> L_showComplete = false;
     bool L_dirty                     = false;
+
     QString L_oldWord                = "";
     QTimer *L_timer                  = nullptr;
     QPoint L_lastHoverGlobal         = QPoint();

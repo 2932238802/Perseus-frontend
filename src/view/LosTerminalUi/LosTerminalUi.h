@@ -5,12 +5,14 @@
 #include <QVBoxLayout>
 #include <QWebChannel>
 #include <QWebEngineView>
+#include <qtmetamacros.h>
 #include <qwidget.h>
 namespace LosView
 {
 
 class LosTerminalUi : public QWidget
 {
+    Q_OBJECT
   public:
     explicit LosTerminalUi(QWidget *parent = nullptr);
     ~LosTerminalUi();

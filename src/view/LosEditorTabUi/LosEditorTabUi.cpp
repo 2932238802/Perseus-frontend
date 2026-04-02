@@ -5,6 +5,7 @@
 #include "core/LosRouter/LosRouter.h"
 #include "models/LosFileContext/LosFileContext.h"
 #include "models/LosFilePath/LosFilePath.h"
+#include "view/LosEditorUi/LosEditorUi.h"
 #include <qtabwidget.h>
 #include <qwidget.h>
 
@@ -23,6 +24,27 @@ LosEditorTabUi::~LosEditorTabUi() {}
 关闭标签页
 */
 void LosEditorTabUi::closeTab(int index) {}
+
+
+
+/**
+- 关闭 所有的 标签
+*/
+void LosEditorTabUi::closeAllTabs()
+{
+    for (auto editor : LOS_pathToUi.values())
+    {
+        if (editor)
+        {
+            editor->deleteLater();
+        }
+    }
+    while (L_tabWidget->count() > 0)
+    {
+        L_tabWidget->removeTab(0);
+    }
+    LOS_pathToUi.clear();
+}
 
 
 
@@ -108,6 +130,9 @@ void LosEditorTabUi::openFile(const LosModel::LosFilePath &file)
 
 
 
+/**
+- 格式化 当前的 tab
+*/
 void LosEditorTabUi::formatTab()
 {
     if (getCurEditor())
@@ -267,10 +292,25 @@ void LosEditorTabUi::onResetCheck(LosCommon::LosToolChain_Constants::LosLanguage
 
 
 
-// TODO: 
+/**
+- 点击 上侧的标签页 实现类似的功能
+*/
 void LosEditorTabUi::onTabClicked(int index)
 {
-    
+
+    if (index < 0 || index >= L_tabWidget->count())
+    {
+        // 无效
+        return;
+    }
+
+    auto *widget = static_cast<LosEditorUi*>(L_tabWidget->widget(index));
+    if (!widget)
+        return;
+    widget->setFocus();
+    QString filePath = LOS_pathToUi.key(widget);
+    emit 
+
 }
 
 
@@ -323,6 +363,8 @@ void LosEditorTabUi::checkLspAnsFormat(const QString &file_path)
             lang, LosCommon::LosToolChain_Constants::LosTool::RUST_ANALYZER);
         emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(
             lang, LosCommon::LosToolChain_Constants::LosTool::CARGO);
+        L_checkedLanguage.insert(LosCommon::LosToolChain_Constants::LosLanguage::RUST);
+        return;
     }
     default:
         break;

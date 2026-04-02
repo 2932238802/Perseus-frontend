@@ -1,4 +1,5 @@
 #include "LosFileTreeUi.h"
+#include "core/LosFileSystem/LosFileSystem.h"
 #include <qabstractitemview.h>
 
 namespace LosView
@@ -145,22 +146,7 @@ void LosFileTreeUi::onCustomContextMenu(const QPoint &pos)
         if (ok && !folderName.trimmed().isEmpty())
         {
             QString newFolderPath = QDir(targetDir).filePath(folderName.trimmed());
-            if (QDir().exists(newFolderPath))
-            {
-                QMessageBox::warning(this, "Error", "Folder already exists!");
-            }
-            else
-            {
-                if (QDir().mkpath(newFolderPath))
-                {
-                    INF("created new folder: " + newFolderPath, "LosFileTreeUi");
-                    emit LosCore::LosRouter::instance()._cmd_fileSystemChanged();
-                }
-                else
-                {
-                    ERR("failed to create folder: " + newFolderPath, "LosFileTreeUi");
-                }
-            }
+            LosCore::LosFileSystem::instance().createDir(newFolderPath);
         }
     }
     else if (selectedAction == copyAct)

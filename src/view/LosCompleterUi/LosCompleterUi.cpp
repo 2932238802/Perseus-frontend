@@ -22,9 +22,14 @@ LosCompleterUi::~LosCompleterUi() {}
 
 /**
 set
+- 重复的 就不要 在显示了
 */
 void LosCompleterUi::updateCompletionList(const QStringList &list)
 {
+    if (L_model->stringList() == list)
+    {
+        return;
+    }
     L_model->setStringList(list);
 }
 

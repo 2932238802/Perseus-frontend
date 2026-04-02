@@ -1,6 +1,5 @@
 #include "core/LosHighlighter/LosHighlighter.h"
 
-
 namespace LosCore
 {
 LosHighlighter::LosHighlighter(QTextDocument *doc) : QSyntaxHighlighter{doc}
@@ -8,8 +7,40 @@ LosHighlighter::LosHighlighter(QTextDocument *doc) : QSyntaxHighlighter{doc}
     initRule();
 }
 
-
 void LosHighlighter::highlightBlock(const QString &str)
+{
+    highlightByRegex(str);
+
+    int currentLine = currentBlock().blockNumber();
+
+    if (L_semanticData.contains(currentLine))
+    {
+        for (const SemanticToken &token : L_semanticData[currentLine])
+        {
+            if (token.tokenType < L_semanticFormats.size())
+            {
+                QTextCharFormat format = L_semanticFormats.at(token.tokenType);
+
+                if (format.isValid())
+                {
+                    // 解析只读或静态的修饰符并设置为斜体
+                    if (L_readonlyModifierIndex != -1 && (token.tokenModifiers & (1 << L_readonlyModifierIndex)))
+                    {
+                        format.setFontItalic(true);
+                    }
+                    if (L_staticModifierIndex != -1 && (token.tokenModifiers & (1 << L_staticModifierIndex)))
+                    {
+                        format.setFontItalic(true);
+                    }
+
+                    setFormat(token.startChar, token.length, format);
+                }
+            }
+        }
+    }
+}
+
+void LosHighlighter::highlightByRegex(const QString &str)
 {
     // 传入的就是当前行的内容
     for (const HighlightRule &rule : L_rules)
@@ -58,11 +89,77 @@ void LosHighlighter::highlightBlock(const QString &str)
     }
 }
 
+
+
+
+/**
+- 更新一下 
+*/
+void LosHighlighter::updateSemanticTokens(const QJsonArray &data)
+{
+    L_semanticData.clear();
+    int currentLine = 0;
+    int currentChar = 0;
+
+    for (int i = 0; i + 4 < data.size(); i += 5)
+    {
+        int deltaLine = data[i].toInt();
+        int deltaChar = data[i + 1].toInt();
+        int length    = data[i + 2].toInt();
+        int tokenType = data[i + 3].toInt();
+        int modifiers = data[i + 4].toInt();
+
+        currentLine += deltaLine;
+
+        if (deltaLine > 0)
+        {
+            currentChar = deltaChar;
+        }
+        else
+        {
+            currentChar += deltaChar;
+        }
+
+        L_semanticData[currentLine].append({currentChar, length, tokenType, modifiers});
+    }
+
+    // 重绘 这一块
+    rehighlight();
+}
+
+
+
+void LosHighlighter::initSemanticLegend(const QStringList &legendTokenTypes, const QStringList &legendTokenModifiers)
+{
+    L_semanticFormats.clear();
+    L_semanticFormats.resize(legendTokenTypes.size());
+
+    for (int i = 0; i < legendTokenTypes.size(); ++i)
+    {
+        QString tokenName = legendTokenTypes.at(i);
+        if (L_themeConfig.contains(tokenName))
+        {
+            L_semanticFormats[i] = L_themeConfig.value(tokenName);
+        }
+        else
+        {
+            L_semanticFormats[i] = QTextCharFormat();
+        }
+    }
+
+    L_readonlyModifierIndex = legendTokenModifiers.indexOf("readonly");
+    L_staticModifierIndex   = legendTokenModifiers.indexOf("static");
+}
+
+
+
+/**
+- 初始化 绘图 规则
+*/
 void LosHighlighter::initRule()
 {
     HighlightRule rule;
 
-    // 关键字
     const QString keywordPatterns[] = {
         QStringLiteral("\\bchar\\b"),     QStringLiteral("\\bclass\\b"),     QStringLiteral("\\bconst\\b"),
         QStringLiteral("\\bdouble\\b"),   QStringLiteral("\\benum\\b"),      QStringLiteral("\\bexplicit\\b"),
@@ -76,7 +173,7 @@ void LosHighlighter::initRule()
         QStringLiteral("\\bvoid\\b"),     QStringLiteral("\\bvolatile\\b"),  QStringLiteral("\\bbool\\b"),
         QStringLiteral("\\btrue\\b"),     QStringLiteral("\\bfalse\\b"),     QStringLiteral("\\bauto\\b")};
 
-    L_keyword.setForeground(QColor("#569CD6"));
+    L_keyword.setForeground(QColor("#E17899")); // 霓虹粉
     for (const auto &str : keywordPatterns)
     {
         rule.L_regex  = QRegularExpression(str);
@@ -84,29 +181,55 @@ void LosHighlighter::initRule()
         L_rules.append(rule);
     }
 
-    L_class.setForeground(QColor("#4EC9B0"));
+    L_class.setForeground(QColor("#F5B83D")); 
     rule.L_regex  = QRegularExpression(QStringLiteral("\\b[Q]?[A-Z][a-zA-Z0-9_]+\\b"));
     rule.L_format = L_class;
     L_rules.append(rule);
 
-    L_func.setForeground(QColor("#DCDCAA"));
+    L_func.setForeground(QColor("#2DCCCF")); 
     rule.L_regex  = QRegularExpression(QStringLiteral("\\b[A-Za-z0-9_]+(?=\\()"));
     rule.L_format = L_func;
     L_rules.append(rule);
 
-    L_str.setForeground(QColor("#CE9178"));
+    L_str.setForeground(QColor("#42E6A4")); 
     rule.L_regex  = QRegularExpression(QStringLiteral("\"[^\"]*\""));
     rule.L_format = L_str;
     L_rules.append(rule);
 
-    L_singleComment.setForeground(QColor("#6A9955"));
+    L_singleComment.setForeground(QColor("#5B7888")); 
     rule.L_regex  = QRegularExpression(QStringLiteral("//[^\n]*"));
     rule.L_format = L_singleComment;
     L_rules.append(rule);
 
-    L_multiComment.setForeground(QColor("#6A9955"));
+    L_multiComment.setForeground(QColor("#5B7888"));
     L_commentStartExpression = QRegularExpression(QStringLiteral("/\\*"));
     L_commentEndExpression   = QRegularExpression(QStringLiteral("\\*/"));
+
+    L_themeConfig["class"]  = L_class;
+    L_themeConfig["struct"] = L_class;
+    L_themeConfig["type"]   = L_class;
+
+    L_themeConfig["function"] = L_func;
+    L_themeConfig["method"]   = L_func;
+
+    L_themeConfig["string"]  = L_str;
+    L_themeConfig["keyword"] = L_keyword;
+    L_themeConfig["comment"] = L_singleComment;
+
+    QTextCharFormat varFormat;
+    varFormat.setForeground(QColor("#C8D4F0"));
+    L_themeConfig["variable"]  = varFormat;
+    L_themeConfig["parameter"] = varFormat;
+    L_themeConfig["property"]  = varFormat;
+
+    QTextCharFormat macroFormat;
+    macroFormat.setForeground(QColor("#B97EE6"));
+    L_themeConfig["macro"]      = macroFormat;
+    
+    QTextCharFormat enumMemberFormat;
+    enumMemberFormat.setForeground(QColor("#FF967D"));
+    L_themeConfig["enumMember"] = enumMemberFormat;
 }
+
 
 } // namespace LosCore

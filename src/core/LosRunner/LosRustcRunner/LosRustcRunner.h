@@ -1,6 +1,7 @@
 
 #pragma once
 #include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
+#include "core/LosState/LosState.h"
 #include "models/LosFilePath/LosFilePath.h"
 
 #include <qobject.h>

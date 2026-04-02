@@ -13,11 +13,9 @@ namespace LosView
 class LosIssuesUi : public QWidget
 {
     Q_OBJECT
-
   public:
     explicit LosIssuesUi(QWidget *parent = nullptr);
     ~LosIssuesUi();
-
 
   private slots:
     void onTableDoubleClicked(int row, int colume);

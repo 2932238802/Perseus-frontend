@@ -17,9 +17,7 @@ namespace LosView
 
 class LosToolMissUi : public QDialog
 {
-  private:
     Q_OBJECT
-
   private:
     void initStyle(const LosCommon::LosToolChain_Constants::ToolChainConfig &config);
 

@@ -32,6 +32,7 @@ class LosEditorTabUi : public QWidget
 
   public: // tool
     void closeTab(int index);
+    void closeAllTabs();
     void saveTab();
     void saveAllTabs();
     void openFile(const LosModel::LosFilePath &file);
@@ -50,11 +51,11 @@ class LosEditorTabUi : public QWidget
     void onDoubleClickedOnIssue(const QString &file_path, int line);
     void onResetCheck(LosCommon::LosToolChain_Constants::LosLanguage lan, const QString &curFile = "");
     void onTabClicked(int index);
-    
+
   private: // init
     void initConnect();
 
-  private:
+  private: // tool
     void checkLspAnsFormat(const QString &file_path);
 
 

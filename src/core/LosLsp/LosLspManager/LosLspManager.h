@@ -35,6 +35,7 @@ class LosLspManager : public QObject
     void requestCompletion(const QString &file_path, int line, int col);
     void toDefineRequest(int line, int col, const QString &file_path);
     void didChangeWatchedFiles(const QString &file_path, int type);
+    void onSemantic(const QString &);
     QString getLangId(LosCommon::LosToolChain_Constants::LosLanguage);
     LosLspClient *getClient(const QString &);
 

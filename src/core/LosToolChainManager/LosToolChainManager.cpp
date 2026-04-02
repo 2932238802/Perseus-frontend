@@ -47,53 +47,19 @@ void LosToolChainManager::onCheckSingleTool(LosCommon::LosToolChain_Constants::L
         QString foundPath = L_activeToolPath[tool];
         SUC("tool ready: " + config.L_name + " at " + foundPath, "LosToolChainManager");
         using LosTool = LosCommon::LosToolChain_Constants::LosTool;
-        switch (tool)
+        switch (config.L_category)
         {
-        case LosTool::CLANGD:
-        {
-            INF("need clangd...", "LosToolChainManager");
-            emit LosCore::LosRouter::instance()._cmd_lspReady(tool, foundPath, config.L_startupArgs);
-            break;
-        }
-        case LosTool::NEOCMAKELSP:
-        {
-            INF("need neocmakelsp...", "LosToolChainManager");
-            emit LosCore::LosRouter::instance()._cmd_lspReady(tool, foundPath, config.L_startupArgs);
-            break;
-        }
-        case LosTool::RUST_ANALYZER:
-        {
-            INF("need rust-analyzer...", "LosToolChainManager");
-            emit LosCore::LosRouter::instance()._cmd_lspReady(tool, foundPath, config.L_startupArgs);
-            break;
-        }
-        case LosTool::CARGO:
-        {
-            INF("need cargo...", "LosToolChainManager");
+        case LosCommon::LosToolChain_Constants::ToolCategory::BuildTool:
             emit LosCore::LosRouter::instance()._cmd_buildToolReady(tool, foundPath, config.L_startupArgs);
             break;
-        }
-        case LosTool::CMAKE:
-        {
-            INF("need cmake...", "LosToolChainManager");
-            emit LosCore::LosRouter::instance()._cmd_buildToolReady(tool, foundPath, config.L_startupArgs);
-            break;
-        }
-        case LosTool::NINJA:
-        {
-            INF("need ninja...", "LosToolChainManager");
-            emit LosCore::LosRouter::instance()._cmd_buildToolReady(tool, foundPath, config.L_startupArgs);
-            break;
-        }
-        case LosTool::G_PLUS_PLUS:
-        {
-            INF("need g++...", "LosToolChainManager");
 
-            emit LosCore::LosRouter::instance()._cmd_toolChainReady(
-                LosCommon::LosToolChain_Constants::LosLanguage::CXX,
-                LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS, foundPath);
+        case LosCommon::LosToolChain_Constants::ToolCategory::Compiler:
+            emit LosCore::LosRouter::instance()._cmd_toolChainReady(config.LOS_language, tool, foundPath);
             break;
-        }
+
+        case LosCommon::LosToolChain_Constants::ToolCategory::LSP:
+            emit LosCore::LosRouter::instance()._cmd_lspReady(tool, foundPath, config.L_startupArgs);
+            break;
         default:
             break;
         }

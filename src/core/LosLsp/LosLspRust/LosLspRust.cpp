@@ -142,8 +142,6 @@ void LosLspRust::dealLspMessage(const QJsonObject &obj)
 {
     if (obj.contains("id"))
     {
-
-
         int id = obj["id"].toInt();
         if (!L_idToType.contains(id))
         {
@@ -186,7 +184,6 @@ void LosLspRust::dealLspMessage(const QJsonObject &obj)
             }
 
             QStringList res;
-
             for (const auto &a : items)
             {
                 QJsonObject item = a.toObject();
@@ -247,7 +244,6 @@ void LosLspRust::dealLspMessage(const QJsonObject &obj)
             break;
         }
     }
-
     if (obj.contains("method"))
     {
         QString method = obj["method"].toString();

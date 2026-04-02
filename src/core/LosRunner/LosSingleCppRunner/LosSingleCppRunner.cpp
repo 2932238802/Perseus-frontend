@@ -1,5 +1,6 @@
 #include "LosSingleCppRunner.h"
 #include "common/constants/ConstantsStr.h"
+#include "core/LosRouter/LosRouter.h"
 #include "core/LosState/LosState.h"
 #include "models/LosFilePath/LosFilePath.h"
 
@@ -68,25 +69,27 @@ void LosSingleCppRunner::start(const QString &file_path)
     LOS_filePath.loadFile(file_path);
     LosModel::LosFilePath dir =
         LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR);
-#ifdef Q_OS_WIN
-    L_outPutPath = LOS_filePath.getAbsolutePath() + QDir::separator() + LOS_filePath.getBaseFileName() +
-                   QDir::separator() + LosCommon::LosRunner_Constants::OUTPUT_BUILD + QDir::separator() +
-                   LosCommon::LosRunner_Constants::OUTPUT_GXX + QDir::separator() +
-                   LosCommon::LosRunner_Constants::WIN_EXE;
+    // #ifdef Q_OS_WIN
+    //     L_outPutPath = LOS_filePath.getAbsolutePath() + QDir::separator() + LOS_filePath.getBaseFileName() +
+    //                    QDir::separator() + LosCommon::LosRunner_Constants::OUTPUT_BUILD + QDir::separator() +
+    //                    LosCommon::LosRunner_Constants::OUTPUT_GXX + QDir::separator() +
+    //                    LosCommon::LosRunner_Constants::WIN_EXE;
 
-#elif defined(Q_OS_LINUX) || defined(Q_OS_MAC)
-    L_outPutPath = dir.getAbsolutePath() + QDir::separator() + LOS_filePath.getBaseFileName() + QDir::separator() +
-                   LosCommon::LosRunner_Constants::OUTPUT_BUILD + QDir::separator() +
-                   LosCommon::LosRunner_Constants::OUTPUT_GXX + QDir::separator() +
-                   LosCommon::LosRunner_Constants::LINUX_EXE;
+    // #elif defined(Q_OS_LINUX) || defined(Q_OS_MAC)
+    QString outDirPath = dir.getAbsoluteFilePath() + QDir::separator() + LosCommon::LosRunner_Constants::OUTPUT_BUILD +
+                         QDir::separator() + LosCommon::LosRunner_Constants::OUTPUT_GXX;
+    QDir().mkpath(outDirPath);
+    QString outputExe =
+        outDirPath + QDir::separator() + LOS_filePath.getBaseFileName() + LosCommon::LosRunner_Constants::LINUX_EXE;
+    L_outPutPath = outputExe;
 
-#else
-    L_outPutPath = LOS_filePath.getAbsolutePath() + QDir::separator() + LOS_filePath.getBaseFileName() +
-                   LosCommon::LosRunner_Constants::WIN_EXE + QDir::separator() +
-                   LosCommon::LosRunner_Constants::OUTPUT_BUILD + QDir::separator() +
-                   LosCommon::LosRunner_Constants::OUTPUT_GXX + QDir::separator() +
-                   LosCommon::LosRunner_Constants::LINUX_EXE;
-#endif
+    // #else
+    //     L_outPutPath = LOS_filePath.getAbsolutePath() + QDir::separator() + LOS_filePath.getBaseFileName() +
+    //                    LosCommon::LosRunner_Constants::WIN_EXE + QDir::separator() +
+    //                    LosCommon::LosRunner_Constants::OUTPUT_BUILD + QDir::separator() +
+    //                    LosCommon::LosRunner_Constants::OUTPUT_GXX + QDir::separator() +
+    //                    LosCommon::LosRunner_Constants::LINUX_EXE;
+    // #endif
 
     if (!LOS_filePath.isExist())
     {
@@ -122,7 +125,10 @@ void LosSingleCppRunner::initConnect()
             {
                 if (exit_code == 0)
                 {
-                    SUC("editing successful!", "LosSingleCppRunner");
+                    SUC("editing successful! run : " + L_outPutPath, "LosSingleCppRunner");
+
+                    // 新的文件 生成 触发这个信号
+                    emit LosCore::LosRouter::instance()._cmd_fileSystemChanged();
                     L_runPro->setWorkingDirectory(LOS_filePath.getAbsolutePath());
                     L_runPro->start(L_outPutPath);
                 }
