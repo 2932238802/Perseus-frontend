@@ -55,6 +55,7 @@ class LosEditorTabUi : public QWidget
   private: // init
     void initConnect();
 
+
   private: // tool
     void checkLspAnsFormat(const QString &file_path);
 

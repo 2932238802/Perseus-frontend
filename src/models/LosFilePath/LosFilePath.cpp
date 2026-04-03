@@ -67,10 +67,13 @@ QString LosFilePath::getBaseFileName() const
     return QFileInfo(L_filePath).baseName();
 };
 
+
+
 QString LosFilePath::getSuffix() const
 {
     return QFileInfo(L_filePath).suffix().toLower();
 }
+
 
 
 QString LosFilePath::getAbsolutePath() const
@@ -112,6 +115,7 @@ bool LosFilePath::isExist() const
 {
     return QFileInfo(L_filePath).exists();
 }
+
 
 
 /**

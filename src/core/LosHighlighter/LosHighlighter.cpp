@@ -9,6 +9,7 @@ LosHighlighter::LosHighlighter(QTextDocument *doc) : QSyntaxHighlighter{doc}
 
 void LosHighlighter::highlightBlock(const QString &str)
 {
+    // 语法 高亮
     highlightByRegex(str);
 
     int currentLine = currentBlock().blockNumber();
@@ -33,13 +34,48 @@ void LosHighlighter::highlightBlock(const QString &str)
                         format.setFontItalic(true);
                     }
 
-                    setFormat(token.startChar, token.length, format);
+                    mergeFormat(token.startChar, token.length, format);
                 }
             }
         }
     }
 }
 
+
+
+/**
+- 合并属性
+*/
+void LosHighlighter::mergeFormat(int start, int length, const QTextCharFormat &format)
+{
+    QTextCursor cursor(document());
+    cursor.setPosition(currentBlock().position() + start);
+    cursor.setPosition(currentBlock().position() + start + length, QTextCursor::KeepAnchor);
+
+    QTextCharFormat mergedFormat = cursor.charFormat();
+
+    // 只合并设置了的属性，
+    // 不覆盖未设置的
+    if (format.hasProperty(QTextFormat::ForegroundBrush))
+    {
+        mergedFormat.setForeground(format.foreground());
+    }
+    if (format.hasProperty(QTextFormat::FontItalic))
+    {
+        mergedFormat.setFontItalic(format.fontItalic());
+    }
+    if (format.hasProperty(QTextFormat::FontWeight))
+    {
+        mergedFormat.setFontWeight(format.fontWeight());
+    }
+    cursor.setCharFormat(mergedFormat);
+}
+
+
+
+/**
+- 通过 正则 匹配颜色
+*/
 void LosHighlighter::highlightByRegex(const QString &str)
 {
     // 传入的就是当前行的内容
@@ -91,9 +127,8 @@ void LosHighlighter::highlightByRegex(const QString &str)
 
 
 
-
 /**
-- 更新一下 
+- 更新一下
 */
 void LosHighlighter::updateSemanticTokens(const QJsonArray &data)
 {
@@ -129,6 +164,9 @@ void LosHighlighter::updateSemanticTokens(const QJsonArray &data)
 
 
 
+/**
+- 初始化 semantic 规则
+*/
 void LosHighlighter::initSemanticLegend(const QStringList &legendTokenTypes, const QStringList &legendTokenModifiers)
 {
     L_semanticFormats.clear();
@@ -181,22 +219,22 @@ void LosHighlighter::initRule()
         L_rules.append(rule);
     }
 
-    L_class.setForeground(QColor("#F5B83D")); 
+    L_class.setForeground(QColor("#F5B83D"));
     rule.L_regex  = QRegularExpression(QStringLiteral("\\b[Q]?[A-Z][a-zA-Z0-9_]+\\b"));
     rule.L_format = L_class;
     L_rules.append(rule);
 
-    L_func.setForeground(QColor("#2DCCCF")); 
+    L_func.setForeground(QColor("#2DCCCF"));
     rule.L_regex  = QRegularExpression(QStringLiteral("\\b[A-Za-z0-9_]+(?=\\()"));
     rule.L_format = L_func;
     L_rules.append(rule);
 
-    L_str.setForeground(QColor("#42E6A4")); 
+    L_str.setForeground(QColor("#42E6A4"));
     rule.L_regex  = QRegularExpression(QStringLiteral("\"[^\"]*\""));
     rule.L_format = L_str;
     L_rules.append(rule);
 
-    L_singleComment.setForeground(QColor("#5B7888")); 
+    L_singleComment.setForeground(QColor("#5B7888"));
     rule.L_regex  = QRegularExpression(QStringLiteral("//[^\n]*"));
     rule.L_format = L_singleComment;
     L_rules.append(rule);
@@ -224,8 +262,8 @@ void LosHighlighter::initRule()
 
     QTextCharFormat macroFormat;
     macroFormat.setForeground(QColor("#B97EE6"));
-    L_themeConfig["macro"]      = macroFormat;
-    
+    L_themeConfig["macro"] = macroFormat;
+
     QTextCharFormat enumMemberFormat;
     enumMemberFormat.setForeground(QColor("#FF967D"));
     L_themeConfig["enumMember"] = enumMemberFormat;

@@ -1,7 +1,6 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
-#include "core/LosRouter/LosRouter.h"
-#include <qtabwidget.h>
+
 
 
 /**

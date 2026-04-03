@@ -44,7 +44,6 @@ QT_END_NAMESPACE
 class Perseus : public QMainWindow
 {
     Q_OBJECT
-
   public:
     Perseus(QWidget *parent = nullptr);
     ~Perseus();

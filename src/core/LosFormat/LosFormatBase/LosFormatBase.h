@@ -2,6 +2,7 @@
 #include <qobject.h>
 #include <qprocess.h>
 #include <qtmetamacros.h>
+
 namespace LosCore
 {
 

@@ -45,6 +45,9 @@ class LosHighlighter : public QSyntaxHighlighter
     void highlightBlock(const QString &str) override;
 
   private: // init
+    void mergeFormat(int start, int length, const QTextCharFormat &format);
+
+  private: // init
     void initRule();
     void highlightByRegex(const QString &str);
 
