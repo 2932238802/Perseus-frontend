@@ -1,5 +1,6 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
+#include "core/LosRouter/LosRouter.h"
 #include "core/LosState/LosState.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include <qfiledialog.h>
@@ -79,6 +80,7 @@ void Perseus::OnFileLoaded(bool isc)
                                          INF("load project suc:" + curPath, "Perseus");
                                          LOS_configMgr->create(curPath);
                                          LOS_configMgr->analyse(curPath);
+
                                          emit LosCore::LosRouter::instance()._cmd_fileTreeDone();
                                      });
     }
@@ -374,28 +376,26 @@ void Perseus::initSession()
     LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, file);
 
     // 更新全局 状态
-    OnFileLoaded(isSuc);
-    if (!LOS_tabUi)
+    if (!LOS_tabUi || !isSuc)
         return;
 
-    // 更新左侧 树
     connect(
         &LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_fileTreeDone, this,
         [conf, this]()
         {
             for (const auto &file : conf.L_curFilePaths)
             {
+                LOS_tabUi->blockSignals(true);
                 LOS_tabUi->openFile(file);
+                LOS_tabUi->blockSignals(false);
             }
-            if (conf.L_curProDir.isEmpty())
+            if (conf.L_curProDir.isEmpty() || conf.L_curFilePaths.isEmpty())
                 return;
-            if (!conf.L_curFilePaths.isEmpty())
-            {
-                // 打开 右侧 默认打开的其中一个文件
-                ui->explorer_treeview->expandToFile(conf.L_curFilePaths.first());
-            }
+            ui->explorer_treeview->expandToFile(conf.L_curFilePaths.first());
+            QString currentActiveFile = conf.L_curFilePaths.first();
         },
         Qt::SingleShotConnection);
+    OnFileLoaded(isSuc);
 }
 
 

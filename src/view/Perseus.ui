@@ -83,13 +83,13 @@
         <widget class="LosView::LosDropdownButtonUi" name="files_btn">
          <property name="minimumSize">
           <size>
-           <width>60</width>
+           <width>80</width>
            <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>60</width>
+           <width>80</width>
            <height>30</height>
           </size>
          </property>
@@ -102,13 +102,13 @@
         <widget class="QPushButton" name="setting_btn">
          <property name="minimumSize">
           <size>
-           <width>60</width>
+           <width>80</width>
            <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>60</width>
+           <width>80</width>
            <height>30</height>
           </size>
          </property>
@@ -121,13 +121,13 @@
         <widget class="QPushButton" name="run_singleFile_btn">
          <property name="minimumSize">
           <size>
-           <width>60</width>
+           <width>80</width>
            <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>60</width>
+           <width>80</width>
            <height>30</height>
           </size>
          </property>
