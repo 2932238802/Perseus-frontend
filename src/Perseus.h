@@ -33,6 +33,7 @@
 #include <QPointer>
 #include <QShortcut>
 #include <qpushbutton.h>
+#include <qtmetamacros.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -69,6 +70,7 @@ class Perseus : public QMainWindow
     void onLog(const QString &log);
     void onZoomUi(int delta);
     void onToolChainMissing(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
+
 
   private:
     Ui::Perseus *ui;

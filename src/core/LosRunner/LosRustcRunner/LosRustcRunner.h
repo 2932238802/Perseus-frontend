@@ -1,9 +1,10 @@
 
 #pragma once
+#include "common/constants/ConstantsStr.h"
+#include "core/LosRouter/LosRouter.h"
 #include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
 #include "core/LosState/LosState.h"
 #include "models/LosFilePath/LosFilePath.h"
-
 #include <qobject.h>
 #include <qprocess.h>
 
@@ -20,6 +21,10 @@ class LosRustcRunner : public LosAbstractRunner
     void stop() override;
     void start(const QString &file_path) override;
     void setExePath(const QString &exe_path);
+
+  public: // init
+    void initConnect();
+
 
   private:                                    // params
     LosModel::LosFilePath LOS_targetFilePath; // 针对的 单个 rust文件

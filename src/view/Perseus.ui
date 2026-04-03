@@ -80,7 +80,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="files_btn">
+        <widget class="LosView::LosDropdownButtonUi" name="files_btn">
          <property name="minimumSize">
           <size>
            <width>60</width>
@@ -272,6 +272,11 @@
    <extends>QWidget</extends>
    <header location="global">view/LosTerminalUi/LosTerminalUi.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LosView::LosDropdownButtonUi</class>
+   <extends>QPushButton</extends>
+   <header location="global">view/LosDropdownButtonUi/LosDropdownButtonUi.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

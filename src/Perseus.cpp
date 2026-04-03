@@ -1,5 +1,8 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
+#include "core/LosState/LosState.h"
+#include "models/LosFilePath/LosFilePath.h"
+#include <qfiledialog.h>
 
 
 
@@ -26,6 +29,9 @@ Perseus::Perseus(QWidget *parent) : QMainWindow(parent), ui(new Ui::Perseus)
 Perseus::~Perseus()
 {
     LosCore::LosSession::instance().saveConfig(collectConfig());
+    LosCore::LosLog::instance().disconnect(this);
+    if (LOS_treeModel)
+        delete LOS_treeModel;
     delete ui;
 }
 
@@ -62,14 +68,13 @@ void Perseus::OnFileLoaded(bool isc)
             ui->explorer_treeview->setModel(nullptr);
             LOS_treeModel->deleteLater();
             LOS_treeModel = nullptr;
-            LOS_rootNode  = nullptr;
         }
         LOS_rootNode = nullptr;
         LOS_rootNode = LosModel::LosFileNode::create(curPath, nullptr);
         LosModel::LosFileNode::build(LOS_rootNode, curPath,
                                      [this, curPath]()
                                      {
-                                         LOS_treeModel = new LosModel::LosFileTreeModel(LOS_rootNode, nullptr);
+                                         LOS_treeModel = new LosModel::LosFileTreeModel(LOS_rootNode, this);
                                          ui->explorer_treeview->updateExplorer(LOS_treeModel);
                                          INF("load project suc:" + curPath, "Perseus");
                                          LOS_configMgr->create(curPath);
@@ -197,15 +202,22 @@ void Perseus::onZoomUi(int delta)
         newSize = LosCommon::Perseus_Constants::ZOOM_MAX;
     font.setPointSize(newSize);
     QApplication::setFont(font);
+
+    // 缩放 之后 重新 适应一下 样式
     this->setStyleSheet(this->styleSheet());
 }
 
 
+
+/**
+- 工具 丢失 请求 安装
+*/
 void Perseus::onToolChainMissing(const LosCommon::LosToolChain_Constants::ToolChainConfig &config)
 {
     LosView::LosToolMissUi dialog(config, this);
     dialog.exec();
 }
+
 
 
 /**
@@ -214,7 +226,6 @@ void Perseus::onToolChainMissing(const LosCommon::LosToolChain_Constants::ToolCh
 void Perseus::initConnect()
 {
     connect(&LosCore::LosLog::instance(), &LosCore::LosLog::_sendLog, this, &Perseus::onLog);
-
     LOS_tabUi        = new LosView::LosEditorTabUi(ui->editor_tabwidget, this);
     LOS_runMgr       = new LosCore::LosRunManager(this);
     LOS_lspMgr       = new LosCore::LosLspManager(this);
@@ -228,7 +239,6 @@ void Perseus::initConnect()
         &LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_fileSystemChanged, this,
         [=, this]() { OnFileLoaded(true); }, Qt::QueuedConnection);
     connect(ui->project_btn, &QRadioButton::toggled, this, &Perseus::onProjectBtnClicked);
-
     connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_toolChainMissing, this,
             &Perseus::onToolChainMissing);
     connect(ui->setting_btn, &QPushButton::clicked, this,
@@ -237,8 +247,45 @@ void Perseus::initConnect()
                 LosView::LosSettingsUi settingDialog(this);
                 settingDialog.exec();
             });
+    ui->files_btn->addOption("choose a file",
+                             [this]()
+                             {
+                                 QString filePath = QFileDialog::getOpenFileName(this, tr("Select a file!"));
+                                 if (filePath.isEmpty() || LOS_tabUi == nullptr)
+                                     return;
+                                 LOS_tabUi->closeAllTabs();
+                                 LosModel::LosFilePath projectFile(filePath);
+                                 if (!projectFile.isExist())
+                                     return;
+                                 LosCore::LosState::instance().set<LosModel::LosFilePath>(
+                                     LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, projectFile.getAbsolutePath());
+                                 SUC("choose a file And the file project dir: " + projectFile.getAbsolutePath(),
+                                     "Perseus");
+                                 this->OnFileLoaded(true);
+                             });
+    ui->files_btn->addOption(
+        "choose a dir",
+        [this]()
+        {
+            QString dir = QFileDialog::getExistingDirectory(this, tr("Open a dir!", "", QFileDialog::ShowDirsOnly));
+            if (dir.isEmpty() || LOS_tabUi == nullptr)
+                return;
+            LOS_tabUi->closeAllTabs();
+            LosModel::LosFilePath dirPath(dir);
+            LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR,
+                                                                     dirPath.getAbsoluteFilePath());
+            SUC("choose a dir: " + dirPath.getAbsoluteFilePath(), "Perseus");
+            this->OnFileLoaded(true);
+        });
+    ui->files_btn->addSeparator();
+    ui->files_btn->addOption("new window",
+                             []()
+                             {
+                                 Perseus *newWindow = new Perseus();
+                                 newWindow->setAttribute(Qt::WA_DeleteOnClose);
+                                 newWindow->show();
+                             });
 }
-
 
 
 /**
