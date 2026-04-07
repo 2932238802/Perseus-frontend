@@ -1,6 +1,7 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
 #include "common/constants/ConstantsStr.h"
+#include "core/LosNet/LosNet.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosShortcutManager/LosShortcutManager.h"
 #include "core/LosState/LosState.h"
@@ -255,7 +256,11 @@ void Perseus::initConnect()
             });
     connect(ui->act_explorer_btn, &QPushButton::clicked, this, [this]() { ui->left_panel_stack->setCurrentIndex(0); });
     connect(ui->act_extensions_btn, &QPushButton::clicked, this,
-            [this]() { ui->left_panel_stack->setCurrentIndex(1); });
+            [this]()
+            {
+                ui->left_panel_stack->setCurrentIndex(1);
+                LosCore::LosNet::instance().requestPlugin();
+            });
 
     ui->files_btn->addOption("choose a file",
                              [this]()

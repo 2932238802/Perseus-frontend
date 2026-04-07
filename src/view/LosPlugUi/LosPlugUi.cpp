@@ -1,25 +1,36 @@
 #include "view/LosPlugUi/LosPlugUi.h"
-#include "ui_LosPlugUi.h"
 
 namespace LosView
 {
 
-LosPlugUi::LosPlugUi(QWidget *parent) : QWidget(parent), ui(new Ui::LosPlugUi)
-{
-    ui->setupUi(this);
-
-    // test
-    QStringList mockPlugins = {"11\n22", "33\n44"};
-
-    for (const auto &info : mockPlugins)
+    LosPlugUi::LosPlugUi(QWidget *parent) : QWidget(parent), ui(new Ui::LosPlugUi)
     {
-        ui->extensionsList->addItem(info);
+        ui->setupUi(this);
+        initConnect();
     }
-}
 
-LosPlugUi::~LosPlugUi()
-{
-    delete ui;
-}
+    LosPlugUi::~LosPlugUi()
+    {
+        delete ui;
+    }
+
+
+    void LosPlugUi::initConnect()
+    {
+        auto &router = LosCore::LosRouter::instance();
+        connect(&router, &LosCore::LosRouter::_cmd_net_pluginReply, this, &LosPlugUi::onPluginReply);
+    }
+
+
+
+    void LosPlugUi::onPluginReply(const QList<LosCommon::LosNet_Constants::PluginInfo> &plugins)
+    {
+        ui->extensionsList->clear();
+        for (const auto &info : plugins)
+        {
+            QString str = info.L_id + " | " + info.L_name + " | " + info.L_version;
+            ui->extensionsList->addItem(str);
+        }
+    }
 
 } // namespace LosView

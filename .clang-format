@@ -15,3 +15,5 @@ AllowShortBlocksOnASingleLine: true
 AllowShortFunctionsOnASingleLine: Inline
 SortIncludes: true
 BreakBeforeBraces: Allman
+NamespaceIndentation: All
+FixNamespaceComments: true

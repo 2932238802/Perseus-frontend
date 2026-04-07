@@ -3,6 +3,8 @@
 #include "core/LosRouter/LosRouter.h"
 #include <QCoreApplication>
 #include <QDir>
+#include <qjsonarray.h>
+#include <qjsonobject.h>
 
 namespace LosCore
 {
