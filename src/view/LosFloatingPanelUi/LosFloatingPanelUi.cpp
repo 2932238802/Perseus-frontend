@@ -84,6 +84,10 @@ void LosFloatingPanelUi::showAtPosition(QWidget *parent, LosCommon::LosFloatingP
 
 
 
+
+/**
+- 按键 按 esc 自动退出
+*/
 void LosFloatingPanelUi::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Escape)
