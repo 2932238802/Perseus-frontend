@@ -309,8 +309,6 @@ void LosEditorTabUi::onTabClicked(int index)
         return;
     widget->setFocus();
     QString filePath = LOS_pathToUi.key(widget);
-    emit 
-
 }
 
 

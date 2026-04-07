@@ -66,13 +66,13 @@ void Perseus::OnFileLoaded(bool isc)
             return;
         }
         QString curPath{projectPath.getFilePath()};
-        if (LOS_treeModel != nullptr)
-        {
-            ui->explorer_treeview->setModel(nullptr);
-            LOS_treeModel->deleteLater();
-            LOS_treeModel = nullptr;
-        }
-        LOS_rootNode = nullptr;
+        // if (LOS_treeModel != nullptr)
+        // {
+        //     ui->explorer_treeview->setModel(nullptr);
+        //     LOS_treeModel->deleteLater();
+        //     LOS_treeModel = nullptr;
+        // }
+        // LOS_rootNode = nullptr;
         LOS_rootNode = LosModel::LosFileNode::create(curPath, nullptr);
         LosModel::LosFileNode::build(LOS_rootNode, curPath,
                                      [this, curPath]()

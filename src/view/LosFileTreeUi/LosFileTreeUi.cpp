@@ -1,6 +1,12 @@
 #include "LosFileTreeUi.h"
 #include "core/LosFileSystem/LosFileSystem.h"
+#include "models/LosFileNode/LosFileNode.h"
+#include "models/LosFileTreeModel/LosFileTreeModel.h"
+#include <qabstractitemmodel.h>
 #include <qabstractitemview.h>
+#include <qitemselectionmodel.h>
+#include <qnamespace.h>
+#include <qobject.h>
 
 namespace LosView
 {
@@ -19,10 +25,26 @@ LosFileTreeUi::LosFileTreeUi(QWidget *parent) : QTreeView{parent}
 /**
 更新视图
 */
-void LosFileTreeUi::updateExplorer(LosModel::LosFileTreeModel *model)
+bool LosFileTreeUi::updateExplorer(LosModel::LosFileTreeModel *newModel)
 {
-    if (model)
-        setModel(model);
+    if (!newModel)
+        return false;
+
+    QSet<QString> expandedPaths;
+    getExpandedPaths(&expandedPaths);
+
+    QString selectedPath;
+    auto *oldModel = qobject_cast<LosModel::LosFileTreeModel *>(this->model());
+    if (oldModel && selectionModel() && !selectionModel()->selectedIndexes().isEmpty())
+    {
+        QModelIndex selectedIndex   = selectionModel()->selectedIndexes().first();
+        LosModel::LosFileNode *node = oldModel->nodeFromIndex(selectedIndex);
+        if (node)
+            selectedPath = node->getFile().getFilePath();
+    }
+    setModel(newModel);
+    restoreExpandedState(expandedPaths, selectedPath);
+    return true;
 }
 
 
@@ -147,6 +169,9 @@ void LosFileTreeUi::onCustomContextMenu(const QPoint &pos)
         {
             QString newFolderPath = QDir(targetDir).filePath(folderName.trimmed());
             LosCore::LosFileSystem::instance().createDir(newFolderPath);
+
+            // 刷新
+            emit LosCore::LosRouter::instance()._cmd_fileSystemChanged();
         }
     }
     else if (selectedAction == copyAct)
@@ -196,6 +221,38 @@ void LosFileTreeUi::onCustomContextMenu(const QPoint &pos)
     }
     else if (selectedAction == renameAct) {}
 }
+
+
+
+
+/**
+- 增加 delete 按键 效果
+*/
+void LosFileTreeUi::keyPressEvent(QKeyEvent *key)
+{
+    if (key->key() == Qt::Key_Delete)
+    {
+        QModelIndexList selecteds = selectionModel()->selectedIndexes();
+        if (selecteds.empty())
+            return;
+        QModelIndex index = selecteds.first();
+        auto *treeModel   = qobject_cast<LosModel::LosFileTreeModel *>(model());
+        if (!treeModel)
+            return;
+        LosModel::LosFileNode *node = treeModel->nodeFromIndex(index);
+        if (!node)
+            return;
+        QString clickedPath = node->getFile().getFilePath();
+        auto reply          = QMessageBox::warning(this, "Delete", "delete:\n" + clickedPath + " ?",
+                                                   QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+        if (reply == QMessageBox::Yes)
+        {
+            deleteFileOrFolder(clickedPath);
+            emit LosCore::LosRouter::instance()._cmd_fileSystemChanged();
+        }
+    }
+}
+
 
 
 
@@ -266,6 +323,82 @@ bool LosFileTreeUi::expandToFile(const QString &file_path)
 
 
 /**
+- 恢复展开
+*/
+bool LosFileTreeUi::restoreExpandedState(const QSet<QString> &expand_paths, const QString &selected_path)
+{
+    auto *treeModel = qobject_cast<LosModel::LosFileTreeModel *>(model());
+    if (!treeModel)
+        return false;
+
+    std::function<void(const QModelIndex &)> traverse = [&](const QModelIndex &parent)
+    {
+        int sons = treeModel->rowCount(parent);
+
+        for (int i = 0; i < sons; i++)
+        {
+            QModelIndex son = treeModel->index(i, 0, parent);
+
+            // 获取 内部 filenode
+            LosModel::LosFileNode *node = treeModel->nodeFromIndex(son);
+            if (!node)
+                return;
+
+            QString path = node->getFile().getFilePath();
+            if (expand_paths.contains(path))
+            {
+                expand(son);
+                traverse(son);
+            }
+
+            if (path == selected_path)
+            {
+                // 知识点 补充：
+                // QItemSelectionModel
+                // selectionModel 这个 东西 返回的就是 QItemSelectionModel
+                selectionModel()->select(son, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+            }
+        }
+    };
+
+    traverse(QModelIndex());
+    return true;
+}
+
+
+
+/**
+- 获取 展开的路径
+*/
+bool LosFileTreeUi::getExpandedPaths(QSet<QString> *get_files)
+{
+    auto *treeModel = qobject_cast<LosModel::LosFileTreeModel *>(model());
+    if (!treeModel)
+        return false;
+
+    std::function<void(const QModelIndex &)> traverse = [&](const QModelIndex &parent)
+    {
+        int sons = treeModel->rowCount(parent);
+        for (int i = 0; i < sons; i++)
+        {
+            QModelIndex child = treeModel->index(i, 0, parent);
+            if (isExpanded(child))
+            {
+                LosModel::LosFileNode *node = treeModel->nodeFromIndex(child);
+                if (!node)
+                    return;
+                get_files->insert(node->getFile().getFilePath());
+                traverse(child);
+            }
+        }
+    };
+    traverse(QModelIndex()); // 空 就是 从根开始
+    return true;
+}
+
+
+
+/**
 - 找到 对应的 index
 */
 QModelIndex LosFileTreeUi::findAndExpand(LosModel::LosFileNode *node, const QString &path,
@@ -274,7 +407,7 @@ QModelIndex LosFileTreeUi::findAndExpand(LosModel::LosFileNode *node, const QStr
     if (nullptr == node)
         return QModelIndex();
 
-    if (node->getFile().getFileName() == path)
+    if (node->getFile().getFilePath() == path)
     {
         QModelIndex cur = parent_index;
         while (cur.isValid())
@@ -288,8 +421,8 @@ QModelIndex LosFileTreeUi::findAndExpand(LosModel::LosFileNode *node, const QStr
     for (int i = 0; i < node->getChildCount(); i++)
     {
         LosModel::LosFileNode *child = node->getChild(i);
-        QModelIndex childIndex       = model()->index(i, 0, childIndex);
-        QModelIndex rst              = findAndExpand(child, path, parent_index);
+        QModelIndex childIndex       = model()->index(i, 0, parent_index);
+        QModelIndex rst              = findAndExpand(child, path, childIndex);
         {
             if (rst.isValid())
                 return rst;

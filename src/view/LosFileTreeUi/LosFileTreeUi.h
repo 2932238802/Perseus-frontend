@@ -21,6 +21,8 @@
 #include <QTreeView>
 #include <QUrl>
 #include <QWidget>
+#include <qevent.h>
+#include <qset.h>
 
 namespace LosView
 {
@@ -32,13 +34,20 @@ class LosFileTreeUi : public QTreeView
     ~LosFileTreeUi() = default;
 
   public: // tool
-    void updateExplorer(LosModel::LosFileTreeModel *);
+    bool updateExplorer(LosModel::LosFileTreeModel *);
     void copyFileOrFolder(const QString &, const QString &);
     void deleteFileOrFolder(const QString &);
     bool expandToFile(const QString &);
+    bool restoreExpandedState(const QSet<QString> &, const QString &selected_path);
+
+  public: // get
+    bool getExpandedPaths(QSet<QString> *get_paths);
 
   public slots: // chs
     void onCustomContextMenu(const QPoint &pos);
+
+  protected: // override
+    void keyPressEvent(QKeyEvent *key) override;
 
   private:
     void initConnect();

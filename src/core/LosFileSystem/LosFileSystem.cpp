@@ -27,6 +27,10 @@ bool LosFileSystem::createDir(const QString &path)
 
 
 
+
+/**
+- 创建 文件夹
+*/
 bool LosFileSystem::createFile(const QString &file_path, const QByteArray &data)
 {
     QFileInfo fileInfo;
@@ -50,6 +54,10 @@ bool LosFileSystem::createFile(const QString &file_path, const QByteArray &data)
 
 
 
+
+/**
+- 删除文件
+*/
 bool LosFileSystem::removeFile(const QString &file_path)
 {
     if (QFile::remove(file_path))
@@ -62,6 +70,10 @@ bool LosFileSystem::removeFile(const QString &file_path)
 
 
 
+
+/**
+- 删除文件夹
+*/
 bool LosFileSystem::removeDir(const QString &dir_path)
 {
     QDir dir(dir_path);
@@ -75,6 +87,9 @@ bool LosFileSystem::removeDir(const QString &dir_path)
 
 
 
+/**
+- 重命名文件
+*/
 bool LosFileSystem::renameFile(const QString &src, const QString &dst)
 {
     if (QFile::rename(src, dst))
