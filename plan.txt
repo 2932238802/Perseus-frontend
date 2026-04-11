@@ -1,0 +1,3 @@
+Bug identification: `LosCommandArgsUi::LosCommandArgsUi` constructor incorrectly declares local functions `void initStyle();` and `void initConnect();` instead of calling the class methods.
+Implication: `initConnect()` never runs, so the signal `_cmd_command_exeScript` is never connected to `onExeScript`.
+Proposed fix: Edit `src/view/LosCommandArgsUi/LosCommandArgsUi.cpp` lines 23-24 to remove the `void` keyword.

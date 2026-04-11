@@ -7,6 +7,7 @@
 #include "core/LosLsp/LosLspManager/LosLspManager.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosRunner/LosRunManager/LosRunManager.h"
+#include "core/LosRunner/LosScriptRunner/LosScriptRunner.h"
 #include "core/LosSesssion/LosSesssion.h"
 #include "core/LosShortcutManager/LosShortcutManager.h"
 #include "core/LosState/LosState.h"
@@ -14,6 +15,7 @@
 #include "models/LosFileNode/LosFileNode.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include "models/LosFileTreeModel/LosFileTreeModel.h"
+#include "view/LosCommandArgsUi/LosCommandArgsUi.h"
 #include "view/LosCommandUi/LosCommandUi.h"
 #include "view/LosEditorTabUi/LosEditorTabUi.h"
 #include "view/LosEditorUi/LosEditorUi.h"
@@ -35,7 +37,10 @@
 #include <QMessageBox>
 #include <QPointer>
 #include <QShortcut>
+#include <QTimer>
+#include <qfilesystemwatcher.h>
 #include <qpushbutton.h>
+#include <qtimer.h>
 #include <qtmetamacros.h>
 
 QT_BEGIN_NAMESPACE
@@ -73,11 +78,15 @@ class Perseus : public QMainWindow
     void onLog(const QString &log);
     void onZoomUi(int delta);
     void onToolChainMissing(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
-
+    void onDebounceTimeOut();
+    void onDirectoryChanged();
 
   private:
     Ui::Perseus *ui;
-    bool L_project                                 = false;
+    bool L_project = false;
+
+    QFileSystemWatcher *L_filesWatcher             = nullptr;
+    QTimer *L_timer                                = nullptr;
     LosModel::LosFileNode *LOS_rootNode            = nullptr;
     LosModel::LosFileTreeModel *LOS_treeModel      = nullptr;
     LosView::LosEditorTabUi *LOS_tabUi             = nullptr;
@@ -85,5 +94,7 @@ class Perseus : public QMainWindow
     LosCore::LosLspManager *LOS_lspMgr             = nullptr;
     LosCore::LosConfigManager *LOS_configMgr       = nullptr;
     LosCore::LosToolChainManager *LOS_toolChainMgr = nullptr;
-    LosView::LosCommandUi *L_cmdPalette            = nullptr;
+    LosView::LosCommandUi *LOS_cmdPalette          = nullptr;
+    LosView::LosCommandArgsUi *LOS_cmdArg          = nullptr;
+    LosCore::LosScriptRunner *LOS_scriptRunner     = nullptr;
 };

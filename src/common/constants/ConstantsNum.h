@@ -36,4 +36,14 @@ namespace LosCommon
         const int BASE_LINEWIDTH = 15;
     }
 
+    namespace LosCommandUi_Constants
+    {
+        enum CommandsKind{
+            SCRIPT = 1,
+            THEME = 2,
+            UNKOWN = -1,
+        };
+    }
+    
+
 } // namespace LosCommon

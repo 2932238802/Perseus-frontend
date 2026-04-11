@@ -1,5 +1,11 @@
 
 #include "LosCommandUi.h"
+#include "common/constants/ConstantsClass.h"
+#include "common/constants/ConstantsNum.h"
+#include "common/util/NumberToCommandsKind.h"
+#include "core/LosLog/LosLog.h"
+#include <qjsonarray.h>
+#include <qjsonobject.h>
 namespace LosView
 {
 
@@ -7,16 +13,15 @@ namespace LosView
     {
         initStyle();
         initConnect();
+        initScanLocalPlugins();
     }
 
 
-
-    void LosCommandUi::regis(const QString &display, const QString &cmd)
+    void LosCommandUi::regis(const QString &display, const LosCommon::LosCommandUi_Constants::CommandsInfo &cmd_info)
     {
-        L_commands.insert(display, cmd);
+        L_commands.insert(display, cmd_info);
         L_lists->addItem(display);
     }
-
 
 
     /**
@@ -90,6 +95,22 @@ namespace LosView
 
 
 
+    void LosCommandUi::initScanLocalPlugins()
+    {
+        QString extDir = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/.perseus/extensions/";
+        QDir dir(extDir);
+        if (!dir.exists())
+            return;
+
+        QStringList pluginFolders = dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot);
+        for (const QString &folderName : pluginFolders)
+        {
+            onPluginPath(dir.absoluteFilePath(folderName));
+        }
+    }
+
+
+
     /**
     - 文本的 改动
     */
@@ -120,12 +141,19 @@ namespace LosView
     void LosCommandUi::executeSelectedItem()
     {
         auto item = L_lists->currentItem();
-        if (item && !item->isHidden())
+        if (!item || item->isHidden())
         {
-            // 如果
-            QString scrip = L_commands.value(item->text());
-            hide();
-            emit LosCore::LosRouter::instance()._cmd_command_exeScript(scrip);
+            return;
+        }
+        auto scripInfo = L_commands.value(item->text());
+        hide();
+        if (scripInfo.kind == LosCommon::LosCommandUi_Constants::CommandsKind::SCRIPT)
+        {
+            emit LosCore::LosRouter::instance()._cmd_command_exeScript(scripInfo.L_scriptPath, scripInfo.L_params);
+        }
+        else
+        {
+            WAR("unkown script info kind", "LosCommandUi");
         }
     }
 
@@ -134,22 +162,39 @@ namespace LosView
     /**
     - 解析 这个json
     {
-    "id": "perseus-rust",
-    "name": "Rust Support For create and build",
-    "version": "1.0.0",
-    "description": "provides Cargo project creation and building support",
-    "contributes": {
-        "commands": {
-        "rust.create.linux": "./scripts/create.sh",
-        "rust.create.windows": "./scripts/create.bat",
-        "rust.build.linux": "./scripts/build.sh"
+        "id": "perseus-rust",
+        "name": "Rust Support For create and build",
+        "version": "1.0.0",
+        "description": "provides Cargo project creation and building support",
+        "contributes": {
+            "commands": {
+            "rust.create.linux": {
+                "kind": 1,
+                "scripts": "./scripts/create.sh",
+                "params": [
+                // "project_name"
+                ]
+            },
+            "rust.create.windows": {
+                "kind": 1,
+                "scripts": "./scripts/create.bat",
+                "params": [
+                "project_name"
+                ]
+            },
+            "rust.build.linux": {
+                "kind": 1,
+                "scripts": "./scripts/build.sh",
+                "params": []
+            }
+            }
         }
-    }
-    }
+        }
     */
     void LosCommandUi::onPluginPath(const QString &plugin_path)
     {
         // plugin_path =  /home/losangelous/.perseus/extensions/rust-extension
+        // INF(plugin_path, "LosCommandUI");
         QFileInfo file(plugin_path);
         if (!file.exists())
         {
@@ -186,12 +231,10 @@ namespace LosView
             ERR("contributesObj is not contain commands", "LosCommandUi");
             return;
         }
-
         QJsonObject commandsObj = contributesObj["commands"].toObject();
         for (auto i = commandsObj.begin(); i != commandsObj.end(); i++)
         {
-            QString cmdName            = i.key();
-            QString scriptRelativePath = i.value().toString();
+            QString cmdName = i.key();
 #ifdef Q_OS_WIN
             if (cmdName.endsWith(".linux"))
                 continue;
@@ -199,12 +242,55 @@ namespace LosView
             if (cmdName.endsWith(".windows"))
                 continue;
 #endif
-            if (scriptRelativePath.startsWith("./"))
+            QJsonObject cmdValue = i.value().toObject();
+            // 如果 没有 这两个 基本的 就 下一个
+            if (!cmdValue.contains("kind") || !cmdValue.contains("scripts"))
             {
-                scriptRelativePath = scriptRelativePath.mid(0, 2);
+                WAR("Command missing kind or scripts: " + cmdName, "LosCommandUi");
+                continue;
             }
-            QString scriptAbsolutePath = QDir(plugin_path).filePath(scriptRelativePath);
-            regis(cmdName, scriptAbsolutePath);
+            auto kind = LosCommon::NumberToCommandsKind(cmdValue["kind"].toInt());
+
+            switch (kind)
+            {
+            case LosCommon::LosCommandUi_Constants::CommandsKind::SCRIPT:
+            {
+                struct LosCommon::LosCommandUi_Constants::CommandsInfo info
+                {
+                    .kind = kind
+                };
+                QString scriptRelativePath = cmdValue["scripts"].toString();
+                if (scriptRelativePath.startsWith("./"))
+                {
+                    scriptRelativePath = scriptRelativePath.mid(2);
+                }
+                QString scriptAbsolutePath = QDir(plugin_path).filePath(scriptRelativePath);
+                info.L_scriptPath          = scriptAbsolutePath;
+
+                QStringList paramsList;
+                if (!cmdValue.contains("params"))
+                    return;
+                QJsonArray params = cmdValue["params"].toArray();
+                for (auto param : params)
+                {
+                    if (param.isString())
+                    {
+                        paramsList.append(param.toString());
+                    }
+                }
+                info.L_params = std::move(paramsList);
+                regis(cmdName, info);
+                break;
+            }
+            case LosCommon::LosCommandUi_Constants::CommandsKind::THEME:
+            {
+                break;
+            }
+            default:
+            {
+                break;
+            }
+            }
         }
     }
 

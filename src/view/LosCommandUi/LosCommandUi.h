@@ -8,6 +8,7 @@
 #include <QFileInfo>
 #include <QGraphicsDropShadowEffect>
 #include <QKeyEvent>
+#include <QStandardPaths>
 #include <QString>
 #include <qboxlayout.h>
 #include <qdebug.h>
@@ -25,7 +26,6 @@ namespace LosView
     class LosCommandUi : public QDialog
     {
         Q_OBJECT
-
       public:
         explicit LosCommandUi(QWidget *parent = nullptr);
         ~LosCommandUi() = default;
@@ -36,6 +36,7 @@ namespace LosView
       private: // init
         void initStyle();
         void initConnect();
+        void initScanLocalPlugins();
 
       private slots:
         void onSearchTextChanged(const QString &text);
@@ -43,7 +44,7 @@ namespace LosView
         void onPluginPath(const QString &plugin_path);
 
       private: // tool
-        void regis(const QString &display, const QString &cmd);
+        void regis(const QString &display, const LosCommon::LosCommandUi_Constants::CommandsInfo &cmd);
         // void initRegis(const QList<LosCommon::LosNet_Constants::PluginInfo> &);
 
       protected slots:
@@ -54,6 +55,6 @@ namespace LosView
       private:
         QLineEdit *L_searchBox;
         QListWidget *L_lists;
-        QMap<QString, QString> L_commands;
+        QMap<QString, LosCommon::LosCommandUi_Constants::CommandsInfo> L_commands;
     };
 } // namespace LosView

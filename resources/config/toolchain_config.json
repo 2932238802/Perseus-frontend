@@ -131,6 +131,19 @@
                     "downloadUrl": "https://rustup.rs/",
                     "validateKey": "cargo"
                 },
+                "rustc": {
+                    "category": "Compiler",
+                    "name": "Rust Compiler (rustc)",
+                    "executables": [
+                        "rustc.exe",
+                        "rustc"
+                    ],
+                    "startupArgs": [],
+                    "requireNodeJs": false,
+                    "versionArgs": "--version",
+                    "downloadUrl": "https://rustup.rs/",
+                    "validateKey": "rustc"
+                },
                 "rust-analyzer": {
                     "category": "LSP",
                     "name": "rust-analyzer",

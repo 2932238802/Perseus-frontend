@@ -1,4 +1,5 @@
 #pragma once
+#include "common/constants/ConstantsNum.h"
 #include <QObject>
 #include <QString>
 #include <QStringList>
@@ -123,7 +124,6 @@ namespace LosCommon
     } // namespace LosSession_Constants
 
 
-
     namespace LosToolChain_Constants
     {
         enum class LosLanguage
@@ -151,6 +151,7 @@ namespace LosCommon
             NEOCMAKELSP,
             RUST_ANALYZER,
             CARGO,
+            RUSTC,
             UNKNOWN
         };
 
@@ -221,5 +222,30 @@ namespace LosCommon
         };
     } // namespace LosNet_Constants
 
+
+    namespace LosCommandUi_Constants
+    {
+        struct CommandsInfo
+        {
+            LosCommon::LosCommandUi_Constants::CommandsKind kind =
+                LosCommon::LosCommandUi_Constants::CommandsKind::UNKOWN;
+            QString L_scriptPath;
+            QStringList L_params;
+        };
+    } // namespace LosCommandUi_Constants
+
+
+
+    namespace LosPlatform_Constants
+    {
+        enum class OsType
+        {
+            WINDOWS = 1,
+            LINUX_N = 2,
+            LINUX_W = 3,
+            MACOS,
+            UNKOWN
+        };
+    }
 
 } // namespace LosCommon

@@ -156,6 +156,13 @@
          </property>
         </spacer>
        </item>
+       <item>
+        <widget class="QLabel" name="project_dir_label">
+         <property name="text">
+          <string>peoject dir</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>

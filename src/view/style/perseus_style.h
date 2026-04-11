@@ -593,6 +593,24 @@ inline const QString perseus_getStyle()
         }
 
 
+        #project_dir_label {
+            color: #ffffff;            
+            font-weight: bold;         
+            font-family: "Consolas", "JetBrains Mono", monospace; 
+            font-size: 12px;     
+            background-color: #252526; 
+            border: 1px solid #333333;  
+            border-radius: 4px;     
+            padding: 4px 12px;         
+            margin-right: 10px;        
+        }
+        
+        #project_dir_label:hover {
+            background-color: #2a2d2e;
+            border: 1px solid #454545;
+        }
+
+
     )");
 }
 
