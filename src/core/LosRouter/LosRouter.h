@@ -91,8 +91,8 @@ namespace LosCore
         // 左侧树 建立 完毕 之后
         void _cmd_fileTreeDone(); // filetree 建立完毕 发送信号 就是左侧的文件树
 
-
-
+        // 修改 文件
+        void _cmd_fileRenamed(const QString &oldPath, const QString &newPath);
         // ----------------------------------------------------------------------------
 
 
@@ -137,7 +137,7 @@ namespace LosCore
         void _cmd_command_exeScript(const QString &script_path, const QStringList &params);
 
         /*
-         * 
+         *
          */
         void _cmd_net_PluginPath(const QString &plugin_path);
         /*

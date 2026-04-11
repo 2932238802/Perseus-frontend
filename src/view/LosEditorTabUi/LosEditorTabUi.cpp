@@ -222,7 +222,7 @@ namespace LosView
                 LOS_pathToUi.remove(filePath);
         }
         L_tabWidget->removeTab(index);
-        editor->deleteLater();
+        wi->deleteLater();
     }
 
     /**
@@ -230,7 +230,7 @@ namespace LosView
     */
     void LosEditorTabUi::onEditDirty(const QString &file_path, bool is_dirty)
     {
-        if (nullptr == LOS_pathToUi[file_path])
+        if (!LOS_pathToUi.contains(file_path))
             return;
 
         int index = L_tabWidget->indexOf(LOS_pathToUi[file_path]);
@@ -336,23 +336,42 @@ namespace LosView
 
 
 
+    void LosEditorTabUi::onFileRenamed(const QString &old_path, const QString &new_path)
+    {
+        if (!LOS_pathToUi.contains(old_path))
+        {
+            return;
+        }
+
+        LosEditorUi *editor = LOS_pathToUi.take(old_path);
+        LOS_pathToUi.insert(new_path, editor);
+        int index = L_tabWidget->indexOf(editor);
+        if (index != -1)
+        {
+            L_tabWidget->setTabText(index, QFileInfo(new_path).fileName());
+        }
+        auto context = QSharedPointer<LosModel::LosFileContext>::create();
+        context->load(new_path);
+        auto fileCopy = QSharedPointer<LosModel::LosFilePath>::create(new_path);
+        editor->loadContextAndPath(context, fileCopy);
+    }
+
+
+
     /**
     初始化
     */
     void LosEditorTabUi::initConnect()
     {
+        auto &router = LosCore::LosRouter::instance();
         connect(L_tabWidget, &QTabWidget::tabCloseRequested, this, &LosEditorTabUi::onTabCloseRequested);
         // 收到 定义 结果 就去处理
-        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_definition, this,
-                &LosEditorTabUi::onDefineResult);
-        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_gotoFile, this,
-                &LosEditorTabUi::onDoubleClickedOnIssue);
-        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_codeFormat, this,
-                &LosEditorTabUi::formatTab);
-        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_fileDirty, this,
-                &LosEditorTabUi::onEditDirty);
-        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_openPluginDetail, this,
-                &LosEditorTabUi::onOpenPlugin);
+        connect(&router, &LosCore::LosRouter::_cmd_lsp_result_definition, this, &LosEditorTabUi::onDefineResult);
+        connect(&router, &LosCore::LosRouter::_cmd_gotoFile, this, &LosEditorTabUi::onDoubleClickedOnIssue);
+        connect(&router, &LosCore::LosRouter::_cmd_codeFormat, this, &LosEditorTabUi::formatTab);
+        connect(&router, &LosCore::LosRouter::_cmd_fileDirty, this, &LosEditorTabUi::onEditDirty);
+        connect(&router, &LosCore::LosRouter::_cmd_openPluginDetail, this, &LosEditorTabUi::onOpenPlugin);
+        connect(&router, &LosCore::LosRouter::_cmd_fileRenamed, this, &LosEditorTabUi::onFileRenamed);
         if (L_tabWidget)
         {
             connect(L_tabWidget, &QTabWidget::currentChanged, this, &LosEditorTabUi::onTabClicked);

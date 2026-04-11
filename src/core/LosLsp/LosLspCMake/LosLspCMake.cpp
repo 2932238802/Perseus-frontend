@@ -216,6 +216,9 @@ void LosLspCMake::dealLspMessage(const QJsonObject &obj)
                 diagList.append(d);
             }
             emit LosRouter::instance()._cmd_lsp_result_diagnostics(filePath, diagList);
+
+            // 直接开始分析吧
+            emit LosRouter::instance()._cmd_lsp_request_semantic(filePath); 
         }
     }
 }

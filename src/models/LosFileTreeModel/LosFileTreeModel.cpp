@@ -250,6 +250,7 @@ namespace LosModel
             return false;
         node->getFile().setFilePath(newPath);
         emit dataChanged(index, index, {Qt::DisplayRole, Qt::EditRole});
+        emit LosCore::LosRouter::instance()._cmd_fileRenamed(oldPath, newPath);
         return true;
     }
 

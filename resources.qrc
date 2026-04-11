@@ -30,4 +30,7 @@
         <file>resources/web/xterm/xterm.js</file>
         <file>resources/web/terminal.html</file>
     </qresource>
+    <qresource prefix="/style">
+        <file alias="perseus_style.qss">src/view/style/perseus_style.qss</file>
+    </qresource>
 </RCC>

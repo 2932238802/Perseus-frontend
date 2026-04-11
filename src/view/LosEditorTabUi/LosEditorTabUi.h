@@ -11,6 +11,7 @@
 
 #include <QDebug>
 #include <QObject>
+#include <QSharedPointer>
 #include <QWidget>
 #include <qglobal.h>
 #include <qmessagebox.h>
@@ -23,47 +24,48 @@
 
 namespace LosView
 {
-class LosEditorTabUi : public QWidget
-{
-    Q_OBJECT
-  public: // construct
-    explicit LosEditorTabUi(QTabWidget *tabWidget, QWidget *object = nullptr);
-    ~LosEditorTabUi() override;
+    class LosEditorTabUi : public QWidget
+    {
+        Q_OBJECT
+      public: // construct
+        explicit LosEditorTabUi(QTabWidget *tabWidget, QWidget *object = nullptr);
+        ~LosEditorTabUi() override;
 
-  public: // tool
-    void closeTab(int index);
-    void closeAllTabs();
-    void saveTab();
-    void saveAllTabs();
-    void openFile(const LosModel::LosFilePath &file);
-    void formatTab();
+      public: // tool
+        void closeTab(int index);
+        void closeAllTabs();
+        void saveTab();
+        void saveAllTabs();
+        void openFile(const LosModel::LosFilePath &file);
+        void formatTab();
 
-  public: // get
-    LosEditorUi *getCurEditor();
-    int tabCount() const;
-    QString getCurFilePath() const;
-    QStringList getOpenFiles() const;
+      public: // get
+        LosEditorUi *getCurEditor();
+        int tabCount() const;
+        QString getCurFilePath() const;
+        QStringList getOpenFiles() const;
 
-  private slots: // chs
-    void onTabCloseRequested(int index);
-    void onEditDirty(const QString &file_path, bool is_dirty);
-    void onDefineResult(const QString &file_path, int line);
-    void onDoubleClickedOnIssue(const QString &file_path, int line);
-    void onResetCheck(LosCommon::LosToolChain_Constants::LosLanguage lan, const QString &curFile = "");
-    void onTabClicked(int index);
-    void onOpenPlugin(const LosCommon::LosNet_Constants::PluginInfo& info);
+      private slots: // chs
+        void onTabCloseRequested(int index);
+        void onEditDirty(const QString &file_path, bool is_dirty);
+        void onDefineResult(const QString &file_path, int line);
+        void onDoubleClickedOnIssue(const QString &file_path, int line);
+        void onResetCheck(LosCommon::LosToolChain_Constants::LosLanguage lan, const QString &curFile = "");
+        void onTabClicked(int index);
+        void onOpenPlugin(const LosCommon::LosNet_Constants::PluginInfo &info);
+        void onFileRenamed(const QString &old_path, const QString &new_path);
 
-  private: // init
-    void initConnect();
-
-
-  private: // tool
-    void checkLspAnsFormat(const QString &file_path);
+      private: // init
+        void initConnect();
 
 
-  private: // params
-    QSet<LosCommon::LosToolChain_Constants::LosLanguage> L_checkedLanguage;
-    QTabWidget *L_tabWidget;
-    QMap<QString, LosView::LosEditorUi *> LOS_pathToUi;
-};
+      private: // tool
+        void checkLspAnsFormat(const QString &file_path);
+
+
+      private: // params
+        QSet<LosCommon::LosToolChain_Constants::LosLanguage> L_checkedLanguage;
+        QTabWidget *L_tabWidget;
+        QMap<QString, LosView::LosEditorUi *> LOS_pathToUi;
+    };
 } // namespace LosView
