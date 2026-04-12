@@ -124,7 +124,6 @@ void Perseus::onFilesBtnClicked()
         if (filePath.isEmpty())
             return;
         pathChoose = QFileInfo(filePath).absolutePath();
-        return;
     }
     if (!pathChoose.isEmpty())
     {
