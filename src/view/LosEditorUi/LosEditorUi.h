@@ -45,76 +45,74 @@
 
 namespace LosModel
 {
-class LosFileContext;
+    class LosFileContext;
 }
 
 namespace LosView
 {
+    class LosLineNumberUi;
+    class LosEditorUi : public QPlainTextEdit
+    {
+        Q_OBJECT
+      public: // construct
+        ~LosEditorUi() override;
+        explicit LosEditorUi(QWidget *parent = nullptr);
 
-class LosLineNumberUi;
+      public: // tool
+        void showCompletion(const QStringList &list);
+        void showDiagnostic(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &);
+        void gotoLine(int line);
+        void format();
 
-class LosEditorUi : public QPlainTextEdit
-{
-    Q_OBJECT
-  public: // construct
-    ~LosEditorUi() override;
-    explicit LosEditorUi(QWidget *parent = nullptr);
+      public: // get
+        QString getWordUnderCursor() const;
+        bool isDirty() const;
+        int getLineNumberWidth() const;
 
-  public: // tool
-    void showCompletion(const QStringList &list);
-    void showDiagnostic(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &);
-    void gotoLine(int line);
-    void format();
+      public: // set
+        void loadContextAndPath(QSharedPointer<LosModel::LosFileContext> context,
+                                QSharedPointer<LosModel::LosFilePath> file_path);
+        bool save();
+        void insertCompletion(const QString &completion);
+        void lineNumberAreaPaintEvent(QPaintEvent *event);
 
-  public: // get
-    QString getWordUnderCursor() const;
-    bool isDirty() const;
-    int getLineNumberWidth() const;
+      private: // init
+        void initConnect();
+        void initStyle();
 
-  public: // set
-    void loadContextAndPath(QSharedPointer<LosModel::LosFileContext> context,
-                            QSharedPointer<LosModel::LosFilePath> file_path);
-    bool save();
-    void insertCompletion(const QString &completion);
-    void lineNumberAreaPaintEvent(QPaintEvent *event);
+      private: // tool
+        void cutCurrentLine();
+        void copyCurrentLine();
+        void updateLineNumberArea(const QRect &rect, int dy);
+        void updateLineNumberAreaWidth(int);
+        void highlightCurrentLine();
 
-  private: // init
-    void initConnect();
-    void initStyle();
+      private slots: // chs
+        void onTextChanged();
+        void onDebounceTimeout();
+        void onHover_Clangd(const QString &markdownContent);
+        void onSemanticLegend(const QStringList &, const QStringList &);
+        void onSemanticTokens(const QJsonArray &);
 
-  private: // tool
-    void cutCurrentLine();
-    void copyCurrentLine();
-    void updateLineNumberArea(const QRect &rect, int dy);
-    void updateLineNumberAreaWidth(int);
-    void highlightCurrentLine();
+      protected: // override
+        void keyPressEvent(QKeyEvent *event) override;
+        void mousePressEvent(QMouseEvent *event) override;
+        void changeEvent(QEvent *e) override;
+        bool event(QEvent *event) override;
+        void resizeEvent(QResizeEvent *e) override;
 
-  private slots: // chs
-    void onTextChanged();
-    void onDebounceTimeout();
-    void onHover_Clangd(const QString &markdownContent);
-    void onSemanticLegend(const QStringList &, const QStringList &);
-    void onSemanticTokens(const QJsonArray &);
+      private: // param
+        std::atomic<bool> L_showComplete = false;
+        bool L_dirty                     = false;
 
-  protected: // override
-    void keyPressEvent(QKeyEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
-    void changeEvent(QEvent *e) override;
-    bool event(QEvent *event) override;
-    void resizeEvent(QResizeEvent *e) override;
-
-  private: // param
-    std::atomic<bool> L_showComplete = false;
-    bool L_dirty                     = false;
-
-    QString L_oldWord        = "";
-    QTimer *L_timer          = nullptr;
-    QPoint L_lastHoverGlobal = QPoint();
-    QSharedPointer<LosModel::LosFileContext> LOS_context;
-    QSharedPointer<LosModel::LosFilePath> LOS_filePath;
-    QList<QTextEdit::ExtraSelection> L_diagnosticSelections;
-    LosView::LosCompleterUi *LOS_completer;
-    LosCore::LosHighlighter *LOS_highlighter = nullptr;
-    LosView::LosLineNumberUi *LOS_lineNumber = nullptr;
-};
+        QString L_oldWord        = "";
+        QTimer *L_timer          = nullptr;
+        QPoint L_lastHoverGlobal = QPoint();
+        QSharedPointer<LosModel::LosFileContext> LOS_context;
+        QSharedPointer<LosModel::LosFilePath> LOS_filePath;
+        QList<QTextEdit::ExtraSelection> L_diagnosticSelections;
+        LosView::LosCompleterUi *LOS_completer;
+        LosCore::LosHighlighter *LOS_highlighter = nullptr;
+        LosView::LosLineNumberUi *LOS_lineNumber = nullptr;
+    };
 } // namespace LosView
