@@ -7,45 +7,45 @@
 namespace LosCore
 {
 
-class LosState
-{
-  private:
-    LosState()  = default;
-    ~LosState() = default;
-
-  public:
-    static LosState &instance();
-    LosState(const LosState &)            = delete;
-    LosState &operator=(const LosState &) = delete;
-
-  public: // tool
-    template <class T> void set(LosCommon::LosState_Constants::SG_STR key, const T &value)
+    class LosState
     {
-        QMutexLocker<QMutex> guard(&L_mtx);
-        L_data[key] = QVariant::fromValue(value);
-    }
+      private:
+        LosState()  = default;
+        ~LosState() = default;
 
-    template <class T> T get(LosCommon::LosState_Constants::SG_STR s, const T &default_value = T())
-    {
-        QMutexLocker<QMutex> guard(&L_mtx);
-        if (!L_data.contains(s))
+      public:
+        static LosState &instance();
+        LosState(const LosState &)            = delete;
+        LosState &operator=(const LosState &) = delete;
+
+      public: /* tool */
+        template <class T> void set(LosCommon::LosState_Constants::SG_STR key, const T &value)
         {
-            return default_value;
+            QMutexLocker<QMutex> guard(&L_mtx);
+            L_data[key] = QVariant::fromValue(value);
         }
-        return L_data[s].value<T>();
-    }
 
-    template <class T> bool contain(LosCommon::LosState_Constants::SG_STR key) const
-    {
-        QMutexLocker<QMutex> guard(&L_mtx);
-        return L_data.contains(key);
-    }
+        template <class T> T get(LosCommon::LosState_Constants::SG_STR s, const T &default_value = T())
+        {
+            QMutexLocker<QMutex> guard(&L_mtx);
+            if (!L_data.contains(s))
+            {
+                return default_value;
+            }
+            return L_data[s].value<T>();
+        }
 
-    void remove(LosCommon::LosState_Constants::SG_STR key);
-    void clear();
+        template <class T> bool contain(LosCommon::LosState_Constants::SG_STR key) const
+        {
+            QMutexLocker<QMutex> guard(&L_mtx);
+            return L_data.contains(key);
+        }
 
-  private:
-    QHash<LosCommon::LosState_Constants::SG_STR, QVariant> L_data;
-    mutable QMutex L_mtx;
-};
-} // namespace LosCore
+        void remove(LosCommon::LosState_Constants::SG_STR key);
+        void clear();
+
+      private:
+        QHash<LosCommon::LosState_Constants::SG_STR, QVariant> L_data;
+        mutable QMutex L_mtx;
+    };
+} /* namespace LosCore */

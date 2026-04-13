@@ -27,11 +27,11 @@ namespace LosView
     class LosEditorTabUi : public QWidget
     {
         Q_OBJECT
-      public: // construct
+      public: /* construct */
         explicit LosEditorTabUi(QTabWidget *tabWidget, QWidget *object = nullptr);
         ~LosEditorTabUi() override;
 
-      public: // tool
+      public: /* tool */
         void closeTab(int index);
         void closeAllTabs();
         void saveTab();
@@ -39,13 +39,13 @@ namespace LosView
         void openFile(const LosModel::LosFilePath &file);
         void formatTab();
 
-      public: // get
+      public: /* get */
         LosEditorUi *getCurEditor();
         int tabCount() const;
         QString getCurFilePath() const;
         QStringList getOpenFiles() const;
 
-      private slots: // chs
+      private slots: /* chs */
         void onTabCloseRequested(int index);
         void onEditDirty(const QString &file_path, bool is_dirty);
         void onDefineResult(const QString &file_path, int line);
@@ -55,17 +55,17 @@ namespace LosView
         void onOpenPlugin(const LosCommon::LosNet_Constants::PluginInfo &info);
         void onFileRenamed(const QString &old_path, const QString &new_path);
 
-      private: // init
+      private: /* init */
         void initConnect();
 
 
-      private: // tool
+      private: /* tool */
         void checkLspAnsFormat(const QString &file_path);
 
 
-      private: // params
+      private: /* params */
         QSet<LosCommon::LosToolChain_Constants::LosLanguage> L_checkedLanguage;
         QTabWidget *L_tabWidget;
         QMap<QString, LosView::LosEditorUi *> LOS_pathToUi;
     };
-} // namespace LosView
+} /* namespace LosView */

@@ -8,24 +8,26 @@
 namespace LosView
 {
 
-class LosFloatingPanelUi : public QDialog
-{
-  public:
-    explicit LosFloatingPanelUi(QWidget *contentWidget, bool auto_close, QWidget *parent);
-    ~LosFloatingPanelUi() = default;
+    class LosFloatingPanelUi : public QDialog
+    {
+      public:
+        explicit LosFloatingPanelUi(QWidget *contentWidget, bool auto_close, QWidget *parent);
+        ~LosFloatingPanelUi() = default;
 
-  private: // init
-    void initStyle();
+      private: /* init */
+        void initStyle();
 
-  public: // tool
-    void showAtPosition(QWidget *parent, LosCommon::LosFloatingPanelUi_Constants::PositionMode mode);
+      public: /* tool */
+        void showAtPosition(QWidget *parent, LosCommon::LosFloatingPanelUi_Constants::PositionMode mode);
 
-  protected:
-    // keyPressEvent
-    void keyPressEvent(QKeyEvent *event) override;
+      protected:
+        /*
+         * keyPressEvent
+         */
+        void keyPressEvent(QKeyEvent *event) override;
 
-  private:
-    QWidget *L_bgWidget;
-};
+      private:
+        QWidget *L_bgWidget;
+    };
 
-} // namespace LosView
+} /* namespace LosView */

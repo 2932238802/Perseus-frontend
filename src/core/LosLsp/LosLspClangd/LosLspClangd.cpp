@@ -9,9 +9,9 @@ namespace LosCore
 
 
 
-    /**
-    开始
-    */
+    /*
+     * 开始
+     */
     void LosLspClangd::start(const QStringList &start_up_args, const QString &exe_path)
     {
         if (L_process && L_process->state() == QProcess::NotRunning)
@@ -23,13 +23,15 @@ namespace LosCore
 
 
 
-    /**
-    初始化 链接
-    */
+    /*
+     * 初始化 链接
+     */
     void LosLspClangd::initConnect()
     {
         auto &router = LosRouter::instance();
-        // 开始的时候 发送 初始化 信息先
+        /*
+         * 开始的时候 发送 初始化 信息先
+         */
         connect(L_process, &QProcess::started, this, &LosLspClangd::sendInitializeRequest);
         connect(L_process, &QProcess::readyReadStandardError, this,
                 [this]() { INF(QString::fromUtf8(L_process->readAllStandardError()), "LosLspClangd"); });
@@ -42,9 +44,9 @@ namespace LosCore
 
 
 
-    /**
-    - 发送初始化请求
-    */
+    /*
+     * - 发送初始化请求
+     */
     void LosLspClangd::sendInitializeRequest()
     {
         QJsonObject params;
@@ -61,9 +63,9 @@ namespace LosCore
 
 
 
-    /**
-    处理初始化
-    */
+    /*
+     * 处理初始化
+     */
     void LosLspClangd::sendInitializedMsg()
     {
         sendNotification("initialized", QJsonObject());
@@ -71,9 +73,9 @@ namespace LosCore
 
 
 
-    /**
-    - 处理 lsp 请求
-    */
+    /*
+     * - 处理 lsp 请求
+     */
     void LosLspClangd::dealLspMessage(const QJsonObject &obj)
     {
         if (obj.contains("id"))
@@ -106,7 +108,9 @@ namespace LosCore
                 emit LosRouter::instance()._cmd_lsp_result_completion(res);
                 break;
             }
-            // 有 id 的请求 就 一定会返回 有id 的回复
+            /*
+             * 有 id 的请求 就 一定会返回 有id 的回复
+             */
             case LosLspType::REQ_INITIALIZE:
             {
                 SUC("handshake successful", "LosLspClangd");
@@ -163,7 +167,9 @@ namespace LosCore
                     QJsonObject result   = obj["result"].toObject();
                     QJsonObject contents = result["contents"].toObject();
                     QString hoverText    = contents["value"].toString();
-                    // 悬停 提示 前端 ui 进行渲染
+                    /*
+                     * 悬停 提示 前端 ui 进行渲染
+                     */
                     emit LosRouter::instance()._cmd_lsp_result_hover(hoverText);
                 }
                 else
@@ -174,10 +180,12 @@ namespace LosCore
             }
             case LosCore::LosLspType::REQ_SEMANTIC_HIGHLIGHT:
             {
-                // 这里是 语法 高亮
-                // [deltaLine, deltaChar, length, tokenType, modifiers]
-                // json 返回的 只是 数组 没有对应的字段
-                // 就是 纯 数字 所以需要自己进行解析
+                /*
+                 * 这里是 语法 高亮
+                 * [deltaLine, deltaChar, length, tokenType, modifiers]
+                 * json 返回的 只是 数组 没有对应的字段
+                 * 就是 纯 数字 所以需要自己进行解析
+                 */
                 INF("11", "11");
 
                 if (obj.contains("result") && !obj["result"].isNull())
@@ -226,4 +234,4 @@ namespace LosCore
         }
     }
 
-} // namespace LosCore
+} /* namespace LosCore */

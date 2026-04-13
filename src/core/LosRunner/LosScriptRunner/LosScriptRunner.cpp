@@ -24,7 +24,7 @@ namespace LosCore
 #ifdef Q_OS_WIN
         QStringList winArgs;
         winArgs << "/c" << main_file_path;
-        winArgs.append(L_args); // 把用户填的参数加在后面
+        winArgs.append(L_args); /* 把用户填的参数加在后面 */
         L_runner->start("cmd.exe", winArgs);
 #else
         QStringList linuxArgs;
@@ -83,4 +83,4 @@ namespace LosCore
     }
 
 
-} // namespace LosCore
+} /* namespace LosCore */

@@ -10,8 +10,8 @@ namespace LosCore
         static LosCommon::LosPlatform_Constants::OsType detectOs();
         static LosCommon::LosPlatform_Constants::OsType LOS_osType;
 
-      public: // tool
+      public: /* tool */
         static LosCommon::LosPlatform_Constants::OsType getOs();
         static QString lineEnding();
     };
-} // namespace LosCore
+} /* namespace LosCore */

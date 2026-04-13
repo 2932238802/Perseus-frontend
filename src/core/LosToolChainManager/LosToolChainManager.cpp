@@ -15,9 +15,9 @@ namespace LosCore
 
 
 
-    /**
-     检查 一个 语言的 工具链
-    */
+    /*
+     * 检查 一个 语言的 工具链
+     */
     void LosToolChainManager::onCheckLanguageToolchain(LosCommon::LosToolChain_Constants::LosLanguage lang,
                                                        LosCommon::LosToolChain_Constants::LosTool tool)
     {
@@ -31,9 +31,9 @@ namespace LosCore
 
 
 
-    /**
-    检查 单个 sing tool
-    */
+    /*
+     * 检查 单个 sing tool
+     */
     void LosToolChainManager::onCheckSingleTool(LosCommon::LosToolChain_Constants::LosTool tool)
     {
         if (!LOS_toolConfigs.contains(tool))
@@ -72,9 +72,9 @@ namespace LosCore
     }
 
 
-    /**
-     - 读取 json
-    */
+    /*
+     * - 读取 json
+     */
     void LosToolChainManager::initConfig()
     {
         auto configFile(LosCommon::GetFilePathFromUp<LosCommon::FindFileType::SYSTEM_TOOLCHAIN_CONFIG_JSON>(
@@ -109,7 +109,7 @@ namespace LosCore
             for (auto it = sharedTools.begin(); it != sharedTools.end(); ++it)
             {
                 QString toolNameStr       = it.key();
-                auto toolEnum             = stringToTool(toolNameStr); // 字符串转枚举
+                auto toolEnum             = stringToTool(toolNameStr); /* 字符串转枚举 */
                 QJsonObject toolObj       = it.value().toObject();
                 LOS_toolConfigs[toolEnum] = parseToolNode(toolObj, toolNameStr);
                 if (toolObj.contains("supportedLanguages") && toolObj["supportedLanguages"].isArray())
@@ -162,9 +162,9 @@ namespace LosCore
 
 
 
-    /**
-    - 初始化链接
-    */
+    /*
+     * - 初始化链接
+     */
     void LosToolChainManager::initConnect()
     {
         auto &router = LosCore::LosRouter::instance();
@@ -174,9 +174,9 @@ namespace LosCore
 
 
 
-    /**
-    - 判断是不是 可以运行
-    */
+    /*
+     * - 判断是不是 可以运行
+     */
     bool LosToolChainManager::validateExecutable(const LosCommon::LosToolChain_Constants::ToolChainConfig &config)
     {
         auto toolEnum = stringToTool(config.L_name);
@@ -194,16 +194,18 @@ namespace LosCore
 
 
 
-    /**
-    - 解析 一个 toolIt config 解析
-    */
+    /*
+     * - 解析 一个 toolIt config 解析
+     */
     LosCommon::LosToolChain_Constants::ToolChainConfig LosToolChainManager::parseToolNode(const QJsonObject &toolObj,
                                                                                           const QString &toolName)
     {
         LosCommon::LosToolChain_Constants::ToolChainConfig config;
         config.L_category = stringToCategory(toolObj["category"].toString());
         config.L_name     = toolName;
-        // config.LOS_language = stringToLanguage(toolObj["language"].toString()); json 暂时没有设置 字段 先留着吧
+        /*
+         * config.LOS_language = stringToLanguage(toolObj["language"].toString()); json 暂时没有设置 字段 先留着吧
+         */
 
         if (toolObj.contains("executables") && toolObj["executables"].isArray())
         {
@@ -231,9 +233,9 @@ namespace LosCore
 
 
 
-    /**
-    - 字符串 -> 具体枚举
-    */
+    /*
+     * - 字符串 -> 具体枚举
+     */
     LosCommon::LosToolChain_Constants::LosLanguage LosToolChainManager::stringToLanguage(const QString &str)
     {
         using namespace LosCommon::LosToolChain_Constants;
@@ -257,9 +259,9 @@ namespace LosCore
 
 
 
-    /**
-    - 字符串 转 具体 枚举
-    */
+    /*
+     * - 字符串 转 具体 枚举
+     */
     LosCommon::LosToolChain_Constants::ToolCategory LosToolChainManager::stringToCategory(const QString &str)
     {
         using namespace LosCommon::LosToolChain_Constants;
@@ -281,9 +283,9 @@ namespace LosCore
 
 
 
-    /**
-    - 字符串 转 具体工具
-    */
+    /*
+     * - 字符串 转 具体工具
+     */
     LosCommon::LosToolChain_Constants::LosTool LosToolChainManager::stringToTool(const QString &str)
     {
         using namespace LosCommon::LosToolChain_Constants;
@@ -311,4 +313,4 @@ namespace LosCore
         return LosTool::UNKNOWN;
     }
 
-} // namespace LosCore
+} /* namespace LosCore */

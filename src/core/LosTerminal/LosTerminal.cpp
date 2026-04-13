@@ -26,9 +26,9 @@ namespace LosCore
 
 
 
-    /**
-    - 终端准备就绪
-    */
+    /*
+     * - 终端准备就绪
+     */
     void LosTerminal::onTerminalReady()
     {
         if (L_process->state() != QProcess::NotRunning)
@@ -46,9 +46,9 @@ namespace LosCore
     }
 
 
-    /**
-    - 把 Qt的输出 发射给 term.js
-    */
+    /*
+     * - 把 Qt的输出 发射给 term.js
+     */
     void LosTerminal::onReadyReadStdOut()
     {
         QByteArray data = L_process->readAllStandardOutput();
@@ -57,9 +57,9 @@ namespace LosCore
 
 
 
-    /**
-    - 把 Qt的输出 发射给 term.js
-    */
+    /*
+     * - 把 Qt的输出 发射给 term.js
+     */
     void LosTerminal::onReadyReadStdErr()
     {
         QByteArray data = L_process->readAllStandardError();
@@ -68,10 +68,10 @@ namespace LosCore
 
 
 
-    /**
-    - write QByteArray
-    -
-    */
+    /*
+     * - write QByteArray
+     * -
+     */
     void LosTerminal::write(const QString &content)
     {
         if (L_process->state() == QProcess::Running)
@@ -82,13 +82,13 @@ namespace LosCore
 
 
 
-    /**
-    - 初始化链接
-    */
+    /*
+     * - 初始化链接
+     */
     void LosTerminal::initConnect()
     {
         connect(L_process, &QProcess::readyReadStandardOutput, this, &LosTerminal::onReadyReadStdOut);
         connect(L_process, &QProcess::readyReadStandardError, this, &LosTerminal::onReadyReadStdErr);
     }
 
-} // namespace LosCore
+} /* namespace LosCore */

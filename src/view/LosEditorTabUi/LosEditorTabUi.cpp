@@ -21,16 +21,16 @@ namespace LosView
 
     LosEditorTabUi::~LosEditorTabUi() {}
 
-    /**
-    关闭标签页
-    */
+    /*
+     * 关闭标签页
+     */
     void LosEditorTabUi::closeTab(int index) {}
 
 
 
-    /**
-    - 关闭 所有的 标签
-    */
+    /*
+     * - 关闭 所有的 标签
+     */
     void LosEditorTabUi::closeAllTabs()
     {
         for (auto editor : LOS_pathToUi.values())
@@ -49,9 +49,9 @@ namespace LosView
 
 
 
-    /**
-    - 保存标签页
-    */
+    /*
+     * - 保存标签页
+     */
     void LosEditorTabUi::saveTab()
     {
         if (L_tabWidget == nullptr)
@@ -72,9 +72,9 @@ namespace LosView
 
 
 
-    /**
-    保存所有的标签页
-    */
+    /*
+     * 保存所有的标签页
+     */
     void LosEditorTabUi::saveAllTabs()
     {
         if (nullptr == L_tabWidget)
@@ -98,14 +98,16 @@ namespace LosView
 
 
 
-    /**
-    - tool
-    - 打开文件
-    - 只能打开 非 二进制文件
-    */
+    /*
+     * - tool
+     * - 打开文件
+     * - 只能打开 非 二进制文件
+     */
     void LosEditorTabUi::openFile(const LosModel::LosFilePath &file)
     {
-        // 呼叫 解释器 呼叫 运行其
+        /*
+         * 呼叫 解释器 呼叫 运行其
+         */
         if (file.isBinary())
         {
             return;
@@ -120,8 +122,10 @@ namespace LosView
             return;
         }
         LosEditorUi *editor = new LosEditorUi(this);
-        // 这里 会 读写 磁盘 两次
-        // 可以 优化的
+        /*
+         * 这里 会 读写 磁盘 两次
+         * 可以 优化的
+         */
         auto contextCopy = QSharedPointer<LosModel::LosFileContext>::create();
         contextCopy->load(filePath);
         auto fileCopy = QSharedPointer<LosModel::LosFilePath>::create(filePath);
@@ -133,9 +137,9 @@ namespace LosView
 
 
 
-    /**
-    - 格式化 当前的 tab
-    */
+    /*
+     * - 格式化 当前的 tab
+     */
     void LosEditorTabUi::formatTab()
     {
         if (getCurEditor())
@@ -144,10 +148,10 @@ namespace LosView
 
 
 
-    /**
-    get
-    获取当前编辑器
-    */
+    /*
+     * get
+     * 获取当前编辑器
+     */
     LosEditorUi *LosEditorTabUi::getCurEditor()
     {
         if (L_tabWidget != nullptr)
@@ -159,9 +163,9 @@ namespace LosView
 
 
 
-    /**
-    get
-    */
+    /*
+     * get
+     */
     int LosEditorTabUi::tabCount() const
     {
         return L_tabWidget->count();
@@ -169,9 +173,9 @@ namespace LosView
 
 
 
-    /**
-    get
-    */
+    /*
+     * get
+     */
     QString LosEditorTabUi::getCurFilePath() const
     {
         auto widget = qobject_cast<LosEditorUi *>(L_tabWidget->currentWidget());
@@ -186,9 +190,9 @@ namespace LosView
     }
 
 
-    /**
-    关闭 ui 点击
-    */
+    /*
+     * 关闭 ui 点击
+     */
     void LosEditorTabUi::onTabCloseRequested(int index)
     {
         QWidget *wi = L_tabWidget->widget(index);
@@ -196,7 +200,9 @@ namespace LosView
             return;
         LosEditorUi *editor = qobject_cast<LosEditorUi *>(wi);
 
-        // 补充
+        /*
+         * 补充
+         */
         if (editor)
         {
             if (editor->isDirty())
@@ -227,9 +233,9 @@ namespace LosView
         wi->deleteLater();
     }
 
-    /**
-    如果编辑器 修改
-    */
+    /*
+     * 如果编辑器 修改
+     */
     void LosEditorTabUi::onEditDirty(const QString &file_path, bool is_dirty)
     {
         if (!LOS_pathToUi.contains(file_path))
@@ -253,7 +259,7 @@ namespace LosView
 
 
 
-    /**
+    /*
      */
     void LosEditorTabUi::onDefineResult(const QString &file_path, int line)
     {
@@ -266,9 +272,9 @@ namespace LosView
 
 
 
-    /**
-    双击
-    */
+    /*
+     * 双击
+     */
     void LosEditorTabUi::onDoubleClickedOnIssue(const QString &file_path, int line)
     {
         openFile(file_path);
@@ -281,9 +287,9 @@ namespace LosView
 
 
 
-    /**
-    - 重新 检查
-    */
+    /*
+     * - 重新 检查
+     */
     void LosEditorTabUi::onResetCheck(LosCommon::LosToolChain_Constants::LosLanguage lan, const QString &curFile)
     {
         if (L_checkedLanguage.contains(lan))
@@ -298,15 +304,17 @@ namespace LosView
 
 
 
-    /**
-    - 点击 上侧的标签页 实现类似的功能
-    - 修复 qobject_cast
-    */
+    /*
+     * - 点击 上侧的标签页 实现类似的功能
+     * - 修复 qobject_cast
+     */
     void LosEditorTabUi::onTabClicked(int index)
     {
         if (index < 0 || index >= L_tabWidget->count())
         {
-            // 无效
+            /*
+             * 无效
+             */
             return;
         }
 
@@ -360,14 +368,16 @@ namespace LosView
 
 
 
-    /**
-    初始化
-    */
+    /*
+     * 初始化
+     */
     void LosEditorTabUi::initConnect()
     {
         auto &router = LosCore::LosRouter::instance();
         connect(L_tabWidget, &QTabWidget::tabCloseRequested, this, &LosEditorTabUi::onTabCloseRequested);
-        // 收到 定义 结果 就去处理
+        /*
+         * 收到 定义 结果 就去处理
+         */
         connect(&router, &LosCore::LosRouter::_cmd_lsp_result_definition, this, &LosEditorTabUi::onDefineResult);
         connect(&router, &LosCore::LosRouter::_cmd_gotoFile, this, &LosEditorTabUi::onDoubleClickedOnIssue);
         connect(&router, &LosCore::LosRouter::_cmd_codeFormat, this, &LosEditorTabUi::formatTab);
@@ -382,9 +392,9 @@ namespace LosView
 
 
 
-    /**
-    检查 语法 和 自行
-    */
+    /*
+     * 检查 语法 和 自行
+     */
     void LosEditorTabUi::checkLspAnsFormat(const QString &file_path)
     {
         auto lang = LosCommon::CheckLang(file_path);
@@ -423,4 +433,4 @@ namespace LosView
     }
 
 
-} // namespace LosView
+} /* namespace LosView */

@@ -2,5 +2,5 @@
 
 namespace LosCore
 {
-LosConfig::LosConfig(QObject *parent) : QObject{parent} {}
-} // namespace LosCore
+    LosConfig::LosConfig(QObject *parent) : QObject{parent} {}
+} /* namespace LosCore */

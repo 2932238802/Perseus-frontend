@@ -21,14 +21,14 @@ namespace LosView
         explicit LosPluginDetailUi(QWidget *parent = nullptr);
         ~LosPluginDetailUi();
 
-      public: // tool
+      public: /* tool */
         void setPluginInfo(const LosCommon::LosNet_Constants::PluginInfo &info);
 
       private slots:
         void onDownloadBtnClicked();
         void onDownloadFinished(const QString &zipPath);
 
-      private: // init
+      private: /* init */
         void initConnect();
 
       private:
@@ -36,4 +36,4 @@ namespace LosView
         LosCommon::LosNet_Constants::PluginInfo LOS_info;
     };
 
-} // namespace LosView
+} /* namespace LosView */

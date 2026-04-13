@@ -14,10 +14,10 @@ namespace LosCore
         explicit LosFormatBase(QObject *parent = nullptr);
         ~LosFormatBase() = default;
 
-      public: // tool
+      public: /* tool */
         virtual bool format(QString *out, const QString &file_path, const QString &raw_content) = 0;
 
       protected:
     };
 
-} // namespace LosCore
+} /* namespace LosCore */

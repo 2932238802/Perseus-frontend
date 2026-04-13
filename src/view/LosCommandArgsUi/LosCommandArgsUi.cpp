@@ -113,7 +113,7 @@ namespace LosView
             args.append(input);
         }
 
-        SUC(L_scriptPath,"LosCommandArgsUi");
+        SUC(L_scriptPath, "LosCommandArgsUi");
 
         this->accept();
         emit LosCore::LosRouter::instance()._cmd_runScript(L_scriptPath, dir, args);
@@ -154,7 +154,7 @@ namespace LosView
         connect(&router, &LosCore::LosRouter::_cmd_command_exeScript, this, &LosCommandArgsUi::onExeScript);
         connect(ui->btn_browse, &QPushButton::clicked, this, &LosCommandArgsUi::onBrowseBtnClicked);
         connect(ui->btn_run, &QPushButton::clicked, this, &LosCommandArgsUi::onRunBtnClicked);
-        connect(ui->btn_cancel, &QPushButton::clicked, this, &QDialog::reject); // Cancel直接关闭
+        connect(ui->btn_cancel, &QPushButton::clicked, this, &QDialog::reject); /* Cancel直接关闭 */
     }
 
-} // namespace LosView
+} /* namespace LosView */

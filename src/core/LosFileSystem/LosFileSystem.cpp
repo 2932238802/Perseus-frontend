@@ -3,100 +3,99 @@
 #include "core/LosRouter/LosRouter.h"
 namespace LosCore
 {
-    
-LosFileSystem &LosFileSystem::instance()
-{
-    static LosFileSystem s;
-    return s;
-}
 
-
-
-bool LosFileSystem::createDir(const QString &path)
-{
-    QDir dir;
-    if (dir.mkpath(path))
+    LosFileSystem &LosFileSystem::instance()
     {
-        INF("created new folder: " + path, "LosFileTreeUi");
+        static LosFileSystem s;
+        return s;
+    }
+
+
+
+    bool LosFileSystem::createDir(const QString &path)
+    {
+        QDir dir;
+        if (dir.mkpath(path))
+        {
+            INF("created new folder: " + path, "LosFileTreeUi");
+            emit LosCore::LosRouter::instance()._cmd_fileSystemChanged();
+            return true;
+        }
+        ERR("failed to create folder: " + path, "LosFileTreeUi");
+        return false;
+    }
+
+
+
+    /*
+     * - 创建 文件夹
+     */
+    bool LosFileSystem::createFile(const QString &file_path, const QByteArray &data)
+    {
+        QFileInfo fileInfo;
+        QString dirPath = fileInfo.absolutePath();
+        if (!createDir(dirPath))
+            return false;
+
+        QFile file(file_path);
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        {
+            return false;
+        }
+
+        /*
+         * 创建成功了
+         */
         emit LosCore::LosRouter::instance()._cmd_fileSystemChanged();
-        return true;
+
+        qint64 writtenBytes = file.write(data);
+        file.close();
+        return writtenBytes == data.size();
     }
-    ERR("failed to create folder: " + path, "LosFileTreeUi");
-    return false;
-}
 
 
 
-
-/**
-- 创建 文件夹
-*/
-bool LosFileSystem::createFile(const QString &file_path, const QByteArray &data)
-{
-    QFileInfo fileInfo;
-    QString dirPath = fileInfo.absolutePath();
-    if (!createDir(dirPath))
-        return false;
-
-    QFile file(file_path);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    /*
+     * - 删除文件
+     */
+    bool LosFileSystem::removeFile(const QString &file_path)
     {
+        if (QFile::remove(file_path))
+        {
+            emit LosRouter::instance()._cmd_fileSystemChanged();
+            return true;
+        }
         return false;
     }
 
-    // 创建成功了
-    emit LosCore::LosRouter::instance()._cmd_fileSystemChanged();
-
-    qint64 writtenBytes = file.write(data);
-    file.close();
-    return writtenBytes == data.size();
-}
 
 
-
-
-/**
-- 删除文件
-*/
-bool LosFileSystem::removeFile(const QString &file_path)
-{
-    if (QFile::remove(file_path))
+    /*
+     * - 删除文件夹
+     */
+    bool LosFileSystem::removeDir(const QString &dir_path)
     {
-        emit LosRouter::instance()._cmd_fileSystemChanged();
-        return true;
+        QDir dir(dir_path);
+        if (dir.removeRecursively())
+        {
+            emit LosRouter::instance()._cmd_fileSystemChanged();
+            return true;
+        }
+        return false;
     }
-    return false;
-}
 
 
 
-
-/**
-- 删除文件夹
-*/
-bool LosFileSystem::removeDir(const QString &dir_path)
-{
-    QDir dir(dir_path);
-    if (dir.removeRecursively())
+    /*
+     * - 重命名文件
+     */
+    bool LosFileSystem::renameFile(const QString &src, const QString &dst)
     {
-        emit LosRouter::instance()._cmd_fileSystemChanged();
-        return true;
+        if (QFile::rename(src, dst))
+        {
+            emit LosRouter::instance()._cmd_fileSystemChanged();
+            return true;
+        }
+        return false;
     }
-    return false;
-}
-
-
-
-/**
-- 重命名文件
-*/
-bool LosFileSystem::renameFile(const QString &src, const QString &dst)
-{
-    if (QFile::rename(src, dst))
-    {
-        emit LosRouter::instance()._cmd_fileSystemChanged();
-        return true;
-    }
-    return false;
-}
-} // namespace LosCore
+} /* namespace LosCore */

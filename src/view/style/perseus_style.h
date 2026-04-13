@@ -17,11 +17,14 @@ namespace LosStyle
             QTextStream stream(&file);
             return stream.readAll();
         }
-        else{
-            ERR("1","1");
+        else
+        {
+            ERR("1", "1");
         }
-        // 如果读取失败（通常是路径没写对），返回空字符串
+        /*
+         * 如果读取失败（通常是路径没写对），返回空字符串
+         */
         return QString();
     }
 
-} // namespace LosStyle
+} /* namespace LosStyle */

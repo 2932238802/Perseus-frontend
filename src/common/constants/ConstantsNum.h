@@ -2,16 +2,20 @@
 #pragma once
 namespace LosCommon
 {
-    // 最多 能看到 的 补全 字段
+    /*
+     * 最多 能看到 的 补全 字段
+     */
     inline const int MAX_VISIBLE_COMPLETION = 10;
 
 
-    // 格式化
+    /*
+     * 格式化
+     */
     namespace LosFormatManager_Constants
     {
         inline const int WAITFORSTARTED_TIME_MS  = 1000;
         inline const int WAITFORFINISHED_TIME_MS = 3000;
-    } // namespace LosFormatManager_Constants
+    } /* namespace LosFormatManager_Constants */
 
 
     namespace Perseus_Constants
@@ -28,7 +32,7 @@ namespace LosCommon
         inline const int ZOOM_MIN                 = 8;
 
 
-    } // namespace Perseus_Constants
+    } /* namespace Perseus_Constants */
 
 
     namespace LosLineNumberUi_Constants
@@ -38,12 +42,13 @@ namespace LosCommon
 
     namespace LosCommandUi_Constants
     {
-        enum CommandsKind{
+        enum CommandsKind
+        {
             SCRIPT = 1,
-            THEME = 2,
+            THEME  = 2,
             UNKOWN = -1,
         };
     }
-    
 
-} // namespace LosCommon
+
+} /* namespace LosCommon */

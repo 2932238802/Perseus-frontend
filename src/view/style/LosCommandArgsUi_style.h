@@ -68,4 +68,4 @@ namespace LosStyle
             }
         )");
     }
-}
+} // namespace LosStyle

@@ -1,10 +1,12 @@
 #pragma once
 #include <QString>
 
-namespace LosStyle {
+namespace LosStyle
+{
 
-inline const QString LosIssuesUi_getStyle() {
-    return QString(R"(
+    inline const QString LosIssuesUi_getStyle()
+    {
+        return QString(R"(
         QTableWidget {
             background-color: #1E1E1E;
             color: #D4D4D4;
@@ -81,6 +83,6 @@ inline const QString LosIssuesUi_getStyle() {
             background-color: transparent; 
         }
     )");
-}
+    }
 
-} // namespace LosStyle
+} /* namespace LosStyle */

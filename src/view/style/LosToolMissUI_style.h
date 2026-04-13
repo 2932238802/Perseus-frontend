@@ -3,9 +3,9 @@
 #include <QString>
 namespace LosStyle
 {
-inline QString LosToolMissUI_getStyle()
-{
-    return QString(R"(
+    inline QString LosToolMissUI_getStyle()
+    {
+        return QString(R"(
     QDialog {
         background-color: #2b2b2b;
         color: #ffffff;
@@ -28,5 +28,5 @@ inline QString LosToolMissUI_getStyle()
     }
                 
 )");
-};
-} // namespace LosStyle
+    };
+} /* namespace LosStyle */

@@ -14,59 +14,61 @@
 namespace LosCore
 {
 
-struct SemanticToken
-{
-    int startChar;
-    int length;
-    int tokenType;
-    int tokenModifiers;
-};
-
-class LosHighlighter : public QSyntaxHighlighter
-{
-    Q_OBJECT
-    // QSyntaxHighlighter 必须 绑定 QTextDocument
-
-    struct HighlightRule
+    struct SemanticToken
     {
-        QTextCharFormat L_format;
-        QRegularExpression L_regex;
+        int startChar;
+        int length;
+        int tokenType;
+        int tokenModifiers;
     };
 
-  public:
-    explicit LosHighlighter(QTextDocument *doc);
-    ~LosHighlighter() = default;
+    class LosHighlighter : public QSyntaxHighlighter
+    {
+        Q_OBJECT
+        /*
+         * QSyntaxHighlighter 必须 绑定 QTextDocument
+         */
 
-    void updateSemanticTokens(const QJsonArray &data);
-    void initSemanticLegend(const QStringList &legendTokenTypes,
-                            const QStringList &legendTokenModifiers = QStringList());
+        struct HighlightRule
+        {
+            QTextCharFormat L_format;
+            QRegularExpression L_regex;
+        };
 
-  protected:
-    void highlightBlock(const QString &str) override;
+      public:
+        explicit LosHighlighter(QTextDocument *doc);
+        ~LosHighlighter() = default;
 
-  private: // init
-    void mergeFormat(int start, int length, const QTextCharFormat &format);
+        void updateSemanticTokens(const QJsonArray &data);
+        void initSemanticLegend(const QStringList &legendTokenTypes,
+                                const QStringList &legendTokenModifiers = QStringList());
 
-  private: // init
-    void initRule();
-    void highlightByRegex(const QString &str);
+      protected:
+        void highlightBlock(const QString &str) override;
 
-  private:
-    QList<HighlightRule> L_rules;
-    QTextCharFormat L_keyword;
-    QTextCharFormat L_class;
-    QTextCharFormat L_singleComment;
-    QTextCharFormat L_multiComment;
-    QTextCharFormat L_str;
-    QTextCharFormat L_func;
-    QRegularExpression L_commentStartExpression;
-    QRegularExpression L_commentEndExpression;
+      private: /* init */
+        void mergeFormat(int start, int length, const QTextCharFormat &format);
 
-    QMap<int, QList<SemanticToken>> L_semanticData;
-    QVector<QTextCharFormat> L_semanticFormats;
-    QMap<QString, QTextCharFormat> L_themeConfig;
+      private: /* init */
+        void initRule();
+        void highlightByRegex(const QString &str);
 
-    int L_readonlyModifierIndex = -1;
-    int L_staticModifierIndex   = -1;
-};
-} // namespace LosCore
+      private:
+        QList<HighlightRule> L_rules;
+        QTextCharFormat L_keyword;
+        QTextCharFormat L_class;
+        QTextCharFormat L_singleComment;
+        QTextCharFormat L_multiComment;
+        QTextCharFormat L_str;
+        QTextCharFormat L_func;
+        QRegularExpression L_commentStartExpression;
+        QRegularExpression L_commentEndExpression;
+
+        QMap<int, QList<SemanticToken>> L_semanticData;
+        QVector<QTextCharFormat> L_semanticFormats;
+        QMap<QString, QTextCharFormat> L_themeConfig;
+
+        int L_readonlyModifierIndex = -1;
+        int L_staticModifierIndex   = -1;
+    };
+} /* namespace LosCore */

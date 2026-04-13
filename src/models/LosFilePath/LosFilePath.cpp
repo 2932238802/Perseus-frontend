@@ -118,10 +118,10 @@ namespace LosModel
 
 
 
-    /**
-    - 文本文件”和“二进制文件
-    - 用来标识文件或数据内容格式的一种标准方式
-    */
+    /*
+     * - 文本文件”和“二进制文件
+     * - 用来标识文件或数据内容格式的一种标准方式
+     */
     bool LosFilePath::isBinary() const
     {
         static QMimeDatabase db;
@@ -149,10 +149,10 @@ namespace LosModel
 
 
 
-    /**
-    支持 QStringList的流式操作
-
-    */
+    /*
+     * 支持 QStringList的流式操作
+     *
+     */
     QStringList &operator<<(QStringList &list, const LosFilePath &path)
     {
         list.append(path.getFilePath());
@@ -161,12 +161,12 @@ namespace LosModel
 
 
 
-    /**
-    对比
-    */
+    /*
+     * 对比
+     */
     bool LosFilePath::operator==(const QString &str) const
     {
         return L_filePath == str;
     }
 
-} // namespace LosModel
+} /* namespace LosModel */

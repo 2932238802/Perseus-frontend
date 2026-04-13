@@ -33,27 +33,27 @@ namespace LosView
         explicit LosFileTreeUi(QWidget *parent = nullptr);
         ~LosFileTreeUi() = default;
 
-      public: // tool
+      public: /* tool */
         bool updateExplorer(LosModel::LosFileTreeModel *);
         void copyFileOrFolder(const QString &, const QString &);
         void deleteFileOrFolder(const QString &);
         bool expandToFile(const QString &);
         bool restoreExpandedState(const QSet<QString> &, const QString &selected_path);
 
-      public: // get
+      public: /* get */
         bool getExpandedPaths(QSet<QString> *get_paths);
 
-      public slots: // chs
+      public slots: /* chs */
         void onCustomContextMenu(const QPoint &pos);
 
-      protected: // override
+      protected: /* override */
         void keyPressEvent(QKeyEvent *key) override;
 
       private:
         void initConnect();
         void initStyle();
 
-      private: // innner tool
+      private: /* innner tool */
         QModelIndex findAndExpand(LosModel::LosFileNode *, const QString &, const QModelIndex &);
     };
-} // namespace LosView
+} /* namespace LosView */

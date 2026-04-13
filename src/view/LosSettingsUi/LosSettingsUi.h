@@ -35,4 +35,4 @@ namespace LosView
       private:
         Ui::LosSettingsUi *ui;
     };
-}; // namespace LosView
+}; /* namespace LosView */

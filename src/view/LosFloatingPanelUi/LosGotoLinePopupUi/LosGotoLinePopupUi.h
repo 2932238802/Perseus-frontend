@@ -12,18 +12,18 @@
 namespace LosView
 {
 
-class LosGotoLinePopupUi : public QWidget
-{
-    Q_OBJECT
-  public:
-    explicit LosGotoLinePopupUi(QWidget *parent = nullptr);
-    ~LosGotoLinePopupUi() = default;
+    class LosGotoLinePopupUi : public QWidget
+    {
+        Q_OBJECT
+      public:
+        explicit LosGotoLinePopupUi(QWidget *parent = nullptr);
+        ~LosGotoLinePopupUi() = default;
 
-  public: // get
-    int getLineNumber() const;
-    QLineEdit *getLineEdit() const;
+      public: /* get */
+        int getLineNumber() const;
+        QLineEdit *getLineEdit() const;
 
-  private:
-    QLineEdit *L_lineEdit;
-};
-} // namespace LosView
+      private:
+        QLineEdit *L_lineEdit;
+    };
+} /* namespace LosView */

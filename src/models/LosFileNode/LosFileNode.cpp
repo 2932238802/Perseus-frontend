@@ -16,9 +16,9 @@ namespace LosModel
 
 
 
-    /**
-    - QDir::fromNativeSeparators 标准化
-    */
+    /*
+     * - QDir::fromNativeSeparators 标准化
+     */
     LosFileNode *LosFileNode::create(const QString &filePath, LosFileNode *parent)
     {
         LosFileNode *node = new LosFileNode(QDir::fromNativeSeparators(filePath), parent);
@@ -27,9 +27,9 @@ namespace LosModel
 
 
 
-    /**
-    增加子元素
-    */
+    /*
+     * 增加子元素
+     */
     void LosFileNode::appendChild(LosFileNode *node)
     {
         if (node)
@@ -41,9 +41,9 @@ namespace LosModel
 
 
 
-    /**
-    清理
-    */
+    /*
+     * 清理
+     */
     void LosFileNode::clear()
     {
         qDeleteAll(LOS_childrens);
@@ -52,9 +52,9 @@ namespace LosModel
 
 
 
-    /**
-    设置 父亲 节点
-    */
+    /*
+     * 设置 父亲 节点
+     */
     void LosFileNode::setParentNode(LosFileNode *node)
     {
         LOS_parent = node;
@@ -70,7 +70,9 @@ namespace LosModel
 
         QFuture<void> funture = QtConcurrent::run([root, cur]() { buildImpl(root, cur); });
         auto *watch           = new QFutureWatcher<void>();
-        // Qt 默认这个 Lambda 表达式会在发出信号的那个线程中直接执行
+        /*
+         * Qt 默认这个 Lambda 表达式会在发出信号的那个线程中直接执行
+         */
         QObject::connect(watch, &QFutureWatcher<void>::finished,
                          [watch, on_finished]()
                          {
@@ -91,7 +93,9 @@ namespace LosModel
     void LosFileNode::buildImpl(LosFileNode *root, const QString &cur)
     {
         QDir dir(cur);
-        // NoSymLinks 这个 防止 重复 链接
+        /*
+         * NoSymLinks 这个 防止 重复 链接
+         */
         dir.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks);
         dir.setSorting(QDir::DirsFirst | QDir::Name | QDir::IgnoreCase);
         QFileInfoList fileList(dir.entryInfoList());
@@ -174,4 +178,4 @@ namespace LosModel
         return LOS_filePath.getFileType();
     }
 
-}; // namespace LosModel
+}; /* namespace LosModel */

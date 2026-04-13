@@ -28,7 +28,9 @@ namespace LosView
         ui->label_name->setText(info.L_name);
         ui->label_version->setText(info.L_version);
 
-        // 这里 检测 一下 是不是 已经安装了
+        /*
+         * 这里 检测 一下 是不是 已经安装了
+         */
         QString extDir     = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/.perseus/extensions/";
         QString pluginPath = extDir + info.L_id;
         QFileInfo checkInstall(pluginPath);
@@ -143,9 +145,16 @@ namespace LosView
 
     void LosPluginDetailUi::initConnect()
     {
+        /*
+         * 点击 下载的按钮 会 触发  onDownloadBtnClicked 这个函数
+         * - 更改样式
+         * - 下载这个zip 到本地
+         * - 然后 更新一下 指令集
+         *   -  指令集 就是 ctrl + shift + p 弹出的窗口
+         */
         connect(ui->btn_install, &QPushButton::clicked, this, &LosPluginDetailUi::onDownloadBtnClicked);
         connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_net_downloadFinished, this,
                 &LosPluginDetailUi::onDownloadFinished);
     }
 
-} // namespace LosView
+} /* namespace LosView */

@@ -12,15 +12,15 @@
 namespace LosCore
 {
 
-class LosFNeocmakelsp : public LosFormatBase
-{
-  public:
-    LosFNeocmakelsp(QObject *parent = nullptr);
-    ~LosFNeocmakelsp() = default;
+    class LosFNeocmakelsp : public LosFormatBase
+    {
+      public:
+        LosFNeocmakelsp(QObject *parent = nullptr);
+        ~LosFNeocmakelsp() = default;
 
-  public:
-    bool format(QString *out, const QString &file_path, const QString &raw_content) override;
+      public:
+        bool format(QString *out, const QString &file_path, const QString &raw_content) override;
 
-  private:
-};
-} // namespace LosCore
+      private:
+    };
+} /* namespace LosCore */

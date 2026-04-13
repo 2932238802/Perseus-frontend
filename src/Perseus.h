@@ -5,6 +5,7 @@
 #include "core/LosConfig/LosConfigManager/LosConfigManager.h"
 #include "core/LosLsp/LosLspClient/LosLspClient.h"
 #include "core/LosLsp/LosLspManager/LosLspManager.h"
+#include "core/LosNet/LosNet.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosRunner/LosRunManager/LosRunManager.h"
 #include "core/LosRunner/LosScriptRunner/LosScriptRunner.h"
@@ -38,8 +39,10 @@
 #include <QPointer>
 #include <QShortcut>
 #include <QTimer>
+#include <qfiledialog.h>
 #include <qfilesystemwatcher.h>
 #include <qpushbutton.h>
+#include <qstackedwidget.h>
 #include <qtimer.h>
 #include <qtmetamacros.h>
 
@@ -66,15 +69,15 @@ class Perseus : public QMainWindow
     void initShotcut();
     void initSession();
 
-  private: // tool
+  private: /* tool */
     LosCommon::LosSession_Constants::Config collectConfig();
 
   public slots:
     void OnFileLoaded(bool isc);
-    void onFilesBtnClicked();                                   // 打开本地文件夹
-    void onExplorerFileDoubleClicked(const QModelIndex &index); // 打开本地文件夹
-    void onRunSingleFileBtnClicked();                           // 运行一个文本
-    void onProjectBtnClicked(bool checked);                     // 是否开启 项目 模式
+    void onFilesBtnClicked();                                   /* 打开本地文件夹 */
+    void onExplorerFileDoubleClicked(const QModelIndex &index); /* 打开本地文件夹 */
+    void onRunSingleFileBtnClicked();                           /* 运行一个文本 */
+    void onProjectBtnClicked(bool checked);                     /* 是否开启 项目 模式 */
     void onLog(const QString &log);
     void onZoomUi(int delta);
     void onToolChainMissing(const LosCommon::LosToolChain_Constants::ToolChainConfig &);

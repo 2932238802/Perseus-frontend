@@ -5,9 +5,9 @@
 namespace LosCore
 {
 
-    /**
-    - construct
-    */
+    /*
+     * - construct
+     */
     LosLspClient::LosLspClient(QObject *parent) : QObject(parent), L_id(1)
     {
         L_process = new QProcess(this);
@@ -16,9 +16,9 @@ namespace LosCore
 
 
 
-    /**
-    - 析构
-    */
+    /*
+     * - 析构
+     */
     LosLspClient::~LosLspClient()
     {
         if (L_process && L_process->state() != QProcess::NotRunning)
@@ -30,9 +30,9 @@ namespace LosCore
 
 
 
-    /**
-    - 发送请求
-    */
+    /*
+     * - 发送请求
+     */
     void LosLspClient::sendRequest(const QString &method, const QJsonObject &params, LosLspType type)
     {
         QJsonObject request;
@@ -52,9 +52,9 @@ namespace LosCore
 
 
 
-    /**
-    - 发送通知
-    */
+    /*
+     * - 发送通知
+     */
     void LosLspClient::sendNotification(const QString &method, const QJsonObject &params)
     {
         QJsonObject req;
@@ -70,9 +70,9 @@ namespace LosCore
 
 
 
-    /**
-    - 处理原始数据
-    */
+    /*
+     * - 处理原始数据
+     */
     void LosLspClient::processRawData()
     {
         QByteArray data = L_process->readAllStandardOutput();
@@ -121,9 +121,9 @@ namespace LosCore
 
 
 
-    /**
-    - 打开文件
-    */
+    /*
+     * - 打开文件
+     */
     void LosLspClient::didOpen(const QString &file_path, const QString &text, const QString &languageId)
     {
         if (!L_isinit)
@@ -148,9 +148,9 @@ namespace LosCore
 
 
 
-    /**
-    - 文件变化
-    */
+    /*
+     * - 文件变化
+     */
     void LosLspClient::didChange(const QString &file_path, const QString &text)
     {
         if (!L_isinit)
@@ -182,9 +182,9 @@ namespace LosCore
 
 
 
-    /**
-    - 文件请求
-    */
+    /*
+     * - 文件请求
+     */
     void LosLspClient::requestCompletion(const QString &file_path, int line, int character)
     {
         if (!L_isinit)
@@ -202,9 +202,9 @@ namespace LosCore
 
 
 
-    /**
-    文件转定义
-    */
+    /*
+     * 文件转定义
+     */
     void LosLspClient::requestDefinition(const QString &file_path, int line, int character)
     {
         QJsonObject textDocument;
@@ -220,9 +220,9 @@ namespace LosCore
 
 
 
-    /**
-    - 鼠标悬停的效果
-    */
+    /*
+     * - 鼠标悬停的效果
+     */
     void LosLspClient::requestHover(const QString &file_path, int line, int character)
     {
         QJsonObject position;
@@ -238,9 +238,9 @@ namespace LosCore
 
 
 
-    /**
-    - 发送 语法 高亮的补全
-    */
+    /*
+     * - 发送 语法 高亮的补全
+     */
     void LosLspClient::requestSemantic(const QString &file_path)
     {
         if (!L_isinit)
@@ -256,9 +256,9 @@ namespace LosCore
 
 
 
-    /**
-    文件树的变化
-    */
+    /*
+     * 文件树的变化
+     */
     void
     LosLspClient::didChangeWatchedFiles(const QString &filePath,
                                         LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type type)
@@ -272,4 +272,4 @@ namespace LosCore
         sendNotification("workspace/didChangeWatchedFiles", params);
     }
 
-} // namespace LosCore
+} /* namespace LosCore */

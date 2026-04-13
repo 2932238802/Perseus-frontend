@@ -71,18 +71,18 @@ namespace LosCore
 
 
 
-    /**
-    设置 exe 的位置
-    */
+    /*
+     * 设置 exe 的位置
+     */
     void LosCmakeRunner::setCMakeExe(const QString &file_path)
     {
         L_cmakeExe = file_path;
     }
 
 
-    /**
-    初始化链接
-    */
+    /*
+     * 初始化链接
+     */
     void LosCmakeRunner::initConnect()
     {
         connect(L_cmake, &QProcess::readyReadStandardError, this,
@@ -110,9 +110,9 @@ namespace LosCore
 
 
 
-    /**
-    - 找到 cmake 的查询文件
-    */
+    /*
+     * - 找到 cmake 的查询文件
+     */
     std::optional<QString> LosCmakeRunner::findLatestIndex(const QString &build_path)
     {
         QString reply = build_path + "/.cmake/api/v1/reply";
@@ -140,9 +140,9 @@ namespace LosCore
 
 
 
-    /**
-    - 找到可执行文件的位置
-    */
+    /*
+     * - 找到可执行文件的位置
+     */
     std::optional<QString> LosCmakeRunner::findExePath(const QString &build_path, const QString &targer_name)
     {
         QString suffix = "";
@@ -167,12 +167,12 @@ namespace LosCore
 
 
 
-    /**
-    - 查找对应的json 文件
-    - index.json -> codemodel-v2.json -> target.json
-    - index 这个是 入口 买次跑Cmake都会生成 带时间戳的index
-    - codemodel-v2 就是整个项目的结构的路径名字
-    */
+    /*
+     * - 查找对应的json 文件
+     * - index.json -> codemodel-v2.json -> target.json
+     * - index 这个是 入口 买次跑Cmake都会生成 带时间戳的index
+     * - codemodel-v2 就是整个项目的结构的路径名字
+     */
     std::optional<QString> LosCmakeRunner::parseCMakeTarget(const QString &index, const QString &build_path)
     {
         QFile indexFile(index);
@@ -234,9 +234,9 @@ namespace LosCore
 
 
 
-    /**
-    - cmake 初步 结束
-    */
+    /*
+     * - cmake 初步 结束
+     */
     void LosCmakeRunner::onCMakeFinished(int exitCode, QProcess::ExitStatus exitStatus)
     {
         if (exitCode == 0 && exitStatus == QProcess::ExitStatus::NormalExit)
@@ -263,4 +263,4 @@ namespace LosCore
             ERR("cmake err!", "LosCmakeRunner");
         }
     }
-} // namespace LosCore
+} /* namespace LosCore */

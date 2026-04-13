@@ -4,24 +4,24 @@
 
 namespace LosCommon
 {
-inline LosCommon::LosToolChain_Constants::LosLanguage CheckLang(const QString &file_path)
-{
-    if (file_path.endsWith(".cpp") || file_path.endsWith(".c") || file_path.endsWith(".h"))
+    inline LosCommon::LosToolChain_Constants::LosLanguage CheckLang(const QString &file_path)
     {
-        return LosCommon::LosToolChain_Constants::LosLanguage::CXX;
+        if (file_path.endsWith(".cpp") || file_path.endsWith(".c") || file_path.endsWith(".h"))
+        {
+            return LosCommon::LosToolChain_Constants::LosLanguage::CXX;
+        }
+        else if (file_path.endsWith(".py"))
+        {
+            return LosCommon::LosToolChain_Constants::LosLanguage::PYTHON;
+        }
+        else if (LosModel::LosFilePath(file_path).getFileName() == "CMakeLists.txt")
+        {
+            return LosCommon::LosToolChain_Constants::LosLanguage::CMAKE;
+        }
+        else if (file_path.endsWith(".rs"))
+        {
+            return LosCommon::LosToolChain_Constants::LosLanguage::RUST;
+        }
+        return LosCommon::LosToolChain_Constants::LosLanguage::UNKNOWN;
     }
-    else if (file_path.endsWith(".py"))
-    {
-        return LosCommon::LosToolChain_Constants::LosLanguage::PYTHON;
-    }
-    else if (LosModel::LosFilePath(file_path).getFileName() == "CMakeLists.txt")
-    {
-        return LosCommon::LosToolChain_Constants::LosLanguage::CMAKE;
-    }
-    else if (file_path.endsWith(".rs"))
-    {
-        return LosCommon::LosToolChain_Constants::LosLanguage::RUST;
-    }
-    return LosCommon::LosToolChain_Constants::LosLanguage::UNKNOWN;
-}
-} // namespace LosCommon
+} /* namespace LosCommon */

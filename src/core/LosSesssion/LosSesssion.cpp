@@ -5,107 +5,110 @@
 
 namespace LosCore
 {
-/**
-- 获取单例
-*/
-LosSession &LosSession::instance()
-{
-    static LosSession s;
-    return s;
-}
-
-
-/**
-- 获取 config 文件夹
-*/
-QString LosSession::getDefaultConfigAbsoluteFilePath()
-{
-    QString configDir = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
-    QDir().mkpath(configDir);
-    return configDir + QDir::separator() + "session.json";
-}
-
-
-
-/**
-- 加载 config 文件
-*/
-bool LosSession::loadConfig(LosCommon::LosSession_Constants::Config* conf) 
-{
-    QString filePath = getDefaultConfigAbsoluteFilePath();
-
-    QFile file(filePath);
-    if (!file.exists())
+    /*
+     * - 获取单例
+     */
+    LosSession &LosSession::instance()
     {
-        WAR("config file not found: " + filePath, "LosSession");
-        return false;
+        static LosSession s;
+        return s;
     }
 
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+
+    /*
+     * - 获取 config 文件夹
+     */
+    QString LosSession::getDefaultConfigAbsoluteFilePath()
     {
-        ERR("failed to open config file: " + file.errorString(), "LosSession");
-        return false;
+        QString configDir = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+        QDir().mkpath(configDir);
+        return configDir + QDir::separator() + "session.json";
     }
 
-    QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
-    file.close();
 
-    if (!doc.isObject())
+
+    /*
+     * - 加载 config 文件
+     */
+    bool LosSession::loadConfig(LosCommon::LosSession_Constants::Config *conf)
     {
-        ERR("invalid config file format", "LosSession");
-        return false;
-    }
+        QString filePath = getDefaultConfigAbsoluteFilePath();
 
-    QJsonObject root = doc.object();
-
-    conf->L_curProDir = root["projectPath"].toString();
-    if (!conf->L_curProDir.isEmpty() && !QDir(conf->L_curProDir).exists())
-    {
-        WAR("project path no longer exists: " + conf->L_curProDir, "LosSession");
-        conf->L_curProDir = "";
-    }
-
-    QJsonArray filesArray = root["openFiles"].toArray();
-    for (const auto &fileVal : filesArray)
-    {
-        QString filePath = fileVal.toString();
-        if (QFileInfo::exists(filePath))
+        QFile file(filePath);
+        if (!file.exists())
         {
-            conf->L_curFilePaths.append(filePath);
+            WAR("config file not found: " + filePath, "LosSession");
+            return false;
         }
+
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            ERR("failed to open config file: " + file.errorString(), "LosSession");
+            return false;
+        }
+
+        QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+        file.close();
+
+        if (!doc.isObject())
+        {
+            ERR("invalid config file format", "LosSession");
+            return false;
+        }
+
+        QJsonObject root = doc.object();
+
+        conf->L_curProDir = root["projectPath"].toString();
+        if (!conf->L_curProDir.isEmpty() && !QDir(conf->L_curProDir).exists())
+        {
+            WAR("project path no longer exists: " + conf->L_curProDir, "LosSession");
+            conf->L_curProDir = "";
+        }
+
+        conf->L_curActiveFile = root["activeFile"].toString();
+
+        QJsonArray filesArray = root["openFiles"].toArray();
+        for (const auto &fileVal : filesArray)
+        {
+            QString filePath = fileVal.toString();
+            if (QFileInfo::exists(filePath))
+            {
+                conf->L_curFilePaths.append(filePath);
+            }
+        }
+
+        return true;
     }
 
-    return true;
-}
 
 
-
-/**
-- 保存文件
-*/
-bool LosSession::saveConfig(const LosCommon::LosSession_Constants::Config &conf) 
-{
-    QJsonObject obj;
-    obj["projectPath"] = conf.L_curProDir;
-    QJsonArray filesList;
-    for (const auto &str : conf.L_curFilePaths)
+    /*
+     * - 保存文件
+     */
+    bool LosSession::saveConfig(const LosCommon::LosSession_Constants::Config &conf)
     {
-        filesList.append(str);
-    }
-    obj["openFiles"] = filesList;
-    obj["version"]   = 1;
-    QJsonDocument doc(obj);
-    QFile file(getDefaultConfigAbsoluteFilePath());
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        ERR("open" + getDefaultConfigAbsoluteFilePath() + " err!", "LosSession");
-        return false;
+        QJsonObject obj;
+        obj["projectPath"] = conf.L_curProDir;
+        obj["activeFile"]  = conf.L_curActiveFile;
+        QJsonArray filesList;
+        for (const auto &str : conf.L_curFilePaths)
+        {
+            filesList.append(str);
+        }
+        obj["openFiles"] = filesList;
+        obj["version"]   = 1;
+        QJsonDocument doc(obj);
+        QFile file(getDefaultConfigAbsoluteFilePath());
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+            ERR("open" + getDefaultConfigAbsoluteFilePath() + " err!", "LosSession");
+            return false;
+        }
+
+        file.write(doc.toJson(QJsonDocument::Indented));
+        file.close();
+        SUC("save config suc", "LosSession");
+        return true;
     }
 
-    file.write(doc.toJson(QJsonDocument::Indented));
-    file.close();
-    SUC("save config suc", "LosSession");
-    return true;
-}
-
-} // namespace LosCore
+} /* namespace LosCore */

@@ -3,54 +3,54 @@
 
 namespace LosView
 {
-/**
-- construct
-*/
-LosSettingsUi::LosSettingsUi(QWidget *parent) : QDialog(parent), ui(new Ui::LosSettingsUi)
-{
-    ui->setupUi(this);
-    initStyle();
-    initConnect();
-}
-LosSettingsUi::~LosSettingsUi()
-{
-    delete ui;
-}
-
-
-
-/**
-- 设置样式
-*/
-void LosSettingsUi::initStyle()
-{
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-}
-
-
-
-/**
-- 初始化 连接
-*/
-void LosSettingsUi::initConnect()
-{
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [this]() { accept(); });
-    connect(ui->buttonBox, &QDialogButtonBox::rejected, this, [this]() { reject(); });
-    QPushButton *applyBtn = ui->buttonBox->button(QDialogButtonBox::Apply);
-    if (applyBtn)
+    /*
+     * - construct
+     */
+    LosSettingsUi::LosSettingsUi(QWidget *parent) : QDialog(parent), ui(new Ui::LosSettingsUi)
     {
-        connect(applyBtn, &QPushButton::clicked, this, &LosSettingsUi::onSaveSettings);
+        ui->setupUi(this);
+        initStyle();
+        initConnect();
     }
-}
+    LosSettingsUi::~LosSettingsUi()
+    {
+        delete ui;
+    }
 
 
 
-/**
-- 保存 设置
-*/
-void LosSettingsUi::onSaveSettings()
-{
-    INF("保存", "LosSettingsUi");
-}
+    /*
+     * - 设置样式
+     */
+    void LosSettingsUi::initStyle()
+    {
+        setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    }
 
-} // namespace LosView
+
+
+    /*
+     * - 初始化 连接
+     */
+    void LosSettingsUi::initConnect()
+    {
+        connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [this]() { accept(); });
+        connect(ui->buttonBox, &QDialogButtonBox::rejected, this, [this]() { reject(); });
+        QPushButton *applyBtn = ui->buttonBox->button(QDialogButtonBox::Apply);
+        if (applyBtn)
+        {
+            connect(applyBtn, &QPushButton::clicked, this, &LosSettingsUi::onSaveSettings);
+        }
+    }
+
+
+
+    /*
+     * - 保存 设置
+     */
+    void LosSettingsUi::onSaveSettings()
+    {
+        INF("保存", "LosSettingsUi");
+    }
+
+} /* namespace LosView */

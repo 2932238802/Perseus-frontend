@@ -9,21 +9,21 @@
 namespace LosCore
 {
 
-class LosLspClangd : public LosLspClient
-{
-    Q_OBJECT
-  public:
-    explicit LosLspClangd(QObject *parent = nullptr);
-    ~LosLspClangd() override = default;
-    void start(const QStringList &start_up_args, const QString &exe_path) override;
-    void dealLspMessage(const QJsonObject &obj) override;
+    class LosLspClangd : public LosLspClient
+    {
+        Q_OBJECT
+      public:
+        explicit LosLspClangd(QObject *parent = nullptr);
+        ~LosLspClangd() override = default;
+        void start(const QStringList &start_up_args, const QString &exe_path) override;
+        void dealLspMessage(const QJsonObject &obj) override;
 
-  private:
-    void initConnect();
-    void sendInitializeRequest();
-    void sendInitializedMsg();
+      private:
+        void initConnect();
+        void sendInitializeRequest();
+        void sendInitializedMsg();
 
-  private:
-};
+      private:
+    };
 
-} // namespace LosCore
+} /* namespace LosCore */

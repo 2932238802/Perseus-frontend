@@ -11,15 +11,15 @@
 namespace LosCore
 {
 
-class LosFClangFormat : public LosFormatBase
-{
-  public:
-    LosFClangFormat(QObject *parent = nullptr);
-    ~LosFClangFormat() = default;
+    class LosFClangFormat : public LosFormatBase
+    {
+      public:
+        LosFClangFormat(QObject *parent = nullptr);
+        ~LosFClangFormat() = default;
 
-  public:
-    bool format(QString *out, const QString &file_path, const QString &raw_content) override;
+      public:
+        bool format(QString *out, const QString &file_path, const QString &raw_content) override;
 
-  private:
-};
-} // namespace LosCore
+      private:
+    };
+} /* namespace LosCore */

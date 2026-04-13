@@ -54,54 +54,54 @@ namespace LosView
     class LosEditorUi : public QPlainTextEdit
     {
         Q_OBJECT
-      public: // construct
+      public: /* construct */
         ~LosEditorUi() override;
         explicit LosEditorUi(QWidget *parent = nullptr);
 
-      public: // tool
+      public: /* tool */
         void showCompletion(const QStringList &list);
         void showDiagnostic(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &);
         void gotoLine(int line);
         void format();
 
-      public: // get
+      public: /* get */
         QString getWordUnderCursor() const;
         bool isDirty() const;
         int getLineNumberWidth() const;
 
-      public: // set
+      public: /* set */
         void loadContextAndPath(QSharedPointer<LosModel::LosFileContext> context,
                                 QSharedPointer<LosModel::LosFilePath> file_path);
         bool save();
         void insertCompletion(const QString &completion);
         void lineNumberAreaPaintEvent(QPaintEvent *event);
 
-      private: // init
+      private: /* init */
         void initConnect();
         void initStyle();
 
-      private: // tool
+      private: /* tool */
         void cutCurrentLine();
         void copyCurrentLine();
         void updateLineNumberArea(const QRect &rect, int dy);
         void updateLineNumberAreaWidth(int);
         void highlightCurrentLine();
 
-      private slots: // chs
+      private slots: /* chs */
         void onTextChanged();
         void onDebounceTimeout();
         void onHover_Clangd(const QString &markdownContent);
         void onSemanticLegend(const QStringList &, const QStringList &);
         void onSemanticTokens(const QJsonArray &);
 
-      protected: // override
+      protected: /* override */
         void keyPressEvent(QKeyEvent *event) override;
         void mousePressEvent(QMouseEvent *event) override;
         void changeEvent(QEvent *e) override;
         bool event(QEvent *event) override;
         void resizeEvent(QResizeEvent *e) override;
 
-      private: // param
+      private: /* param */
         std::atomic<bool> L_showComplete = false;
         bool L_dirty                     = false;
 
@@ -115,4 +115,4 @@ namespace LosView
         LosCore::LosHighlighter *LOS_highlighter = nullptr;
         LosView::LosLineNumberUi *LOS_lineNumber = nullptr;
     };
-} // namespace LosView
+} /* namespace LosView */

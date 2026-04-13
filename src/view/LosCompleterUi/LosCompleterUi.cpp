@@ -3,45 +3,47 @@
 
 namespace LosView
 {
-/**
-const
-*/
-LosCompleterUi::LosCompleterUi(QObject *parent) : QCompleter{parent}
-{
-    L_model = new QStringListModel(this);
-    this->setModel(L_model);
-    setMaxVisibleItems(LosCommon::MAX_VISIBLE_COMPLETION);
-    setCompletionMode(QCompleter::PopupCompletion);
-    // 大小写不敏感
-    setCaseSensitivity(Qt::CaseInsensitive);
-    initStyle();
-}
-LosCompleterUi::~LosCompleterUi() {}
-
-
-
-/**
-set
-- 重复的 就不要 在显示了
-*/
-void LosCompleterUi::updateCompletionList(const QStringList &list)
-{
-    if (L_model->stringList() == list)
+    /*
+     * const
+     */
+    LosCompleterUi::LosCompleterUi(QObject *parent) : QCompleter{parent}
     {
-        return;
+        L_model = new QStringListModel(this);
+        this->setModel(L_model);
+        setMaxVisibleItems(LosCommon::MAX_VISIBLE_COMPLETION);
+        setCompletionMode(QCompleter::PopupCompletion);
+        /*
+         * 大小写不敏感
+         */
+        setCaseSensitivity(Qt::CaseInsensitive);
+        initStyle();
     }
-    L_model->setStringList(list);
-}
+    LosCompleterUi::~LosCompleterUi() {}
 
 
 
-/**
-init
-*/
-void LosCompleterUi::initStyle()
-{
-    auto popup = this->popup();
-    popup->setStyleSheet(LosStyle::LosCompleterUi_getStyle());
-}
+    /*
+     * set
+     * - 重复的 就不要 在显示了
+     */
+    void LosCompleterUi::updateCompletionList(const QStringList &list)
+    {
+        if (L_model->stringList() == list)
+        {
+            return;
+        }
+        L_model->setStringList(list);
+    }
 
-} // namespace LosView
+
+
+    /*
+     * init
+     */
+    void LosCompleterUi::initStyle()
+    {
+        auto popup = this->popup();
+        popup->setStyleSheet(LosStyle::LosCompleterUi_getStyle());
+    }
+
+} /* namespace LosView */

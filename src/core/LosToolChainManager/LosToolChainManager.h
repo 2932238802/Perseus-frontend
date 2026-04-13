@@ -53,4 +53,4 @@ namespace LosCore
             LOS_toolConfigs;
         QHash<LosCommon::LosToolChain_Constants::LosTool, QString> L_activeToolPath;
     };
-} // namespace LosCore
+} /* namespace LosCore */

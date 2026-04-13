@@ -16,22 +16,22 @@
 namespace LosCore
 {
 
-class LosLspRust : public LosLspClient
-{
-    Q_OBJECT
-  public: // construct
-    explicit LosLspRust(QObject *parent = nullptr);
-    ~LosLspRust() = default;
+    class LosLspRust : public LosLspClient
+    {
+        Q_OBJECT
+      public: /* construct */
+        explicit LosLspRust(QObject *parent = nullptr);
+        ~LosLspRust() = default;
 
-  public: // tool
-    void start(const QStringList &start_up_args, const QString &exe_path) override;
-    void dealLspMessage(const QJsonObject &obj) override;
+      public: /* tool */
+        void start(const QStringList &start_up_args, const QString &exe_path) override;
+        void dealLspMessage(const QJsonObject &obj) override;
 
-  private:
-    void sendInitializeRequest();
-    void sendInitializedMsg();
-    void initConnect();
-};
+      private:
+        void sendInitializeRequest();
+        void sendInitializedMsg();
+        void initConnect();
+    };
 
 
-} // namespace LosCore
+} /* namespace LosCore */

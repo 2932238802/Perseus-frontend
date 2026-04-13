@@ -19,12 +19,12 @@ namespace LosView
 
 
 
-    /**
-    展示弹窗
-    */
-    /**
-    展示弹窗
-    */
+    /*
+     * 展示弹窗
+     */
+    /*
+     * 展示弹窗
+     */
     void LosEditorUi::showCompletion(const QStringList &list)
     {
         if (!this->hasFocus())
@@ -59,9 +59,9 @@ namespace LosView
 
 
 
-    /**
-    展示错误
-    */
+    /*
+     * 展示错误
+     */
     void LosEditorUi::showDiagnostic(const QString &file_path,
                                      const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &dias)
     {
@@ -71,7 +71,9 @@ namespace LosView
         for (const auto &a : dias)
         {
             QTextCharFormat format;
-            // 波浪线
+            /*
+             * 波浪线
+             */
             format.setUnderlineStyle(QTextCharFormat::SpellCheckUnderline);
             QTextEdit::ExtraSelection selections;
             switch (a.ds)
@@ -118,42 +120,50 @@ namespace LosView
 
             selectionsList.append(selections);
         }
-        // this->setExtraSelections(selectionsList);
+        /*
+         * this->setExtraSelections(selectionsList);
+         */
         L_diagnosticSelections = selectionsList;
         highlightCurrentLine();
     }
 
 
 
-    /**
-    跳转到指定的行
-    */
+    /*
+     * 跳转到指定的行
+     */
     void LosEditorUi::gotoLine(int line)
     {
         QTextDocument *qtd = this->document();
-        // line findBlockByLineNumber 可能对于 视觉行 会有问题
+        /*
+         * line findBlockByLineNumber 可能对于 视觉行 会有问题
+         */
         QTextBlock block = qtd->findBlockByNumber(line);
         if (block.isValid())
         {
             QTextCursor cursor(qtd);
             cursor.setPosition(block.position());
             this->setTextCursor(cursor);
-            // 定位到中间
+            /*
+             * 定位到中间
+             */
             this->centerCursor();
-            // 拿到焦点
+            /*
+             * 拿到焦点
+             */
             this->setFocus();
         }
     }
 
 
 
-    /**
-    if (out == currentText)
-        {
-            return;
-        }
-    - 增加防抖
-    */
+    /*
+     * if (out == currentText)
+     * {
+     * return;
+     * }
+     * - 增加防抖
+     */
     void LosEditorUi::format()
     {
         QString out{""};
@@ -163,7 +173,9 @@ namespace LosView
         {
             return;
         }
-        // fix
+        /*
+         * fix
+         */
         if (out == currentText)
         {
             return;
@@ -171,7 +183,7 @@ namespace LosView
         QTextCursor cur = textCursor();
         int outPos      = cur.position();
         cur.beginEditBlock();
-        cur.select(QTextCursor::Document); // 全选
+        cur.select(QTextCursor::Document); /* 全选 */
         cur.insertText(out);
         cur.endEditBlock();
         cur.setPosition(qMin(outPos, out.length()));
@@ -180,9 +192,9 @@ namespace LosView
 
 
 
-    /**
-    导入内容
-    */
+    /*
+     * 导入内容
+     */
     void LosEditorUi::loadContextAndPath(QSharedPointer<LosModel::LosFileContext> context,
                                          QSharedPointer<LosModel::LosFilePath> file_path)
     {
@@ -199,6 +211,7 @@ namespace LosView
         }
         else
         {
+            this->document()->blockSignals(false);
             return;
         }
         setPlainText(text);
@@ -210,15 +223,15 @@ namespace LosView
 
 
 
-    /**
-    词汇补全
-    */
+    /*
+     * 词汇补全
+     */
     void LosEditorUi::insertCompletion(const QString &completion)
     {
         QTextCursor qtc = textCursor();
         int needLenth   = completion.size() - LOS_completer->completionPrefix().size();
         qtc.insertText(completion.right(needLenth));
-        setTextCursor(qtc); // 为什么 这里还要 setTextCursor
+        setTextCursor(qtc); /* 为什么 这里还要 setTextCursor */
         L_showComplete = false;
     }
 
@@ -229,28 +242,36 @@ namespace LosView
         QPainter painter(LOS_lineNumber);
         painter.fillRect(event->rect(), QColor("#181825"));
 
-        QTextBlock block = firstVisibleBlock(); // 第一个 编辑区域
+        QTextBlock block = firstVisibleBlock(); /* 第一个 编辑区域 */
         int blockNumber  = block.blockNumber();
 
-        // qRound 是 四舍五入
-        // blockBoundingGeometry QTextBlock
-        // 获取 当前 textblock的边界框
+        /*
+         * qRound 是 四舍五入
+         * blockBoundingGeometry QTextBlock
+         * 获取 当前 textblock的边界框
+         */
         int top    = qRound(blockBoundingGeometry(block).translated(contentOffset()).top());
         int bottom = top + qRound(blockBoundingRect(block).height());
 
-        // event->rect().bottom()
-        // 当前要画的 矩形 的 最下边 如果算出来的比 top 要小
-        // 就不用画了
+        /*
+         * event->rect().bottom()
+         * 当前要画的 矩形 的 最下边 如果算出来的比 top 要小
+         * 就不用画了
+         */
         while (block.isValid() && top <= event->rect().bottom())
         {
             if (block.isVisible() && bottom >= event->rect().top())
             {
-                // 将内部从 0 开始的索引，
-                // 转成人类习惯的从 1 开始的字符串
+                /*
+                 * 将内部从 0 开始的索引，
+                 * 转成人类习惯的从 1 开始的字符串
+                 */
                 QString number = QString::number(blockNumber + 1);
 
-                // 准备颜料（高亮当前行）
-                // 就是 当前 这一行的数据
+                /*
+                 * 准备颜料（高亮当前行）
+                 * 就是 当前 这一行的数据
+                 */
                 if (textCursor().blockNumber() == blockNumber)
                 {
                     painter.setPen(QColor("#cdd6f4"));
@@ -260,17 +281,22 @@ namespace LosView
                     painter.setPen(QColor("#6c7086"));
                 }
 
-                // x坐标, y坐标, 宽度, 高度,
-                // 对齐方式, 要写的字
+                /*
+                 * x坐标, y坐标, 宽度, 高度,
+                 * 对齐方式, 要写的字
+                 */
                 painter.drawText(0, top, LOS_lineNumber->width() - 5, fontMetrics().height(),
                                  Qt::AlignRight | Qt::AlignVCenter, number);
             }
 
-            // 准备画下一行
-            // 推进链表和坐标）
+            /*
+             * 准备画下一行
+             * 推进链表和坐标）
+             */
             block = block.next();
             top   = bottom;
-            //
+            /*
+             */
             bottom = top + qRound(blockBoundingRect(block).height());
             ++blockNumber;
         }
@@ -278,9 +304,9 @@ namespace LosView
 
 
 
-    /**
-    调用 LosContext 接口
-    */
+    /*
+     * 调用 LosContext 接口
+     */
     bool LosEditorUi::save()
     {
         if (LOS_context.isNull() || LOS_filePath.isNull())
@@ -292,13 +318,17 @@ namespace LosView
         bool ok = LOS_context->save(this->toPlainText(), filePath);
         if (ok)
         {
-            // 保存的时候 自动格式化
+            /*
+             * 保存的时候 自动格式化
+             */
             this->document()->setModified(false);
             L_dirty = false;
             emit LosCore::LosRouter::instance()._cmd_fileDirty(LOS_filePath -> getFilePath(), false);
 
-            // 保存的时候 还要 检查一下 是不是
-            // diag 报错机制 再次显示
+            /*
+             * 保存的时候 还要 检查一下 是不是
+             * diag 报错机制 再次显示
+             */
             emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(LOS_filePath -> getFilePath(),
                                                                              toPlainText());
         }
@@ -307,10 +337,10 @@ namespace LosView
 
 
 
-    /**
-    get
-    获取当前光标下的单词
-    */
+    /*
+     * get
+     * 获取当前光标下的单词
+     */
     QString LosEditorUi::getWordUnderCursor() const
     {
         QTextCursor cursor = this->textCursor();
@@ -338,9 +368,9 @@ namespace LosView
 
 
 
-    /**
-    - 获取 尺寸 宽度
-    */
+    /*
+     * - 获取 尺寸 宽度
+     */
     int LosEditorUi::getLineNumberWidth() const
     {
         int digit = 1;
@@ -357,26 +387,34 @@ namespace LosView
 
 
 
-    /**
-    - 文字稍微 变动 就变脏
-    - 绑定 悬停效果
-    */
+    /*
+     * - 文字稍微 变动 就变脏
+     * - 绑定 悬停效果
+     */
     void LosEditorUi::initConnect()
     {
         L_timer = new QTimer(this);
         L_timer->setSingleShot(true);
 
-        // 语法补全的弹窗
+        /*
+         * 语法补全的弹窗
+         */
         LOS_completer = new LosView::LosCompleterUi(this);
         LOS_completer->setWidget(this);
 
-        // 语法高亮
+        /*
+         * 语法高亮
+         */
         LOS_highlighter = new LosCore::LosHighlighter(this->document());
 
-        // 行 号
+        /*
+         * 行 号
+         */
         LOS_lineNumber = new LosView::LosLineNumberUi(this);
 
-        // activated 有两种
+        /*
+         * activated 有两种
+         */
         auto &router = LosCore::LosRouter::instance();
         connect(LOS_completer, QOverload<const QString &>::of(&QCompleter::activated), this,
                 &LosEditorUi::insertCompletion);
@@ -399,9 +437,9 @@ namespace LosView
 
 
 
-    /**
-    - 初始化样式
-    */
+    /*
+     * - 初始化样式
+     */
     void LosEditorUi::initStyle()
     {
         QFontMetrics met(this->font());
@@ -412,9 +450,9 @@ namespace LosView
 
 
 
-    /**
-    - 自定义 工具 剪切
-    */
+    /*
+     * - 自定义 工具 剪切
+     */
     void LosEditorUi::cutCurrentLine()
     {
         QTextCursor cursor = textCursor();
@@ -422,7 +460,9 @@ namespace LosView
         cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
         if (!cursor.atEnd())
         {
-            // 吃掉 后面的 \n
+            /*
+             * 吃掉 后面的 \n
+             */
             cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
         }
         setTextCursor(cursor);
@@ -431,9 +471,9 @@ namespace LosView
 
 
 
-    /**
-    - 复制 一行
-    */
+    /*
+     * - 复制 一行
+     */
     void LosEditorUi::copyCurrentLine()
     {
         QTextCursor cursor         = textCursor();
@@ -471,8 +511,10 @@ namespace LosView
 
     void LosEditorUi::updateLineNumberAreaWidth(int)
     {
-        // 左、上、右、下
-        // getLineNumberWidth 获取一个 左侧的长度
+        /*
+         * 左、上、右、下
+         * getLineNumberWidth 获取一个 左侧的长度
+         */
         setViewportMargins(getLineNumberWidth(), 0, 0, 0);
     }
 
@@ -495,10 +537,10 @@ namespace LosView
 
 
 
-    /**
-    - 变脏的信号
-    - 修复 防止 抖动的逻辑
-    */
+    /*
+     * - 变脏的信号
+     * - 修复 防止 抖动的逻辑
+     */
     void LosEditorUi::onTextChanged()
     {
         if (!LOS_context)
@@ -516,9 +558,9 @@ namespace LosView
 
 
 
-    /**
-    - 防抖
-    */
+    /*
+     * - 防抖
+     */
     void LosEditorUi::onDebounceTimeout()
     {
         if (!LOS_filePath)
@@ -548,9 +590,9 @@ namespace LosView
 
 
 
-    /**
-    - clangd 语法补全
-    */
+    /*
+     * - clangd 语法补全
+     */
     void LosEditorUi::onHover_Clangd(const QString &markdownContent)
     {
         if (markdownContent.isEmpty())
@@ -566,7 +608,9 @@ namespace LosView
         html.replace("```c\n", "<pre style='color:#569cd6; font-family:Consolas; margin: 5px 0;'>");
         html.replace("```", "</pre>");
 
-        // 这里的 ? 是非 贪婪模式 匹配到 下一个 ** 就停止
+        /*
+         * 这里的 ? 是非 贪婪模式 匹配到 下一个 ** 就停止
+         */
         QRegularExpression boldRegex("\\*\\*(.*?)\\*\\*");
 
         html.replace(boldRegex, "<b>\\1</b>");
@@ -579,9 +623,9 @@ namespace LosView
     }
 
 
-    /**
-    - 更新 初始化 样式表
-    */
+    /*
+     * - 更新 初始化 样式表
+     */
     void LosEditorUi::onSemanticLegend(const QStringList &token_types, const QStringList &legend_token_modifiers)
     {
         LOS_highlighter->initSemanticLegend(token_types, legend_token_modifiers);
@@ -589,9 +633,9 @@ namespace LosView
 
 
 
-    /**
-    - 更新 颜色
-    */
+    /*
+     * - 更新 颜色
+     */
     void LosEditorUi::onSemanticTokens(const QJsonArray &data)
     {
         LOS_highlighter->updateSemanticTokens(data);
@@ -599,12 +643,14 @@ namespace LosView
 
 
 
-    /**
-    - 光标拦截
-        - 弹出 语法补全
-    - 同时 支持 括号补全
-    */
-    // 在 LosEditorUi.cpp 中
+    /*
+     * - 光标拦截
+     * - 弹出 语法补全
+     * - 同时 支持 括号补全
+     */
+    /*
+     * 在 LosEditorUi.cpp 中
+     */
     void LosEditorUi::keyPressEvent(QKeyEvent *event)
     {
         if (LOS_completer && LOS_completer->popup() && LOS_completer->popup()->isVisible())
@@ -669,12 +715,14 @@ namespace LosView
     }
 
 
-    /**
-    按键拦截
-    */
+    /*
+     * 按键拦截
+     */
     void LosEditorUi::mousePressEvent(QMouseEvent *event)
     {
-        // QApplication::keyboardModifiers()  获取当前所有 被 按住的键
+        /*
+         * QApplication::keyboardModifiers()  获取当前所有 被 按住的键
+         */
         if (!LOS_filePath)
             return;
         if (LOS_completer && LOS_completer->popup())
@@ -695,9 +743,9 @@ namespace LosView
 
 
 
-    /**
-    - 暂时先 监听 字体变化 然后修改 tab 按键的效果
-    */
+    /*
+     * - 暂时先 监听 字体变化 然后修改 tab 按键的效果
+     */
     void LosEditorUi::changeEvent(QEvent *e)
     {
         if (e->type() == QEvent::FontChange)
@@ -711,9 +759,9 @@ namespace LosView
 
 
 
-    /**
-    - 鼠标悬停的效果
-    */
+    /*
+     * - 鼠标悬停的效果
+     */
     bool LosEditorUi::event(QEvent *event)
     {
         if (!LOS_filePath)
@@ -741,4 +789,4 @@ namespace LosView
     }
 
 
-} // namespace LosView
+} /* namespace LosView */

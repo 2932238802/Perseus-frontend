@@ -17,26 +17,28 @@
 
 
 
-/**
-构造
-*/
+/*
+ * 构造
+ */
 Perseus::Perseus(QWidget *parent) : QMainWindow(parent), ui(new Ui::Perseus)
 {
     ui->setupUi(this);
     initConnect();
     initStyle();
     initShotcut();
-    // 等待 100 毫秒后，
-    // 调用当前对象的 initSession () 函数
-    // 只执行一次执行完就结束
+    /*
+     * 等待 100 毫秒后，
+     * 调用当前对象的 initSession () 函数
+     * 只执行一次执行完就结束
+     */
     QTimer::singleShot(LosCommon::Perseus_Constants::WAIT_FOR_SESSION_TIME_MS, this, &Perseus::initSession);
 }
 
 
 
-/**
-析构
-*/
+/*
+ * 析构
+ */
 Perseus::~Perseus()
 {
     LosCore::LosSession::instance().saveConfig(collectConfig());
@@ -48,9 +50,9 @@ Perseus::~Perseus()
 
 
 
-/**
-esc 关闭程序
-*/
+/*
+ * esc 关闭程序
+ */
 void Perseus::keyPressEvent(QKeyEvent *e)
 {
     QMainWindow::keyPressEvent(e);
@@ -58,12 +60,12 @@ void Perseus::keyPressEvent(QKeyEvent *e)
 
 
 
-/**
-文件 加载完毕
-*/
-/**
-文件 加载完毕
-*/
+/*
+ * 文件 加载完毕
+ */
+/*
+ * 文件 加载完毕
+ */
 void Perseus::OnFileLoaded(bool isc)
 {
     if (!isc)
@@ -86,7 +88,7 @@ void Perseus::OnFileLoaded(bool isc)
     QString curPath{projectPath.getFilePath()};
     auto *newRootNode = LosModel::LosFileNode::create(curPath, nullptr);
     LosModel::LosFileNode::build(newRootNode, curPath,
-                                 [this, curPath, newRootNode]() // 把 newRootNode 传进 Lambda
+                                 [this, curPath, newRootNode]() /* 把 newRootNode 传进 Lambda */
                                  {
                                      auto oldModel = LOS_treeModel;
                                      auto oldRoot  = LOS_rootNode;
@@ -123,12 +125,12 @@ void Perseus::OnFileLoaded(bool isc)
 
 
 
-/**
-- 文件按钮 被点击
-- 支持导入文件和文件夹
-- 以文件夹所在的绝对位置 作为 项目根目录
-- 切换目录时关闭其它 Tab
-*/
+/*
+ * - 文件按钮 被点击
+ * - 支持导入文件和文件夹
+ * - 以文件夹所在的绝对位置 作为 项目根目录
+ * - 切换目录时关闭其它 Tab
+ */
 void Perseus::onFilesBtnClicked()
 {
     QString pathChoose = QFileDialog::getExistingDirectory(
@@ -157,11 +159,11 @@ void Perseus::onFilesBtnClicked()
 
 
 
-/**
-双击文件
-- 修复 展开的问题
-- 默认已经有 展开的问题
-*/
+/*
+ * 双击文件
+ * - 修复 展开的问题
+ * - 默认已经有 展开的问题
+ */
 void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
 {
     if (!LOS_treeModel)
@@ -178,9 +180,9 @@ void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
 
 
 
-/**
-点击运行按钮
-*/
+/*
+ * 点击运行按钮
+ */
 void Perseus::onRunSingleFileBtnClicked()
 {
     auto curWidget = LOS_tabUi->getCurEditor();
@@ -199,9 +201,9 @@ void Perseus::onRunSingleFileBtnClicked()
 
 
 
-/**
-- 项目 按钮的点击
-*/
+/*
+ * - 项目 按钮的点击
+ */
 void Perseus::onProjectBtnClicked(bool checked)
 {
     L_project = checked;
@@ -209,9 +211,9 @@ void Perseus::onProjectBtnClicked(bool checked)
 
 
 
-/**
-- 打印日志
-*/
+/*
+ * - 打印日志
+ */
 void Perseus::onLog(const QString &log)
 {
     ui->output_plaintextedit->appendHtml(log);
@@ -219,11 +221,11 @@ void Perseus::onLog(const QString &log)
 
 
 
-/**
-- 字体缩放实现
-- this->setStyleSheet(this->styleSheet()); 增加对应的 格式 修复
-
-*/
+/*
+ * - 字体缩放实现
+ * - this->setStyleSheet(this->styleSheet()); 增加对应的 格式 修复
+ *
+ */
 void Perseus::onZoomUi(int delta)
 {
     QFont font  = QApplication::font();
@@ -235,15 +237,17 @@ void Perseus::onZoomUi(int delta)
     font.setPointSize(newSize);
     QApplication::setFont(font);
 
-    // 缩放 之后 重新 适应一下 样式
+    /*
+     * 缩放 之后 重新 适应一下 样式
+     */
     this->setStyleSheet(this->styleSheet());
 }
 
 
 
-/**
-- 工具 丢失 请求 安装
-*/
+/*
+ * - 工具 丢失 请求 安装
+ */
 void Perseus::onToolChainMissing(const LosCommon::LosToolChain_Constants::ToolChainConfig &config)
 {
     LosView::LosToolMissUi dialog(config, this);
@@ -273,9 +277,9 @@ void Perseus::onDirectoryChanged()
 }
 
 
-/**
-初始化连接
-*/
+/*
+ * 初始化连接
+ */
 void Perseus::initConnect()
 {
     connect(&LosCore::LosLog::instance(), &LosCore::LosLog::_sendLog, this, &Perseus::onLog);
@@ -294,7 +298,9 @@ void Perseus::initConnect()
     connect(L_timer, &QTimer::timeout, this, &Perseus::onDebounceTimeOut);
     connect(L_filesWatcher, &QFileSystemWatcher::directoryChanged, this, &Perseus::onDirectoryChanged);
     connect(ui->files_btn, &QPushButton::clicked, this, &Perseus::onFilesBtnClicked);
-    // enter 自动触发 actived
+    /*
+     * enter 自动触发 actived
+     */
     connect(ui->explorer_treeview, &QTreeView::activated, this, &Perseus::onExplorerFileDoubleClicked);
     connect(ui->run_singleFile_btn, &QPushButton::clicked, this, &Perseus::onRunSingleFileBtnClicked);
     connect(
@@ -364,9 +370,9 @@ void Perseus::initConnect()
 
 
 
-/**
-初始化样式F
-*/
+/*
+ * 初始化样式F
+ */
 void Perseus::initStyle()
 {
     QFont defaultFont = QApplication::font();
@@ -386,9 +392,9 @@ void Perseus::initStyle()
 
 
 
-/**
-快捷键
-*/
+/*
+ * 快捷键
+ */
 void Perseus::initShotcut()
 {
     LosCore::LosShortcutManager::instance().reg(
@@ -454,7 +460,9 @@ void Perseus::initShotcut()
                         line = maxLines;
                     }
 
-                    // 底层行号减 1
+                    /*
+                     * 底层行号减 1
+                     */
                     editor->gotoLine(line - 1);
                 }
             }
@@ -465,23 +473,29 @@ void Perseus::initShotcut()
 
 
 
-/**
-- 初始化会话
-*/
+/*
+ * - 初始化会话
+ */
 void Perseus::initSession()
 {
-    // 加载 这个 conf
+    /*
+     * 加载 这个 conf
+     */
     LosCommon::LosSession_Constants::Config conf;
     if (!LosCore::LosSession::instance().loadConfig(&conf))
         return;
 
-    // 打开 file
-    // 存到 全局
+    /*
+     * 打开 file
+     * 存到 全局
+     */
     LosModel::LosFilePath file(conf.L_curProDir);
     bool isSuc = file.isExist();
     LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, file);
 
-    // 更新全局 状态
+    /*
+     * 更新全局 状态
+     */
     if (!LOS_tabUi || !isSuc)
         return;
 
@@ -506,9 +520,9 @@ void Perseus::initSession()
 
 
 
-/**
-- 收集当前的配置
-*/
+/*
+ * 收集当前的配置
+ */
 LosCommon::LosSession_Constants::Config Perseus::collectConfig()
 {
     LosCommon::LosSession_Constants::Config conf;

@@ -21,7 +21,7 @@ namespace LosView
         explicit LosPlugUi(QWidget *parent = nullptr);
         ~LosPlugUi();
 
-      public: // tool
+      public: /* tool */
         bool isEmpty();
 
       private:
@@ -36,4 +36,4 @@ namespace LosView
         Ui::LosPlugUi *ui;
     };
 
-} // namespace LosView
+} /* namespace LosView */

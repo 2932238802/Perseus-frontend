@@ -6,7 +6,7 @@
 int main(int argc, char *argv[])
 {
     qputenv("QTWEBENGINE_CHROMIUM_FLAGS", "--disable-gpu --no-sandbox");
-    
+
 #ifdef Q_OS_LINUX
     qputenv("QT_QPA_PLATFORM", "xcb");
 #endif

@@ -6,9 +6,9 @@
 
 namespace LosCore
 {
-    /**
-    - 构造函数
-    */
+    /*
+     * - 构造函数
+     */
     LosRunManager::LosRunManager(QObject *parent) : QObject{parent}
     {
         initConnect();
@@ -20,9 +20,9 @@ namespace LosCore
 
 
 
-    /**
-    执行函数
-    */
+    /*
+     * 执行函数
+     */
     void LosRunManager::execute(const QString &file_path, bool is_project)
     {
         auto lang = LosCommon::CheckLang(file_path);
@@ -73,9 +73,9 @@ namespace LosCore
 
 
 
-    /**
-    - 全部暂停
-    */
+    /*
+     * - 全部暂停
+     */
     void LosRunManager::stop()
     {
         for (auto *runner : LOS_runners)
@@ -89,9 +89,9 @@ namespace LosCore
 
 
 
-    /**
-    - 工具链 已完备
-    */
+    /*
+     * - 工具链 已完备
+     */
     void LosRunManager::onToolChainReady(LosCommon::LosToolChain_Constants::LosLanguage lan,
                                          LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath)
     {
@@ -105,7 +105,9 @@ namespace LosCore
             }
             auto *runner = qobject_cast<LosSingleCppRunner *>(
                 LOS_runners[LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS]);
-            // 设置可执行 文件的位置
+            /*
+             * 设置可执行 文件的位置
+             */
             runner->setExePath(exePath);
             runner->start(L_mainEntryFilePath);
             break;
@@ -131,9 +133,9 @@ namespace LosCore
 
 
 
-    /**
-    - 构建工具 完毕
-    */
+    /*
+     * - 构建工具 完毕
+     */
     void LosRunManager::onBuildToolReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath,
                                          const QStringList &args)
     {
@@ -159,7 +161,9 @@ namespace LosCore
         }
         case LosCommon::LosToolChain_Constants::LosTool::CARGO:
         {
-            // cargo
+            /*
+             * cargo
+             */
             break;
         }
         default:
@@ -169,9 +173,9 @@ namespace LosCore
 
 
 
-    /**
-    获取 当前的 执行器
-    */
+    /*
+     * 获取 当前的 执行器
+     */
     LosAbstractRunner *LosRunManager::getCurRunner(const QString &file_path, bool is_project)
     {
         auto lang = LosCommon::CheckLang(file_path);
@@ -197,9 +201,9 @@ namespace LosCore
 
 
 
-    /**
-    连接
-    */
+    /*
+     * 连接
+     */
     void LosRunManager::initConnect()
     {
         auto &router = LosCore::LosRouter::instance();
@@ -208,4 +212,4 @@ namespace LosCore
     }
 
 
-} // namespace LosCore
+} /* namespace LosCore */

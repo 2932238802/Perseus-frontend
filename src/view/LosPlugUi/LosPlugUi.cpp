@@ -56,4 +56,4 @@ namespace LosView
         emit LosCore::LosRouter::instance()._cmd_openPluginDetail(info);
     }
 
-} // namespace LosView
+} /* namespace LosView */

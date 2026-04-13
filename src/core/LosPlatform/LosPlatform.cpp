@@ -49,4 +49,4 @@ namespace LosCore
     {
         return getOs() == LosCommon::LosPlatform_Constants::OsType::WINDOWS ? "\r\n" : "\n";
     }
-} // namespace LosCore
+} /* namespace LosCore */

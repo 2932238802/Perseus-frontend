@@ -21,9 +21,9 @@ namespace LosModel
     };
 
 
-    /**
-    获取身份证
-    */
+    /*
+     * 获取身份证
+     */
     QModelIndex LosFileTreeModel::index(int row, int column, const QModelIndex &parent) const
     {
         if (!hasIndex(row, column, parent))
@@ -52,9 +52,9 @@ namespace LosModel
 
 
 
-    /**
-    找爸爸
-    */
+    /*
+     * 找爸爸
+     */
     QModelIndex LosFileTreeModel::parent(const QModelIndex &child) const
     {
         if (!child.isValid())
@@ -75,9 +75,9 @@ namespace LosModel
 
 
 
-    /**
-    判断孩子
-    */
+    /*
+     * 判断孩子
+     */
     bool LosFileTreeModel::hasChildren(const QModelIndex &parent) const
     {
         if (parent.isValid())
@@ -93,9 +93,9 @@ namespace LosModel
 
 
 
-    /**
-    设置节点的交互标志 允许被选中和点击
-    */
+    /*
+     * 设置节点的交互标志 允许被选中和点击
+     */
     Qt::ItemFlags LosFileTreeModel::flags(const QModelIndex &index) const
     {
         if (!index.isValid())
@@ -105,9 +105,9 @@ namespace LosModel
 
 
 
-    /**
-    问行数
-    */
+    /*
+     * 问行数
+     */
     int LosFileTreeModel::rowCount(const QModelIndex &parent) const
     {
         if (parent.column() > 0)
@@ -126,9 +126,9 @@ namespace LosModel
 
 
 
-    /**
-    问列数
-    */
+    /*
+     * 问列数
+     */
     int LosFileTreeModel::columnCount(const QModelIndex &parent) const
     {
         Q_UNUSED(parent);
@@ -137,9 +137,9 @@ namespace LosModel
 
 
 
-    /**
-    要数据
-    */
+    /*
+     * 要数据
+     */
     QVariant LosFileTreeModel::data(const QModelIndex &index, int role) const
     {
         if (!index.isValid())
@@ -212,9 +212,9 @@ namespace LosModel
 
 
 
-    /**
-    - 设置数据
-    */
+    /*
+     * - 设置数据
+     */
     bool LosFileTreeModel::setData(const QModelIndex &index, const QVariant &value, int role)
     {
         if (!index.isValid() || role != Qt::EditRole)
@@ -256,9 +256,9 @@ namespace LosModel
 
 
 
-    /**
-    获取 内部 节点
-    */
+    /*
+     * 获取 内部 节点
+     */
     LosFileNode *LosFileTreeModel::nodeFromIndex(const QModelIndex &index)
     {
         if (!index.isValid())
@@ -268,12 +268,12 @@ namespace LosModel
 
 
 
-    /**
-    - 获取 根节点
-    */
+    /*
+     * - 获取 根节点
+     */
     LosModel::LosFileNode *LosFileTreeModel::getRoot() const
     {
         return LOS_rootNode;
     }
 
-} // namespace LosModel
+} /* namespace LosModel */

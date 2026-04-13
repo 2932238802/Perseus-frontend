@@ -24,9 +24,9 @@ namespace LosView
     }
 
 
-    /**
-    - 显示搜索的 框
-    */
+    /*
+     * - 显示搜索的 框
+     */
     void LosCommandUi::showPalette()
     {
         L_searchBox->clear();
@@ -49,9 +49,9 @@ namespace LosView
 
 
 
-    /**
-    - 初始化 央视
-    */
+    /*
+     * - 初始化 央视
+     */
     void LosCommandUi::initStyle()
     {
         setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
@@ -82,9 +82,9 @@ namespace LosView
 
 
 
-    /**
-    - 初始化链接
-    */
+    /*
+     * - 初始化链接
+     */
     void LosCommandUi::initConnect()
     {
         auto &router = LosCore::LosRouter::instance();
@@ -111,15 +111,17 @@ namespace LosView
 
 
 
-    /**
-    - 文本的 改动
-    */
+    /*
+     * - 文本的 改动
+     */
     void LosCommandUi::onSearchTextChanged(const QString &text)
     {
         for (int i = 0; i < L_lists->count(); i++)
         {
             QListWidgetItem *item = L_lists->item(i);
-            // 小写
+            /*
+             * 小写
+             */
             bool isMatch = item->text().contains(text, Qt::CaseInsensitive);
             item->setHidden(!isMatch);
         }
@@ -135,9 +137,9 @@ namespace LosView
 
 
 
-    /**
-    - 执行 选中的 item
-    */
+    /*
+     * - 执行 选中的 item
+     */
     void LosCommandUi::executeSelectedItem()
     {
         auto item = L_lists->currentItem();
@@ -159,42 +161,44 @@ namespace LosView
 
 
 
-    /**
-    - 解析 这个json
-    {
-        "id": "perseus-rust",
-        "name": "Rust Support For create and build",
-        "version": "1.0.0",
-        "description": "provides Cargo project creation and building support",
-        "contributes": {
-            "commands": {
-            "rust.create.linux": {
-                "kind": 1,
-                "scripts": "./scripts/create.sh",
-                "params": [
-                // "project_name"
-                ]
-            },
-            "rust.create.windows": {
-                "kind": 1,
-                "scripts": "./scripts/create.bat",
-                "params": [
-                "project_name"
-                ]
-            },
-            "rust.build.linux": {
-                "kind": 1,
-                "scripts": "./scripts/build.sh",
-                "params": []
-            }
-            }
-        }
-        }
-    */
+    /*
+     * - 解析 这个json
+     * {
+     * "id": "perseus-rust",
+     * "name": "Rust Support For create and build",
+     * "version": "1.0.0",
+     * "description": "provides Cargo project creation and building support",
+     * "contributes": {
+     * "commands": {
+     * "rust.create.linux": {
+     * "kind": 1,
+     * "scripts": "./scripts/create.sh",
+     * "params": [
+     * // "project_name"
+     * ]
+     * },
+     * "rust.create.windows": {
+     * "kind": 1,
+     * "scripts": "./scripts/create.bat",
+     * "params": [
+     * "project_name"
+     * ]
+     * },
+     * "rust.build.linux": {
+     * "kind": 1,
+     * "scripts": "./scripts/build.sh",
+     * "params": []
+     * }
+     * }
+     * }
+     * }
+     */
     void LosCommandUi::onPluginPath(const QString &plugin_path)
     {
-        // plugin_path =  /home/losangelous/.perseus/extensions/rust-extension
-        // INF(plugin_path, "LosCommandUI");
+        /*
+         * plugin_path =  /home/losangelous/.perseus/extensions/rust-extension
+         * INF(plugin_path, "LosCommandUI");
+         */
         QFileInfo file(plugin_path);
         if (!file.exists())
         {
@@ -243,7 +247,9 @@ namespace LosView
                 continue;
 #endif
             QJsonObject cmdValue = i.value().toObject();
-            // 如果 没有 这两个 基本的 就 下一个
+            /*
+             * 如果 没有 这两个 基本的 就 下一个
+             */
             if (!cmdValue.contains("kind") || !cmdValue.contains("scripts"))
             {
                 WAR("Command missing kind or scripts: " + cmdName, "LosCommandUi");
@@ -296,9 +302,9 @@ namespace LosView
 
 
 
-    /**
-    - 过滤掉 一些 按键
-    */
+    /*
+     * - 过滤掉 一些 按键
+     */
     bool LosCommandUi::eventFilter(QObject *watched, QEvent *event)
     {
         if (watched == L_searchBox && event->type() == QEvent::KeyPress)
@@ -364,4 +370,4 @@ namespace LosView
     }
 
 
-} // namespace LosView
+} /* namespace LosView */

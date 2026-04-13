@@ -70,4 +70,4 @@ namespace LosCore
         return true;
     }
 
-} // namespace LosCore
+} /* namespace LosCore */

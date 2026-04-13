@@ -25,11 +25,11 @@ namespace LosCore
         ~LosLspManager() override;
 
 
-      public:  // tool
-      private: // init
+      public:  /* tool */
+      private: /* init */
         void initConnect();
 
-      private: // tool
+      private: /* tool */
         void openFile(const QString &file_path, const QString &file_context);
         void changeFile(const QString &file_path, const QString &file_context);
         void requestCompletion(const QString &file_path, int line, int col);
@@ -43,9 +43,11 @@ namespace LosCore
         void onLspReady(LosCommon::LosToolChain_Constants::LosTool, const QString &, const QStringList &);
 
       private:
-        // 一个语言对应一个解释器
-        // LosTool 指定工具
+        /*
+         * 一个语言对应一个解释器
+         * LosTool 指定工具
+         */
         QMap<LosCommon::LosToolChain_Constants::LosTool, LosLspClient *> LOS_clients;
     };
 
-} // namespace LosCore
+} /* namespace LosCore */

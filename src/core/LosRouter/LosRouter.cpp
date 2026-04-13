@@ -13,4 +13,4 @@ namespace LosCore
     }
 
     LosRouter::LosRouter(QObject *parent) : QObject(parent) {}
-} // namespace LosCore
+} /* namespace LosCore */

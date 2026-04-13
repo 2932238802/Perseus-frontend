@@ -14,11 +14,11 @@ namespace LosCore
         Q_OBJECT
       public:
         explicit LosScriptRunner(QObject *parent = nullptr);
-        ~LosScriptRunner() ;
+        ~LosScriptRunner();
         void start(const QString &main_file_path = "") override;
         void stop() override;
 
-      private: // init
+      private: /* init */
         void initConnect();
 
       private:
@@ -27,4 +27,4 @@ namespace LosCore
         QProcess *L_runner;
     };
 
-} // namespace LosCore
+} /* namespace LosCore */

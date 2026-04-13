@@ -52,4 +52,4 @@ namespace LosStyle
     )");
     }
 
-} // namespace LosStyle
+} /* namespace LosStyle */

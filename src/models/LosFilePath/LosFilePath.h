@@ -20,10 +20,10 @@ namespace LosModel
         LosFilePath(const LosFilePath &);
         ~LosFilePath() = default;
 
-      public: // init
+      public: /* init */
         void loadFile(const QString &file_path);
 
-      public: // get
+      public: /* get */
         const QString &getFilePath() const;
         const QString &getFileName() const;
         QString getAbsolutePath() const;
@@ -51,4 +51,4 @@ namespace LosModel
     QDebug operator<<(QDebug debug, const LosFilePath &path);
     QStringList &operator<<(QStringList &, const LosFilePath &path);
 
-}; // namespace LosModel
+}; /* namespace LosModel */

@@ -1,26 +1,28 @@
 #pragma once
+#include "common/constants/ConstantsNum.h"
+#include "view/style/LosCompleterUi_style.h"
 #include <QAbstractItemView>
 #include <QCompleter>
 #include <QStringListModel>
 #include <qobject.h>
 #include <qtmetamacros.h>
-#include "common/constants/ConstantsNum.h"
-#include "view/style/LosCompleterUi_style.h"
 
-namespace LosView {
-class LosCompleterUi : public QCompleter {
-  Q_OBJECT
-public:
-  explicit LosCompleterUi(QObject *parent = nullptr);
-  ~LosCompleterUi();
+namespace LosView
+{
+    class LosCompleterUi : public QCompleter
+    {
+        Q_OBJECT
+      public:
+        explicit LosCompleterUi(QObject *parent = nullptr);
+        ~LosCompleterUi();
 
-public: // set
-  void updateCompletionList(const QStringList &);
+      public: /* set */
+        void updateCompletionList(const QStringList &);
 
-private: // init
-  void initStyle();
+      private: /* init */
+        void initStyle();
 
-private:
-  QStringListModel *L_model = nullptr;
-};
-} // namespace LosView
+      private:
+        QStringListModel *L_model = nullptr;
+    };
+} /* namespace LosView */

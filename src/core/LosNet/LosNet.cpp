@@ -18,9 +18,9 @@ namespace LosCore
     }
 
 
-    /**
-    - 发送 Plugin的请求
-    */
+    /*
+     * - 发送 Plugin的请求
+     */
     void LosNet::requestPlugin()
     {
         request(LosCommon::LosNet_Constants::API::PLUGIN_API,
@@ -28,9 +28,9 @@ namespace LosCore
     }
 
 
-    /**
-    - 专门 处理 plugin 请求
-    */
+    /*
+     * - 专门 处理 plugin 请求
+     */
     void LosNet::dealPluginReply(const QByteArray &data)
     {
         QJsonParseError parseErr;
@@ -62,9 +62,9 @@ namespace LosCore
 
 
 
-    /**
-    - 初始化 请求
-    */
+    /*
+     * - 初始化 请求
+     */
     void LosNet::requestInit()
     {
         request(LosCommon::LosNet_Constants::API::ROOT_API,
@@ -77,12 +77,14 @@ namespace LosCore
     }
 
 
-    /**
-    - 下载插件
-    */
+    /*
+     * - 下载插件
+     */
     void LosNet::downloadPlugin(const QString &download_url, const QString &savePath)
     {
-        // 直接 get 就行 不用 content
+        /*
+         * 直接 get 就行 不用 content
+         */
         QUrl url(download_url);
         QNetworkRequest req(url);
         QNetworkReply *rep = L_net->get(req);
@@ -108,9 +110,9 @@ namespace LosCore
 
 
 
-    /**
-    - 获取 readme 界面
-    */
+    /*
+     * - 获取 readme 界面
+     */
     void LosNet::fetchPluginReadme(const QString &url_str, std::function<void(const QString &)> func)
     {
         if (url_str.isEmpty())
@@ -128,9 +130,9 @@ namespace LosCore
 
 
 
-    /**
-    - 发送 request
-    */
+    /*
+     * - 发送 request
+     */
     void LosNet::request(const QString &api, std::function<void(const QByteArray &)> func)
     {
         QUrl url(LosCommon::LosNet_Constants::BASE_URL + api);
@@ -142,9 +144,9 @@ namespace LosCore
 
 
 
-    /**
-     - 给 答复 进行连接
-    */
+    /*
+     * - 给 答复 进行连接
+     */
     void LosNet::conn(QNetworkReply *reply, std::function<void(const QByteArray &)> func)
     {
         connect(reply, &QNetworkReply::finished, this,
@@ -163,11 +165,11 @@ namespace LosCore
 
 
 
-    /**
-    - 初始化链接
-    */
+    /*
+     * - 初始化链接
+     */
     void LosNet::initConnect() {}
 
 
 
-} // namespace LosCore
+} /* namespace LosCore */

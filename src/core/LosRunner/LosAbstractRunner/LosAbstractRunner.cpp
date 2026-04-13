@@ -3,5 +3,5 @@
 
 namespace LosCore
 {
-LosAbstractRunner::LosAbstractRunner(QObject *parent) : QObject(parent) {}
-} // namespace LosCore
+    LosAbstractRunner::LosAbstractRunner(QObject *parent) : QObject(parent) {}
+} /* namespace LosCore */

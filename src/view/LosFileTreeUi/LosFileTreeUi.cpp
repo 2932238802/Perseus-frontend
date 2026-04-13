@@ -27,9 +27,9 @@ namespace LosView
 
 
 
-    /**
-    更新视图
-    */
+    /*
+     * 更新视图
+     */
     bool LosFileTreeUi::updateExplorer(LosModel::LosFileTreeModel *newModel)
     {
         if (!newModel)
@@ -54,9 +54,9 @@ namespace LosView
 
 
 
-    /**
-    - customContextMenuRequested 右键
-    */
+    /*
+     * - customContextMenuRequested 右键
+     */
     void LosFileTreeUi::initConnect()
     {
         this->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -65,19 +65,21 @@ namespace LosView
 
 
 
-    /**
-    - 初始化
-    */
+    /*
+     * - 初始化
+     */
     void LosFileTreeUi::initStyle() {}
 
 
 
-    /**
-    - 双击 单位
-    */
+    /*
+     * - 双击 单位
+     */
     void LosFileTreeUi::onCustomContextMenu(const QPoint &pos)
     {
-        // 判断一下 合不合法 然后 路径获取一下 这边 其实可以拆分一下
+        /*
+         * 判断一下 合不合法 然后 路径获取一下 这边 其实可以拆分一下
+         */
         auto *treeModel = qobject_cast<LosModel::LosFileTreeModel *>(this->model());
         if (!treeModel)
             return;
@@ -98,15 +100,17 @@ namespace LosView
             targetDir = clickedPath;
         }
 
-        // 这边是 画出来
-        // New File
-        // New Folder
-        // ----
-        // Copy
-        // Paste
-        // Rename
-        // ----
-        // delete
+        /*
+         * 这边是 画出来
+         * New File
+         * New Folder
+         * ----
+         * Copy
+         * Paste
+         * Rename
+         * ----
+         * delete
+         */
 
         QMenu menu(this);
         QAction *newFileAct   = menu.addAction("New File");
@@ -260,9 +264,9 @@ namespace LosView
 
 
 
-    /**
-    - 增加 delete 按键 效果
-    */
+    /*
+     * - 增加 delete 按键 效果
+     */
     void LosFileTreeUi::keyPressEvent(QKeyEvent *key)
     {
         if (key->key() == Qt::Key_Delete)
@@ -300,15 +304,17 @@ namespace LosView
 
 
 
-    /**
-    - 复制文件
-    */
+    /*
+     * - 复制文件
+     */
     void LosFileTreeUi::copyFileOrFolder(const QString &src_path, const QString &des_path)
     {
         LosModel::LosFilePath file(src_path);
         if (file.isFile())
         {
-            // 如果是文件
+            /*
+             * 如果是文件
+             */
             QFile::copy(src_path, des_path);
         }
         else if (file.isDir())
@@ -326,9 +332,9 @@ namespace LosView
 
 
 
-    /**
-    - 删除文件夹
-    */
+    /*
+     * - 删除文件夹
+     */
     void LosFileTreeUi::deleteFileOrFolder(const QString &file_path)
     {
         LosModel::LosFilePath fileInfo(file_path);
@@ -344,9 +350,9 @@ namespace LosView
 
 
 
-    /**
-    - 展开到 指定的文件
-    */
+    /*
+     * - 展开到 指定的文件
+     */
     bool LosFileTreeUi::expandToFile(const QString &file_path)
     {
         auto *treeModel = qobject_cast<LosModel::LosFileTreeModel *>(model());
@@ -366,9 +372,9 @@ namespace LosView
 
 
 
-    /**
-    - 恢复展开
-    */
+    /*
+     * - 恢复展开
+     */
     bool LosFileTreeUi::restoreExpandedState(const QSet<QString> &expand_paths, const QString &selected_path)
     {
         auto *treeModel = qobject_cast<LosModel::LosFileTreeModel *>(model());
@@ -383,7 +389,9 @@ namespace LosView
             {
                 QModelIndex son = treeModel->index(i, 0, parent);
 
-                // 获取 内部 filenode
+                /*
+                 * 获取 内部 filenode
+                 */
                 LosModel::LosFileNode *node = treeModel->nodeFromIndex(son);
                 if (!node)
                     return;
@@ -397,9 +405,11 @@ namespace LosView
 
                 if (path == selected_path)
                 {
-                    // 知识点 补充：
-                    // QItemSelectionModel
-                    // selectionModel 这个 东西 返回的就是 QItemSelectionModel
+                    /*
+                     * 知识点 补充：
+                     * QItemSelectionModel
+                     * selectionModel 这个 东西 返回的就是 QItemSelectionModel
+                     */
                     selectionModel()->select(son, QItemSelectionModel::Select | QItemSelectionModel::Rows);
                 }
             }
@@ -411,9 +421,9 @@ namespace LosView
 
 
 
-    /**
-    - 获取 展开的路径
-    */
+    /*
+     * - 获取 展开的路径
+     */
     bool LosFileTreeUi::getExpandedPaths(QSet<QString> *get_files)
     {
         auto *treeModel = qobject_cast<LosModel::LosFileTreeModel *>(model());
@@ -436,15 +446,15 @@ namespace LosView
                 }
             }
         };
-        traverse(QModelIndex()); // 空 就是 从根开始
+        traverse(QModelIndex()); /* 空 就是 从根开始 */
         return true;
     }
 
 
 
-    /**
-    - 找到 对应的 index
-    */
+    /*
+     * - 找到 对应的 index
+     */
     QModelIndex LosFileTreeUi::findAndExpand(LosModel::LosFileNode *node, const QString &path,
                                              const QModelIndex &parent_index)
     {
@@ -476,4 +486,4 @@ namespace LosView
     }
 
 
-} // namespace LosView
+} /* namespace LosView */

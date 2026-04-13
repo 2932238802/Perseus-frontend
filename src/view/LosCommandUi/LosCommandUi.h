@@ -33,7 +33,7 @@ namespace LosView
       public:
         void showPalette();
 
-      private: // init
+      private: /* init */
         void initStyle();
         void initConnect();
         void initScanLocalPlugins();
@@ -43,9 +43,11 @@ namespace LosView
         void executeSelectedItem();
         void onPluginPath(const QString &plugin_path);
 
-      private: // tool
+      private: /* tool */
         void regis(const QString &display, const LosCommon::LosCommandUi_Constants::CommandsInfo &cmd);
-        // void initRegis(const QList<LosCommon::LosNet_Constants::PluginInfo> &);
+        /*
+         * void initRegis(const QList<LosCommon::LosNet_Constants::PluginInfo> &);
+         */
 
       protected slots:
         bool eventFilter(QObject *watched, QEvent *event) override;
@@ -57,4 +59,4 @@ namespace LosView
         QListWidget *L_lists;
         QMap<QString, LosCommon::LosCommandUi_Constants::CommandsInfo> L_commands;
     };
-} // namespace LosView
+} /* namespace LosView */

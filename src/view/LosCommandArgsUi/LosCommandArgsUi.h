@@ -26,7 +26,7 @@ namespace LosView
         void onRunBtnClicked();
         void onBrowseBtnClicked();
 
-      private: // init
+      private: /* init */
         void initStyle();
         void initConnect();
 
@@ -36,4 +36,4 @@ namespace LosView
         QString L_scriptPath;
     };
 
-} // namespace LosView
+} /* namespace LosView */

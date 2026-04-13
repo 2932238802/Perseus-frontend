@@ -3,4 +3,4 @@
 namespace LosCore
 {
     LosFormatBase::LosFormatBase(QObject *parent) : QObject{parent} {}
-} // namespace LosCore
+} /* namespace LosCore */
