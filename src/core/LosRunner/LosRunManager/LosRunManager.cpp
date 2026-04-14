@@ -1,6 +1,5 @@
 
 #include "LosRunManager.h"
-#include "common/constants/ConstantsClass.h"
 
 namespace LosCore
 {
@@ -190,34 +189,6 @@ namespace LosCore
         default:
             break;
         }
-    }
-
-
-
-    /*
-     * 获取 当前的 执行器
-     */
-    LosAbstractRunner *LosRunManager::getCurRunner(const QString &file_path, bool is_project)
-    {
-        auto lang = LosCommon::CheckLang(file_path);
-        switch (lang)
-        {
-        case LosCommon::LosToolChain_Constants::LosLanguage::CXX:
-        {
-            if (is_project)
-            {
-                return LOS_runners.value(LosCommon::LosToolChain_Constants::LosTool::CMAKE, nullptr);
-            }
-            else
-            {
-                return LOS_runners.value(LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS, nullptr);
-            }
-        }
-        default:
-            break;
-        }
-
-        return nullptr;
     }
 
 

@@ -15,6 +15,7 @@
 #include <qjsonarray.h>
 #include <qjsondocument.h>
 #include <qjsonobject.h>
+#include <qobject.h>
 #include <qprocess.h>
 #include <qtmetamacros.h>
 
@@ -35,7 +36,7 @@ namespace LosCore
       public: /* set */
         void setCMakeExe(const QString &file_path);
 
-      private:
+      private: // init
         void initConnect();
         std::optional<QString> findLatestIndex(const QString &cur_file_path);
 

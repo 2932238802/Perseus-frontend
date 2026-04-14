@@ -151,6 +151,7 @@ namespace LosCommon
          * PYTHON
          * - windows python
          * - Linux python3
+         * - PYRIGHT 就是 语义 和 语法的高亮
          */
         enum class LosTool
         {
@@ -166,6 +167,7 @@ namespace LosCommon
             RUSTC,
             UNKNOWN,
             PYTHON,
+            PYRIGHT,
         };
 
 

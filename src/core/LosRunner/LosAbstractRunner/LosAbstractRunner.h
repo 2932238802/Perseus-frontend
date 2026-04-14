@@ -14,7 +14,6 @@ namespace LosCore
         virtual ~LosAbstractRunner()                           = default;
         virtual void start(const QString &main_file_path = "") = 0;
         virtual void stop()                                    = 0;
-
       private:
     };
 } /* namespace LosCore */

@@ -73,7 +73,7 @@ namespace LosCore
         QString outDirPath = dir.getAbsoluteFilePath() + QDir::separator() +
                              LosCommon::LosRunner_Constants::OUTPUT_BUILD + QDir::separator() +
                              LosCommon::LosRunner_Constants::OUTPUT_GXX;
-                             
+
         QDir().mkpath(outDirPath);
         QString outputExe =
             outDirPath + QDir::separator() + LOS_filePath.getBaseFileName() + LosCommon::LosRunner_Constants::LINUX_EXE;
@@ -101,7 +101,7 @@ namespace LosCore
 
 
     /*
-     * - 建立联系
+     * 建立联系
      */
     void LosSingleCppRunner::initConnect()
     {

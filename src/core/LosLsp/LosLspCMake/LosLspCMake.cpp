@@ -1,6 +1,5 @@
 #include "LosLspCMake.h"
 
-
 namespace LosCore
 {
 

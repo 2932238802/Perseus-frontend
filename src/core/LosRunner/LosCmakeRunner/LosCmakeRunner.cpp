@@ -1,6 +1,5 @@
 
 #include "LosCmakeRunner.h"
-#include <qobject.h>
 
 
 namespace LosCore

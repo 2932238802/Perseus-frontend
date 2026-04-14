@@ -1,10 +1,7 @@
 #include "LosLspClient.h"
 
-
-
 namespace LosCore
 {
-
     /*
      * - construct
      */
@@ -271,5 +268,4 @@ namespace LosCore
         params["changes"] = changes;
         sendNotification("workspace/didChangeWatchedFiles", params);
     }
-
 } /* namespace LosCore */

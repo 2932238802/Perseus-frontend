@@ -39,9 +39,6 @@ namespace LosCore
       private: /* init */
         void initConnect();
 
-      private: /* tool */
-        LosAbstractRunner *getCurRunner(const QString &file_path, bool is_project);
-
       private: /* param */
         QString L_mainEntryFilePath = "";
         QMap<LosCommon::LosToolChain_Constants::LosTool, LosAbstractRunner *> LOS_runners;

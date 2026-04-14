@@ -99,7 +99,6 @@ namespace LosCommon
     {
         inline constexpr const char *ASSUME_FILENAME_ASRS = "-assume-filename=";
         inline constexpr const char *STYLE_ASRS           = "-style=";
-
 #ifdef Q_OS_WIN
         inline constexpr const char *CLANG_FORMAT = "clang-format.exe";
 #else
@@ -109,6 +108,10 @@ namespace LosCommon
 
 
 
+    /*
+     *
+     *
+     */
     namespace LosNet_Constants
     {
         inline constexpr const char *BASE_URL = "http://localhost:3000/";
@@ -123,6 +126,7 @@ namespace LosCommon
         {
             inline constexpr const char *JSON_TYPE = "application/json";
         } /* namespace HEADER_TYPE */
+
     } /* namespace LosNet_Constants */
 
 
