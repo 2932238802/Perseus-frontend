@@ -20,7 +20,12 @@ namespace LosView
 
 
     /*
-     * - 设置样式
+     * 设置样式
+     * - windowFlags
+     *   - 获取当前 窗口已经设置的所有样式
+     * - WindowContextHelpButtonHint
+     *   - 右上角的 问号
+     *   - ~ 就是按位取反
      */
     void LosSettingsUi::initStyle()
     {

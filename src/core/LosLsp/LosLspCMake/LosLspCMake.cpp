@@ -8,8 +8,9 @@ namespace LosCore
         initConnect();
     }
 
+
     /*
-     * - 开始
+     * 开始
      */
     void LosLspCMake::start(const QStringList &start_up_args, const QString &exe_path)
     {
@@ -23,7 +24,7 @@ namespace LosCore
 
 
     /*
-     * - 处理 请求
+     * 处理 请求
      */
     void LosLspCMake::dealLspMessage(const QJsonObject &obj)
     {

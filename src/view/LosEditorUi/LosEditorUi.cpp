@@ -163,6 +163,9 @@ namespace LosView
      * return;
      * }
      * - 增加防抖
+     *
+     * LOS_highlighter->updateSemanticTokens(QJsonArray{});
+     * - 清楚 过期的 语义
      */
     void LosEditorUi::format()
     {
@@ -173,13 +176,11 @@ namespace LosView
         {
             return;
         }
-        /*
-         * fix
-         */
         if (out == currentText)
         {
             return;
         }
+        LOS_highlighter->updateSemanticTokens(QJsonArray{});
         QTextCursor cur = textCursor();
         int outPos      = cur.position();
         cur.beginEditBlock();

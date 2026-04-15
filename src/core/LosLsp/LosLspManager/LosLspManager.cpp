@@ -1,5 +1,6 @@
 #include "LosLspManager.h"
 #include "common/constants/ConstantsClass.h"
+#include "core/LosLsp/LosLspPython/LosLspPython.h"
 #include "core/LosRouter/LosRouter.h"
 
 
@@ -62,7 +63,7 @@ namespace LosCore
 
 
     /*
-     * - 监听 文件结构 改变
+     * 监听 文件结构 改变
      */
     void LosLspManager::didChangeWatchedFiles(const QString &file_path, int type)
     {
@@ -80,7 +81,7 @@ namespace LosCore
 
 
     /*
-     * - 发送 语法 高亮请求
+     * 发送 语法 高亮请求
      */
     void LosLspManager::onSemantic(const QString &file_paht)
     {
@@ -163,6 +164,13 @@ namespace LosCore
                 return LOS_clients.value(LosCommon::LosToolChain_Constants::LosTool::RUST_ANALYZER);
             }
         }
+        else if (lang == LosCommon::LosToolChain_Constants::LosLanguage::PYTHON)
+        {
+            if (LOS_clients.contains(LosCommon::LosToolChain_Constants::LosTool::PYRIGHT))
+            {
+                return LOS_clients.value(LosCommon::LosToolChain_Constants::LosTool::PYRIGHT);
+            }
+        }
         return nullptr;
     }
 
@@ -193,12 +201,14 @@ namespace LosCore
                 LOS_clients[tool] = new LosLspRust(this);
                 break;
             }
+            case LosCommon::LosToolChain_Constants::LosTool::PYRIGHT:
+            {
+                LOS_clients[tool] = new LosLspPython(this);
+                break;
+            }
             default:
             {
                 WAR("other lsp is not set", "LosLspManager!");
-                /*
-                 * 这里 改为 return 免得 空指针
-                 */
                 return;
             }
             }

@@ -81,7 +81,7 @@
          <item>
           <widget class="QLabel" name="label_title_build">
            <property name="text">
-            <string>&lt;h2&gt;Build &amp; Run&lt;/h2&gt;</string>
+            <string>&lt;h2&gt;Build &amp; Run Tools&lt;/h2&gt;</string>
            </property>
           </widget>
          </item>
@@ -90,6 +90,8 @@
            <property name="verticalSpacing">
             <number>15</number>
            </property>
+           
+           <!-- CMake 设置行 -->
            <item row="0" column="0">
             <widget class="QLabel" name="label_cmake">
              <property name="text">
@@ -98,12 +100,105 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLineEdit" name="edit_cmake_path">
-             <property name="placeholderText">
-              <string>cmake</string>
+            <layout class="QHBoxLayout" name="horizontalLayout_cmake">
+             <item>
+              <widget class="QLineEdit" name="edit_cmake_path">
+               <property name="placeholderText">
+                <string>cmake</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btn_browse_cmake">
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+
+           <!-- Cargo 设置行 -->
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_cargo">
+             <property name="text">
+              <string>Cargo Path:</string>
              </property>
             </widget>
            </item>
+           <item row="1" column="1">
+            <layout class="QHBoxLayout" name="horizontalLayout_cargo">
+             <item>
+              <widget class="QLineEdit" name="edit_cargo_path">
+               <property name="placeholderText">
+                <string>cargo</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btn_browse_cargo">
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+
+           <!-- Rustc 设置行 -->
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_rustc">
+             <property name="text">
+              <string>Rustc Path:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <layout class="QHBoxLayout" name="horizontalLayout_rustc">
+             <item>
+              <widget class="QLineEdit" name="edit_rustc_path">
+               <property name="placeholderText">
+                <string>rustc</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btn_browse_rustc">
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+
+           <!-- Python 设置行 -->
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_python">
+             <property name="text">
+              <string>Python Path:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <layout class="QHBoxLayout" name="horizontalLayout_python">
+             <item>
+              <widget class="QLineEdit" name="edit_python_path">
+               <property name="placeholderText">
+                <string>python / python3</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="btn_browse_python">
+               <property name="text">
+                <string>...</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+
           </layout>
          </item>
          <item>

@@ -149,12 +149,21 @@ namespace LosCommon
 
     /*
      * 全局状态标识枚举
+     *
+     * PYTHON_EXE_PATH
+     * GXX_EXE_PATH
+     * - 自已设定的 exe 解释器
      */
     namespace LosState_Constants
     {
         enum class SG_STR
         {
             PROJECT_DIR,
+
+            PYTHON_EXE_PATH,
+            GXX_EXE_PATH,
+            RUSTC_EXE_PATH,
+            CMAKE_EXE_PATH
         };
     } /* namespace LosState_Constants */
 

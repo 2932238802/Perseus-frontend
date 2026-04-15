@@ -54,6 +54,7 @@ namespace LosCore
     void LosSingleCppRunner::setExePath(const QString &exe_path)
     {
         L_exePath = exe_path;
+        LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::GXX_EXE_PATH, exe_path);
     }
 
 

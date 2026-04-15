@@ -1,5 +1,6 @@
 
 #include "LosCmakeRunner.h"
+#include "core/LosState/LosState.h"
 
 
 namespace LosCore
@@ -76,6 +77,7 @@ namespace LosCore
     void LosCmakeRunner::setCMakeExe(const QString &file_path)
     {
         L_cmakeExe = file_path;
+        LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::CMAKE_EXE_PATH, file_path);
     }
 
 

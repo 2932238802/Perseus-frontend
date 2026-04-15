@@ -50,7 +50,7 @@ namespace LosCore
 
 
     /*
-     * - 发送通知
+     * 发送通知
      */
     void LosLspClient::sendNotification(const QString &method, const QJsonObject &params)
     {
@@ -68,7 +68,7 @@ namespace LosCore
 
 
     /*
-     * - 处理原始数据
+     * 处理原始数据
      */
     void LosLspClient::processRawData()
     {
@@ -119,7 +119,7 @@ namespace LosCore
 
 
     /*
-     * - 打开文件
+     * 打开文件
      */
     void LosLspClient::didOpen(const QString &file_path, const QString &text, const QString &languageId)
     {
@@ -146,7 +146,7 @@ namespace LosCore
 
 
     /*
-     * - 文件变化
+     * 文件变化
      */
     void LosLspClient::didChange(const QString &file_path, const QString &text)
     {
@@ -180,7 +180,7 @@ namespace LosCore
 
 
     /*
-     * - 文件请求
+     * 文件请求
      */
     void LosLspClient::requestCompletion(const QString &file_path, int line, int character)
     {
@@ -218,7 +218,7 @@ namespace LosCore
 
 
     /*
-     * - 鼠标悬停的效果
+     * 鼠标悬停的效果
      */
     void LosLspClient::requestHover(const QString &file_path, int line, int character)
     {
@@ -236,7 +236,7 @@ namespace LosCore
 
 
     /*
-     * - 发送 语法 高亮的补全
+     * 发送 语法 高亮的补全
      */
     void LosLspClient::requestSemantic(const QString &file_path)
     {

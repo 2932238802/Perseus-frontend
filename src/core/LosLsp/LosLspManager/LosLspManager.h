@@ -24,8 +24,6 @@ namespace LosCore
         explicit LosLspManager(QObject *parent = nullptr);
         ~LosLspManager() override;
 
-
-      public:  /* tool */
       private: /* init */
         void initConnect();
 

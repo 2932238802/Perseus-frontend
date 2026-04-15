@@ -1,5 +1,7 @@
 
 #include "LosPythonRunner.h"
+#include "common/constants/ConstantsStr.h"
+#include "core/LosState/LosState.h"
 
 
 namespace LosCore
@@ -22,8 +24,8 @@ namespace LosCore
 
     void LosPythonRunner::start(const QString &main_file_path)
     {
-        SUC("start...","LosPythonRunner");
-        
+        SUC("start...", "LosPythonRunner");
+
         LOS_targetFile.loadFile(main_file_path);
         if (!LOS_targetFile.isExist())
         {
@@ -57,6 +59,7 @@ namespace LosCore
     void LosPythonRunner::setExePath(const QString &file_path)
     {
         L_exePath = std::move(file_path);
+        LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::PYTHON_EXE_PATH, file_path);
     }
 
 
