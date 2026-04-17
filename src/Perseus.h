@@ -105,10 +105,10 @@ class Perseus : public QMainWindow
 
   public slots: // xhc
     void OnFileLoaded(bool isc, bool runAnalysis = true);
-    void onFilesBtnClicked();                                   /* 打开本地文件夹 */
-    void onExplorerFileDoubleClicked(const QModelIndex &index); /* 打开本地文件夹 */
-    void onRunSingleFileBtnClicked();                           /* 运行一个文本 */
-    void onProjectBtnClicked(bool checked);                     /* 是否开启 项目 模式 */
+    void onFilesBtnClicked();
+    void onExplorerFileDoubleClicked(const QModelIndex &index);
+    void onRunSingleFileBtnClicked();
+    void onProjectBtnClicked(bool checked);
     void onLog(const QString &log);
     void onZoomUi(int delta);
     void onToolChainMissing(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
@@ -118,7 +118,7 @@ class Perseus : public QMainWindow
   private:
     Ui::Perseus *ui;
     bool L_project                                 = false;
-    int L_buildGeneration                          = 0; /* 代次守卫：防止异步 build 回调竞争 */
+    int L_buildGeneration                          = 0;
     QFileSystemWatcher *L_filesWatcher             = nullptr;
     QTimer *L_timer                                = nullptr;
     LosModel::LosFileNode *LOS_rootNode            = nullptr;

@@ -1,4 +1,11 @@
 #include "LosScriptRunner.h"
+#include "common/constants/ConstantsClass.h"
+#include "common/constants/ConstantsStr.h"
+#include "common/util/GetFilePath.h"
+#include "core/LosPlatform/LosPlatform.h"
+#include "core/LosRouter/LosRouter.h"
+#include "core/LosState/LosState.h"
+#include <qcoreapplication.h>
 
 namespace LosCore
 {
@@ -7,13 +14,19 @@ namespace LosCore
         L_runner = new QProcess(this);
         initConnect();
     }
-
     LosScriptRunner::~LosScriptRunner()
     {
         stop();
     }
 
 
+
+    /**
+     * @brief
+     * 调用可执行文件对指定文件进行编译
+     *
+     * @param in main_file_path 指定编译的文件
+     */
     void LosScriptRunner::start(const QString &main_file_path)
     {
         if (!L_workingDir.isEmpty())
@@ -28,7 +41,7 @@ namespace LosCore
         L_runner->start("cmd.exe", winArgs);
 #else
         QStringList linuxArgs;
-        linuxArgs << main_file_path;
+        linuxArgs << "-c" << main_file_path;
         linuxArgs.append(L_args);
         L_runner->start("bash", linuxArgs);
 #endif
@@ -36,6 +49,10 @@ namespace LosCore
 
 
 
+    /**
+     * @brief
+     * 停止QProcess运行
+     */
     void LosScriptRunner::stop()
     {
         if (L_runner->state() != QProcess::NotRunning)
@@ -45,6 +62,14 @@ namespace LosCore
     }
 
 
+
+    /**
+     * @brief
+     * - 初始化信号槽连接
+     *
+     * @note
+     * - 初始化调用
+     */
     void LosScriptRunner::initConnect()
     {
         auto &router = LosCore::LosRouter::instance();
@@ -55,6 +80,8 @@ namespace LosCore
                     this->L_workingDir = std::move(working_dir);
                     this->start(script_path);
                 });
+
+        connect(&router, &LosCore::LosRouter::_cmd_autoInstallTool, this, &LosScriptRunner::onAutoInstallTool);
         connect(L_runner, &QProcess::readyReadStandardOutput, this,
                 [this]()
                 {
@@ -81,6 +108,56 @@ namespace LosCore
         connect(L_runner, &QProcess::errorOccurred, this,
                 [=](QProcess::ProcessError error) { ERR("The compiled program failed to start", "LosScriptRunner"); });
     }
+
+
+
+    QString LosScriptRunner::getScriptsInstallDir()
+    {
+        auto &ins = LosState::instance();
+        auto con  = LosCommon::LosState_Constants::SG_STR::SCRIPTS_INSTALL_DIR;
+        if (!ins.contain<QString>(con))
+        {
+            auto opt = LosCommon::GetFilePathFromUp<LosCommon::FindFileType::COMMON_DIR>("resources/config/scripts/installers");
+            if (!opt)
+            {
+                return "";
+            }
+            else
+            {
+                ins.set<QString>(con, *opt);
+            }
+        }
+        return ins.get<QString>(LosCommon::LosState_Constants::SG_STR::SCRIPTS_INSTALL_DIR);
+    }
+
+
+
+    /**
+     * @brief onAutoInstallTool
+     * - 安装对应的工具
+     * - 系统内置脚本方便 安装对应的环境
+     *
+     * @param config in 传入对应的工具信息
+     * - 用于安装
+     */
+    void LosScriptRunner::onAutoInstallTool(const LosCommon::LosToolChain_Constants::ToolChainConfig &config)
+    {
+        auto plat = LosPlatform::getOs();
+        QString allPath{getScriptsInstallDir()};
+        allPath = plat == LosCommon::LosPlatform_Constants::OsType::WINDOWS
+                      ? allPath + "/windows/" + config.L_scriptWin
+                      : allPath + "/linux/" + config.L_scriptLinux;
+        QFileInfo file(allPath);
+        if (!file.exists())
+        {
+            ERR("not find :" + file.absoluteFilePath(), "LosScriptRunner");
+            return;
+        }
+        this->L_args.clear();
+        this->L_workingDir = file.absolutePath();
+        this->start(plat == LosCommon::LosPlatform_Constants::OsType::WINDOWS ? "\"" + allPath + "\"" : allPath);
+    }
+
 
 
 } /* namespace LosCore */

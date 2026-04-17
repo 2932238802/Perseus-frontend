@@ -5,56 +5,47 @@
         "cmake": {
             "category": "BuildTool",
             "name": "CMake",
-            "executables": [
-                "cmake.exe",
-                "cmake"
-            ],
+            "executables": ["cmake.exe", "cmake"],
             "startupArgs": [],
             "requireNodeJs": false,
             "versionArgs": "--version",
             "downloadUrl": "https://cmake.org/download/",
             "validateKey": "cmake version",
-            "supportedLanguages": [
-                "CXX",
-                "CSHARP",
-                "CUDA"
-            ]
+            "supportedLanguages": ["CXX", "CSHARP", "CUDA"],
+            "installScripts": {
+                "windows": "install_cmake.bat",
+                "linux": "install_cmake.sh"
+            }
         },
         "ninja": {
             "category": "BuildTool",
             "name": "Ninja Build",
-            "executables": [
-                "ninja.exe",
-                "ninja"
-            ],
+            "executables": ["ninja.exe", "ninja"],
             "startupArgs": [],
             "requireNodeJs": false,
             "versionArgs": "--version",
             "downloadUrl": "https://ninja-build.org/",
             "validateKey": "ninja",
-            "supportedLanguages": [
-                "CXX",
-                "RUST"
-            ]
+            "supportedLanguages": ["CXX", "RUST"],
+            "installScripts": {
+                "windows": "install_ninja.bat",
+                "linux": "install_ninja.sh"
+            }
         },
         "git": {
             "category": "BuildTool",
             "name": "Git",
-            "executables": [
-                "git.exe",
-                "git"
-            ],
+            "executables": ["git.exe", "git"],
             "startupArgs": [],
             "requireNodeJs": false,
             "versionArgs": "--version",
             "downloadUrl": "https://git-scm.com/",
             "validateKey": "git version",
-            "supportedLanguages": [
-                "CXX",
-                "RUST",
-                "PYTHON",
-                "CSHARP"
-            ]
+            "supportedLanguages": ["CXX", "RUST", "PYTHON", "CSHARP"],
+            "installScripts": {
+                "windows": "install_git.bat",
+                "linux": "install_git.sh"
+            }
         }
     },
     "toolchains": {
@@ -68,46 +59,44 @@
                 "g++": {
                     "category": "Compiler",
                     "name": "C++ (g++ / clang++)",
-                    "executables": [
-                        "g++.exe",
-                        "g++",
-                        "clang++.exe",
-                        "clang++"
-                    ],
+                    "executables": ["g++.exe", "g++", "clang++.exe", "clang++"],
                     "startupArgs": [],
                     "requireNodeJs": false,
                     "versionArgs": "--version",
                     "downloadUrl": "https://www.msys2.org/",
-                    "validateKey": "g++"
+                    "validateKey": "g++",
+                    "installScripts": {
+                        "windows": "install_gcc.bat",
+                        "linux": "install_gcc.sh"
+                    }
                 },
                 "clangd": {
                     "category": "LSP",
                     "name": "clangd",
-                    "executables": [
-                        "clangd.exe",
-                        "clangd"
-                    ],
-                    "startupArgs": [
-                        "--background-index",
-                        "--clang-tidy"
-                    ],
+                    "executables": ["clangd.exe", "clangd"],
+                    "startupArgs": ["--background-index", "--clang-tidy"],
                     "requireNodeJs": false,
                     "versionArgs": "--version",
                     "downloadUrl": "https://github.com/clangd/clangd/releases",
-                    "validateKey": "clangd"
+                    "validateKey": "clangd",
+                    "installScripts": {
+                        "windows": "install_clangd.bat",
+                        "linux": "install_clangd.sh"
+                    }
                 },
                 "clang-format": {
                     "category": "Formatter",
                     "name": "clang-format",
-                    "executables": [
-                        "clang-format.exe",
-                        "clang-format"
-                    ],
+                    "executables": ["clang-format.exe", "clang-format"],
                     "startupArgs": [],
                     "requireNodeJs": false,
                     "versionArgs": "--version",
                     "downloadUrl": "https://clang.llvm.org/",
-                    "validateKey": "clang-format"
+                    "validateKey": "clang-format",
+                    "installScripts": {
+                        "windows": "install_clang_format.bat",
+                        "linux": "install_clang_format.sh"
+                    }
                 }
             }
         },
@@ -121,41 +110,44 @@
                 "cargo": {
                     "category": "Compiler",
                     "name": "Rust (cargo)",
-                    "executables": [
-                        "cargo.exe",
-                        "cargo"
-                    ],
+                    "executables": ["cargo.exe", "cargo"],
                     "startupArgs": [],
                     "requireNodeJs": false,
                     "versionArgs": "--version",
                     "downloadUrl": "https://rustup.rs/",
-                    "validateKey": "cargo"
+                    "validateKey": "cargo",
+                    "installScripts": {
+                        "windows": "install_rust.bat",
+                        "linux": "install_rust.sh"
+                    }
                 },
                 "rustc": {
                     "category": "Compiler",
                     "name": "Rust Compiler (rustc)",
-                    "executables": [
-                        "rustc.exe",
-                        "rustc"
-                    ],
+                    "executables": ["rustc.exe", "rustc"],
                     "startupArgs": [],
                     "requireNodeJs": false,
                     "versionArgs": "--version",
                     "downloadUrl": "https://rustup.rs/",
-                    "validateKey": "rustc"
+                    "validateKey": "rustc",
+                    "installScripts": {
+                        "windows": "install_rust.bat",
+                        "linux": "install_rust.sh"
+                    }
                 },
                 "rust-analyzer": {
                     "category": "LSP",
                     "name": "rust-analyzer",
-                    "executables": [
-                        "rust-analyzer.exe",
-                        "rust-analyzer"
-                    ],
+                    "executables": ["rust-analyzer.exe", "rust-analyzer"],
                     "startupArgs": [],
                     "requireNodeJs": false,
                     "versionArgs": "--version",
                     "downloadUrl": "https://rust-analyzer.github.io/",
-                    "validateKey": "rust-analyzer"
+                    "validateKey": "rust-analyzer",
+                    "installScripts": {
+                        "windows": "install_rust_analyzer.bat",
+                        "linux": "install_rust_analyzer.sh"
+                    }
                 }
             }
         },
@@ -169,45 +161,44 @@
                 "python": {
                     "category": "Compiler",
                     "name": "Python 3",
-                    "executables": [
-                        "python.exe",
-                        "python3.exe",
-                        "python3",
-                        "python"
-                    ],
+                    "executables": ["python.exe", "python3.exe", "python3", "python"],
                     "startupArgs": [],
                     "requireNodeJs": false,
                     "versionArgs": "--version",
                     "downloadUrl": "https://www.python.org/downloads/",
-                    "validateKey": "Python"
+                    "validateKey": "Python",
+                    "installScripts": {
+                        "windows": "install_python.bat",
+                        "linux": "install_python.sh"
+                    }
                 },
                 "pyright": {
                     "category": "LSP",
                     "name": "Pyright",
-                    "executables": [
-                        "pyright-langserver.cmd",
-                        "pyright-langserver"
-                    ],
-                    "startupArgs": [
-                        "--stdio"
-                    ],
+                    "executables": ["pyright-langserver.cmd", "pyright-langserver"],
+                    "startupArgs": ["--stdio"],
                     "requireNodeJs": true,
                     "versionArgs": "--version",
                     "downloadUrl": "https://github.com/microsoft/pyright",
-                    "validateKey": "pyright"
+                    "validateKey": "pyright",
+                    "installScripts": {
+                        "windows": "install_pyright.bat",
+                        "linux": "install_pyright.sh"
+                    }
                 },
                 "black": {
                     "category": "Formatter",
                     "name": "Black",
-                    "executables": [
-                        "black.exe",
-                        "black"
-                    ],
+                    "executables": ["black.exe", "black"],
                     "startupArgs": [],
                     "requireNodeJs": false,
                     "versionArgs": "--version",
                     "downloadUrl": "https://github.com/psf/black",
-                    "validateKey": "black"
+                    "validateKey": "black",
+                    "installScripts": {
+                        "windows": "install_black.bat",
+                        "linux": "install_black.sh"
+                    }
                 }
             }
         },
@@ -221,30 +212,30 @@
                 "csc": {
                     "category": "Compiler",
                     "name": "C# Compiler",
-                    "executables": [
-                        "csc.exe",
-                        "csc"
-                    ],
+                    "executables": ["csc.exe", "csc"],
                     "startupArgs": [],
                     "requireNodeJs": false,
                     "versionArgs": "-version",
                     "downloadUrl": "https://dotnet.microsoft.com/",
-                    "validateKey": "Microsoft"
+                    "validateKey": "Microsoft",
+                    "installScripts": {
+                        "windows": "install_dotnet.bat",
+                        "linux": "install_dotnet.sh"
+                    }
                 },
                 "omnisharp": {
                     "category": "LSP",
                     "name": "OmniSharp",
-                    "executables": [
-                        "OmniSharp.exe",
-                        "omnisharp"
-                    ],
-                    "startupArgs": [
-                        "--languageserver"
-                    ],
+                    "executables": ["OmniSharp.exe", "omnisharp"],
+                    "startupArgs": ["--languageserver"],
                     "requireNodeJs": false,
                     "versionArgs": "--version",
                     "downloadUrl": "https://github.com/OmniSharp/omnisharp-roslyn",
-                    "validateKey": "OmniSharp"
+                    "validateKey": "OmniSharp",
+                    "installScripts": {
+                        "windows": "install_omnisharp.bat",
+                        "linux": "install_omnisharp.sh"
+                    }
                 }
             }
         },
@@ -258,17 +249,16 @@
                 "neocmakelsp": {
                     "category": "LSP",
                     "name": "NeoCMakeLSP",
-                    "executables": [
-                        "neocmakelsp.exe",
-                        "neocmakelsp"
-                    ],
-                    "startupArgs": [
-                        "stdio"
-                    ],
+                    "executables": ["neocmakelsp.exe", "neocmakelsp"],
+                    "startupArgs": ["stdio"],
                     "requireNodeJs": false,
                     "versionArgs": "--version",
                     "downloadUrl": "https://github.com/Decodetalkers/neocmakelsp/releases",
-                    "validateKey": "neocmakelsp"
+                    "validateKey": "neocmakelsp",
+                    "installScripts": {
+                        "windows": "install_neocmakelsp.bat",
+                        "linux": "install_neocmakelsp.sh"
+                    }
                 }
             }
         }

@@ -58,7 +58,7 @@ namespace LosView
         {
             return;
         }
-        
+
         auto widget = qobject_cast<LosEditorUi *>(L_tabWidget->currentWidget());
         if (!widget || !widget->isDirty())
         {
@@ -106,9 +106,6 @@ namespace LosView
      */
     void LosEditorTabUi::openFile(const LosModel::LosFilePath &file)
     {
-        /*
-         * 呼叫 解释器 呼叫 运行其
-         */
         if (file.isBinary())
         {
             return;
@@ -124,8 +121,8 @@ namespace LosView
         }
         LosEditorUi *editor = new LosEditorUi(this);
         /*
-         * 这里 会 读写 磁盘 两次
-         * 可以 优化的
+         * 这里会读写 磁盘 两次
+         * 可以优化的
          */
         auto contextCopy = QSharedPointer<LosModel::LosFileContext>::create();
         contextCopy->load(filePath);
@@ -235,7 +232,7 @@ namespace LosView
     }
 
 
-    
+
     /*
      * 如果编辑器 修改
      */
@@ -422,6 +419,13 @@ namespace LosView
             emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(
                 lang, LosCommon::LosToolChain_Constants::LosTool::CARGO);
             L_checkedLanguage.insert(LosCommon::LosToolChain_Constants::LosLanguage::RUST);
+            return;
+        }
+        case LosCommon::LosToolChain_Constants::LosLanguage::PYTHON:
+        {
+            emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(
+                lang, LosCommon::LosToolChain_Constants::LosTool::PYRIGHT);
+            L_checkedLanguage.insert(LosCommon::LosToolChain_Constants::LosLanguage::PYTHON);
             return;
         }
         default:

@@ -18,33 +18,32 @@ namespace LosCommon
         INF("find ... :" + base_file_name, "GetFilePathFromUp");
         QDir dir(QCoreApplication::applicationDirPath());
 
-        QString targetPath = "";
+        QString targetPath = base_file_name;
 
-        /*
-         * 编译器 分支
-         */
-        if constexpr (type == LosCommon::FindFileType::COMMON)
-        {
-            targetPath = base_file_name;
-        }
-        else if constexpr (type == LosCommon::FindFileType::SYSTEM_TOOLCHAIN_CONFIG_JSON)
+        if constexpr (type == LosCommon::FindFileType::SYSTEM_TOOLCHAIN_CONFIG_JSON)
         {
             targetPath = "resources/config/" + base_file_name;
         }
+
         for (int i = 0; i < max_times; i++)
         {
-            /*
-             * QDir 这里的 exist 就是判断一下 当前文件夹 存不存在 指定的文件
-             */
             if (dir.exists(targetPath))
             {
-                return dir.filePath(targetPath);
+                QString fullPath = dir.filePath(targetPath);
+                QFileInfo fileInfo(fullPath);
+                
+                if constexpr (type == LosCommon::FindFileType::COMMON_DIR)
+                {
+                    if (fileInfo.isDir()) return fullPath;
+                }
+                else 
+                {
+                    if (fileInfo.isFile()) return fullPath;
+                }
             }
             if (!dir.cdUp())
                 break;
         }
         return std::nullopt;
     }
-
-
 } /* namespace LosCommon */

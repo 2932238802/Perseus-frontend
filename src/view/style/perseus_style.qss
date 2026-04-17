@@ -1,9 +1,11 @@
 QMainWindow {
     background-color: #121212;
+    color: #cccccc;
 }
 
 * {
     outline: none;
+    font-family: "Microsoft YaHei", "Segoe UI", sans-serif;
 }
 
 QTabWidget {
@@ -17,18 +19,16 @@ QTabBar::base {
 }
 
 QToolTip {
-    background-color: #1e1e1e;
-    color: #ffffff;
-    border: 1px solid #333333;
+    background-color: #252526;
+    color: #cccccc;
+    border: 1px solid #454545;
     border-radius: 4px;
-    padding: 4px 8px;
-    font-family: "Microsoft YaHei", sans-serif;
-    font-size: 0.9em;
+    padding: 6px 10px;
 }
 
 #toolbar_widget {
     background-color: #1e1e1e;
-    border-bottom: 1px solid #333333;
+    border-bottom: 1px solid #2d2d2d;
 }
 
 #icon_btn,
@@ -37,11 +37,9 @@ QToolTip {
 #setting_btn {
     border: 1px solid transparent;
     background-color: transparent;
-    color: #d4d4d4;
+    color: #cccccc;
     border-radius: 4px;
-    padding: 4px 12px;
-    font-size: 16px;
-    font-family: "Microsoft YaHei", sans-serif;
+    padding: 5px 12px;
 }
 
 #icon_btn {
@@ -50,7 +48,7 @@ QToolTip {
     padding: 4px 0px;
     min-width: 32px;
     text-align: center;
-    font-size: 1.15em;
+    font-size: 1.2em;
 }
 
 #icon_btn:hover,
@@ -58,7 +56,6 @@ QToolTip {
 #run_singleFile_btn:hover,
 #setting_btn:hover {
     background-color: #2a2d2e;
-    border: 1px solid #333333;
     color: #ffffff;
 }
 
@@ -66,15 +63,14 @@ QToolTip {
 #files_btn:pressed,
 #run_singleFile_btn:pressed,
 #setting_btn:pressed {
-    background-color: #37373d;
-    border: 1px solid #4a4a4a;
+    background-color: #007acc;
+    color: #ffffff;
 }
 
 #activity_bar {
     background-color: #181818;
-    border-right: 1px solid #333333;
+    border-right: 1px solid #2b2b2b;
 }
-
 
 #activity_bar QPushButton:hover {
     background: transparent;
@@ -82,7 +78,7 @@ QToolTip {
 }
 
 #activity_bar QPushButton:checked {
-    border-left: 3px solid #ffffff;
+    border-left: 3px solid #007acc;
     background: transparent;
     background-color: transparent;
 }
@@ -91,8 +87,6 @@ QToolTip {
     background: transparent;
     background-color: transparent;
 }
-
-
 
 #act_explorer_btn {
     image: url(:/icons/files_black.png);
@@ -114,27 +108,25 @@ QToolTip {
 
 #project_btn {
     background-color: transparent;
-    color: #a0a0a0;
+    color: #9d9d9d;
     border: none;
-    padding: 6px 16px;
-    font-size: 14px;
-    font-family: "Microsoft YaHei", sans-serif;
-    spacing: 8px;
+    padding: 8px 16px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 #project_btn:hover {
-    color: #ffffff;
+    color: #cccccc;
 }
 
 #project_btn:checked {
     color: #ffffff;
-    font-weight: bold;
 }
 
 #project_btn::indicator {
-    width: 14px;
-    height: 14px;
-    border-radius: 7px;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
     border: 2px solid #555555;
     background-color: transparent;
 }
@@ -144,27 +136,20 @@ QToolTip {
 }
 
 #project_btn::indicator:checked {
-    border-color: #ffffff;
-    background-color: #ffffff;
+    border-color: #007acc;
+    background-color: #007acc;
 }
 
-#project_btn::indicator:checked:hover {
-    background-color: #d4d4d4;
-    border-color: #d4d4d4;
-}
-
-/* ----- Splitters ----- */
 QSplitter::handle {
-    background-color: #121212;
-    margin: 1px;
+    background-color: #1e1e1e;
+    margin: 0px;
 }
 
 QSplitter::handle:horizontal:hover,
 QSplitter::handle:vertical:hover {
-    background-color: #555555;
+    background-color: #007acc;
 }
 
-/* ----- TreeView ----- */
 QTreeView {
     background-color: #1e1e1e;
     color: #cccccc;
@@ -174,8 +159,8 @@ QTreeView {
 
 QTreeView::item {
     padding: 4px 0px;
-    border-radius: 4px;
-    margin: 0px 4px;
+    border-radius: 3px;
+    margin: 1px 4px;
 }
 
 QTreeView::item:hover {
@@ -184,55 +169,54 @@ QTreeView::item:hover {
 }
 
 QTreeView::item:selected {
-    background-color: #37373d;
+    background-color: #04395e;
     color: #ffffff;
-    font-weight: bold;
+    border: 1px solid #0f5280;
 }
 
 QTreeView::branch {
     background-color: transparent;
 }
 
-
 #editor_tabwidget::pane {
     border: 0px solid transparent;
-    background-color: #121212;
+    background-color: #1e1e1e;
     top: -1px;
 }
 
 #editor_tabwidget QTabBar {
-    background-color: #1e1e1e;
+    background-color: #181818;
     border: none;
 }
 
 #editor_tabwidget QTabBar::tab {
-    background-color: #1e1e1e;
-    color: #888888;
+    background-color: #2d2d2d;
+    color: #9d9d9d;
     padding: 8px 16px;
     border: none;
-    border-right: 1px solid #333333;
-    min-width: 90px;
+    border-right: 1px solid #181818;
+    min-width: 100px;
 }
 
 #editor_tabwidget QTabBar::tab:selected {
-    background-color: #121212;
+    background-color: #1e1e1e;
     color: #ffffff;
-    border-top: 2px solid #ffffff;
+    border-top: 2px solid #007acc;
 }
 
 #editor_tabwidget QTabBar::tab:hover:!selected {
     background-color: #2a2d2e;
-    color: #d4d4d4;
+    color: #cccccc;
 }
 
 #editor_tabwidget QTabBar::close-button {
     subcontrol-position: right;
-    margin-right: 2px;
+    margin-right: 4px;
 }
 
 #editor_tabwidget QTabBar::close-button:hover {
-    background-color: #cc0000;
-    border-radius: 2px;
+    background-color: #c74e39;
+    border-radius: 3px;
 }
 
 #bottom_tabwidget::pane {
@@ -243,39 +227,35 @@ QTreeView::branch {
 }
 
 #bottom_tabwidget>QTabBar {
-    background-color: #121212;
+    background-color: #1e1e1e;
     border: none;
 }
 
 #bottom_tabwidget>QTabBar::tab {
     background-color: transparent;
     color: #888888;
-    padding: 6px 16px;
+    padding: 8px 16px;
     border: none;
-    font-size: 0.9em;
     text-transform: uppercase;
 }
 
 #bottom_tabwidget>QTabBar::tab:selected {
     color: #ffffff;
-    background-color: #1e1e1e;
+    border-bottom: 2px solid #ffffff;
 }
 
 #bottom_tabwidget>QTabBar::tab:hover:!selected {
-    color: #d4d4d4;
-    background-color: #2a2d2e;
+    color: #cccccc;
 }
 
-/* ----- Terminal & Output ----- */
 QPlainTextEdit {
-    background-color: #121212;
+    background-color: #1e1e1e;
     color: #d4d4d4;
     border: none;
     font-family: "JetBrains Mono", "Consolas", monospace;
-    font-size: 1.1em;
-    selection-background-color: #444444;
+    selection-background-color: #264f78;
     selection-color: #ffffff;
-    padding: 4px;
+    padding: 6px;
 }
 
 #output_plaintextedit {
@@ -284,7 +264,7 @@ QPlainTextEdit {
 
 #terminal_tabs::pane {
     border: 0px solid transparent;
-    background-color: #121212;
+    background-color: #1e1e1e;
     top: -1px;
 }
 
@@ -296,22 +276,20 @@ QPlainTextEdit {
 #terminal_tabs QTabBar::tab {
     background-color: #1e1e1e;
     color: #888888;
-    padding: 6px 12px;
+    padding: 6px 14px;
     border: none;
-    border-right: 1px solid #333333;
+    border-right: 1px solid #2b2b2b;
     min-width: 60px;
-    font-family: "JetBrains Mono", "Consolas", monospace;
-    font-size: 12px;
 }
 
 #terminal_tabs QTabBar::tab:selected {
-    background-color: #121212;
+    background-color: #252526;
     color: #ffffff;
 }
 
 #terminal_tabs QTabBar::tab:hover:!selected {
     background-color: #2a2d2e;
-    color: #d4d4d4;
+    color: #cccccc;
 }
 
 #terminal_tabs QTabBar::close-button {
@@ -320,42 +298,37 @@ QPlainTextEdit {
 }
 
 #terminal_tabs QTabBar::close-button:hover {
-    background-color: #cc0000;
-    border-radius: 2px;
+    background-color: #c74e39;
+    border-radius: 3px;
 }
 
-/* ----- Extensions (LosPlugUi) ----- */
 #LosPlugUi {
     background-color: #1e1e1e;
 }
 
 #LosPlugUi QLabel#titleLabel {
     color: #cccccc;
-    font-size: 11px;
     font-weight: bold;
-    font-family: "JetBrains Mono", "Consolas", monospace;
+    text-transform: uppercase;
     padding-left: 4px;
 }
 
 #LosPlugUi QLineEdit#searchLineEdit {
-    background-color: #2a2d2e;
+    background-color: #252526;
     color: #ffffff;
-    border: 1px solid #333333;
+    border: 1px solid #3c3c3c;
     border-radius: 4px;
     padding: 6px 10px;
-    font-family: "Microsoft YaHei", sans-serif;
-    font-size: 13px;
 }
 
 #LosPlugUi QLineEdit#searchLineEdit:focus {
     border: 1px solid #007acc;
-    background-color: #1e1e1e;
+    background-color: #252526;
 }
 
 #LosPlugUi QListWidget#extensionsList {
     background-color: transparent;
     color: #d4d4d4;
-    font-family: "Microsoft YaHei", sans-serif;
     outline: none;
     border: none;
 }
@@ -363,8 +336,8 @@ QPlainTextEdit {
 #LosPlugUi QListWidget::item {
     padding: 8px;
     border-radius: 4px;
-    border-bottom: 1px solid transparent;
-    margin: 2px 4px;
+    border: 1px solid transparent;
+    margin: 2px 6px;
 }
 
 #LosPlugUi QListWidget::item:hover {
@@ -372,77 +345,72 @@ QPlainTextEdit {
 }
 
 #LosPlugUi QListWidget::item:selected {
-    background-color: #37373d;
+    background-color: #04395e;
     color: #ffffff;
-    border-left: 3px solid #007acc;
-    border-radius: 0px;
+    border: 1px solid #0f5280;
 }
 
 QScrollBar:vertical {
     background-color: transparent;
-    width: 12px;
+    width: 14px;
     border: none;
     margin: 0px;
 }
 
 QScrollBar::handle:vertical {
-    background-color: rgba(85, 85, 85, 0.6);
-    border-radius: 6px;
+    background-color: rgba(121, 121, 121, 0.4);
+    border-radius: 0px;
     min-height: 30px;
-    margin: 2px;
+    margin: 0px;
 }
 
 QScrollBar::handle:vertical:hover {
-    background-color: rgba(136, 136, 136, 0.9);
+    background-color: rgba(100, 100, 100, 0.7);
 }
 
 QScrollBar:horizontal {
     background-color: transparent;
-    height: 12px;
+    height: 14px;
     border: none;
     margin: 0px;
 }
 
 QScrollBar::handle:horizontal {
-    background-color: rgba(85, 85, 85, 0.6);
-    border-radius: 6px;
+    background-color: rgba(121, 121, 121, 0.4);
+    border-radius: 0px;
     min-width: 30px;
-    margin: 2px;
+    margin: 0px;
 }
 
 QScrollBar::handle:horizontal:hover {
-    background-color: rgba(136, 136, 136, 0.9);
+    background-color: rgba(100, 100, 100, 0.7);
 }
 
 QScrollBar::add-line,
-QScrollBar::sub-line {
-    height: 0px;
-    width: 0px;
-}
-
+QScrollBar::sub-line,
 QScrollBar::add-page,
 QScrollBar::sub-page {
     background-color: transparent;
+    height: 0px;
+    width: 0px;
+    border: none;
 }
 
-/* ----- Settings Dialog ----- */
 QDialog#LosSettingsUi {
-    background-color: #121212;
+    background-color: #1e1e1e;
 }
 
 #category_list {
-    background-color: #1e1e1e;
+    background-color: #252526;
     border: none;
     border-right: 1px solid #333333;
     padding-top: 10px;
-    font-family: "Microsoft YaHei", sans-serif;
-    font-size: 14px;
     outline: none;
 }
 
 #category_list::item {
     color: #cccccc;
-    padding: 10px 15px;
+    padding: 10px 16px;
     border-left: 3px solid transparent;
 }
 
@@ -452,159 +420,172 @@ QDialog#LosSettingsUi {
 }
 
 #category_list::item:selected {
-    background-color: #121212;
+    background-color: #1e1e1e;
     color: #ffffff;
     font-weight: bold;
-    border-left: 3px solid #ffffff;
+    border-left: 3px solid #007acc;
 }
 
 #pages_stack {
-    background-color: #121212;
+    background-color: #1e1e1e;
     border: none;
 }
 
 #label_title_build {
     color: #ffffff;
-    border-bottom: 1px solid #333333;
-    padding-bottom: 5px;
-    font-family: "Microsoft YaHei", sans-serif;
+    border-bottom: 1px solid #3c3c3c;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
-#label_cmake {
-    color: #a0a0a0;
-    font-size: 14px;
-    font-family: "Microsoft YaHei", sans-serif;
+#page_build QLabel {
+    color: #cccccc;
+    padding-right: 10px;
 }
 
-#edit_cmake_path {
-    background-color: #000000;
-    color: #ffffff;
-    border: 1px solid #333333;
+#page_build QLineEdit {
+    background-color: #252526;
+    color: #d4d4d4;
+    border: 1px solid #3c3c3c;
     border-radius: 4px;
     padding: 6px 10px;
     font-family: "JetBrains Mono", "Consolas", monospace;
-    font-size: 13px;
 }
 
-#edit_cmake_path:hover {
+#page_build QLineEdit:hover {
     border: 1px solid #555555;
 }
 
-#edit_cmake_path:focus {
-    border: 1px solid #ffffff;
-    background-color: #1e1e1e;
+#page_build QLineEdit:focus {
+    border: 1px solid #007acc;
+    background-color: #252526;
+}
+
+#page_build QToolButton {
+    background-color: #333333;
+    color: #d4d4d4;
+    border: 1px solid #3c3c3c;
+    border-radius: 4px;
+    padding: 5px 14px;
+    font-weight: bold;
+}
+
+#page_build QToolButton:hover {
+    background-color: #404040;
+    color: #ffffff;
+    border: 1px solid #555555;
+}
+
+#page_build QToolButton:pressed {
+    background-color: #007acc;
+    color: #ffffff;
+    border: 1px solid #007acc;
+}
+
+#buttonBox {
+    margin-top: 10px;
 }
 
 #buttonBox QPushButton {
-    background-color: #2a2d2e;
-    color: #d4d4d4;
+    background-color: #333333;
+    color: #cccccc;
     border: 1px solid transparent;
     border-radius: 4px;
-    padding: 6px 16px;
-    min-width: 60px;
-    font-family: "Microsoft YaHei", sans-serif;
-    font-size: 13px;
+    padding: 6px 18px;
+    min-width: 65px;
 }
 
 #buttonBox QPushButton:hover {
-    background-color: #37373d;
+    background-color: #404040;
     color: #ffffff;
+    border: 1px solid #555555;
 }
 
 #buttonBox QPushButton:pressed {
-    background-color: #4a4a4a;
-    border: 1px solid #ffffff;
+    background-color: #252526;
+    border: 1px solid #007acc;
 }
 
 #buttonBox QPushButton[text="OK"] {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #007acc;
+    color: #ffffff;
     font-weight: bold;
 }
 
 #buttonBox QPushButton[text="OK"]:hover {
-    background-color: #d4d4d4;
+    background-color: #1177bb;
 }
 
-
-#LosPluginDetailUi {
-    background-color: #121212;
+#buttonBox QPushButton[text="OK"]:pressed {
+    background-color: #0d5484;
 }
 
 #LosPluginDetailUi {
-    background-color: #121212;
+    background-color: #1e1e1e;
 }
 
 #LosPluginDetailUi #label_icon {
-    background-color: #1e1e1e;
+    background-color: #252526;
     border-radius: 8px;
+    padding: 4px;
 }
 
 #LosPluginDetailUi #label_name {
     color: #ffffff;
-    font-size: 24px;
+    font-size: 1.8em;
     font-weight: bold;
-    font-family: "Microsoft YaHei", sans-serif;
 }
 
 #LosPluginDetailUi #label_version {
     color: #888888;
-    font-size: 13px;
     font-family: "JetBrains Mono", "Consolas", monospace;
 }
 
 #LosPluginDetailUi #btn_install {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #007acc;
+    color: #ffffff;
     font-weight: bold;
-    border-radius: 3px;
+    border-radius: 4px;
     padding: 6px 28px;
-    font-family: "Microsoft YaHei", sans-serif;
-    font-size: 13px;
     min-width: 100px;
     border: none;
 }
 
 #LosPluginDetailUi #btn_install:hover {
-    background-color: #e0e0e0;
+    background-color: #1177bb;
 }
 
 #LosPluginDetailUi #btn_install:pressed {
-    background-color: #cccccc;
+    background-color: #0d5484;
 }
 
 #LosPluginDetailUi #btn_install:disabled {
-    background-color: #2a2d2e;
+    background-color: #333333;
     color: #666666;
-    font-weight: normal;
 }
 
 #LosPluginDetailUi #text_description {
     background-color: transparent;
-    color: #d4d4d4;
+    color: #cccccc;
     border: none;
-    border-top: 1px solid #2a2d2e;
+    border-top: 1px solid #333333;
     margin-top: 20px;
     padding-top: 20px;
-    font-family: "Microsoft YaHei", sans-serif;
-    font-size: 14px;
     line-height: 1.6;
 }
 
-
 #project_dir_label {
     color: #ffffff;
-    font-weight: bold;
-    font-family: "Consolas", "JetBrains Mono", monospace;
-    font-size: 12px;
-    background-color: #252526;
-    border: 1px solid #333333;
+    font-family: "JetBrains Mono", "Consolas", monospace;
+    background-color: #007acc;
+    border: none;
     border-radius: 4px;
     padding: 4px 12px;
     margin-right: 10px;
 }
 
 #project_dir_label:hover {
-    background-color: #2a2d2e;
-    border: 1px solid #454545;
+    background-color: #1177bb;
 }

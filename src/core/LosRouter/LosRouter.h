@@ -189,5 +189,15 @@ namespace LosCore
         void _cmd_command_exeScript(const QString &script_path, const QStringList &params);
         void _cmd_net_PluginPath(const QString &plugin_path);
         void _cmd_runScript(const QString &working_dir, const QString &script_path, const QStringList &args);
+
+
+
+        // ----------------------------------------------------------------------------
+        /*
+         * _cmd_autoInstallTool
+         * - 自动后台安装
+         *
+         */
+        void _cmd_autoInstallTool(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
     };
 } /* namespace LosCore */

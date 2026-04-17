@@ -21,7 +21,8 @@ namespace LosCommon
     enum class FindFileType
     {
         SYSTEM_TOOLCHAIN_CONFIG_JSON = 1,
-        COMMON
+        COMMON_FILE,
+        COMMON_DIR,
     };
 }; /* namespace LosCommon */
 
@@ -184,17 +185,33 @@ namespace LosCommon
 
 
 
+        /**
+         * @brief config 下的tool信息
+         * LOS_language 属于什么语
+         * L_category 是什么类型的工具
+         * L_name 工具标识名
+         * L_exeName 跨平台可执行文件名
+         * L_startupArgs  默认启动参数
+         * L_requireNodeJs 是否依赖 Node 环境
+         * L_version 版本号
+         * L_downUrl 下载直链
+         * L_validateKey 文件的验证码
+         * L_scriptWin window安装脚本
+         * L_scriptLinux Linux 安装脚本
+         */
         struct ToolChainConfig
         {
-            LosLanguage LOS_language;     /* 属于什么语 */
-            ToolCategory L_category;      /* 是什么类型的工具 */
-            QString L_name;               /* 工具标识名 (如 "clangd") */
-            QStringList L_exeName;        /* 跨平台可执行文件名 */
-            QStringList L_startupArgs;    /* 默认启动参数 */
-            bool L_requireNodeJs = false; /* 是否依赖 Node 环境  有些需要 */
-            QString L_version;            /* 版本号 */
-            QString L_downUrl;            /* 下载直链 */
-            QString L_validateKey;        /* 文件的验证码 这个 */
+            LosLanguage LOS_language;
+            ToolCategory L_category;
+            QString L_name;
+            QStringList L_exeName;
+            QStringList L_startupArgs;
+            bool L_requireNodeJs = false;
+            QString L_version;
+            QString L_downUrl;
+            QString L_validateKey;
+            QString L_scriptWin;
+            QString L_scriptLinux;
         };
 
     } /* namespace LosToolChain_Constants */

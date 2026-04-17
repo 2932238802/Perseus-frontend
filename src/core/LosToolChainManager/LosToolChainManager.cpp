@@ -1,5 +1,6 @@
 #include "LosToolChainManager.h"
 #include "common/constants/ConstantsClass.h"
+#include <qjsonobject.h>
 
 
 
@@ -110,7 +111,7 @@ namespace LosCore
             for (auto it = sharedTools.begin(); it != sharedTools.end(); ++it)
             {
                 QString toolNameStr       = it.key();
-                auto toolEnum             = stringToTool(toolNameStr); /* 字符串转枚举 */
+                auto toolEnum             = stringToTool(toolNameStr);
                 QJsonObject toolObj       = it.value().toObject();
                 LOS_toolConfigs[toolEnum] = parseToolNode(toolObj, toolNameStr);
                 if (toolObj.contains("supportedLanguages") && toolObj["supportedLanguages"].isArray())
@@ -186,6 +187,7 @@ namespace LosCore
             auto pathOpt = LosCommon::FindExePath(exeName);
             if (pathOpt.has_value())
             {
+                SUC("find tool in" + *pathOpt, "LosToolChainManager");
                 L_activeToolPath[toolEnum] = pathOpt.value();
                 return true;
             }
@@ -212,7 +214,6 @@ namespace LosCore
                 config.L_exeName.append(val.toString());
             }
         }
-
         if (toolObj.contains("startupArgs") && toolObj["startupArgs"].isArray())
         {
             QJsonArray argsArray = toolObj["startupArgs"].toArray();
@@ -225,6 +226,12 @@ namespace LosCore
         config.L_version       = toolObj["versionArgs"].toString();
         config.L_downUrl       = toolObj["downloadUrl"].toString();
         config.L_validateKey   = toolObj["validateKey"].toString();
+        if (toolObj.contains("installScripts") && toolObj["installScripts"].isObject())
+        {
+            QJsonObject installs = toolObj["installScripts"].toObject();
+            config.L_scriptWin   = installs.contains("windows") ? installs["windows"].toString() : "";
+            config.L_scriptLinux = installs.contains("linux") ? installs["linux"].toString() : "";
+        }
         return config;
     }
 

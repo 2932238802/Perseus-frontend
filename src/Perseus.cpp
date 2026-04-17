@@ -1,8 +1,6 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
 
-
-
 /*
  * 构造
  */
@@ -300,8 +298,10 @@ void Perseus::onDirectoryChanged()
 
 
 
-/*
- * 初始化连接
+/** 
+ * @brief 
+ * initConnect
+ * - 初始化连接
  */
 void Perseus::initConnect()
 {
@@ -574,6 +574,6 @@ LosCommon::LosSession_Constants::Config Perseus::collectConfig()
     conf.L_curProDir = LosCore::LosState::instance()
                            .get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR)
                            .getFilePath();
-    conf.L_curActiveFile = LOS_tabUi->getCurFilePath(); /* 保存当前激活的标签页路径 */
+    conf.L_curActiveFile = LOS_tabUi->getCurFilePath();
     return conf;
 }

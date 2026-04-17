@@ -43,13 +43,10 @@ namespace LosView
         void executeSelectedItem();
         void onPluginPath(const QString &plugin_path);
 
-      private: /* tool */
+      private:
         void regis(const QString &display, const LosCommon::LosCommandUi_Constants::CommandsInfo &cmd);
-        /*
-         * void initRegis(const QList<LosCommon::LosNet_Constants::PluginInfo> &);
-         */
-
-      protected slots:
+      
+        protected slots:
         bool eventFilter(QObject *watched, QEvent *event) override;
         void focusOutEvent(QFocusEvent *event) override;
         bool event(QEvent *event) override;

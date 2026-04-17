@@ -1,14 +1,13 @@
 
 #include "LosLspPython.h"
-#include "common/constants/ConstantsStr.h"
-#include "core/LosState/LosState.h"
-#include <qcoreapplication.h>
-#include <qjsondocument.h>
-#include <qjsonobject.h>
+
 namespace LosCore
 {
 
-    LosLspPython::LosLspPython(QObject *parent) {}
+    LosLspPython::LosLspPython(QObject *parent)
+    {
+        initConnect();
+    }
 
     void LosLspPython::start(const QStringList &start_up_args, const QString &exe_path)
     {
@@ -299,5 +298,27 @@ namespace LosCore
     {
         sendNotification("initialized", QJsonObject());
     }
+
+
+
+    /*
+     * 初始化 发送信号
+     * sendInitializeRequest
+     * - 程序开始的时候 发送初始化 信号
+     * 
+     */
+    void LosLspPython::initConnect()
+    {
+        auto &router = LosRouter::instance();
+        connect(L_process, &QProcess::started, this, &LosLspPython::sendInitializeRequest);
+        connect(L_process, &QProcess::readyReadStandardError, this,
+                [this]() { INF(QString::fromUtf8(L_process->readAllStandardError()), "LosLspPython"); });
+        connect(&router, &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this,
+                [this](const QString &compile_commands_path, auto type)
+                { this->didChangeWatchedFiles(compile_commands_path, type); });
+        connect(&router, &LosRouter::_cmd_lsp_request_hover, this,
+                [this](const QString &filePath, int line, int col) { this->requestHover(filePath, line, col); });
+    }
+
 
 } // namespace LosCore

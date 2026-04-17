@@ -19,7 +19,9 @@ namespace LosView
 
 
 
-    /*
+    /**
+     * @brief initStyle
+     *
      * 设置样式
      * - windowFlags
      *   - 获取当前 窗口已经设置的所有样式
@@ -34,8 +36,11 @@ namespace LosView
 
 
 
-    /*
-     * - 初始化 连接
+    /**
+     * @brief initConnect
+     *
+     *
+     * 初始化 连接
      */
     void LosSettingsUi::initConnect()
     {
