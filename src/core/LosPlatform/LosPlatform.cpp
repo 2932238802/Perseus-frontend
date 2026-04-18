@@ -1,8 +1,7 @@
 
 
 #include "LosPlatform.h"
-#include "common/constants/ConstantsClass.h"
-#include <qdebug.h>
+
 
 namespace LosCore
 {

@@ -2,6 +2,7 @@
 
 
 #include "core/LosLog/LosLog.h"
+#include "view/LosTerminalUi/LosTerminalUi.h"
 #include <QTabBar>
 #include <QTimer>
 #include <QToolButton>

@@ -9,7 +9,6 @@ namespace LosView
         ui->setupUi(this);
         initConnect();
     }
-
     LosPlugUi::~LosPlugUi()
     {
         delete ui;

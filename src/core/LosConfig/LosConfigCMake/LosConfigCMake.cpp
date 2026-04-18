@@ -1,6 +1,5 @@
 
 #include "LosConfigCMake.h"
-#include "common/constants/ConstantsStr.h"
 
 namespace LosCore
 {

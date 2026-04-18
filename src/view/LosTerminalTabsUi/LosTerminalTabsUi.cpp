@@ -1,6 +1,5 @@
 #include "LosTerminalTabsUi.h"
-#include "view/LosTerminalUi/LosTerminalUi.h"
-#include <qwidget.h>
+
 
 namespace LosView
 {

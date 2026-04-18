@@ -4,6 +4,7 @@
 #include "core/LosLsp/LosLspCMake/LosLspCMake.h"
 #include "core/LosLsp/LosLspClangd/LosLspClangd.h"
 #include "core/LosLsp/LosLspClient/LosLspClient.h"
+#include "core/LosLsp/LosLspPython/LosLspPython.h"
 #include "core/LosLsp/LosLspRust/LosLspRust.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosRunner/LosCmakeRunner/LosCmakeRunner.h"

@@ -24,9 +24,6 @@ namespace LosView
         QVBoxLayout *mainLayout = new QVBoxLayout(this);
         mainLayout->setContentsMargins(10, 10, 10, 10);
 
-        /*
-         * 背景颜色
-         */
         L_bgWidget = new QWidget(this);
         L_bgWidget->setStyleSheet(R"(
         QWidget { 

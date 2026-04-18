@@ -1,13 +1,6 @@
 
 #include "LosNet.h"
-#include "common/constants/ConstantsStr.h"
-#include "core/LosRouter/LosRouter.h"
-#include <qfileinfo.h>
-#include <qjsondocument.h>
-#include <qnetworkreply.h>
-#include <qnetworkrequest.h>
-#include <qstringview.h>
-#include <qurl.h>
+
 
 namespace LosCore
 {

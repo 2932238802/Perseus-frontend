@@ -1,5 +1,7 @@
 #pragma once
 
+#include "common/constants/ConstantsStr/LosFloatingPanelUiStr.h"
+
 #include <QDialog>
 #include <QHBoxLayout>
 #include <QIntValidator>
@@ -7,7 +9,6 @@
 #include <QLineEdit>
 #include <qwidget.h>
 
-#include "common/constants/ConstantsStr.h"
 
 namespace LosView
 {

@@ -1,10 +1,14 @@
 
 
 #pragma once
-#include "common/constants/ConstantsStr.h"
+#include "common/constants/ConstantsStr/LosRunnerStr.h"
+#include "common/constants/ConstantsStr/LosStateStr.h"
+#include "core/LosRouter/LosRouter.h"
+#include "core/LosState/LosState.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
 #include "models/LosFilePath/LosFilePath.h"
+
 #include <QObject>
 #include <QProcess>
 #include <qobject.h>

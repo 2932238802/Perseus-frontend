@@ -5,8 +5,10 @@
 #include <QVBoxLayout>
 #include <QWebChannel>
 #include <QWebEngineView>
+#include <qcolor.h>
 #include <qtmetamacros.h>
 #include <qwidget.h>
+
 namespace LosView
 {
 

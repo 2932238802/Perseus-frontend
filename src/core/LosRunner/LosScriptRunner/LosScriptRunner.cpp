@@ -1,6 +1,5 @@
 #include "LosScriptRunner.h"
 #include "common/constants/ConstantsClass.h"
-#include "common/constants/ConstantsStr.h"
 #include "common/util/GetFilePath.h"
 #include "core/LosPlatform/LosPlatform.h"
 #include "core/LosRouter/LosRouter.h"

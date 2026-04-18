@@ -1,7 +1,5 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
-#include "common/constants/ConstantsStr.h"
-#include "core/LosShortcutManager/LosShortcutManager.h"
 
 /*
  * 构造
@@ -502,7 +500,18 @@ void Perseus::initShotcut()
         "go to line");
 
     LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::TAB_CLOSE, this,
-                                                [this]() { LOS_tabUi->closeTab(LOS_tabUi->getCurEditIndex()); });
+                                                [this]()
+                                                {
+                                                    auto edit = LOS_tabUi->getCurEditor();
+                                                    if (!edit)
+                                                        return;
+                                                    if (!edit->property("isPinned").toBool())
+                                                    {
+                                                        LOS_tabUi->closeTab(LOS_tabUi->getCurEditIndex());
+                                                        return;
+                                                    }
+
+                                                });
 }
 
 

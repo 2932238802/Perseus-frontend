@@ -1,6 +1,5 @@
 
 #include "LosTerminalUi.h"
-#include <qcolor.h>
 
 namespace LosView
 {

@@ -12,8 +12,8 @@ int main(int argc, char *argv[])
 #endif
     QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
     QApplication a(argc, argv);
-    QApplication::setApplicationName("Perseus");
-    QApplication::setApplicationDisplayName("Perseus Editor");
+    QApplication::setApplicationName(QStringLiteral("Perseus"));
+    QApplication::setApplicationDisplayName(QStringLiteral("Perseus Editor"));
     a.setWindowIcon(QIcon(":/icons/theme.png"));
     Perseus w;
     w.show();

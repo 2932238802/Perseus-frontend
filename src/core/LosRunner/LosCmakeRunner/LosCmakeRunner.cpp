@@ -1,6 +1,5 @@
 
 #include "LosCmakeRunner.h"
-#include "core/LosState/LosState.h"
 
 
 namespace LosCore

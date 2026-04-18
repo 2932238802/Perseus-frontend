@@ -408,8 +408,8 @@ namespace LosView
 
 
     /**
-     * @brief
-     *
+     * @brief initTabBar
+     * - 右键悬浮标签的 弹窗
      */
     void LosEditorTabUi::initTabBar()
     {
@@ -426,21 +426,24 @@ namespace LosView
                         return;
                     QMenu menu;
 
-                    QAction *pin           = new QAction("固定");
-                    QAction *copyLocalPath = new QAction("复制本地路径");
+                    QAction *pin           = new QAction(QStringLiteral("pin"));
+                    QAction *copyLocalPath = new QAction(QStringLiteral("open local path"));
                     menu.addAction(pin);
                     menu.addAction(copyLocalPath);
-                    QAction *ac = menu.exec(tabBar->mapToGlobal(pos));
+                    QAction *ac  = menu.exec(tabBar->mapToGlobal(pos));
+                    QWidget *tab = L_tabWidget->widget(index);
                     if (ac == pin)
                     {
                         tabBar->moveTab(index, 0);
                         QString curText = tabBar->tabText(0);
-                        if (!curText.startsWith("[pin]"))
-                            tabBar->setTabText(0, "[pin]" + curText);
+                        if (!curText.startsWith(tr("[pin]")))
+                        {
+                            tabBar->setTabText(0, tr("[pin]") + curText);
+                            tab->setProperty("isPinned", true);
+                        }
                     }
                     else if (ac == copyLocalPath)
                     {
-                        QWidget *tab        = L_tabWidget->widget(index);
                         LosEditorUi *editor = qobject_cast<LosEditorUi *>(tab);
                         if (!editor)
                             return;

@@ -1,5 +1,6 @@
 #pragma once
-#include "common/constants/ConstantsStr.h"
+#include "common/constants/ConstantsStr/LosStateStr.h"
+
 #include <QHash>
 #include <QVariant>
 #include <qmutex.h>

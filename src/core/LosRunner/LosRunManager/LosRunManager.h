@@ -1,5 +1,6 @@
 #pragma once
 #include "common/constants/ConstantsClass.h"
+#include "common/constants/ConstantsStr/LosConfigStr.h"
 #include "common/util/CheckLang.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"

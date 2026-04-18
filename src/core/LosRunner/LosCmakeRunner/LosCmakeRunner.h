@@ -1,6 +1,7 @@
 #pragma once
 #include "common/constants/ConstantsClass.h"
-#include "common/constants/ConstantsStr.h"
+#include "common/constants/ConstantsStr/LosConfigStr.h"
+#include "common/constants/ConstantsStr/LosRunnerStr.h"
 #include "common/util/GetFilePath.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"

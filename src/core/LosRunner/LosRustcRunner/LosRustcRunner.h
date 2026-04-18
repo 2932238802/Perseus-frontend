@@ -1,6 +1,8 @@
 
 #pragma once
-#include "common/constants/ConstantsStr.h"
+// #include "common/constants/ConstantsStr.h"
+
+#include "common/constants/ConstantsStr/LosRunnerStr.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
 #include "core/LosState/LosState.h"

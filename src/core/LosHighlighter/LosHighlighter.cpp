@@ -150,10 +150,15 @@ namespace LosCore
 
 
 
-    /*
+    /**
+     * @brief updateSemanticTokens
+     * 
+     * 
+     * @param in data
+     * 
      * 更新一下
      * - [deltaLine, deltaChar, length, tokenType, modifiers]
-     * - 分别是五个 
+     * - 分别是五个
      */
     void LosHighlighter::updateSemanticTokens(const QJsonArray &data)
     {

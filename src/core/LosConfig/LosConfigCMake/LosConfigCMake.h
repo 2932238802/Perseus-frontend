@@ -1,4 +1,6 @@
-#include "common/constants/ConstantsStr.h"
+#pragma once
+
+#include "common/constants/ConstantsStr/LosConfigStr.h"
 #include "core/LosConfig/LosConfig/LosConfig.h"
 #include "core/LosConfig/LosConfigFactory/LosConfigFactory.h"
 #include "core/LosLog/LosLog.h"
@@ -8,6 +10,7 @@
 #include <qprocess.h>
 #include <qtmetamacros.h>
 #include <qurl.h>
+
 namespace LosCore
 {
     class LosConfigCMake : public LosConfig

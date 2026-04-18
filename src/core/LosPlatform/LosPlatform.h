@@ -1,6 +1,8 @@
 #pragma once
 #include "common/constants/ConstantsClass.h"
+
 #include <QFile>
+#include <qdebug.h>
 namespace LosCore
 {
 

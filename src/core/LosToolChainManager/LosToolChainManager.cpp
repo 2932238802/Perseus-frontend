@@ -172,6 +172,7 @@ namespace LosCore
         auto &router = LosCore::LosRouter::instance();
         connect(&router, &LosRouter::_cmd_checkLanguageToolchain, this, &LosToolChainManager::onCheckLanguageToolchain);
         connect(&router, &LosRouter::_cmd_checkSingleTool, this, &LosToolChainManager::onCheckSingleTool);
+        
     }
 
 

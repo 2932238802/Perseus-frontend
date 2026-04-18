@@ -4,10 +4,9 @@
 #include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
 #include "core/LosState/LosState.h"
 #include "models/LosFilePath/LosFilePath.h"
+
 #include <QObject>
 #include <QProcess>
-#include "common/constants/ConstantsStr.h"
-#include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
 #include <qprocess.h>
 namespace LosCore
 {
