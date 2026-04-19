@@ -1,8 +1,10 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
 
-/*
- * 构造
+/**
+ * @brief Construct a new Perseus:: Perseus object
+ * 
+ * @param in parent 
  */
 Perseus::Perseus(QWidget *parent) : QMainWindow(parent), ui(new Ui::Perseus)
 {
@@ -20,8 +22,9 @@ Perseus::Perseus(QWidget *parent) : QMainWindow(parent), ui(new Ui::Perseus)
 
 
 
-/*
- * 析构
+/**
+ * @brief 
+ * 
  */
 Perseus::~Perseus()
 {
@@ -34,8 +37,12 @@ Perseus::~Perseus()
 
 
 
-/*
- * esc 关闭程序
+/**
+ * @brief 
+ * 
+ * @param e 
+ * @return * void 
+ * 
  */
 void Perseus::keyPressEvent(QKeyEvent *e)
 {
@@ -44,11 +51,11 @@ void Perseus::keyPressEvent(QKeyEvent *e)
 
 
 
-/*
- * 文件 加载完毕
- */
-/*
- * 文件 加载完毕
+/**
+ * @brief 
+ * 
+ * @param in isc 
+ * @param in run_analysis 
  */
 void Perseus::OnFileLoaded(bool isc, bool run_analysis)
 {
@@ -141,12 +148,13 @@ void Perseus::OnFileLoaded(bool isc, bool run_analysis)
 
 
 
-/*
- * onFilesBtnClicked
+/**
+ * @brief onFilesBtnClicked
  * - 文件按钮 被点击
  * - 支持导入文件和文件夹
  * - 以文件夹所在的绝对位置 作为 项目根目录
  * - 切换目录时关闭其它 Tab
+ * 
  */
 void Perseus::onFilesBtnClicked()
 {
@@ -176,10 +184,15 @@ void Perseus::onFilesBtnClicked()
 
 
 
-/*
+/**
+ * @brief onExplorerFileDoubleClicked
  * 双击文件
  * - 修复 展开的问题
  * - 默认已经有 展开的问题
+ * 
+ * @param index 
+ * 
+ * 
  */
 void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
 {
@@ -510,7 +523,6 @@ void Perseus::initShotcut()
                                                         LOS_tabUi->closeTab(LOS_tabUi->getCurEditIndex());
                                                         return;
                                                     }
-
                                                 });
 }
 
