@@ -101,6 +101,7 @@ namespace LosCore
         connect(&router, &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this, &LosLspManager::didChangeWatchedFiles);
         connect(&router, &LosRouter::_cmd_lspReady, this, &LosLspManager::onLspReady);
         connect(&router, &LosRouter::_cmd_lsp_request_semantic, this, &LosLspManager::onSemantic);
+        connect(&router, &LosRouter::_cmd_fileRenamed, this, &LosLspManager::onFileRenamed);
     }
 
 
@@ -219,6 +220,30 @@ namespace LosCore
             }
         }
         LOS_clients[tool]->start(asgs, exePath);
+    }
+
+
+
+    /**
+     * @brief onFileRenamed 重命名
+     *
+     * @param oldPath
+     * @param newPath
+     */
+    void LosLspManager::onFileRenamed(const QString &oldPath, const QString &newPath)
+    {
+        auto oldClient = getClient(oldPath);
+        auto newClient = getClient(newPath);
+        if (oldClient)
+        {
+            oldClient->didChangeWatchedFiles(
+                oldPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::DELETE);
+        }
+        if (newClient)
+        {
+            newClient->didChangeWatchedFiles(
+                newPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Created);
+        }
     }
 
 

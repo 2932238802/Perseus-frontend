@@ -12,9 +12,6 @@ namespace LosView
         this->setModel(L_model);
         setMaxVisibleItems(LosCommon::MAX_VISIBLE_COMPLETION);
         setCompletionMode(QCompleter::PopupCompletion);
-        /*
-         * 大小写不敏感
-         */
         setCaseSensitivity(Qt::CaseInsensitive);
         initStyle();
     }

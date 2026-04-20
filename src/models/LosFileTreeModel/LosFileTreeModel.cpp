@@ -21,8 +21,14 @@ namespace LosModel
     };
 
 
-    /*
-     * 获取身份证
+    
+    /**
+     * @brief index 获取身份证
+     * 
+     * @param row 
+     * @param column 
+     * @param parent 
+     * @return QModelIndex 
      */
     QModelIndex LosFileTreeModel::index(int row, int column, const QModelIndex &parent) const
     {

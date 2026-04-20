@@ -1,6 +1,12 @@
 #include "LosEditorUi.h"
 #include "view/LosLineNumberUi/LosLineNumberUi.h"
+#include <cfloat>
+#include <qcursor.h>
+#include <qevent.h>
 #include <qglobal.h>
+#include <qnamespace.h>
+#include <qplaintextedit.h>
+#include <qtextcursor.h>
 #include <qtextedit.h>
 #include <qtextformat.h>
 #include <qtextobject.h>
@@ -338,9 +344,10 @@ namespace LosView
 
 
 
-    /*
-     * get
-     * 获取当前光标下的单词
+    /**
+     * @brief getWordUnderCursor 获取当前光标下的单词
+     *
+     * @return QString
      */
     QString LosEditorUi::getWordUnderCursor() const
     {
@@ -362,6 +369,12 @@ namespace LosView
 
 
 
+    /**
+     * @brief isDirty
+     *
+     * @return true
+     * @return false
+     */
     bool LosEditorUi::isDirty() const
     {
         return L_dirty;
@@ -397,25 +410,17 @@ namespace LosView
         L_timer = new QTimer(this);
         L_timer->setSingleShot(true);
 
-        /*
-         * 语法补全的弹窗
-         */
+        // 语法补全的弹窗
         LOS_completer = new LosView::LosCompleterUi(this);
         LOS_completer->setWidget(this);
 
-        /*
-         * 语法高亮
-         */
+        // 语法高亮
         LOS_highlighter = new LosCore::LosHighlighter(this->document());
 
-        /*
-         * 行 号
-         */
+        // 行 号
         LOS_lineNumber = new LosView::LosLineNumberUi(this);
 
-        /*
-         * activated 有两种
-         */
+        // activated 有两种
         auto &router = LosCore::LosRouter::instance();
         connect(LOS_completer, QOverload<const QString &>::of(&QCompleter::activated), this,
                 &LosEditorUi::insertCompletion);
@@ -438,60 +443,29 @@ namespace LosView
 
 
 
-    /*
-     * - 初始化样式
+    /**
+     * @brief initStyle
+     * - 设置样式
+     * - 设置鼠标 追踪
      */
     void LosEditorUi::initStyle()
     {
         QFontMetrics met(this->font());
         int tab = 4 * met.horizontalAdvance(" ");
         this->setTabStopDistance(tab);
-        updateLineNumberAreaWidth(0);
+        updateLineNumberAreaWidth();
+        viewport()->setMouseTracking(true);
+        setMouseTracking(true);
     }
 
 
 
-    /*
-     * - 自定义 工具 剪切
+    /**
+     * @brief updateLineNumberArea 更新 左侧的数
+     *
+     * @param in rect
+     * @param in dy
      */
-    void LosEditorUi::cutCurrentLine()
-    {
-        QTextCursor cursor = textCursor();
-        cursor.movePosition(QTextCursor::StartOfBlock);
-        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-        if (!cursor.atEnd())
-        {
-            /*
-             * 吃掉 后面的 \n
-             */
-            cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
-        }
-        setTextCursor(cursor);
-        cut();
-    }
-
-
-
-    /*
-     * - 复制 一行
-     */
-    void LosEditorUi::copyCurrentLine()
-    {
-        QTextCursor cursor         = textCursor();
-        QTextCursor originalCursor = cursor;
-        cursor.movePosition(QTextCursor::StartOfBlock);
-        cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
-        if (!cursor.atEnd())
-        {
-            cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
-        }
-        setTextCursor(cursor);
-        copy();
-        setTextCursor(originalCursor);
-    }
-
-
-
     void LosEditorUi::updateLineNumberArea(const QRect &rect, int dy)
     {
         if (dy)
@@ -504,13 +478,17 @@ namespace LosView
         }
         if (rect.contains(viewport()->rect()))
         {
-            updateLineNumberAreaWidth(0);
+            updateLineNumberAreaWidth();
         }
     }
 
 
 
-    void LosEditorUi::updateLineNumberAreaWidth(int)
+    /**
+     * @brief updateLineNumberAreaWidth
+     * 更新左侧的宽度
+     */
+    void LosEditorUi::updateLineNumberAreaWidth()
     {
         /*
          * 左、上、右、下
@@ -521,19 +499,76 @@ namespace LosView
 
 
 
+    /**
+     * @brief highlightCurrentLine 高亮行
+     *
+     */
     void LosEditorUi::highlightCurrentLine()
     {
-        QList<QTextEdit::ExtraSelection> extra = L_diagnosticSelections;
-        if (isReadOnly())
-            return;
-        QTextEdit::ExtraSelection selection;
-        QColor lineColor = QColor("#313244");
-        selection.format.setBackground(lineColor);
-        selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-        selection.cursor = textCursor();
-        selection.cursor.clearSelection();
-        extra.append(selection);
+        QList<QTextEdit::ExtraSelection> extra;
+        extra.append(L_diagnosticSelections);
+        if (!isReadOnly())
+        {
+            QTextEdit::ExtraSelection selection;
+            QColor lineColor = QColor("#313244");
+            selection.format.setBackground(lineColor);
+            selection.format.setProperty(QTextFormat::FullWidthSelection, true);
+            selection.cursor = textCursor();
+            selection.cursor.clearSelection();
+            extra.append(selection);
+        }
+        extra.append(L_hoverSelections);
         setExtraSelections(extra);
+    }
+
+
+    
+    /**
+     * @brief updateHoverUnderline
+     * 鼠标ctrl 悬停 下划线高亮
+     *
+     * @param in vpPos 全局位置
+     */
+    void LosEditorUi::updateHoverUnderline(const QPoint &vpPos)
+    {
+        QTextCursor cursor = cursorForPosition(vpPos);
+        cursor.select(QTextCursor::WordUnderCursor);
+        QString word = cursor.selectedText();
+        if (word.isEmpty() || (!word.at(0).isLetterOrNumber() && word.at(0) != '_'))
+        {
+            clearHoverUnderline();
+            viewport()->setCursor(Qt::IBeamCursor);
+            return;
+        }
+
+        if (L_lastCursor.selectionStart() == cursor.selectionStart() &&
+            L_lastCursor.selectionEnd() == cursor.selectionEnd())
+        {
+            return;
+        }
+
+        L_lastCursor = cursor;
+        QTextEdit::ExtraSelection sel;
+        sel.cursor = cursor;
+        sel.format.setFontUnderline(true);
+        sel.format.setUnderlineStyle(QTextCharFormat::SingleUnderline);
+        sel.format.setForeground(QColor("#89b4fa"));
+        L_hoverSelections = {sel};
+        highlightCurrentLine();
+        viewport()->setCursor(Qt::PointingHandCursor);
+    }
+
+
+
+    /**
+     * @brief clearHoverUnderline 清理下划线
+     *
+     */
+    void LosEditorUi::clearHoverUnderline()
+    {
+        L_hoverSelections.clear();
+        L_lastCursor = QTextCursor();
+        highlightCurrentLine();
     }
 
 
@@ -559,8 +594,8 @@ namespace LosView
 
 
 
-    /*
-     * - 防抖
+    /**
+     * @brief onDebounceTimeout 防抖语法补全
      */
     void LosEditorUi::onDebounceTimeout()
     {
@@ -591,8 +626,10 @@ namespace LosView
 
 
 
-    /*
-     * - clangd 语法补全
+    /**
+     * @brief
+     *
+     * @param markdownContent
      */
     void LosEditorUi::onHover_Clangd(const QString &markdownContent)
     {
@@ -608,10 +645,6 @@ namespace LosView
         html.replace("```cpp\n", "<pre style='color:#569cd6; font-family:Consolas; margin: 5px 0;'>");
         html.replace("```c\n", "<pre style='color:#569cd6; font-family:Consolas; margin: 5px 0;'>");
         html.replace("```", "</pre>");
-
-        /*
-         * 这里的 ? 是非 贪婪模式 匹配到 下一个 ** 就停止
-         */
         QRegularExpression boldRegex("\\*\\*(.*?)\\*\\*");
 
         html.replace(boldRegex, "<b>\\1</b>");
@@ -643,6 +676,76 @@ namespace LosView
     }
 
 
+    /**
+     * @brief onCutKeyClicked
+     * 剪切一行
+     */
+    void LosEditorUi::onCutKeyClicked()
+    {
+        QTextCursor cursor = textCursor();
+        if (!cursor.hasSelection())
+        {
+            QTextCursor cursor = textCursor();
+            cursor.movePosition(QTextCursor::StartOfBlock);
+            cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+            if (!cursor.atEnd())
+            {
+                /*
+                 * 吃掉 后面的 \n
+                 */
+                cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+            }
+            setTextCursor(cursor);
+            cut();
+            return;
+        }
+    }
+
+
+
+    /**
+     * @brief onCopyCurrentLine
+     * 复制当前行
+     */
+    void LosEditorUi::onCopyCurrentLine()
+    {
+        QTextCursor cursor = textCursor();
+        if (!cursor.hasSelection())
+        {
+            QTextCursor cursor         = textCursor();
+            QTextCursor originalCursor = cursor;
+            cursor.movePosition(QTextCursor::StartOfBlock);
+            cursor.movePosition(QTextCursor::EndOfBlock, QTextCursor::KeepAnchor);
+            if (!cursor.atEnd())
+            {
+                cursor.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+            }
+            setTextCursor(cursor);
+            copy();
+            setTextCursor(originalCursor);
+            return;
+        }
+    }
+
+
+    /**
+     * @brief onControlKeyClicked
+     * - ctrl + 鼠标左键
+     * - 高亮
+     *
+     * @param in event
+     * - 鼠标事件
+     */
+    void LosEditorUi::onControlKeyPressed()
+    {
+        L_ctrlBtnPresses   = true;
+        const QPoint vpPos = viewport()->mapFromGlobal(QCursor::pos());
+        if (viewport()->rect().contains(vpPos))
+        {
+            updateHoverUnderline(vpPos);
+        }
+    }
+
 
     /*
      * 光标拦截
@@ -651,6 +754,11 @@ namespace LosView
      */
     void LosEditorUi::keyPressEvent(QKeyEvent *event)
     {
+        if (event->key() == Qt::Key_Control)
+        {
+            onControlKeyPressed();
+        }
+
         if (LOS_completer && LOS_completer->popup() && LOS_completer->popup()->isVisible())
         {
             switch (event->key())
@@ -672,24 +780,9 @@ namespace LosView
         }
 
         if (event->matches(QKeySequence::Cut))
-        {
-            QTextCursor cursor = textCursor();
-            if (!cursor.hasSelection())
-            {
-                cutCurrentLine();
-                return;
-            }
-        }
-
+            onCutKeyClicked();
         if (event->matches(QKeySequence::Copy))
-        {
-            QTextCursor cursor = textCursor();
-            if (!cursor.hasSelection())
-            {
-                copyCurrentLine();
-                return;
-            }
-        }
+            onCopyCurrentLine();
 
         static const QHash<QChar, QChar> AUTO_CLOSE_MAP{{'{', '}'}, {'[', ']'}, {'(', ')'}};
         if (!event->text().isEmpty())
@@ -698,19 +791,35 @@ namespace LosView
             if (AUTO_CLOSE_MAP.contains(inputChar))
             {
                 QPlainTextEdit::keyPressEvent(event);
-
                 QTextCursor cursor = textCursor();
                 cursor.insertText(AUTO_CLOSE_MAP[inputChar]);
-
                 cursor.movePosition(QTextCursor::PreviousCharacter);
                 setTextCursor(cursor);
-
                 return;
             }
         }
 
         QPlainTextEdit::keyPressEvent(event);
     }
+
+
+
+    /**
+     * @brief keyReleaseEvent
+     *
+     * @param event
+     */
+    void LosEditorUi::keyReleaseEvent(QKeyEvent *event)
+    {
+        if (event->key() == Qt::Key_Control)
+        {
+            L_ctrlBtnPresses = false;
+            clearHoverUnderline();
+            viewport()->setCursor(Qt::IBeamCursor);
+        }
+        QPlainTextEdit::keyReleaseEvent(event);
+    }
+
 
 
     /*
@@ -733,6 +842,8 @@ namespace LosView
             int line        = cur.blockNumber();
             int col         = cur.positionInBlock();
             emit LosCore::LosRouter::instance()._cmd_whereDefine(line, col, LOS_filePath -> getFilePath());
+            clearHoverUnderline();
+            viewport()->setCursor(Qt::IBeamCursor);
             event->accept();
             return;
         }
@@ -741,8 +852,34 @@ namespace LosView
 
 
 
-    /*
-     * - 暂时先 监听 字体变化 然后修改 tab 按键的效果
+    /**
+     * @brief mouseMoveEvent
+     *
+     * @param event
+     */
+    void LosEditorUi::mouseMoveEvent(QMouseEvent *event)
+    {
+        if (L_ctrlBtnPresses)
+        {
+            updateHoverUnderline(event->pos());
+        }
+        QPlainTextEdit::mouseMoveEvent(event);
+    }
+
+
+    void LosEditorUi::leaveEvent(QEvent *event)
+    {
+        clearHoverUnderline();
+        viewport()->setCursor(Qt::IBeamCursor);
+        QPlainTextEdit::leaveEvent(event);
+    }
+
+
+
+    /**
+     * @brief changeEvent
+     *
+     * @param e
      */
     void LosEditorUi::changeEvent(QEvent *e)
     {
@@ -757,13 +894,17 @@ namespace LosView
 
 
 
-    /*
-     * - 鼠标悬停的效果
+    /**
+     * @brief event 鼠标悬停的效果
+     *
+     * @param event
+     * @return true
+     * @return false
      */
     bool LosEditorUi::event(QEvent *event)
     {
         if (!LOS_filePath)
-            return false;
+            return QPlainTextEdit::event(event);
         if (event->type() == QEvent::ToolTip)
         {
             QHelpEvent *help   = static_cast<QHelpEvent *>(event);
@@ -779,6 +920,11 @@ namespace LosView
 
 
 
+    /**
+     * @brief resizeEvent
+     *
+     * @param in e
+     */
     void LosEditorUi::resizeEvent(QResizeEvent *e)
     {
         QRect cr = contentsRect();
@@ -786,5 +932,14 @@ namespace LosView
         QPlainTextEdit::resizeEvent(e);
     }
 
+
+
+    void LosEditorUi::focusOutEvent(QFocusEvent *event)
+    {
+        L_ctrlBtnPresses = false;
+        clearHoverUnderline();
+        viewport()->setCursor(Qt::IBeamCursor);
+        QPlainTextEdit::focusOutEvent(event);
+    }
 
 } /* namespace LosView */

@@ -24,6 +24,7 @@ namespace LosCore
          * 文本定义
          */
         void _cmd_whereDefine(int line, int col, const QString &file_path);
+        void _cmd_whereDefine_probe(int line, int col, const QString &file_path);
 
         /*
          * 打开文件 给 lsp 的请求

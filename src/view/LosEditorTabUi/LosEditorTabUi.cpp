@@ -1,6 +1,9 @@
 
 #include "LosEditorTabUi.h"
 #include "common/constants/ConstantsStr/LosEditorTableUiStr.h"
+#include "common/constants/ConstantsStr/ShortCut.h"
+#include "core/LosShortcutManager/LosShortcutManager.h"
+#include "view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.h"
 
 
 
@@ -385,8 +388,64 @@ namespace LosView
 
 
 
-    /*
-     * 初始化
+    /**
+     * @brief onGotoLineShort
+     * -
+     *
+     */
+    void LosEditorTabUi::onGotoLineShortcut()
+    {
+        auto editor = getCurEditor();
+        if (!editor)
+            return;
+        int maxLines                               = editor->document()->blockCount();
+        LosView::LosGotoLinePopupUi *contentWidget = new LosView::LosGotoLinePopupUi();
+        LosView::LosFloatingPanelUi *dialog        = new LosView::LosFloatingPanelUi(contentWidget, true, this);
+        connect(contentWidget->getLineEdit(), &QLineEdit::returnPressed, dialog, &QDialog::accept);
+        dialog->showAtPosition(editor, LosCommon::LosFloatingPanelUi_Constants::PositionMode::TopRight);
+        contentWidget->getLineEdit()->setFocus();
+        if (dialog->exec() == QDialog::Accepted)
+        {
+            int line = contentWidget->getLineNumber();
+            if (line > 0)
+            {
+                if (line > maxLines)
+                {
+                    line = maxLines;
+                }
+                editor->gotoLine(line - 1);
+            }
+        }
+        dialog->deleteLater();
+    }
+
+
+
+    /**
+     * @brief onFindShortcut
+     * 搜索的快捷键
+     */
+    void LosEditorTabUi::onFindShortcut()
+    {
+        auto edit                              = getCurEditor();
+        LosView::LosFindPopupUi *contentWidget = new LosView::LosFindPopupUi();
+        LosView::LosFloatingPanelUi *dialog    = new LosView::LosFloatingPanelUi(contentWidget, true, this);
+        connect(contentWidget->getEdit(), &QLineEdit::returnPressed, dialog, &QDialog::accept);
+        dialog->showAtPosition(edit, LosCommon::LosFloatingPanelUi_Constants::PositionMode::TopRight);
+        contentWidget->getEdit()->setFocus();
+        if (dialog->exec() == QDialog::Accepted)
+        {
+            INF("1", "1");
+        }
+        dialog->deleteLater();
+    }
+
+
+
+    /**
+     * @brief initConnect
+     * - 初始化 信号槽
+     * 
      */
     void LosEditorTabUi::initConnect()
     {
@@ -453,6 +512,16 @@ namespace LosView
                         cp->setText(filePath);
                     }
                 });
+    }
+
+
+
+    void LosEditorTabUi::initShortCut()
+    {
+        LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::GOTO_LINE, this,
+                                                    [this]() { this->onGotoLineShortcut(); });
+        LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::SEARCH_FIND, this,
+                                                    [this]() { this->onFindShortcut(); });
     }
 
 

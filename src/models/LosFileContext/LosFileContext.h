@@ -9,7 +9,6 @@
 
 namespace LosModel
 {
-
     class LosFileContext
     {
       public:

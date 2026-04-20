@@ -1,7 +1,6 @@
 #include "LosSettingsUi.h"
-#include "core/LosRouter/LosRouter.h"
 #include "ui_LosSettingsUi.h"
-#include <qpushbutton.h>
+
 
 
 namespace LosView

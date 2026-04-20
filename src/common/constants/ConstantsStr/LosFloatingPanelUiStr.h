@@ -1,3 +1,4 @@
+#pragma once
 #include <QString>
 
 namespace LosCommon
@@ -31,5 +32,32 @@ namespace LosCommon
                                                                             }
                                                                         )";
         } /* namespace LosGotoLinePopupUi_Constants */
+
+
+
+        namespace LosFindPopupUi_Constants
+        {
+            inline constexpr const char *FIND_LABEL_CONTENT    = "Go to line:";
+            inline constexpr const char *FIND_LABEL_STYLESHEET = R"(
+                                                                        color: #a6adc8; 
+                                                                        font-size: 13px;
+                                                                    )";
+
+            inline constexpr const char *FIND_LINEEDIT_STYLESHEET = R"(
+                                                                            QLineEdit { 
+                                                                                background-color: #a1a3c1; 
+                                                                                border: 1px solid #45475a; 
+                                                                                border-radius: 4px; 
+                                                                                padding: 4px 8px; 
+                                                                                color: #ffffff; 
+                                                                                font-family: 'JetBrains Mono', monospace;
+                                                                                font-size: 14px;
+                                                                            }
+                                                                            QLineEdit:focus { 
+                                                                                border: 1px solid #89b4fa; 
+                                                                                background-color: #45475a; 
+                                                                            }
+                                                                        )";
+        } // namespace LosFindPopupUii_Constants
     } /* namespace LosFloatingPanelUi_Constants */
 } // namespace LosCommon

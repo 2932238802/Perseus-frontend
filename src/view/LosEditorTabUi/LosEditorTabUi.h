@@ -2,6 +2,7 @@
 #pragma once
 #include "common/constants/ConstantsClass.h"
 #include "common/constants/ConstantsStr/LosEditorTableUiStr.h"
+#include "common/constants/ConstantsStr/ShortCut.h"
 #include "common/util/CheckLang.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
@@ -9,6 +10,8 @@
 #include "models/LosFileContext/LosFileContext.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include "view/LosEditorUi/LosEditorUi.h"
+#include "view/LosFloatingPanelUi/LosFloatingPanelUi.h"
+#include "view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.h"
 #include "view/LosPluginDetailUi/LosPluginDetailUi.h"
 
 #include <QDebug>
@@ -63,11 +66,13 @@ namespace LosView
         void onTabClicked(int index);
         void onOpenPlugin(const LosCommon::LosNet_Constants::PluginInfo &info);
         void onFileRenamed(const QString &old_path, const QString &new_path);
+        void onGotoLineShortcut();
+        void onFindShortcut();
 
       private: /* init */
         void initConnect();
         void initTabBar();
-
+        void initShortCut();
 
       private: /* tool */
         void checkLspAnsFormat(const QString &file_path);

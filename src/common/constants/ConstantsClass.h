@@ -83,7 +83,8 @@ namespace LosCommon
         enum LspJson_didChangeWatchedFiles_changes_type
         {
             Created = 1,
-            Changed = 2
+            Changed = 2,
+            DELETE  = 3,
         };
 
 

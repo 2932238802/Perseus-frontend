@@ -311,6 +311,7 @@ void Perseus::onDirectoryChanged()
 
 
 
+
 /**
  * @brief
  * initConnect
@@ -399,7 +400,7 @@ void Perseus::initConnect()
                              [this]()
                              {
                                  QString versionInfo = QString("<h3>Perseus IDE</h3>"
-                                                               "<p><b>Version:</b> 1.0.56 (Build: %1)</p>"
+                                                               "<p><b>Version:</b> 1.0.80 (Build: %1)</p>"
                                                                "<p><b>Qt version:</b> Qt %2</p>"
                                                                "<hr>"
                                                                "<p>Copyright &copy; 2026 LosAngelous</p>")
@@ -479,38 +480,7 @@ void Perseus::initShotcut()
         "zoom out");
     LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::COMMANDS, this,
                                                 [this]() { LOS_cmdPalette->showPalette(); });
-    LosCore::LosShortcutManager::instance().reg(
-        LosCommon::ShortCut::GOTO_LINE, this,
-        [this]()
-        {
-            auto editor = LOS_tabUi->getCurEditor();
-            if (!editor)
-                return;
-            int maxLines                               = editor->document()->blockCount();
-            LosView::LosGotoLinePopupUi *contentWidget = new LosView::LosGotoLinePopupUi();
-            LosView::LosFloatingPanelUi *dialog        = new LosView::LosFloatingPanelUi(contentWidget, true, this);
-            connect(contentWidget->getLineEdit(), &QLineEdit::returnPressed, dialog, &QDialog::accept);
-            dialog->showAtPosition(editor, LosCommon::LosFloatingPanelUi_Constants::PositionMode::TopRight);
-            contentWidget->getLineEdit()->setFocus();
-            if (dialog->exec() == QDialog::Accepted)
-            {
-                int line = contentWidget->getLineNumber();
-                if (line > 0)
-                {
-                    if (line > maxLines)
-                    {
-                        line = maxLines;
-                    }
-
-                    /*
-                     * 底层行号减 1
-                     */
-                    editor->gotoLine(line - 1);
-                }
-            }
-            dialog->deleteLater();
-        },
-        "go to line");
+    
 
     LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::TAB_CLOSE, this,
                                                 [this]()
@@ -528,8 +498,9 @@ void Perseus::initShotcut()
 
 
 
-/*
- * 初始化会话
+/**
+ * @brief initSession
+ * 
  */
 void Perseus::initSession()
 {
@@ -588,8 +559,12 @@ void Perseus::initSession()
 
 
 
-/*
- * 收集当前的配置
+
+/**
+ * @brief collectConfig
+ * - 收集当前的 信息
+ * 
+ * @return LosCommon::LosSession_Constants::Config 
  */
 LosCommon::LosSession_Constants::Config Perseus::collectConfig()
 {
