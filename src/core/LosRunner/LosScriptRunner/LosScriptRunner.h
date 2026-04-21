@@ -1,8 +1,12 @@
 #pragma once
-#include "common/constants/ConstantsClass.h"
+#include "common/constants/ConstantsClass/LosPlatformClass.h"
+#include "common/util/GetFilePath.h"
 #include "core/LosLog/LosLog.h"
+#include "core/LosPlatform/LosPlatform.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
+#include "core/LosState/LosState.h"
+#include <qcoreapplication.h>
 #include <qglobal.h>
 #include <qprocess.h>
 #include <qtmetamacros.h>

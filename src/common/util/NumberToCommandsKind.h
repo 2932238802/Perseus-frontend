@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common/constants/ConstantsNum.h"
+#include "common/constants/ConstantsClass/LosCommandUiClass.h"
 
 namespace LosCommon
 {

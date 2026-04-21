@@ -1,5 +1,5 @@
 #pragma once
-#include "common/constants/ConstantsClass.h"
+#include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include <QString>
 
 namespace LosCommon

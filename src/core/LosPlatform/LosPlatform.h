@@ -1,6 +1,5 @@
 #pragma once
-#include "common/constants/ConstantsClass.h"
-
+#include "common/constants/ConstantsClass/LosPlatformClass.h"
 #include <QFile>
 #include <qdebug.h>
 namespace LosCore

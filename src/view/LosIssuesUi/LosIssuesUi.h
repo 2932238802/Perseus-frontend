@@ -1,11 +1,19 @@
 #pragma once
-#include "common/constants/ConstantsClass.h"
+#include "common/constants/ConstantsClass/LosLspClass.h"
+#include "core/LosRouter/LosRouter.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include "view/style/LosIssuesUi_style.h"
+
 #include <QHeaderView>
 #include <QObject>
 #include <QTableWidget>
 #include <QWidget>
+#include <qabstractitemview.h>
+#include <qboxlayout.h>
+#include <qcolor.h>
+#include <qnamespace.h>
+#include <qtableview.h>
+#include <qtablewidget.h>
 
 namespace LosView
 {

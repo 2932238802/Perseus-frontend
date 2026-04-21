@@ -1,5 +1,4 @@
 #pragma once
-#include "common/constants/ConstantsClass.h"
 #include "common/util/CheckLang.h"
 #include "core/LosLsp/LosLspCMake/LosLspCMake.h"
 #include "core/LosLsp/LosLspClangd/LosLspClangd.h"

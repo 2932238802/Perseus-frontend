@@ -1,5 +1,5 @@
 #pragma once
-#include "common/constants/ConstantsClass.h"
+#include "common/constants/ConstantsClass/LosSessionClass.h"
 #include "core/LosLog/LosLog.h"
 #include <QDir>
 #include <QStandardPaths>

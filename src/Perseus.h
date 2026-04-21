@@ -1,7 +1,7 @@
 #pragma once
 
-#include "common/constants/ConstantsClass.h"
-#include "common/constants/ConstantsNum.h"
+#include "common/constants/ConstantsClass/LosSessionClass.h"
+#include "common/constants/ConstantsNum/PerseusNum.h"
 #include "common/constants/ConstantsStr/ShortCut.h"
 #include "core/LosConfig/LosConfigManager/LosConfigManager.h"
 #include "core/LosLsp/LosLspClient/LosLspClient.h"

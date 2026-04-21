@@ -1,17 +1,4 @@
 #include "LosEditorUi.h"
-#include "view/LosLineNumberUi/LosLineNumberUi.h"
-#include <cfloat>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qglobal.h>
-#include <qnamespace.h>
-#include <qplaintextedit.h>
-#include <qtextcursor.h>
-#include <qtextedit.h>
-#include <qtextformat.h>
-#include <qtextobject.h>
-
-
 
 namespace LosView
 {

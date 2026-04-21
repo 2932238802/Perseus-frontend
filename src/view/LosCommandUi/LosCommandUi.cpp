@@ -1,11 +1,6 @@
 
 #include "LosCommandUi.h"
-#include "common/constants/ConstantsClass.h"
-#include "common/constants/ConstantsNum.h"
-#include "common/util/NumberToCommandsKind.h"
-#include "core/LosLog/LosLog.h"
-#include <qjsonarray.h>
-#include <qjsonobject.h>
+
 namespace LosView
 {
 

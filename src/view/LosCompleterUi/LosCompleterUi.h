@@ -1,5 +1,5 @@
 #pragma once
-#include "common/constants/ConstantsNum.h"
+#include "common/constants/ConstantsNum/LosCompleterUiNum.h"
 #include "view/style/LosCompleterUi_style.h"
 #include <QAbstractItemView>
 #include <QCompleter>

@@ -13,7 +13,6 @@
 
 namespace LosCore
 {
-
     struct SemanticToken
     {
         int startChar;

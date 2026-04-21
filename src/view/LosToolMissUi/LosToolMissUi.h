@@ -1,12 +1,13 @@
 #pragma once
 
-#include "common/constants/ConstantsClass.h"
 #include "core/LosRouter/LosRouter.h"
 #include "view/style/LosToolMissUI_style.h"
+
 #include <QDesktopServices>
 #include <QLabel>
 #include <QPushButton>
 #include <QString>
+#include <QUrl>
 #include <qboxlayout.h>
 #include <qdialog.h>
 #include <qtmetamacros.h>
@@ -14,7 +15,6 @@
 
 namespace LosView
 {
-
     class LosToolMissUi : public QDialog
     {
         Q_OBJECT
@@ -25,5 +25,4 @@ namespace LosView
         explicit LosToolMissUi(const LosCommon::LosToolChain_Constants::ToolChainConfig &, QWidget *parent = nullptr);
         ~LosToolMissUi() = default;
     };
-
 } /* namespace LosView */

@@ -1,6 +1,5 @@
 #include "LosToolMissUi.h"
-#include <QDesktopServices>
-#include <QUrl>
+
 
 namespace LosView
 {

@@ -1,7 +1,6 @@
 #pragma once
-#include "common/constants/ConstantsClass.h"
+#include "common/constants/ConstantsClass/LosUtilClass.h"
 #include "core/LosLog/LosLog.h"
-
 #include <QDir>
 #include <QFile>
 #include <QString>
@@ -31,14 +30,16 @@ namespace LosCommon
             {
                 QString fullPath = dir.filePath(targetPath);
                 QFileInfo fileInfo(fullPath);
-                
+
                 if constexpr (type == LosCommon::FindFileType::COMMON_DIR)
                 {
-                    if (fileInfo.isDir()) return fullPath;
+                    if (fileInfo.isDir())
+                        return fullPath;
                 }
-                else 
+                else
                 {
-                    if (fileInfo.isFile()) return fullPath;
+                    if (fileInfo.isFile())
+                        return fullPath;
                 }
             }
             if (!dir.cdUp())

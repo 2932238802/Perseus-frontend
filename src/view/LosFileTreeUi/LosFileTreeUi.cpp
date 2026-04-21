@@ -1,17 +1,5 @@
 #include "LosFileTreeUi.h"
-#include "common/constants/ConstantsClass.h"
-#include "core/LosFileSystem/LosFileSystem.h"
-#include "core/LosPlatform/LosPlatform.h"
-#include "models/LosFileNode/LosFileNode.h"
-#include "models/LosFilePath/LosFilePath.h"
-#include "models/LosFileTreeModel/LosFileTreeModel.h"
-#include <qabstractitemmodel.h>
-#include <qabstractitemview.h>
-#include <qdesktopservices.h>
-#include <qguiapplication.h>
-#include <qitemselectionmodel.h>
-#include <qnamespace.h>
-#include <qobject.h>
+
 
 namespace LosView
 {

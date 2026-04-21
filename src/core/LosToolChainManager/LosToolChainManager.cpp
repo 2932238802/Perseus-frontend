@@ -1,8 +1,4 @@
 #include "LosToolChainManager.h"
-#include "common/constants/ConstantsClass.h"
-#include <qjsonobject.h>
-
-
 
 namespace LosCore
 {

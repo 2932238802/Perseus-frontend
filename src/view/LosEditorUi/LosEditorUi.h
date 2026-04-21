@@ -1,12 +1,13 @@
 #pragma once
-#include "common/constants/ConstantsClass.h"
-#include "common/constants/ConstantsNum.h"
+#include "common/constants/ConstantsNum/LosCompleterUiNum.h"
+#include "common/constants/ConstantsNum/LosLineNumberUiNum.h"
 #include "core/LosFormat/LosFormatManager/LosFormatManager.h"
 #include "core/LosHighlighter/LosHighlighter.h"
 #include "core/LosRouter/LosRouter.h"
 #include "models/LosFileContext/LosFileContext.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include "view/LosCompleterUi/LosCompleterUi.h"
+#include "view/LosLineNumberUi/LosLineNumberUi.h"
 
 #include <QApplication>
 #include <QCompleter>
@@ -24,7 +25,9 @@
 #include <QWidget>
 #include <algorithm>
 #include <atomic>
+#include <cfloat>
 #include <qcoreevent.h>
+#include <qcursor.h>
 #include <qevent.h>
 #include <qfontmetrics.h>
 #include <qglobal.h>

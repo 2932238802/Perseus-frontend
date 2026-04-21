@@ -1,8 +1,8 @@
 #pragma once
-#include "common/constants/ConstantsClass.h"
 #include "core/LosRouter/LosRouter.h"
-#include "ui_LosPlugUi.h"
+
 #include <QWidget>
+#include <qlistwidget.h>
 #include <qtmetamacros.h>
 
 namespace Ui

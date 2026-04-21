@@ -1,4 +1,3 @@
-
 #include "view/LosCompleterUi/LosCompleterUi.h"
 
 namespace LosView

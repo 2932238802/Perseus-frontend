@@ -29,7 +29,6 @@ namespace LosCore
             if (!L_idToType.contains(id))
                 return;
             LosLspType type = L_idToType.take(id);
-
             switch (type)
             {
             case LosLspType::REQ_INITIALIZE:
@@ -61,7 +60,7 @@ namespace LosCore
                     }
                 }
 
-                sendInitializeMsg(); // 发送 initialized 通知
+                sendInitializeMsg(); 
                 for (const auto &con : L_pendings)
                 {
                     didOpen(con.L_filePath, con.L_content, con.L_langId);

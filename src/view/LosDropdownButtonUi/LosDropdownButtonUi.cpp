@@ -1,9 +1,7 @@
 
 
 #include "LosDropdownButtonUi.h"
-#include <qaction.h>
-#include <qmenu.h>
-#include <qpushbutton.h>
+
 namespace LosView
 {
 

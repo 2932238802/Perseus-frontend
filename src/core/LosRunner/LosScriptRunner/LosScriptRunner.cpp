@@ -1,10 +1,4 @@
 #include "LosScriptRunner.h"
-#include "common/constants/ConstantsClass.h"
-#include "common/util/GetFilePath.h"
-#include "core/LosPlatform/LosPlatform.h"
-#include "core/LosRouter/LosRouter.h"
-#include "core/LosState/LosState.h"
-#include <qcoreapplication.h>
 
 namespace LosCore
 {

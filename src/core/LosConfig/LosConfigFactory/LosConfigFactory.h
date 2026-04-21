@@ -1,7 +1,7 @@
 #pragma once
 
-#include "common/constants/ConstantsClass.h"
 #include "core/LosConfig/LosConfig/LosConfig.h"
+#include "common/constants/ConstantsClass/LosConfigClass.h"
 #include <QString>
 #include <vector>
 namespace LosCore

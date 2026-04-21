@@ -1,6 +1,4 @@
 #pragma once
-
-
 #include <QObject>
 #include <functional>
 #include <qaction.h>
@@ -8,7 +6,9 @@
 #include <qpushbutton.h>
 #include <qtmetamacros.h>
 #include <qwidget.h>
-
+#include <qaction.h>
+#include <qmenu.h>
+#include <qpushbutton.h>
 
 namespace LosView
 {

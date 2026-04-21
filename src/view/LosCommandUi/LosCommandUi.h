@@ -1,9 +1,11 @@
 #pragma once
-
-#include "common/constants/ConstantsClass.h"
+#include "common/constants/ConstantsClass/LosCommandUiClass.h"
+#include "common/constants/ConstantsNum/LosCommandUiNum.h"
+#include "common/util/NumberToCommandsKind.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
 #include "view/style/LosCommandUi_style.h"
+
 #include <QDir>
 #include <QFileInfo>
 #include <QGraphicsDropShadowEffect>
@@ -13,6 +15,7 @@
 #include <qboxlayout.h>
 #include <qdebug.h>
 #include <qdialog.h>
+#include <qjsonarray.h>
 #include <qjsondocument.h>
 #include <qjsonobject.h>
 #include <qlineedit.h>
@@ -45,8 +48,8 @@ namespace LosView
 
       private:
         void regis(const QString &display, const LosCommon::LosCommandUi_Constants::CommandsInfo &cmd);
-      
-        protected slots:
+
+      protected slots:
         bool eventFilter(QObject *watched, QEvent *event) override;
         void focusOutEvent(QFocusEvent *event) override;
         bool event(QEvent *event) override;

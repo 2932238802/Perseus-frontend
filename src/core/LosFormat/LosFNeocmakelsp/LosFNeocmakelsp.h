@@ -1,7 +1,5 @@
 #pragma once
-
-#include "common/constants/ConstantsClass.h"
-#include "common/constants/ConstantsNum.h"
+#include "common/constants/ConstantsNum/LosFormatManagerNum.h"
 #include "common/util/CheckLang.h"
 #include "common/util/FindExePath.h"
 #include "core/LosFormat/LosFormatBase/LosFormatBase.h"

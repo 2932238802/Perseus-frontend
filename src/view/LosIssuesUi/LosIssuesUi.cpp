@@ -1,15 +1,9 @@
 
 
 #include "view/LosIssuesUi/LosIssuesUi.h"
-#include "common/constants/ConstantsClass.h"
-#include "core/LosRouter/LosRouter.h"
-#include "models/LosFilePath/LosFilePath.h"
-#include <qabstractitemview.h>
-#include <qboxlayout.h>
-#include <qcolor.h>
-#include <qnamespace.h>
-#include <qtableview.h>
-#include <qtablewidget.h>
+
+
+
 namespace LosView
 {
     /*

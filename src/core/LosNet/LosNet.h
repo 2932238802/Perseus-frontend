@@ -1,5 +1,5 @@
 #pragma once
-#include "common/constants/ConstantsClass.h"
+#include "common/constants/ConstantsClass/LosNetClass.h"
 #include "common/constants/ConstantsStr/LosNetStr.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"

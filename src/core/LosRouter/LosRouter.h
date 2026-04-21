@@ -1,5 +1,7 @@
 #pragma once
-#include "common/constants/ConstantsClass.h"
+#include "common/constants/ConstantsClass/LosLspClass.h"
+#include "common/constants/ConstantsClass/LosNetClass.h"
+#include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include <QObject>
 #include <qglobal.h>
 #include <qjsonarray.h>

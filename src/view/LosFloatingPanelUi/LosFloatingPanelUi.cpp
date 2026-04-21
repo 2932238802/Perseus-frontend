@@ -1,10 +1,5 @@
 
 #include "LosFloatingPanelUi.h"
-#include "common/constants/ConstantsClass.h"
-#include <qboxlayout.h>
-#include <qdialog.h>
-#include <qnamespace.h>
-#include <qwidget.h>
 
 namespace LosView
 {

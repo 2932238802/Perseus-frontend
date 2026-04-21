@@ -1,6 +1,5 @@
 #include "view/LosPlugUi/LosPlugUi.h"
-#include "core/LosRouter/LosRouter.h"
-#include <qlistwidget.h>
+#include "ui_LosPlugUi.h"
 
 namespace LosView
 {

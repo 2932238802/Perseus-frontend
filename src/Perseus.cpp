@@ -3,8 +3,8 @@
 
 /**
  * @brief Construct a new Perseus:: Perseus object
- * 
- * @param in parent 
+ *
+ * @param in parent
  */
 Perseus::Perseus(QWidget *parent) : QMainWindow(parent), ui(new Ui::Perseus)
 {
@@ -23,8 +23,8 @@ Perseus::Perseus(QWidget *parent) : QMainWindow(parent), ui(new Ui::Perseus)
 
 
 /**
- * @brief 
- * 
+ * @brief
+ *
  */
 Perseus::~Perseus()
 {
@@ -38,11 +38,11 @@ Perseus::~Perseus()
 
 
 /**
- * @brief 
- * 
- * @param e 
- * @return * void 
- * 
+ * @brief
+ *
+ * @param e
+ * @return * void
+ *
  */
 void Perseus::keyPressEvent(QKeyEvent *e)
 {
@@ -52,10 +52,10 @@ void Perseus::keyPressEvent(QKeyEvent *e)
 
 
 /**
- * @brief 
- * 
- * @param in isc 
- * @param in run_analysis 
+ * @brief
+ *
+ * @param in isc
+ * @param in run_analysis
  */
 void Perseus::OnFileLoaded(bool isc, bool run_analysis)
 {
@@ -154,7 +154,7 @@ void Perseus::OnFileLoaded(bool isc, bool run_analysis)
  * - 支持导入文件和文件夹
  * - 以文件夹所在的绝对位置 作为 项目根目录
  * - 切换目录时关闭其它 Tab
- * 
+ *
  */
 void Perseus::onFilesBtnClicked()
 {
@@ -189,10 +189,10 @@ void Perseus::onFilesBtnClicked()
  * 双击文件
  * - 修复 展开的问题
  * - 默认已经有 展开的问题
- * 
- * @param index 
- * 
- * 
+ *
+ * @param index
+ *
+ *
  */
 void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
 {
@@ -308,7 +308,6 @@ void Perseus::onDirectoryChanged()
 {
     L_timer->start();
 }
-
 
 
 
@@ -480,7 +479,7 @@ void Perseus::initShotcut()
         "zoom out");
     LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::COMMANDS, this,
                                                 [this]() { LOS_cmdPalette->showPalette(); });
-    
+
 
     LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::TAB_CLOSE, this,
                                                 [this]()
@@ -500,7 +499,7 @@ void Perseus::initShotcut()
 
 /**
  * @brief initSession
- * 
+ *
  */
 void Perseus::initSession()
 {
@@ -559,12 +558,11 @@ void Perseus::initSession()
 
 
 
-
 /**
  * @brief collectConfig
  * - 收集当前的 信息
- * 
- * @return LosCommon::LosSession_Constants::Config 
+ *
+ * @return LosCommon::LosSession_Constants::Config
  */
 LosCommon::LosSession_Constants::Config Perseus::collectConfig()
 {
