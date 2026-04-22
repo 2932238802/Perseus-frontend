@@ -13,6 +13,11 @@
 #include "view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.h"
 #include "view/LosPluginDetailUi/LosPluginDetailUi.h"
 
+#include "common/constants/ConstantsStr/LosEditorTableUiStr.h"
+#include "common/constants/ConstantsStr/ShortCut.h"
+#include "core/LosShortcutManager/LosShortcutManager.h"
+#include "view/LosEditorUi/LosEditorUi.h"
+#include "view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.h"
 #include <QDebug>
 #include <QObject>
 #include <QSharedPointer>
