@@ -1,11 +1,6 @@
 
 #include "LosEditorTabUi.h"
-#include "common/constants/ConstantsStr/LosEditorTableUiStr.h"
-#include "common/constants/ConstantsStr/ShortCut.h"
-#include "core/LosShortcutManager/LosShortcutManager.h"
-#include "view/LosEditorUi/LosEditorUi.h"
-#include "view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.h"
-#include <qstringliteral.h>
+
 
 
 

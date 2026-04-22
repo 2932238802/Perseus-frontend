@@ -1,5 +1,4 @@
 #include "LosLspClient.h"
-#include <qdebug.h>
 
 namespace LosCore
 {
