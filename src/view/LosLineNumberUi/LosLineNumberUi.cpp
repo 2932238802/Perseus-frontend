@@ -8,8 +8,10 @@ namespace LosView
 
 
 
-    /*
-     * - 合适的  尺寸
+    /**
+     * @brief sizeHint
+     *
+     * @return QSize
      */
     QSize LosLineNumberUi::sizeHint() const
     {
@@ -18,8 +20,10 @@ namespace LosView
 
 
 
-    /*
-     * - 重绘
+    /**
+     * @brief paintEvent
+     *
+     * @param event
      */
     void LosLineNumberUi::paintEvent(QPaintEvent *event)
     {
@@ -28,8 +32,10 @@ namespace LosView
 
 
 
-    /*
-     * - 点击行号 进行定位
+    /**
+     * @brief mousePressEvent
+     * 
+     * @param event
      */
     void LosLineNumberUi::mousePressEvent(QMouseEvent *event)
     {

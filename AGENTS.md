@@ -2,130 +2,134 @@
 
 This file contains essential context, build instructions, and coding standards for any AI coding agents (like Cursor, Copilot, or CLI agents) operating within the `Perseus` repository.
 
-## 1. Project Overview
 
-**Perseus** is a C++17 application built using the Qt Framework (Qt 5 or Qt 6 compatible, utilizing `Widgets` and `Network` components). It uses CMake as its build system.
+## 1. 项目概览与文档导航
 
-**Directory Structure:**
-- `src/view/`: UI components, forms (`.ui`), and view-specific logic.
-- `src/core/`: Core business logic and application orchestration.
-- `src/models/`: Data representations and structures.
-- `src/common/`: Shared utilities, constants, and helper functions.
-- `resources/`: Qt resource files (`.qrc`).
+**Perseus** 是基于 C++17/20 和 Qt 6 的现代 IDE，采用 CMake + Ninja + Clang-18 构建，支持多语言 LSP、插件扩展、跨平台终端等。
 
-Always respect this architectural separation of concerns. Do not put business logic inside UI classes.
+**核心文档导航（务必优先查阅，避免重复内容）：**
+
+- [README.md](README.md)：项目简介、特性、环境要求、分支/提交规范
+- [docs/1_architecture/overview.md](docs/1_architecture/overview.md)：分层架构、模块关系
+- [docs/1_architecture/design-patterns.md](docs/1_architecture/design-patterns.md)：单例/工厂等设计模式
+- [docs/1_architecture/modules.md](docs/1_architecture/modules.md)：各核心模块 API/职责
+- [docs/3_development/setup.md](docs/3_development/setup.md)：开发环境搭建、构建脚本说明
+- [docs/2_extensions/development.md](docs/2_extensions/development.md)：插件开发流程
+
+**目录结构简述：**
+- `src/view/`：UI 组件、.ui 表单、视图逻辑
+- `src/core/`：业务逻辑、管理器、LSP、Runner
+- `src/models/`：数据结构
+- `src/common/`：常量、工具、日志
+- `resources/`：Qt 资源文件
+
+**分层原则：** 业务逻辑严禁进入 UI 层，所有跨层通信通过信号（LosRouter）完成。
 
 ---
 
 ## 2. Build, Run, and Test Commands
 
-Agents must verify their work by building the project. Do not assume commands; use the following:
+
+**务必使用如下标准命令，勿自行假设构建流程。详细说明见 [setup.md](docs/3_development/setup.md)：**
 
 ### Build & Run
-- **Configure CMake:** 
-  ```bash
-  cmake -B _build -DCMAKE_BUILD_TYPE=Release
-  ```
-- **Build the Application:** 
-  ```bash
-  ./build.sh
-  ```
-  *(Alternatively: `cmake --build _build --config Release`)*
-- **Clean and Rebuild:**
-  ```bash
-  ./re-build.sh
-  ```
-- **Run the Application:** 
-  ```bash
-  make run
-  ```
-  *(Alternatively: `./_build/Perseus`)*
+
+- **首次构建/重建**：`./re-build.sh`
+- **增量编译**：`./build.sh`
+- **Debug 构建**：`./gdb-build.sh`
+- **清理**：`./clean.sh`
+- **运行**：`make run` 或 `./_build/Perseus`
 
 ### Testing
-*Note: If a testing framework (like GoogleTest or QtTest) is integrated via CTest, use the following commands.*
 
-- **Run all tests:**
-  ```bash
-  cd _build && ctest --output-on-failure
-  ```
-- **Run a single test (Crucial for isolated verification):**
-  ```bash
-  cd _build && ctest -R <ExactTestName> -V
-  ```
-  *(The `-R` flag uses a regex to match the test name, `-V` enables verbose output to see print statements/errors).*
-- **Build a specific test target:**
-  ```bash
-  cmake --build _build --target <TestTargetName>
-  ```
+**测试相关命令（详细见 [setup.md](docs/3_development/setup.md)）：**
+- 运行全部测试：`cd _build && ctest --output-on-failure`
+- 运行单测：`cd _build && ctest -R <TestName> -V`
+- 构建指定测试目标：`cmake --build _build --target <TestTargetName>`
 
 ---
 
 ## 3. Linting and Formatting
 
-This project enforces strict formatting using `.clang-format`.
 
-- **Style Base:** LLVM
-- **Key Rules:** 
-  - 120 column limit.
-  - 4-space indentation (Tabs are strictly forbidden: `UseTab: Never`).
-  - Brace wrapping: `Allman` style (braces go on a new line).
-  - Pointer alignment: Right (`Type *ptr`, not `Type* ptr`).
+**强制使用 `.clang-format`，CI 检查不通过会拒绝合入。**
 
-**Agent Action:** Before finalizing any code modification, you **MUST** run the formatter on the changed files:
+- 基于 LLVM，120 列宽，4 空格缩进，Allman 大括号风格，指针右对齐
+- 文件内 include 顺序自动排序
+- 禁止 Tab
+
+**所有代码提交前必须执行：**
 ```bash
-clang-format -i path/to/modified_file.cpp path/to/modified_file.h
+clang-format -i path/to/file.cpp path/to/file.h
 ```
 
 ---
 
 ## 4. Code Style Guidelines
 
-### Naming Conventions
-- **Classes & Structs:** `PascalCase` (e.g., `UserModel`, `NetworkManager`).
-- **Functions & Methods:** `camelCase` (e.g., `loadData()`, `parseResponse()`).
-- **Variables:** `camelCase` (e.g., `requestPayload`, `itemCount`).
-- **Member Variables:** Prefix with `m_` to distinguish from local variables (e.g., `m_apiClient`, `m_retryCount`).
-- **Constants & Macros:** `UPPER_SNAKE_CASE` (e.g., `MAX_RETRIES`, `DEFAULT_TIMEOUT`).
+### 命名规范
 
-### Imports and Includes
-- Keep includes sorted alphabetically (enforced by `.clang-format`).
-- **Include Order:**
-  1. The corresponding header for the source file (e.g., in `Foo.cpp`, `#include "Foo.h"` goes first).
-  2. Local project headers (e.g., `#include "models/UserModel.h"`).
-  3. Qt Framework headers (e.g., `#include <QString>`, `#include <QNetworkReply>`).
-  4. Standard C++ headers (e.g., `#include <memory>`, `#include <vector>`).
-- Prefer forward declarations in header files (`class MyWidget;`) instead of `#include`ing the full header, to reduce compilation times. Only `#include` the full header in the `.cpp` file.
+> ⚠️ Perseus 代码实际采用 `L_`/`LOS_` 前缀（如 `L_timer`、`LOS_runMgr`），**与部分通用 C++ 规范（如 m_）不同**。详细见 [CLAUDE.md](CLAUDE.md)。
 
-### Types and Variables
-- Use `auto` when the type is blatantly obvious from the right-hand side (e.g., `auto widget = new QWidget();`, `auto it = map.begin();`). Otherwise, use explicit types for readability.
-- Prefer standard fixed-width integer types (`#include <cstdint>`, `int32_t`, `uint64_t`) or Qt's sized types (`qint32`) when data size matters (e.g., network serialization).
-- Prefer Qt containers (`QString`, `QList`, `QVector`) when interacting with Qt APIs, but standard C++ containers (`std::vector`, `std::string`) are acceptable in `core/` if Qt dependency is avoided.
+| 类型 | 规范 | 示例 |
+|------|------|------|
+| 类/结构体 | PascalCase | LosRunManager |
+| 方法/函数 | camelCase | initConnect() |
+| 普通成员变量 | L_ 前缀 | L_timer |
+| 服务对象成员 | LOS_ 前缀 | LOS_runMgr |
+| 常量/宏 | UPPER_SNAKE_CASE | MAX_RETRIES |
 
-### Memory Management
-- **Qt Object Tree:** For UI components or any `QObject`-derived classes, pass a `parent` pointer in the constructor to ensure automatic memory cleanup.
-  ```cpp
-  auto myButton = new QPushButton(this); // 'this' takes ownership
-  ```
-- **Smart Pointers:** For standard C++ classes or non-QObject data, strictly use smart pointers (`std::unique_ptr`, `std::shared_ptr`). 
-- **Raw Pointers:** Avoid raw `new` and `delete` unless you are immediately handing ownership to a Qt parent or a smart pointer.
+### Include 顺序
+1. 对应头文件（如 Foo.cpp 首行 `#include "Foo.h"`）
+2. 本地项目头文件
+3. Qt 头文件
+4. 标准库头文件
+> 头文件内优先用前置声明，.cpp 再 include 全部依赖
 
-### Error Handling
-- **Early Returns:** Avoid deep nesting. Check for invalid states or null pointers and return early.
-  ```cpp
-  if (!m_networkManager) {
-      qWarning() << "Network manager is not initialized.";
-      return;
-  }
-  ```
-- **Qt Networking Errors:** Connect to the `errorOccurred` or `finished` signals of `QNetworkReply`. Never assume network calls will succeed.
-- **Exceptions:** Since this is a Qt codebase, prefer returning error codes, boolean success flags, or `std::optional` for non-fatal errors rather than throwing standard C++ exceptions, as exception safety across Qt event loops can be complex.
+### 类型与容器
+- Qt 相关优先用 Qt 容器（QString、QList、QVector），核心层可用 std 容器
+- 明显场景可用 auto，否则显式类型
+- 网络/序列化优先用定长整型（int32_t、qint32 等）
 
-### Comments & Documentation
-- Write code that explains itself through clear naming.
-- Use comments to explain **WHY** a piece of logic exists, especially for workarounds, complex math, or obscure business rules.
-- Do not leave commented-out dead code. Delete it. Version control will remember it.
+### 内存管理
+- QObject 派生类务必传 parent，交由 Qt 对象树自动回收
+- 其他对象用智能指针，禁止裸 new/delete
 
-### UI and Qt Specifics
-- Prefer `.ui` files for static layouts. Load them using `setupUi(this)`.
-- Use Qt's **Signals and Slots** mechanism for communicating between decoupled components (e.g., passing data from a `NetworkManager` in `core/` to a `MainWindow` in `view/`). Do not tightly couple the UI to the backend logic.
-- Ensure all heavy lifting (network parsing, file I/O) is done asynchronously or in a separate thread so the main GUI thread remains responsive.
+### 错误处理
+- 早返回，避免嵌套
+- 网络相关必须连接 errorOccurred/finished 信号，**绝不假定网络一定成功**
+- Qt 事件循环下避免抛异常，优先返回 bool/std::optional
+
+### 注释与文档
+- 命名自解释为主，复杂逻辑/特殊原因务必注释“为什么”
+- 禁止遗留死代码，直接删除
+
+### UI/Qt 约定
+- 静态布局优先 .ui 文件，动态用 setupUi(this)
+- 跨层通信全部用信号/槽（LosRouter），UI 层禁止直接依赖核心服务
+- 阻塞/耗时操作必须异步或线程池，主线程只负责 UI 响应
+
+---
+
+## 5. CLAUDE.md 差异说明
+
+本文件为所有 AI 代理通用说明，**如需了解 Perseus 独有命名、架构、单例/工厂等特殊约定，请务必查阅 [CLAUDE.md](CLAUDE.md)**。
+
+主要差异：
+- 命名前缀为 L_/LOS_，非 m_
+- 详细模块职责、信号机制、插件开发、测试流程等见 CLAUDE.md
+
+---
+
+## 6. 常见问题与陷阱
+
+- Qt 6/Clang-18/Ninja/WSL2 环境要求严格，务必用 env.sh 一键安装依赖
+- 所有构建/测试/格式化命令请严格按本文件和 docs/ 执行，勿自行假设
+- 业务逻辑严禁进入 UI 层，所有跨层通信用 LosRouter 信号
+- 插件开发、扩展协议等请查阅 docs/2_extensions/
+
+---
+
+## 7. 维护与贡献
+
+如需补充/修正本说明，请优先链接已有文档，避免重复。遇到复杂场景建议拆分 skill 文件或专用 agent 说明。

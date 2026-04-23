@@ -48,9 +48,13 @@ namespace LosModel
 
 
 
-    /*
-     * - 保存逻辑
+    /**
+     * @brief save
      *
+     * @param content
+     * @param file_path
+     * @return true
+     * @return false
      */
     bool LosFileContext::save(const QString &content, const QString &file_path)
     {
@@ -62,9 +66,6 @@ namespace LosModel
             return false;
         }
         QTextStream out(&file);
-        /*
-         * QStringConverter
-         */
         out.setEncoding(QStringConverter::Utf8);
         out << content;
         file.close();

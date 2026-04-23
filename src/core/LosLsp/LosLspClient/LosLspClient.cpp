@@ -13,8 +13,9 @@ namespace LosCore
 
 
 
-    /*
-     * - 析构
+    /**
+     * @brief Destroy the Los Lsp Client:: Los Lsp Client object
+     *
      */
     LosLspClient::~LosLspClient()
     {
@@ -27,8 +28,12 @@ namespace LosCore
 
 
 
-    /*
-     * 打开文件
+    /**
+     * @brief
+     *
+     * @param file_path
+     * @param text
+     * @param languageId
      */
     void LosLspClient::didOpen(const QString &file_path, const QString &text, const QString &languageId)
     {

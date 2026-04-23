@@ -1,4 +1,5 @@
 #include "LosEditorUi.h"
+#include "common/constants/ConstantsStr/LosEditorUiStr.h"
 
 namespace LosView
 {
@@ -109,41 +110,35 @@ namespace LosView
 
 
 
-    /*
-     * 跳转到指定的行
+    /**
+     * @brief gotoLine
+     *
+     * @param in line
      */
     void LosEditorUi::gotoLine(int line)
     {
         QTextDocument *qtd = this->document();
-        /*
-         * line findBlockByLineNumber 可能对于 视觉行 会有问题
-         */
-        QTextBlock block = qtd->findBlockByNumber(line);
+        QTextBlock block   = qtd->findBlockByNumber(line);
         if (block.isValid())
         {
             QTextCursor cursor(qtd);
             cursor.setPosition(block.position());
             this->setTextCursor(cursor);
-            /*
-             * 定位到中间
-             */
             this->centerCursor();
-            /*
-             * 拿到焦点
-             */
             this->setFocus();
         }
     }
 
 
 
-    /*
+    /**
+     * @brief format 格式化
+     *
      * if (out == currentText)
      * {
-     * return;
+     *     return;
      * }
      * - 增加防抖
-     *
      * LOS_highlighter->updateSemanticTokens(QJsonArray{});
      * - 清楚 过期的 语义
      */
@@ -248,8 +243,7 @@ namespace LosView
     {
         QPainter painter(LOS_lineNumber);
         painter.fillRect(event->rect(), QColor("#21222c"));
-
-        QTextBlock block = firstVisibleBlock(); /* 第一个 编辑区域 */
+        QTextBlock block = firstVisibleBlock();
         int blockNumber  = block.blockNumber();
 
         /*
@@ -281,11 +275,11 @@ namespace LosView
                  */
                 if (textCursor().blockNumber() == blockNumber)
                 {
-                    painter.setPen(QColor("#bd93f9"));
+                    painter.setPen(QColor(LosCommon::LosEditorUi_Constants::LINENUMBER_CURLINE));
                 }
                 else
                 {
-                    painter.setPen(QColor("#6272a4"));
+                    painter.setPen(QColor(LosCommon::LosEditorUi_Constants::LINENUMBER_UNCURLINE));
                 }
 
                 /*
@@ -295,15 +289,8 @@ namespace LosView
                 painter.drawText(0, top, LOS_lineNumber->width() - 5, fontMetrics().height(),
                                  Qt::AlignRight | Qt::AlignVCenter, number);
             }
-
-            /*
-             * 准备画下一行
-             * 推进链表和坐标）
-             */
-            block = block.next();
-            top   = bottom;
-            /*
-             */
+            block  = block.next();
+            top    = bottom;
             bottom = top + qRound(blockBoundingRect(block).height());
             ++blockNumber;
         }
@@ -311,8 +298,11 @@ namespace LosView
 
 
 
-    /*
-     * 调用 LosContext 接口
+    /**
+     * @brief save 保存当前文件
+     *
+     * @return true
+     * @return false
      */
     bool LosEditorUi::save()
     {
@@ -321,21 +311,12 @@ namespace LosView
         QString filePath = LOS_filePath->getFilePath();
         if (filePath.isEmpty())
             return false;
-        format();
         bool ok = LOS_context->save(this->toPlainText(), filePath);
         if (ok)
         {
-            /*
-             * 保存的时候 自动格式化
-             */
             this->document()->setModified(false);
             L_dirty = false;
             emit LosCore::LosRouter::instance()._cmd_fileDirty(LOS_filePath -> getFilePath(), false);
-
-            /*
-             * 保存的时候 还要 检查一下 是不是
-             * diag 报错机制 再次显示
-             */
             emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(LOS_filePath -> getFilePath(),
                                                                              toPlainText());
         }
@@ -370,7 +351,7 @@ namespace LosView
 
 
     /**
-     * @brief isDirty
+     * @brief isDirty 是否为脏文件
      *
      * @return true
      * @return false
@@ -383,7 +364,7 @@ namespace LosView
 
 
     /**
-     * @brief
+     * @brief getLineNumberWidth
      *
      * @return int
      */
