@@ -67,7 +67,12 @@ clang-format -i path/to/file.cpp path/to/file.h
 
 ## 4. Code Style Guidelines
 
-### 命名规范
+### Naming Conventions
+- **Classes & Structs:** `PascalCase` (e.g., `UserModel`, `NetworkManager`).
+- **Functions & Methods:** `camelCase` (e.g., `loadData()`, `parseResponse()`).
+- **Variables:** `camelCase` (e.g., `requestPayload`, `itemCount`).
+- **Member Variables:** Prefix with `L_` to distinguish from local variables (e.g., `L_apiClient`, `L_retryCount`).
+- **Constants & Macros:** `UPPER_SNAKE_CASE` (e.g., `MAX_RETRIES`, `DEFAULT_TIMEOUT`).
 
 > ⚠️ Perseus 代码实际采用 `L_`/`LOS_` 前缀（如 `L_timer`、`LOS_runMgr`），**与部分通用 C++ 规范（如 m_）不同**。详细见 [CLAUDE.md](CLAUDE.md)。
 

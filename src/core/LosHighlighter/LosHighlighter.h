@@ -1,4 +1,6 @@
 #pragma once
+#include "common/constants/ConstantsClass/LosHighligherClass.h"
+
 #include <QFont>
 #include <QJsonArray>
 #include <QMap>
@@ -13,31 +15,13 @@
 
 namespace LosCore
 {
-    struct SemanticToken
-    {
-        int startChar;
-        int length;
-        int tokenType;
-        int tokenModifiers;
-    };
-
     class LosHighlighter : public QSyntaxHighlighter
     {
         Q_OBJECT
-        /*
-         * QSyntaxHighlighter 必须 绑定 QTextDocument
-         */
-
-        struct HighlightRule
-        {
-            QTextCharFormat L_format;
-            QRegularExpression L_regex;
-        };
 
       public:
         explicit LosHighlighter(QTextDocument *doc);
         ~LosHighlighter() = default;
-
         void updateSemanticTokens(const QJsonArray &data);
         void initSemanticLegend(const QStringList &legendTokenTypes,
                                 const QStringList &legendTokenModifiers = QStringList());
@@ -53,7 +37,7 @@ namespace LosCore
         void highlightByRegex(const QString &str);
 
       private:
-        QList<HighlightRule> L_rules;
+        QList<LosCommon::LosHighligher_Constants::HighlightRule> L_rules;
         QTextCharFormat L_keyword;
         QTextCharFormat L_class;
         QTextCharFormat L_singleComment;
@@ -63,7 +47,7 @@ namespace LosCore
         QRegularExpression L_commentStartExpression;
         QRegularExpression L_commentEndExpression;
 
-        QMap<int, QList<SemanticToken>> L_semanticData;
+        QMap<int, QList<LosCommon::LosHighligher_Constants::SemanticToken>> L_semanticData;
         QVector<QTextCharFormat> L_semanticFormats;
         QMap<QString, QTextCharFormat> L_themeConfig;
 

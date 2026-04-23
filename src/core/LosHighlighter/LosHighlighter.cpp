@@ -9,36 +9,34 @@ namespace LosCore
 
     void LosHighlighter::highlightBlock(const QString &str)
     {
-        /*
-         * 语法 高亮
-         */
+
         highlightByRegex(str);
 
         int currentLine = currentBlock().blockNumber();
 
         if (L_semanticData.contains(currentLine))
         {
-            for (const SemanticToken &token : L_semanticData[currentLine])
+            for (const LosCommon::LosHighligher_Constants::SemanticToken &token : L_semanticData[currentLine])
             {
-                if (token.tokenType < L_semanticFormats.size())
+                if (token.L_tokenType < L_semanticFormats.size())
                 {
-                    QTextCharFormat format = L_semanticFormats.at(token.tokenType);
+                    QTextCharFormat format = L_semanticFormats.at(token.L_tokenType);
 
                     if (format.isValid())
                     {
                         /*
                          * 解析只读或静态的修饰符并设置为斜体
                          */
-                        if (L_readonlyModifierIndex != -1 && (token.tokenModifiers & (1 << L_readonlyModifierIndex)))
+                        if (L_readonlyModifierIndex != -1 && (token.L_tokenModifiers & (1 << L_readonlyModifierIndex)))
                         {
                             format.setFontItalic(true);
                         }
-                        if (L_staticModifierIndex != -1 && (token.tokenModifiers & (1 << L_staticModifierIndex)))
+                        if (L_staticModifierIndex != -1 && (token.L_tokenModifiers & (1 << L_staticModifierIndex)))
                         {
                             format.setFontItalic(true);
                         }
 
-                        mergeFormat(token.startChar, token.length, format);
+                        mergeFormat(token.L_startChar, token.L_length, format);
                     }
                 }
             }
@@ -88,7 +86,7 @@ namespace LosCore
         /*
          * 传入的就是当前行的内容
          */
-        for (const HighlightRule &rule : L_rules)
+        for (const LosCommon::LosHighligher_Constants::HighlightRule &rule : L_rules)
         {
             /*
              * 这里 匹配
@@ -225,7 +223,7 @@ namespace LosCore
      */
     void LosHighlighter::initRule()
     {
-        HighlightRule rule;
+        LosCommon::LosHighligher_Constants::HighlightRule rule;
 
         const QString keywordPatterns[] = {
             QStringLiteral("\\bchar\\b"),     QStringLiteral("\\bclass\\b"),     QStringLiteral("\\bconst\\b"),

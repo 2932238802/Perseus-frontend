@@ -65,14 +65,8 @@ target_link_libraries(Perseus PRIVATE PerseusCore)
 
 
 
-
 enable_testing()
 add_subdirectory(test)
-
-
-
-
-
 
 
 
