@@ -2,7 +2,12 @@
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "common/constants/ConstantsStr/LosEditorUiStr.h"
 #include "common/util/FindMatchBracket.h"
+#include "common/util/GetLeadingWhiteSpace.h"
+#include <qevent.h>
+#include <qnamespace.h>
+#include <qstringliteral.h>
 #include <qtextcursor.h>
+#include <qtextobject.h>
 
 namespace LosView
 {
@@ -387,9 +392,9 @@ namespace LosView
 
 
 
-    /*
-     * - 文字稍微 变动 就变脏
-     * - 绑定 悬停效果
+    /**
+     * @brief 
+     * 
      */
     void LosEditorUi::initConnect()
     {
@@ -489,7 +494,6 @@ namespace LosView
 
     /**
      * @brief highlightCurrentLine 高亮行
-     *
      */
     void LosEditorUi::highlightCurrentLine()
     {
@@ -548,6 +552,52 @@ namespace LosView
     }
 
 
+
+
+    /**
+     * @brief 
+     * 
+     * @param event 
+     */
+    bool LosEditorUi::updateAutoIndent(QKeyEvent* event)
+    {
+        if(event->key() != Qt::Key_Return && event->key() != Qt::Key_Enter)
+        {
+            return false;
+        }
+        QTextCursor cur = textCursor();
+        QTextBlock block = cur.block();
+        const QString lineText = block.text();
+        const int col = cur.positionInBlock();
+        const QString textBefore = lineText.left(col);
+        const QString textAfter = lineText.mid(col);
+
+        // 获得前置缩进
+        QString baseIndent = LosCommon::GetLeadingWhiteSpace(textBefore);
+        QString nextLineIndent = "";
+        if(textBefore.trimmed().endsWith("{"))
+        {
+            nextLineIndent += LosCommon::LosEditorUi_Constants::BASE_INDENT;
+        }
+        cur.beginEditBlock();
+
+        if(textAfter.trimmed().endsWith("}") && textBefore.trimmed().startsWith("{"))
+        {
+            cur.insertText("\n" + nextLineIndent + "\n" + LosCommon::LosEditorUi_Constants::BASE_INDENT);
+            cur.movePosition(QTextCursor::Up);
+            cur.movePosition(QTextCursor::EndOfLine);
+        }
+        else{
+            QString content{LosCommon::LosEditorUi_Constants::BASE_INDENT};
+            cur.insertText("\n" + content);
+        }
+        cur.endEditBlock();
+        setTextCursor(cur);
+        return true;
+    }
+
+
+    
 
     /**
      * @brief clearHoverUnderline 清理下划线
@@ -967,10 +1017,13 @@ namespace LosView
 
 
 
-    /*
+    /**
+     * @brief 
+     * 
      * 光标拦截
-     * - 弹出 语法补全
-     * - 同时 支持 括号补全
+     * 弹出 语法补全
+     * 同时 支持 括号补全
+     * @param event 
      */
     void LosEditorUi::keyPressEvent(QKeyEvent *event)
     {
@@ -997,6 +1050,11 @@ namespace LosView
             default:
                 break;
             }
+        }
+
+        if(updateAutoIndent(event))
+        {
+            return;
         }
 
         if (event->matches(QKeySequence::Cut))

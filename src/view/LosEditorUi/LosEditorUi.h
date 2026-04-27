@@ -2,6 +2,7 @@
 #include "common/constants/ConstantsNum/LosCompleterUiNum.h"
 #include "common/constants/ConstantsNum/LosLineNumberUiNum.h"
 #include "common/util/FindMatchBracket.h"
+#include "common/util/GetLeadingWhiteSpace.h"
 #include "core/LosFormat/LosFormatManager/LosFormatManager.h"
 #include "core/LosHighlighter/LosHighlighter.h"
 #include "core/LosRouter/LosRouter.h"
@@ -92,14 +93,15 @@ namespace LosView
       private: // tool
         void updateLineNumberArea(const QRect &rect, int dy);
         void updateLineNumberAreaWidth();
-        void highlightCurrentLine();
+        void updateBrackHighlight();
         void updateHoverUnderline(const QPoint &vpPos);
-        void clearHoverUnderline();
-        void hideCompletionPopup();
+        bool updateAutoIndent(QKeyEvent *event);
+        void highlightCurrentLine();
         bool repositionCompletionPopup();
         void showHoverPopup(const QString &html);
         void hideHoverPopup();
-        void updateBrackHighlight();
+        void hideCompletionPopup();
+        void clearHoverUnderline();
 
       private slots: // chs
         void onTextChanged();
