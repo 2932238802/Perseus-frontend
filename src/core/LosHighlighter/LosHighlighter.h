@@ -32,7 +32,7 @@ namespace LosCore
       private: /* init */
         void mergeFormat(int start, int length, const QTextCharFormat &format);
 
-      private: /* init */
+      private: // init
         void initRule();
         void highlightByRegex(const QString &str);
 
@@ -46,11 +46,9 @@ namespace LosCore
         QTextCharFormat L_func;
         QRegularExpression L_commentStartExpression;
         QRegularExpression L_commentEndExpression;
-
         QMap<int, QList<LosCommon::LosHighligher_Constants::SemanticToken>> L_semanticData;
         QVector<QTextCharFormat> L_semanticFormats;
         QMap<QString, QTextCharFormat> L_themeConfig;
-
         int L_readonlyModifierIndex = -1;
         int L_staticModifierIndex   = -1;
     };

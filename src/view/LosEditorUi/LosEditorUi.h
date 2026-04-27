@@ -1,6 +1,7 @@
 #pragma once
 #include "common/constants/ConstantsNum/LosCompleterUiNum.h"
 #include "common/constants/ConstantsNum/LosLineNumberUiNum.h"
+#include "common/util/FindMatchBracket.h"
 #include "core/LosFormat/LosFormatManager/LosFormatManager.h"
 #include "core/LosHighlighter/LosHighlighter.h"
 #include "core/LosRouter/LosRouter.h"
@@ -98,6 +99,7 @@ namespace LosView
         bool repositionCompletionPopup();
         void showHoverPopup(const QString &html);
         void hideHoverPopup();
+        void updateBrackHighlight();
 
       private slots: // chs
         void onTextChanged();
@@ -109,7 +111,6 @@ namespace LosView
         void onCopyCurrentLine();
         void onControlKeyPressed();
         void onOpenFileSuc(const QString &filepath);
-
 
       protected: // override
         void keyPressEvent(QKeyEvent *event) override;
@@ -135,6 +136,7 @@ namespace LosView
         QLabel *L_hoverPopup                                    = nullptr;
         QSharedPointer<LosModel::LosFileContext> LOS_context    = {};
         QSharedPointer<LosModel::LosFilePath> LOS_filePath      = {};
+        QList<QTextEdit::ExtraSelection> L_bracketSelections    = {};
         QList<QTextEdit::ExtraSelection> L_diagnosticSelections = {};
         QList<QTextEdit::ExtraSelection> L_hoverSelections      = {};
         LosView::LosCompleterUi *LOS_completer                  = nullptr;

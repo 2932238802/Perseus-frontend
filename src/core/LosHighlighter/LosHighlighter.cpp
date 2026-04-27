@@ -7,13 +7,17 @@ namespace LosCore
         initRule();
     }
 
+
+
+    /**
+     * @brief highlightBlock
+     *
+     * @param str
+     */
     void LosHighlighter::highlightBlock(const QString &str)
     {
-
         highlightByRegex(str);
-
         int currentLine = currentBlock().blockNumber();
-
         if (L_semanticData.contains(currentLine))
         {
             for (const LosCommon::LosHighligher_Constants::SemanticToken &token : L_semanticData[currentLine])
@@ -24,9 +28,6 @@ namespace LosCore
 
                     if (format.isValid())
                     {
-                        /*
-                         * 解析只读或静态的修饰符并设置为斜体
-                         */
                         if (L_readonlyModifierIndex != -1 && (token.L_tokenModifiers & (1 << L_readonlyModifierIndex)))
                         {
                             format.setFontItalic(true);
@@ -45,21 +46,19 @@ namespace LosCore
 
 
 
-    /*
-     * - 合并属性
+    /**
+     * @brief
+     *
+     * @param start
+     * @param length
+     * @param format
      */
     void LosHighlighter::mergeFormat(int start, int length, const QTextCharFormat &format)
     {
         QTextCursor cursor(document());
         cursor.setPosition(currentBlock().position() + start);
         cursor.setPosition(currentBlock().position() + start + length, QTextCursor::KeepAnchor);
-
         QTextCharFormat mergedFormat = cursor.charFormat();
-
-        /*
-         * 只合并设置了的属性，
-         * 不覆盖未设置的
-         */
         if (format.hasProperty(QTextFormat::ForegroundBrush))
         {
             mergedFormat.setForeground(format.foreground());

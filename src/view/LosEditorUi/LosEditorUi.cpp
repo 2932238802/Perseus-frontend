@@ -1,5 +1,8 @@
 #include "LosEditorUi.h"
+#include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "common/constants/ConstantsStr/LosEditorUiStr.h"
+#include "common/util/FindMatchBracket.h"
+#include <qtextcursor.h>
 
 namespace LosView
 {
@@ -420,6 +423,7 @@ namespace LosView
                 [this]()
                 {
                     LOS_lineNumber->update();
+                    updateBrackHighlight();
                     highlightCurrentLine();
                 });
         connect(&router, &LosCore::LosRouter::_cmd_openFile_suc, this, &LosEditorUi::onOpenFileSuc);
@@ -502,6 +506,7 @@ namespace LosView
             extra.append(selection);
         }
         extra.append(L_hoverSelections);
+        extra.append(L_bracketSelections);
         setExtraSelections(extra);
     }
 
@@ -546,7 +551,6 @@ namespace LosView
 
     /**
      * @brief clearHoverUnderline 清理下划线
-     *
      */
     void LosEditorUi::clearHoverUnderline()
     {
@@ -772,6 +776,83 @@ namespace LosView
         if (L_hoverPopup && L_hoverPopup->isVisible())
             L_hoverPopup->hide();
         L_lastHoverWord.clear();
+    }
+
+
+
+    /**
+     * @brief updateBrackHighlight 高亮括号
+     */
+    void LosEditorUi::updateBrackHighlight()
+    {
+        L_bracketSelections.clear();
+
+        if (document()->isEmpty())
+        {
+            highlightCurrentLine();
+            return;
+        }
+
+        QTextCursor cursor = textCursor();
+        int pos            = cursor.position();
+
+        int brackPos = -1;
+        QChar bracket;
+
+        if (pos > 0)
+        {
+            QChar prevChar = document()->characterAt(pos - 1);
+            if (LosCommon::IsLeftBrack(prevChar) || LosCommon::IsRightBrack(prevChar))
+            {
+                brackPos = pos - 1;
+                bracket  = prevChar;
+            }
+        }
+
+        if (brackPos == -1 && pos < document()->characterCount())
+        {
+            QChar curChar = document()->characterAt(pos);
+            if (LosCommon::IsLeftBrack(curChar) || LosCommon::IsRightBrack(curChar))
+            {
+                brackPos = pos;
+                bracket  = curChar;
+            }
+        }
+
+        if (brackPos == -1)
+        {
+            return;
+        }
+
+        int direction = LosCommon::IsLeftBrack(bracket) ? 1 : -1;
+        int matchPos  = LosCommon::FindMatchingBracket(*document(), brackPos, bracket, direction);
+
+        if (matchPos == -1)
+        {
+            return;
+        }
+
+        QTextCharFormat format;
+        format.setBackground(QColor("#50fa7b"));
+        format.setForeground(Qt::black);
+        format.setFontWeight(QFont::Bold);
+
+        QTextEdit::ExtraSelection sel1;
+        QTextCursor c1(document());
+        c1.setPosition(brackPos);
+        c1.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+        sel1.cursor = c1;
+        sel1.format = format;
+
+        QTextEdit::ExtraSelection sel2;
+        QTextCursor c2(document());
+        c2.setPosition(matchPos);
+        c2.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
+        sel2.cursor = c2;
+        sel2.format = format;
+
+        L_bracketSelections.append(sel1);
+        L_bracketSelections.append(sel2);
     }
 
 
