@@ -1,6 +1,7 @@
 
 
 #include "view/LosIssuesUi/LosIssuesUi.h"
+#include "common/constants/ConstantsStr/LosIssuesUiStr.h"
 
 
 
@@ -28,21 +29,49 @@ namespace LosView
         if (!L_table)
             return;
 
-        L_table->setRowCount(diags.size());
-        for (int i = 0; i < diags.size(); i++)
+        if (diags.isEmpty())
         {
-            const auto &diag = diags[i];
-            L_table->insertRow(i);
-            bool isErr               = diag.ds == LosCommon::LosLsp_Constants::DiagnosticSeverity::Error;
-            QString level            = isErr ? "Err" : "War";
-            QTableWidgetItem *item_1 = new QTableWidgetItem(level);
-            item_1->setForeground(isErr ? QColor("#ff5555") : QColor("#ffb86c"));
+            L_diagMap.remove(file_path);
+        }
+        else
+        {
+            L_diagMap[file_path] = diags;
+        }
+        rebuildTable();
+    }
+
+
+
+    /**
+     * @brief 重建信息提示表
+     *
+     */
+    void LosIssuesUi::rebuildTable()
+    {
+        QList<QPair<QString, LosCommon::LosLsp_Constants::LosDiagnostic>> flatList;
+        for (auto it = L_diagMap.begin(); it != L_diagMap.end(); ++it)
+        {
+            const QString &path = it.key();
+            for (const auto &diag : it.value())
+            {
+                flatList.append({path, diag});
+            }
+        }
+
+        L_table->setRowCount(flatList.size());
+        for (int i = 0; i < flatList.size(); i++)
+        {
+            const auto &[filePath, diag] = flatList[i];
+            bool isErr                   = diag.ds == LosCommon::LosLsp_Constants::DiagnosticSeverity::Error;
+            QString level                = isErr ? "Err" : "War";
+            QTableWidgetItem *item_1     = new QTableWidgetItem(level);
+            item_1->setForeground(isErr ? LosCommon::LosIssuesUi_Constants::ERR_COLOR
+                                        : LosCommon::LosIssuesUi_Constants::WAR_COLOR);
             QTableWidgetItem *item_2 = new QTableWidgetItem(diag.message);
             QTableWidgetItem *item_3 = new QTableWidgetItem(QString::number(diag.startLine + 1));
             item_3->setData(Qt::UserRole, diag.startLine);
-            QTableWidgetItem *item_4 = new QTableWidgetItem(LosModel::LosFilePath(file_path).getFileName());
-            item_4->setData(Qt::UserRole, file_path);
-
+            QTableWidgetItem *item_4 = new QTableWidgetItem(LosModel::LosFilePath(filePath).getFileName());
+            item_4->setData(Qt::UserRole, filePath);
             L_table->setItem(i, 0, item_1);
             L_table->setItem(i, 1, item_2);
             L_table->setItem(i, 2, item_3);
@@ -52,8 +81,11 @@ namespace LosView
 
 
 
-    /*
-     * -
+    /**
+     * @brief
+     *
+     * @param row
+     * @param colume
      */
     void LosIssuesUi::onTableDoubleClicked(int row, int colume)
     {

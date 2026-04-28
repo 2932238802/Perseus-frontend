@@ -610,6 +610,7 @@ namespace LosView
     }
 
 
+    
     /**
      * @brief hideCompletionPopup
      *

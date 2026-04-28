@@ -30,12 +30,16 @@ namespace LosView
         void onUpdateTable(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags);
 
       private:
+        void rebuildTable();
+
+      private:
         void initUi();
         void initStyle();
         void initConnect();
 
       private:
         QTableWidget *L_table = nullptr;
+        QMap<QString, QList<LosCommon::LosLsp_Constants::LosDiagnostic>> L_diagMap;
     };
 
 } /* namespace LosView */
