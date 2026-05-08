@@ -20,7 +20,6 @@ namespace LosCore
         explicit LosRouter(QObject *parent = nullptr);
         ~LosRouter() = default;
 
-
       signals:
         /*
          * 文本定义
@@ -106,9 +105,7 @@ namespace LosCore
 
 
 
-        /*
-         * ----------------------------------------------------------------------------
-         */
+        // ----------------------------------------------------------------------------
 
 
 
@@ -125,55 +122,38 @@ namespace LosCore
         /*
          * 左侧树 建立 完毕 之后
          */
-        void _cmd_fileTreeDone(); /* filetree 建立完毕 发送信号 就是左侧的文件树 */
+        void _cmd_fileTreeDone(); // filetree 建立完毕 发送信号 就是左侧的文件树
 
         /*
          * 修改 文件
          */
         void _cmd_fileRenamed(const QString &oldPath, const QString &newPath);
-        /*
-         * ----------------------------------------------------------------------------
-         */
 
 
 
-        /*
-         * 启动 语言分析其
-         */
+        
+        // ----------------------------------------------------------------------------
+        // 启动 语言分析器
         void _cmd_changeLang(const QString &file_path);
 
-        /*
-         * 启动ui 督促 下载
-         */
+        // 启动ui 督促 下载
         void _cmd_toolChainMissing(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
 
-        /*
-         * 构建工具完备
-         */
+        // 构建工具完备
         void _cmd_buildToolReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath,
                                  const QStringList &args);
 
-        /*
-         * 单个工具完备
-         */
+        // 单个工具完备
         void _cmd_toolChainReady(LosCommon::LosToolChain_Constants::LosLanguage lang,
                                  LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath);
-
         void _cmd_checkLanguageToolchain(LosCommon::LosToolChain_Constants::LosLanguage lang,
                                          LosCommon::LosToolChain_Constants::LosTool tool);
         void _cmd_checkSingleTool(LosCommon::LosToolChain_Constants::LosTool tool);
 
 
 
-        /*
-         * ----------------------------------------------------------------------------
-         */
-
-
-
-        /*
-         * 用户设定 信号 设置 要打开 设置窗口
-         */
+        // ----------------------------------------------------------------------------
+        // 用户设定 信号 设置 要打开 设置窗口
         void _cmd_manuallySet(const LosCommon::LosToolChain_Constants::ToolChainConfig &config);
 
 
@@ -201,8 +181,11 @@ namespace LosCore
         /*
          * _cmd_autoInstallTool
          * - 自动后台安装
-         *
          */
         void _cmd_autoInstallTool(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
+
+
+        // ----------------------------------------------------------------------------
+        
     };
 } /* namespace LosCore */

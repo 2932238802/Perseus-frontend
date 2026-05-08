@@ -1,5 +1,6 @@
 
 #include "LosEditorTabUi.h"
+#include "core/LosLog/LosLog.h"
 
 
 
@@ -11,12 +12,9 @@ namespace LosView
     {
         initConnect();
         initTabBar();
+        initShortCut();
         if (L_tabWidget)
         {
-            /*
-             * 用自绘按钮代替 Qt 原生关闭按钮,
-             * 关闭 setTabsClosable 防止两者同时出现
-             */
             L_tabWidget->setTabsClosable(false);
         }
     }
@@ -571,7 +569,10 @@ namespace LosView
     void LosEditorTabUi::initShortCut()
     {
         LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::GOTO_LINE, this,
-                                                    [this]() { this->onGotoLineShortcut(); });
+                                                    [this]() { 
+                                                        INF("ctrl + g","LosEditorTabUi");
+                                                        this->onGotoLineShortcut(); 
+                                                    });
         LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::SEARCH_FIND, this,
                                                     [this]() { this->onFindShortcut(); });
     }

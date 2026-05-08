@@ -11,9 +11,6 @@ namespace LosCore
 
 
 
-    /*
-     * - 开始
-     */
     void LosLspRust::start(const QStringList &start_up_args, const QString &exe_path)
     {
         if (L_process && L_process->state() == QProcess::NotRunning)
@@ -139,7 +136,6 @@ namespace LosCore
      */
     void LosLspRust::dealLspMessage(const QJsonObject &obj)
     {
-        INF("1","1");
         if (obj.contains("id"))
         {
             int id = obj["id"].toInt();
@@ -147,9 +143,7 @@ namespace LosCore
             {
                 return;
             }
-
             LosLspType type = L_idToType.take(id);
-
             switch (type)
             {
             case LosCore::LosLspType::REQ_INITIALIZE:
@@ -170,7 +164,6 @@ namespace LosCore
                 {
                     return;
                 }
-
                 QJsonValue resultVal = obj["result"];
 
                 QJsonArray items;
@@ -274,8 +267,9 @@ namespace LosCore
 
 
 
-    /*
-     * - 发送初始化请求
+    /**
+     * @brief sendInitializeRequest
+     * 发送初始化 请求
      */
     void LosLspRust::sendInitializeRequest()
     {

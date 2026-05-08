@@ -13,8 +13,13 @@ namespace LosCore
 
 
 
-    /*
-     * - 注册快捷键
+    /**
+     * @brief
+     *
+     * @param key
+     * @param parent
+     * @param action
+     * @param des
      */
     void LosShortcutManager::reg(const QString &key, QWidget *parent, const std::function<void()> &action,
                                  const QString &des)

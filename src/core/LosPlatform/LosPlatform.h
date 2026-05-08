@@ -2,9 +2,9 @@
 #include "common/constants/ConstantsClass/LosPlatformClass.h"
 #include <QFile>
 #include <qdebug.h>
+
 namespace LosCore
 {
-
     class LosPlatform
     {
       private:

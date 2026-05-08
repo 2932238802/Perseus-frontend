@@ -15,15 +15,15 @@ namespace LosView
     class LosTerminalUi : public QWidget
     {
         Q_OBJECT
-      public:
+      public: // construct
         explicit LosTerminalUi(QWidget *parent = nullptr);
         ~LosTerminalUi();
 
-      private: /* init */
+      private: // init
         void initStyle();
         void initConnect();
 
-      private:
+      private: // param
         QWebEngineView *L_webView;
         QWebChannel *L_channel;
         LosCore::LosTerminal *L_backend;

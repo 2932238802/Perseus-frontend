@@ -1,9 +1,17 @@
 
 
 #pragma once
+#include "common/constants/ConstantsStr/LosTerminalStr.h"
+#include "core/LosRouter/LosRouter.h"
+#include <QTimer>
+#include <QToolButton>
+#include <qglobal.h>
+#include <qnamespace.h>
 #include <qobject.h>
 #include <qprocess.h>
 #include <qtmetamacros.h>
+#include <qtoolbutton.h>
+#include <qwidget.h>
 
 namespace LosCore
 {
@@ -19,6 +27,7 @@ namespace LosCore
         void onTerminalReady();
         void onReadyReadStdOut();
         void onReadyReadStdErr();
+        void onProcessFinished(int, QProcess::ExitStatus);
 
       private: /* init */
         void initConnect();

@@ -1,7 +1,4 @@
-
-
 #include "LosPlatform.h"
-
 
 namespace LosCore
 {

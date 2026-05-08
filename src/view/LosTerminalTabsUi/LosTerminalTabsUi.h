@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include "common/constants/ConstantsStr/LosTerminalStr.h"
 #include "core/LosLog/LosLog.h"
 #include "view/LosTerminalUi/LosTerminalUi.h"
 #include <QTabBar>
@@ -19,9 +19,9 @@ namespace LosView
         explicit LosTerminalTabsUi(QWidget *parent = nullptr);
         ~LosTerminalTabsUi() = default;
 
-
       private:
         void initStyle();
+        void initConnect();
 
       private: /* tool */
         void addNewTerminal();

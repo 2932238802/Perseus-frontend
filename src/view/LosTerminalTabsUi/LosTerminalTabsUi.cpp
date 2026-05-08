@@ -1,9 +1,11 @@
 #include "LosTerminalTabsUi.h"
+#include "common/util/GetPushBtn.h"
+#include <qpushbutton.h>
+#include <qtabbar.h>
 
 
 namespace LosView
 {
-
     LosTerminalTabsUi::LosTerminalTabsUi(QWidget *parent) : QTabWidget(parent)
     {
         initStyle();
@@ -11,12 +13,16 @@ namespace LosView
 
 
 
-    /*
+    /**
+     * @brief initStyle
+     * setTabsClosable(false); 关闭自动绘制的叉叉
+     *
+     *
      * 初始化 样式
      */
     void LosTerminalTabsUi::initStyle()
     {
-        setTabsClosable(true);
+        setTabsClosable(false);
         setDocumentMode(true);
         clear();
 
@@ -62,8 +68,17 @@ namespace LosView
 
 
 
-    /*
-     * 增加 终端
+    /**
+     * @brief initConnect
+     * 初始化链接
+     */
+    void LosTerminalTabsUi::initConnect() {}
+
+
+
+    /**
+     * @brief addNewTerminal
+     * 新增 终端
      */
     void LosTerminalTabsUi::addNewTerminal()
     {
@@ -75,8 +90,27 @@ namespace LosView
         }
         L_usedTerminalIds.insert(newId);
         newOne->setProperty("terminal_id", newId);
+        QPushButton *closeBtn =
+            LosCommon::GetPushBtn("x", LosCommon::LosTerminal_Constants::CLOSEBTN_STYLE, QSize(16, 16));
         int newIndex = addTab(newOne, QString("sh - %1").arg(newId));
+        connect(closeBtn, &QPushButton::clicked, this,
+                [this, newOne]()
+                {
+                    int idx = indexOf(newOne);
+                    if (idx < 0)
+                        return;
+                    bool ok;
+                    int id = newOne->property("terminal_id").toInt(&ok);
+                    if (ok)
+                        L_usedTerminalIds.remove(id);
+                    removeTab(idx);
+                    newOne->deleteLater();
+                    if (count() == 0)
+                    {
+                        addNewTerminal();
+                    }
+                });
+        tabBar()->setTabButton(newIndex, QTabBar::RightSide, closeBtn);
         setCurrentIndex(newIndex);
     }
-
 } /* namespace LosView */

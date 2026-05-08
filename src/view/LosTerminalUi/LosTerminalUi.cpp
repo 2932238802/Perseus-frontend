@@ -11,8 +11,9 @@ namespace LosView
 
 
 
-    /*
-     * - 初始化样式
+    /**
+     * @brief initStyle
+     * 
      */
     void LosTerminalUi::initStyle()
     {
@@ -26,9 +27,6 @@ namespace LosView
         L_channel->registerObject("backend", L_backend);
         L_webView->page()->setWebChannel(L_channel);
 
-        /*
-         * 设置背景 颜色
-         */
         L_webView->page()->setBackgroundColor(QColor("#282a36"));
         L_webView->setUrl(QUrl("qrc:/web/resources/web/terminal.html"));
         layout->addWidget(L_webView);
@@ -36,10 +34,5 @@ namespace LosView
 
 
 
-    /*
-     * 超级试驾；哦按空耳
-     */
     void LosTerminalUi::initConnect() {}
-
-
 } /* namespace LosView */
