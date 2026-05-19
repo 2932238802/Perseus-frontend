@@ -11,6 +11,12 @@ namespace LosCore
 
 
 
+    /**
+     * @brief start
+     *
+     * @param start_up_args
+     * @param exe_path
+     */
     void LosLspRust::start(const QStringList &start_up_args, const QString &exe_path)
     {
         if (L_process && L_process->state() == QProcess::NotRunning)
@@ -148,7 +154,7 @@ namespace LosCore
             {
             case LosCore::LosLspType::REQ_INITIALIZE:
             {
-                SUC("handshake successfule", "LosLspCMake");
+                SUC("handshake successful", "LosLspCMake");
                 L_isinit = true;
                 sendInitializedMsg();
                 for (const auto &con : L_pendings)
@@ -250,8 +256,8 @@ namespace LosCore
                 {
                     QJsonObject diagObj = diagVal.toObject();
                     LosCommon::LosLsp_Constants::LosDiagnostic d;
-                    d.message = diagObj["message"].toString();
-                    d.ds = static_cast<LosCommon::LosLsp_Constants::DiagnosticSeverity>(diagObj["severity"].toInt());
+                    d.message         = diagObj["message"].toString();
+                    d.ds              = static_cast<LosCommon::LosLsp_Constants::DiagnosticSeverity>(diagObj["severity"].toInt());
                     QJsonObject start = diagObj["range"].toObject()["start"].toObject();
                     QJsonObject end   = diagObj["range"].toObject()["end"].toObject();
                     d.startLine       = start["line"].toInt();
@@ -275,9 +281,8 @@ namespace LosCore
     {
         QJsonObject params;
         params["processId"] = QCoreApplication::applicationPid();
-        QString absPath     = LosCore::LosState::instance()
-                              .get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR)
-                              .getAbsoluteFilePath();
+        QString absPath =
+            LosCore::LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR).getAbsoluteFilePath();
         params["rootUri"] = QUrl::fromLocalFile(absPath).toString();
         QJsonObject completion;
         QJsonObject completionItem;
@@ -318,8 +323,7 @@ namespace LosCore
         connect(L_process, &QProcess::readyReadStandardError, this,
                 [this]() { INF(QString::fromUtf8(L_process->readAllStandardError()), "LosLspRust"); });
         connect(&router, &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this,
-                [this](const QString &compile_commands_path, auto type)
-                { this->didChangeWatchedFiles(compile_commands_path, type); });
+                [this](const QString &compile_commands_path, auto type) { this->didChangeWatchedFiles(compile_commands_path, type); });
         connect(&router, &LosRouter::_cmd_lsp_request_hover, this,
                 [this](const QString &filePath, int line, int col) { this->requestHover(filePath, line, col); });
     }

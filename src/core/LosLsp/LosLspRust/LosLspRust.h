@@ -15,7 +15,6 @@
 
 namespace LosCore
 {
-
     class LosLspRust : public LosLspClient
     {
         Q_OBJECT

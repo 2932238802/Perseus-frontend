@@ -162,6 +162,10 @@ namespace LosCore
      */
     void LosLspClient::requestDefinition(const QString &file_path, int line, int character)
     {
+        if (!L_isinit)
+        {
+            return;
+        }
         QJsonObject textDocument;
         textDocument["uri"] = QUrl::fromLocalFile(file_path).toString();
         QJsonObject position;
@@ -184,6 +188,10 @@ namespace LosCore
      */
     void LosLspClient::requestHover(const QString &file_path, int line, int character)
     {
+        if (!L_isinit)
+        {
+            return;
+        }
         QJsonObject position;
         position["line"]      = line;
         position["character"] = character;
@@ -253,7 +261,7 @@ namespace LosCore
         };
 
         didChangeWatchedFiles(oldPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::DELETE);
-        didChangeWatchedFiles(oldPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Created);
+        didChangeWatchedFiles(newPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Created);
         if (open)
         {
             QFile f(newPath);
@@ -262,6 +270,7 @@ namespace LosCore
                 QString cont = QString::fromUtf8(f.readAll());
                 f.close();
                 QString langStr = LosCommon::getLangId(LosCommon::CheckLang(newPath));
+                didOpen(newPath, cont, langStr);
             }
         }
     }

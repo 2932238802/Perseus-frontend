@@ -51,8 +51,7 @@ namespace LosView
     /*
      * 展示错误
      */
-    void LosEditorUi::showDiagnostic(const QString &file_path,
-                                     const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &dias)
+    void LosEditorUi::showDiagnostic(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &dias)
     {
         if (LOS_filePath && file_path != LOS_filePath->getFilePath())
             return;
@@ -154,8 +153,7 @@ namespace LosView
     {
         QString out{""};
         QString currentText = toPlainText();
-        if (LOS_filePath &&
-            !LosCore::LosFormatManager::instance().format(&out, LOS_filePath->getFilePath(), toPlainText()))
+        if (LOS_filePath && !LosCore::LosFormatManager::instance().format(&out, LOS_filePath->getFilePath(), toPlainText()))
         {
             return;
         }
@@ -179,8 +177,7 @@ namespace LosView
     /*
      * 导入内容
      */
-    void LosEditorUi::loadContextAndPath(QSharedPointer<LosModel::LosFileContext> context,
-                                         QSharedPointer<LosModel::LosFilePath> file_path)
+    void LosEditorUi::loadContextAndPath(QSharedPointer<LosModel::LosFileContext> context, QSharedPointer<LosModel::LosFilePath> file_path)
     {
         if (!context || !file_path)
             return;
@@ -294,8 +291,7 @@ namespace LosView
                  * x坐标, y坐标, 宽度, 高度,
                  * 对齐方式, 要写的字
                  */
-                painter.drawText(0, top, LOS_lineNumber->width() - 5, fontMetrics().height(),
-                                 Qt::AlignRight | Qt::AlignVCenter, number);
+                painter.drawText(0, top, LOS_lineNumber->width() - 5, fontMetrics().height(), Qt::AlignRight | Qt::AlignVCenter, number);
             }
             block  = block.next();
             top    = bottom;
@@ -325,8 +321,7 @@ namespace LosView
             this->document()->setModified(false);
             L_dirty = false;
             emit LosCore::LosRouter::instance()._cmd_fileDirty(LOS_filePath -> getFilePath(), false);
-            emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(LOS_filePath -> getFilePath(),
-                                                                             toPlainText());
+            emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(LOS_filePath -> getFilePath(), toPlainText());
         }
         return ok;
     }
@@ -385,14 +380,15 @@ namespace LosView
             max /= 10;
             digit++;
         }
-        int space = LosCommon::LosLineNumberUi_Constants::BASE_LINEWIDTH +
-                    fontMetrics().horizontalAdvance(QLatin1Char('9')) * digit;
+        int space = LosCommon::LosLineNumberUi_Constants::BASE_LINEWIDTH + fontMetrics().horizontalAdvance(QLatin1Char('9')) * digit;
         return space;
     }
 
 
 
     /**
+     * @brief
+     *
      * @brief
      *
      */
@@ -413,8 +409,7 @@ namespace LosView
 
         // activated 有两种
         auto &router = LosCore::LosRouter::instance();
-        connect(LOS_completer, QOverload<const QString &>::of(&QCompleter::activated), this,
-                &LosEditorUi::insertCompletion);
+        connect(LOS_completer, QOverload<const QString &>::of(&QCompleter::activated), this, &LosEditorUi::insertCompletion);
         connect(this->document(), &QTextDocument::contentsChanged, this, &LosEditorUi::onTextChanged);
         connect(L_timer, &QTimer::timeout, this, &LosEditorUi::onDebounceTimeout);
         connect(&router, &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this, &LosEditorUi::showDiagnostic);
@@ -534,8 +529,7 @@ namespace LosView
             return;
         }
 
-        if (L_lastCursor.selectionStart() == cursor.selectionStart() &&
-            L_lastCursor.selectionEnd() == cursor.selectionEnd())
+        if (L_lastCursor.selectionStart() == cursor.selectionStart() && L_lastCursor.selectionEnd() == cursor.selectionEnd())
         {
             return;
         }
@@ -582,17 +576,17 @@ namespace LosView
 
         bool endBrack   = textAfter.trimmed().endsWith("}");
         bool beginBrack = textBefore.trimmed().startsWith("{");
-
         if (beginBrack && endBrack)
         {
             cur.insertText("\n" + nextLineIndent + "\n" + LosCommon::LosEditorUi_Constants::BASE_INDENT);
             cur.movePosition(QTextCursor::Up);
             cur.movePosition(QTextCursor::EndOfLine);
         }
-        else if (endBrack && !beginBrack && textAfter.trimmed().isEmpty()) {
-            if(baseIndent.size() >= QString(LosCommon::LosEditorUi_Constants::BASE_INDENT).size())
+        else if (endBrack && !beginBrack && textAfter.trimmed().isEmpty())
+        {
+            if (baseIndent.size() >= QString(LosCommon::LosEditorUi_Constants::BASE_INDENT).size())
             {
-                nextLineIndent = baseIndent.left(baseIndent.size() -QString(LosCommon::LosEditorUi_Constants::BASE_INDENT).size());
+                nextLineIndent = baseIndent.left(baseIndent.size() - QString(LosCommon::LosEditorUi_Constants::BASE_INDENT).size());
             }
             cur.insertText("\n" + nextLineIndent);
         }
@@ -716,20 +710,18 @@ namespace LosView
             return;
         QString currentLineText = cursor.block().text();
         QChar lastChar          = currentLineText.at(col - 1);
-        bool isTriggerChar = lastChar.isLetterOrNumber() || lastChar == '_' || lastChar == '.' || lastChar == '>' ||
-                             lastChar == ':' || lastChar == '#' || lastChar == '/' || lastChar == '"' ||
-                             lastChar == '<';
+        bool isTriggerChar      = lastChar.isLetterOrNumber() || lastChar == '_' || lastChar == '.' || lastChar == '>' || lastChar == ':' ||
+                             lastChar == '#' || lastChar == '/' || lastChar == '"' || lastChar == '<';
         if (!isTriggerChar)
             return;
         if (lastChar == '>' && (col < 2 || currentLineText.at(col - 2) != '-'))
             return;
         if (lastChar == ':' && (col < 2 || currentLineText.at(col - 2) != ':'))
             return;
-
         L_oldWord = getWordUnderCursor();
-        emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(LOS_filePath -> getFilePath(),
-                                                                         this->toPlainText());
+        emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(LOS_filePath -> getFilePath(), this->toPlainText());
         emit LosCore::LosRouter::instance()._cmd_lsp_request_completeion(LOS_filePath -> getFilePath(), line, col);
+        emit LosCore::LosRouter::instance()._cmd_lsp_request_semantic(LOS_filePath -> getFilePath());
     }
 
 
@@ -746,23 +738,22 @@ namespace LosView
             hideHoverPopup();
             return;
         }
-
         QString html = markdownContent;
+        html.replace("&", "&amp;");
         html.replace("<", "&lt;");
         html.replace(">", "&gt;");
         html.replace("```cpp\n", "<pre style='color:#8be9fd; font-family:Consolas; margin: 5px 0;'>");
         html.replace("```c\n", "<pre style='color:#8be9fd; font-family:Consolas; margin: 5px 0;'>");
         html.replace("```", "</pre>");
         QRegularExpression boldRegex("\\*\\*(.*?)\\*\\*");
-
         html.replace(boldRegex, "<b>\\1</b>");
         QRegularExpression inlineCodeRegex("`([^`]+)`");
         html.replace(inlineCodeRegex, "<code style='color:#f1fa8c; background-color:#44475a; padding:2px 4px; "
                                       "border-radius:3px;'>\\1</code>");
         html.replace("\n", "<br>");
-
         showHoverPopup(html);
     }
+
 
 
     /**
@@ -801,8 +792,7 @@ namespace LosView
 
         L_hoverPopup->setText(html);
         L_hoverPopup->adjustSize();
-        QPoint anchor = L_lastHoverWordRectGlobal.isValid() ? L_lastHoverWordRectGlobal.bottomLeft()
-                                                            : L_lastHoverGlobal + QPoint(0, 20);
+        QPoint anchor = L_lastHoverWordRectGlobal.isValid() ? L_lastHoverWordRectGlobal.bottomLeft() : L_lastHoverGlobal + QPoint(0, 20);
         anchor += QPoint(0, 4);
 
         QScreen *screen = QGuiApplication::screenAt(anchor);
