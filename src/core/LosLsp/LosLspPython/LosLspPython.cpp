@@ -1,14 +1,18 @@
 
 #include "LosLspPython.h"
+#include <qobject.h>
 
 namespace LosCore
 {
-
-    LosLspPython::LosLspPython(QObject *parent)
+    /**
+     * @brief Construct a new Los Lsp Python:: Los Lsp Python object
+     *
+     * @param parent
+     */
+    LosLspPython::LosLspPython(QObject *parent) : LosLspClient{parent}
     {
         initConnect();
     }
-
     void LosLspPython::start(const QStringList &start_up_args, const QString &exe_path)
     {
 
@@ -21,6 +25,12 @@ namespace LosCore
 
 
 
+    /**
+     * @brief dealLspMessage
+     * 处理 lsp 的信息
+     *
+     * @param obj
+     */
     void LosLspPython::dealLspMessage(const QJsonObject &obj)
     {
         if (obj.contains("id"))
@@ -60,7 +70,7 @@ namespace LosCore
                     }
                 }
 
-                sendInitializeMsg(); 
+                sendInitializeMsg();
                 for (const auto &con : L_pendings)
                 {
                     didOpen(con.L_filePath, con.L_content, con.L_langId);
@@ -198,7 +208,7 @@ namespace LosCore
                     QJsonObject diagObj = diagVal.toObject();
                     LosCommon::LosLsp_Constants::LosDiagnostic d;
                     d.message = diagObj["message"].toString();
-                    d.ds = static_cast<LosCommon::LosLsp_Constants::DiagnosticSeverity>(diagObj["severity"].toInt());
+                    d.ds      = static_cast<LosCommon::LosLsp_Constants::DiagnosticSeverity>(diagObj["severity"].toInt());
 
                     QJsonObject start = diagObj["range"].toObject()["start"].toObject();
                     QJsonObject end   = diagObj["range"].toObject()["end"].toObject();
@@ -259,8 +269,7 @@ namespace LosCore
         params["processId"] = QCoreApplication::applicationPid();
         if (state.contain<QString>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR))
         {
-            params["rootUri"] =
-                QUrl::fromLocalFile(state.get<QString>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR)).toString();
+            params["rootUri"] = QUrl::fromLocalFile(state.get<QString>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR)).toString();
         }
 
         QJsonObject capabilities;
@@ -304,7 +313,7 @@ namespace LosCore
      * 初始化 发送信号
      * sendInitializeRequest
      * - 程序开始的时候 发送初始化 信号
-     * 
+     *
      */
     void LosLspPython::initConnect()
     {
@@ -313,8 +322,7 @@ namespace LosCore
         connect(L_process, &QProcess::readyReadStandardError, this,
                 [this]() { INF(QString::fromUtf8(L_process->readAllStandardError()), "LosLspPython"); });
         connect(&router, &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this,
-                [this](const QString &compile_commands_path, auto type)
-                { this->didChangeWatchedFiles(compile_commands_path, type); });
+                [this](const QString &compile_commands_path, auto type) { this->didChangeWatchedFiles(compile_commands_path, type); });
         connect(&router, &LosRouter::_cmd_lsp_request_hover, this,
                 [this](const QString &filePath, int line, int col) { this->requestHover(filePath, line, col); });
     }

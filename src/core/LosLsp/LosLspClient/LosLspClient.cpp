@@ -79,7 +79,7 @@ namespace LosCore
     {
         if (!L_isinit)
             return;
-        if (!file_path.isEmpty())
+        if (file_path.isEmpty())
             return;
 
         QJsonObject textDocument;
@@ -224,9 +224,7 @@ namespace LosCore
      * @param filePath
      * @param type
      */
-    void
-    LosLspClient::didChangeWatchedFiles(const QString &filePath,
-                                        LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type type)
+    void LosLspClient::didChangeWatchedFiles(const QString &filePath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type type)
     {
         QJsonObject params, change;
         QJsonArray changes;
@@ -256,8 +254,7 @@ namespace LosCore
         };
 
         didChangeWatchedFiles(oldPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::DELETE);
-        didChangeWatchedFiles(oldPath,
-                              LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Created);
+        didChangeWatchedFiles(oldPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Created);
         if (open)
         {
             QFile f(newPath);
@@ -291,8 +288,7 @@ namespace LosCore
 
         QJsonDocument doc(request);
         QByteArray jb     = doc.toJson(QJsonDocument::Compact);
-        QByteArray header = LosCommon::LosLsp_Constants::CONTENT_LENGTH + QByteArray::number(jb.size()) +
-                            LosCommon::LosLsp_Constants::LSP_RNRN;
+        QByteArray header = LosCommon::LosLsp_Constants::CONTENT_LENGTH + QByteArray::number(jb.size()) + LosCommon::LosLsp_Constants::LSP_RNRN;
         L_process->write(header + jb);
     }
 
@@ -312,8 +308,7 @@ namespace LosCore
         req["params"]  = params;
         QJsonDocument doc(req);
         QByteArray jb     = doc.toJson(QJsonDocument::Compact);
-        QByteArray header = LosCommon::LosLsp_Constants::CONTENT_LENGTH + QByteArray::number(jb.size()) +
-                            LosCommon::LosLsp_Constants::LSP_RNRN;
+        QByteArray header = LosCommon::LosLsp_Constants::CONTENT_LENGTH + QByteArray::number(jb.size()) + LosCommon::LosLsp_Constants::LSP_RNRN;
         L_process->write(header + jb);
     }
 

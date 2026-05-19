@@ -32,8 +32,7 @@ namespace LosCore
         ~LosToolChainManager() = default;
 
       public slots:
-        void onCheckLanguageToolchain(LosCommon::LosToolChain_Constants::LosLanguage lang,
-                                      LosCommon::LosToolChain_Constants::LosTool tool);
+        void onCheckLanguageToolchain(LosCommon::LosToolChain_Constants::LosLanguage lang, LosCommon::LosToolChain_Constants::LosTool tool);
         void onCheckSingleTool(LosCommon::LosToolChain_Constants::LosTool tool);
 
       private:
@@ -42,16 +41,16 @@ namespace LosCore
         bool validateExecutable(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
 
       private:
-        LosCommon::LosToolChain_Constants::ToolChainConfig parseToolNode(const QJsonObject &, const QString &);
+        LosCommon::LosToolChain_Constants::ToolChainConfig
+        parseToolNode(const QJsonObject &, const QString &,
+                      LosCommon::LosToolChain_Constants::LosLanguage language = LosCommon::LosToolChain_Constants::LosLanguage::UNKNOWN);
         LosCommon::LosToolChain_Constants::LosLanguage stringToLanguage(const QString &str);
         LosCommon::LosToolChain_Constants::ToolCategory stringToCategory(const QString &str);
         LosCommon::LosToolChain_Constants::LosTool stringToTool(const QString &str);
 
       private:
-        QHash<LosCommon::LosToolChain_Constants::LosLanguage, QList<LosCommon::LosToolChain_Constants::LosTool>>
-            LOS_languageToolMap;
-        QHash<LosCommon::LosToolChain_Constants::LosTool, LosCommon::LosToolChain_Constants::ToolChainConfig>
-            LOS_toolConfigs;
+        QHash<LosCommon::LosToolChain_Constants::LosLanguage, QList<LosCommon::LosToolChain_Constants::LosTool>> LOS_languageToolMap;
+        QHash<LosCommon::LosToolChain_Constants::LosTool, LosCommon::LosToolChain_Constants::ToolChainConfig> LOS_toolConfigs;
         QHash<LosCommon::LosToolChain_Constants::LosTool, QString> L_activeToolPath;
     };
 } /* namespace LosCore */

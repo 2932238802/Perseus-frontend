@@ -27,12 +27,17 @@ namespace LosCore
 
 
 
-    /*
-     * - 创建 文件夹
+    /**
+     * @brief createFile
+     *
+     * @param file_path
+     * @param data
+     * @return true
+     * @return false
      */
     bool LosFileSystem::createFile(const QString &file_path, const QByteArray &data)
     {
-        QFileInfo fileInfo;
+        QFileInfo fileInfo(file_path);
         QString dirPath = fileInfo.absolutePath();
         if (!createDir(dirPath))
             return false;
@@ -43,11 +48,8 @@ namespace LosCore
             return false;
         }
 
-        /*
-         * 创建成功了
-         */
+        // 创建成功了
         emit LosCore::LosRouter::instance()._cmd_fileSystemChanged();
-
         qint64 writtenBytes = file.write(data);
         file.close();
         return writtenBytes == data.size();
@@ -55,8 +57,12 @@ namespace LosCore
 
 
 
-    /*
-     * - 删除文件
+    /**
+     * @brief removeFile 删除文件
+     *
+     * @param file_path
+     * @return true
+     * @return false
      */
     bool LosFileSystem::removeFile(const QString &file_path)
     {
@@ -70,8 +76,12 @@ namespace LosCore
 
 
 
-    /*
-     * - 删除文件夹
+    /**
+     * @brief removeDir 删除文件夹
+     *
+     * @param dir_path
+     * @return true
+     * @return false
      */
     bool LosFileSystem::removeDir(const QString &dir_path)
     {

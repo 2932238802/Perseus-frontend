@@ -1,4 +1,5 @@
 #include "LosToolChainManager.h"
+#include "common/constants/ConstantsClass/LosToolChainClass.h"
 
 namespace LosCore
 {
@@ -11,8 +12,12 @@ namespace LosCore
 
 
 
-    /*
-     * 检查 一个 语言的 工具链
+    /**
+     * @brief onCheckLanguageToolchain
+     * 检查一个语言的 工具链
+     *
+     * @param lang
+     * @param tool
      */
     void LosToolChainManager::onCheckLanguageToolchain(LosCommon::LosToolChain_Constants::LosLanguage lang,
                                                        LosCommon::LosToolChain_Constants::LosTool tool)
@@ -27,8 +32,12 @@ namespace LosCore
 
 
 
-    /*
+    /**
+     * @brief onCheckSingleTool
+     *
      * 检查 单个 sing tool
+     *
+     * @param tool
      */
     void LosToolChainManager::onCheckSingleTool(LosCommon::LosToolChain_Constants::LosTool tool)
     {
@@ -70,13 +79,15 @@ namespace LosCore
     }
 
 
-    /*
+
+    /**
+     * @brief initConfig
      * 读取 json
+     *
      */
     void LosToolChainManager::initConfig()
     {
-        auto configFile(LosCommon::GetFilePathFromUp<LosCommon::FindFileType::SYSTEM_TOOLCHAIN_CONFIG_JSON>(
-            "toolchain_config.json"));
+        auto configFile(LosCommon::GetFilePathFromUp<LosCommon::FindFileType::SYSTEM_TOOLCHAIN_CONFIG_JSON>("toolchain_config.json"));
 
         if (!configFile)
         {
@@ -147,7 +158,7 @@ namespace LosCore
                     {
                         QString toolNameStr       = toolIt.key();
                         auto toolEnum             = stringToTool(toolNameStr);
-                        LOS_toolConfigs[toolEnum] = parseToolNode(toolIt.value().toObject(), toolNameStr);
+                        LOS_toolConfigs[toolEnum] = parseToolNode(toolIt.value().toObject(), toolNameStr, lang);
                         if (!LOS_languageToolMap[lang].contains(toolEnum))
                         {
                             LOS_languageToolMap[lang].append(toolEnum);
@@ -168,7 +179,6 @@ namespace LosCore
         auto &router = LosCore::LosRouter::instance();
         connect(&router, &LosRouter::_cmd_checkLanguageToolchain, this, &LosToolChainManager::onCheckLanguageToolchain);
         connect(&router, &LosRouter::_cmd_checkSingleTool, this, &LosToolChainManager::onCheckSingleTool);
-        
     }
 
 
@@ -194,15 +204,22 @@ namespace LosCore
 
 
 
-    /*
-     * - 解析 一个 toolIt config 解析
+    /**
+     * @brief parseToolNode
+     * 解析 一个 toolIt config 解析
+     *
+     *
+     * @param toolObj
+     * @param toolName
+     * @return LosCommon::LosToolChain_Constants::ToolChainConfig
      */
-    LosCommon::LosToolChain_Constants::ToolChainConfig LosToolChainManager::parseToolNode(const QJsonObject &toolObj,
-                                                                                          const QString &toolName)
+    LosCommon::LosToolChain_Constants::ToolChainConfig LosToolChainManager::parseToolNode(const QJsonObject &toolObj, const QString &toolName,
+                                                                                          LosCommon::LosToolChain_Constants::LosLanguage language)
     {
         LosCommon::LosToolChain_Constants::ToolChainConfig config;
-        config.L_category = stringToCategory(toolObj["category"].toString());
-        config.L_name     = toolName;
+        config.L_category   = stringToCategory(toolObj["category"].toString());
+        config.L_name       = toolName;
+        config.LOS_language = language;
         if (toolObj.contains("executables") && toolObj["executables"].isArray())
         {
             QJsonArray exeArray = toolObj["executables"].toArray();
@@ -234,8 +251,11 @@ namespace LosCore
 
 
 
-    /*
-     * - 字符串 -> 具体枚举
+    /**
+     * @brief stringToLanguage
+     * 字符串 -> 具体枚举
+     * @param str
+     * @return LosCommon::LosToolChain_Constants::LosLanguage
      */
     LosCommon::LosToolChain_Constants::LosLanguage LosToolChainManager::stringToLanguage(const QString &str)
     {
@@ -260,8 +280,12 @@ namespace LosCore
 
 
 
-    /*
-     * - 字符串 转 具体 枚举
+    /**
+     * @brief stringToCategory
+     * 字符串 转 具体 枚举
+     *
+     * @param str
+     * @return LosCommon::LosToolChain_Constants::ToolCategory
      */
     LosCommon::LosToolChain_Constants::ToolCategory LosToolChainManager::stringToCategory(const QString &str)
     {
