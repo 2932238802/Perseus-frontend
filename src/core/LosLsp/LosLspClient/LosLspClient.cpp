@@ -61,7 +61,6 @@ namespace LosCore
 
     /**
      * @brief didClose 通知 LSP 服务器某文件已关闭
-     *
      * @param file_path 关闭的文件路径
      *
      * LSP 消息格式:

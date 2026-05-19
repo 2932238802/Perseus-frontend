@@ -3,8 +3,10 @@
 
 namespace LosCore
 {
-    /*
-     * - 构造函数
+    /**
+     * @brief Construct a new Los Run Manager:: Los Run Manager object
+     *
+     * @param parent
      */
     LosRunManager::LosRunManager(QObject *parent) : QObject{parent}
     {
@@ -17,8 +19,11 @@ namespace LosCore
 
 
 
-    /*
-     * 执行函数
+    /**
+     * @brief execute
+     *
+     * @param file_path
+     * @param is_project
      */
     void LosRunManager::execute(const QString &file_path, bool is_project)
     {
@@ -44,8 +49,7 @@ namespace LosCore
             {
                 if (!LOS_runners.contains(LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS))
                 {
-                    emit router._cmd_checkLanguageToolchain(lang,
-                                                            LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS);
+                    emit router._cmd_checkLanguageToolchain(lang, LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS);
                     return;
                 }
                 LOS_runners[LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS]->start(file_path);
@@ -70,6 +74,7 @@ namespace LosCore
                 return;
             }
             LOS_runners[LosCommon::LosToolChain_Constants::LosTool::PYTHON]->start(file_path);
+            break;
         }
         default:
         {
@@ -99,8 +104,8 @@ namespace LosCore
     /*
      * - 工具链 已完备
      */
-    void LosRunManager::onToolChainReady(LosCommon::LosToolChain_Constants::LosLanguage lan,
-                                         LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath)
+    void LosRunManager::onToolChainReady(LosCommon::LosToolChain_Constants::LosLanguage lan, LosCommon::LosToolChain_Constants::LosTool tool,
+                                         const QString &exePath)
     {
         switch (tool)
         {
@@ -110,8 +115,7 @@ namespace LosCore
             {
                 LOS_runners[LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS] = new LosSingleCppRunner(this);
             }
-            auto *runner = qobject_cast<LosSingleCppRunner *>(
-                LOS_runners[LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS]);
+            auto *runner = qobject_cast<LosSingleCppRunner *>(LOS_runners[LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS]);
             /*
              * 设置可执行 文件的位置
              */
@@ -125,8 +129,7 @@ namespace LosCore
             {
                 LOS_runners[LosCommon::LosToolChain_Constants::LosTool::RUSTC] = new LosRustcRunner(this);
             }
-            auto *runner =
-                qobject_cast<LosRustcRunner *>(LOS_runners[LosCommon::LosToolChain_Constants::LosTool::RUSTC]);
+            auto *runner = qobject_cast<LosRustcRunner *>(LOS_runners[LosCommon::LosToolChain_Constants::LosTool::RUSTC]);
             runner->setExePath(exePath);
             runner->start(L_mainEntryFilePath);
             break;
@@ -138,8 +141,7 @@ namespace LosCore
             {
                 LOS_runners[LosCommon::LosToolChain_Constants::LosTool::PYTHON] = new LosPythonRunner(this);
             }
-            auto *runner =
-                qobject_cast<LosPythonRunner *>(LOS_runners[LosCommon::LosToolChain_Constants::LosTool::PYTHON]);
+            auto *runner = qobject_cast<LosPythonRunner *>(LOS_runners[LosCommon::LosToolChain_Constants::LosTool::PYTHON]);
             runner->setExePath(exePath);
             runner->start(L_mainEntryFilePath);
             break;
@@ -156,8 +158,7 @@ namespace LosCore
     /*
      * - 构建工具 完毕
      */
-    void LosRunManager::onBuildToolReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath,
-                                         const QStringList &args)
+    void LosRunManager::onBuildToolReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath, const QStringList &args)
     {
         if (LOS_runners.contains(tool))
         {
@@ -170,12 +171,10 @@ namespace LosCore
             LOS_runners[tool] = new LosCmakeRunner(this);
             auto runner       = qobject_cast<LosCmakeRunner *>(LOS_runners[tool]);
             runner->setCMakeExe(exePath);
-            LosModel::LosFilePath porjectDir =
-                LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR);
+            LosModel::LosFilePath porjectDir = LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR);
             if (porjectDir.isExist())
             {
-                runner->start(porjectDir.getFilePath() + QDir::separator() +
-                              LosCommon::LosConfig_Constants::BUILD_NAME);
+                runner->start(porjectDir.getFilePath() + QDir::separator() + LosCommon::LosConfig_Constants::BUILD_NAME);
             }
             break;
         }

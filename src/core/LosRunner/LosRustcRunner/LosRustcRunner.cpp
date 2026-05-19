@@ -2,8 +2,10 @@
 
 namespace LosCore
 {
-    /*
-     * construct
+    /**
+     * @brief Construct a new Los Rustc Runner:: Los Rustc Runner objectconstruct
+     *
+     * @param parent
      */
     LosRustcRunner::LosRustcRunner(QObject *parent) : LosAbstractRunner(parent)
     {
@@ -18,8 +20,8 @@ namespace LosCore
 
 
 
-    /*
-     * 暂停
+    /**
+     * @brief stop 暂停
      *
      */
     void LosRustcRunner::stop()
@@ -27,10 +29,12 @@ namespace LosCore
         if (L_rustc->state() != QProcess::NotRunning)
         {
             L_rustc->kill();
+            L_rustc->waitForFinished();
         }
         if (L_runner->state() != QProcess::NotRunning)
         {
             L_runner->kill();
+            L_runner->waitForFinished();
         }
     }
 
@@ -47,16 +51,13 @@ namespace LosCore
         /*
          * 获取 项目路径
          */
-        LosModel::LosFilePath dir(
-            LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR));
+        LosModel::LosFilePath dir(LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR));
 
-        QString outDirPath = dir.getAbsoluteFilePath() + QDir::separator() +
-                             LosCommon::LosRunner_Constants::OUTPUT_BUILD + QDir::separator() +
+        QString outDirPath = dir.getAbsoluteFilePath() + QDir::separator() + LosCommon::LosRunner_Constants::OUTPUT_BUILD + QDir::separator() +
                              LosCommon::LosRunner_Constants::OUTPUT_RUSTC;
         QDir().mkpath(outDirPath);
-        QString outputExe = outDirPath + QDir::separator() + LOS_targetFilePath.getBaseFileName() +
-                            LosCommon::LosRunner_Constants::LINUX_EXE;
-        L_outPutPath = outputExe;
+        QString outputExe = outDirPath + QDir::separator() + LOS_targetFilePath.getBaseFileName() + LosCommon::LosRunner_Constants::LINUX_EXE;
+        L_outPutPath      = outputExe;
         if (!LOS_targetFilePath.isExist())
         {
             ERR("The file to be executed does not exist...", "LosRustcRunner");
@@ -79,6 +80,13 @@ namespace LosCore
      * - 设置 可执行文件的位置
      * - 这个必须 是要 先 执行的
      */
+
+    /**
+     * @brief setExePath
+     * 设置 可执行文件的位置
+     * 这个必须 是要 先 执行的
+     * @param exe_path
+     */
     void LosRustcRunner::setExePath(const QString &exe_path)
     {
         L_exePath.loadFile(exe_path);
@@ -86,8 +94,9 @@ namespace LosCore
 
 
 
-    /*
-     * - 初始化 连接
+    /**
+     * @brief initConnect
+     * 初始化 连接
      */
     void LosRustcRunner::initConnect()
     {
@@ -99,15 +108,9 @@ namespace LosCore
                     if (exit_code == 0)
                     {
                         SUC("rustc suc!", "LosRustcRunner");
-
-                        /*
-                         * 这里 会 创建 新的项目
-                         */
+                        // 这里 会 创建 新的项目
                         emit LosCore::LosRouter::instance()._cmd_fileSystemChanged();
-
-                        /*
-                         * 设置 工作目录  然后 运行
-                         */
+                        // 设置 工作目录  然后 运行
                         L_runner->setWorkingDirectory(LOS_targetFilePath.getAbsolutePath());
                         L_runner->start(L_outPutPath.getAbsoluteFilePath());
                     }
@@ -136,12 +139,12 @@ namespace LosCore
                 });
         connect(L_runner, &QProcess::readyReadStandardError, this,
                 [this]() { ERR(QString::fromLocal8Bit(L_runner->readAllStandardError()), "LosRustcRunner"); });
-
         connect(L_runner, &QProcess::finished, this, [=](int exitCode, QProcess::ExitStatus exitStatus)
                 { INF("process terminated (exit code: " + QString::number(exitCode) + ")", "LosRustcRunner"); });
-
         connect(L_runner, &QProcess::errorOccurred, this,
                 [=](QProcess::ProcessError error) { ERR("The compiled program failed to start", "LosRustcRunner"); });
+        connect(L_runner, &QProcess::errorOccurred, this,
+                [this](QProcess::ProcessError err) { INF("LosRustcRunner error: " + QString::number(err), "LosRustcRunner"); });
     }
 
 } /* namespace LosCore */

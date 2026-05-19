@@ -179,12 +179,23 @@ namespace LosCore
         auto &router = LosCore::LosRouter::instance();
         connect(&router, &LosRouter::_cmd_checkLanguageToolchain, this, &LosToolChainManager::onCheckLanguageToolchain);
         connect(&router, &LosRouter::_cmd_checkSingleTool, this, &LosToolChainManager::onCheckSingleTool);
+        connect(&router, &LosRouter::_cmd_manuallySet, this,
+                [this](const LosCommon::LosToolChain_Constants::ToolChainConfig &config)
+                {
+                    auto tool = stringToTool(config.L_name);
+                    if (tool != LosCommon::LosToolChain_Constants::LosTool::UNKNOWN)
+                        onCheckSingleTool(tool);
+                });
     }
 
 
 
-    /*
-     * - 判断是不是 可以运行
+    /**
+     * @brief validateExecutable
+     * 判断是不是 可以运行
+     * @param config
+     * @return true
+     * @return false
      */
     bool LosToolChainManager::validateExecutable(const LosCommon::LosToolChain_Constants::ToolChainConfig &config)
     {

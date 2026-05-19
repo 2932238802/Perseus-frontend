@@ -20,11 +20,14 @@ namespace LosCore
 
 
 
-    /*
-     * 创建
+    /**
+     * @brief create
+     *
+     * @param file_path
      */
     void LosConfigManager::create(const QString &file_path)
     {
+        delete LOS_config;
         LOS_config = LosConfigFactory::instance().create(file_path, this);
     }
 

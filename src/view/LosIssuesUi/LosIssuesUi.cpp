@@ -23,8 +23,7 @@ namespace LosView
     /*
      * - 更新下册的
      */
-    void LosIssuesUi::onUpdateTable(const QString &file_path,
-                                    const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags)
+    void LosIssuesUi::onUpdateTable(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags)
     {
         if (!L_table)
             return;
@@ -65,8 +64,7 @@ namespace LosView
             bool isErr                   = diag.ds == LosCommon::LosLsp_Constants::DiagnosticSeverity::Error;
             QString level                = isErr ? "Err" : "War";
             QTableWidgetItem *item_1     = new QTableWidgetItem(level);
-            item_1->setForeground(isErr ? LosCommon::LosIssuesUi_Constants::ERR_COLOR
-                                        : LosCommon::LosIssuesUi_Constants::WAR_COLOR);
+            item_1->setForeground(isErr ? LosCommon::LosIssuesUi_Constants::ERR_COLOR : LosCommon::LosIssuesUi_Constants::WAR_COLOR);
             QTableWidgetItem *item_2 = new QTableWidgetItem(diag.message);
             QTableWidgetItem *item_3 = new QTableWidgetItem(QString::number(diag.startLine + 1));
             item_3->setData(Qt::UserRole, diag.startLine);
@@ -136,8 +134,7 @@ namespace LosView
     {
         if (L_table)
             connect(L_table, &QTableWidget::cellDoubleClicked, this, &LosIssuesUi::onTableDoubleClicked);
-        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this,
-                &LosIssuesUi::onUpdateTable);
+        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this, &LosIssuesUi::onUpdateTable);
     }
 
 } /* namespace LosView */

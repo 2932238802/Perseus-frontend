@@ -4,6 +4,11 @@
 
 namespace LosCore
 {
+    /**
+     * @brief Construct a new Los Cmake Runner:: Los Cmake Runner object
+     *
+     * @param parent
+     */
     LosCmakeRunner::LosCmakeRunner(QObject *parent) : LosAbstractRunner{parent}
     {
         L_cmake    = new QProcess(this);
@@ -11,13 +16,18 @@ namespace LosCore
         L_cmakeExe = "";
         initConnect();
     }
-
     LosCmakeRunner::~LosCmakeRunner()
     {
         stop();
     }
 
 
+
+    /**
+     * @brief start
+     *
+     * @param cur_file_path
+     */
     void LosCmakeRunner::start(const QString &cur_file_path)
     {
         if (L_cmakeExe.isEmpty())
@@ -29,8 +39,7 @@ namespace LosCore
             stop();
         }
 
-        LosModel::LosFilePath path = LosCore::LosState::instance().get<LosModel::LosFilePath>(
-            LosCommon::LosState_Constants::SG_STR::PROJECT_DIR);
+        LosModel::LosFilePath path = LosCore::LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR);
 
         if (!path.isExist())
         {
@@ -54,6 +63,10 @@ namespace LosCore
 
 
 
+    /**
+     * @brief stop
+     *
+     */
     void LosCmakeRunner::stop()
     {
         if (L_cmake->state() != QProcess::NotRunning)
@@ -70,8 +83,11 @@ namespace LosCore
 
 
 
-    /*
+    /**
+     * @brief setCMakeExe
      * 设置 exe 的位置
+     *
+     * @param file_path
      */
     void LosCmakeRunner::setCMakeExe(const QString &file_path)
     {
@@ -80,7 +96,9 @@ namespace LosCore
     }
 
 
-    /*
+
+    /**
+     * @brief initConnect
      * 初始化链接
      */
     void LosCmakeRunner::initConnect()
@@ -90,6 +108,8 @@ namespace LosCore
         connect(L_cmake, &QProcess::readyReadStandardOutput, this,
                 [this]() { INF(QString::fromLocal8Bit(L_cmake->readAllStandardOutput()), "LosCmakeRunner"); });
         connect(L_cmake, &QProcess::finished, this, &LosCmakeRunner::onCMakeFinished);
+        connect(L_cmake, &QProcess::errorOccurred, this,
+                [this](QProcess::ProcessError err) { INF("LosCmakeRunner cmake error: " + QString::number(err), "LosCmakeRunner"); });
         connect(L_runner, &QProcess::readyReadStandardError, this,
                 [this]() { ERR(QString::fromLocal8Bit(L_runner->readAllStandardError()), "LosCmakeRunner"); });
         connect(L_runner, &QProcess::readyReadStandardOutput, this,
@@ -106,12 +126,18 @@ namespace LosCore
                         ERR(QString("process crashed or was killed! (Exit code: %1)").arg(exitCode), "LosCmakeRunner");
                     }
                 });
+        connect(L_runner, &QProcess::errorOccurred, this,
+                [this](QProcess::ProcessError err) { INF("LosCmakeRunner runner error: " + QString::number(err), "LosCmakeRunner"); });
     }
 
 
 
-    /*
-     * - 找到 cmake 的查询文件
+    /**
+     * @brief findLatestIndex
+     * 找到 cmake 的查询文件
+     *
+     * @param build_path
+     * @return std::optional<QString>
      */
     std::optional<QString> LosCmakeRunner::findLatestIndex(const QString &build_path)
     {

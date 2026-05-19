@@ -29,5 +29,8 @@ namespace LosCore
 
       private:
         void makeCMakeQueryDir(const QString &build_path);
+
+      private: // params
+        QProcess *L_process = nullptr;
     };
 } /* namespace LosCore */

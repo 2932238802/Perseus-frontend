@@ -4,15 +4,16 @@
 
 namespace LosCore
 {
-
+    /**
+     * @brief Construct a new Los Python Runner:: Los Python Runner object
+     *
+     * @param parent
+     */
     LosPythonRunner::LosPythonRunner(QObject *parent) : LosAbstractRunner(parent)
     {
         L_runner = new QProcess(this);
         initConnect();
     };
-
-
-
     LosPythonRunner::~LosPythonRunner()
     {
         stop();
@@ -20,6 +21,11 @@ namespace LosCore
 
 
 
+    /**
+     * @brief start
+     *
+     * @param main_file_path
+     */
     void LosPythonRunner::start(const QString &main_file_path)
     {
         SUC("start...", "LosPythonRunner");
@@ -43,6 +49,10 @@ namespace LosCore
 
 
 
+    /**
+     * @brief
+     *
+     */
     void LosPythonRunner::stop()
     {
         if (L_runner->state() != QProcess::NotRunning)
@@ -54,6 +64,11 @@ namespace LosCore
 
 
 
+    /**
+     * @brief
+     *
+     * @param file_path
+     */
     void LosPythonRunner::setExePath(const QString &file_path)
     {
         L_exePath = std::move(file_path);
@@ -62,6 +77,10 @@ namespace LosCore
 
 
 
+    /**
+     * @brief initConnect
+     *
+     */
     void LosPythonRunner::initConnect()
     {
         connect(L_runner, &QProcess::readyReadStandardError, this,
@@ -80,6 +99,8 @@ namespace LosCore
                         ERR(QString("process crashed or was killed! (Exit code: %1)").arg(exitCode), "LosPythonRunner");
                     }
                 });
+        connect(L_runner, &QProcess::errorOccurred, this,
+                [this](QProcess::ProcessError err) { INF("LosPythonRunner error: " + QString::number(err), "LosPythonRunner"); });
     }
 
 } // namespace LosCore

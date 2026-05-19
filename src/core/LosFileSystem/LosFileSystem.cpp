@@ -49,9 +49,9 @@ namespace LosCore
         }
 
         // 创建成功了
-        emit LosCore::LosRouter::instance()._cmd_fileSystemChanged();
         qint64 writtenBytes = file.write(data);
         file.close();
+        emit LosCore::LosRouter::instance()._cmd_fileSystemChanged();
         return writtenBytes == data.size();
     }
 

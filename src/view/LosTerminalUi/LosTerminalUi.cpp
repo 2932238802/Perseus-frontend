@@ -3,17 +3,23 @@
 
 namespace LosView
 {
+    /**
+     * @brief Construct a new Los Terminal Ui:: Los Terminal Ui object
+     *
+     * @param parent
+     */
     LosTerminalUi::LosTerminalUi(QWidget *parent) : QWidget(parent)
     {
         initStyle();
+        initConnect();
     }
     LosTerminalUi::~LosTerminalUi() {}
 
 
 
     /**
-     * @brief initStyle
-     * 
+     * @brief initStyle 初始化样式
+     *
      */
     void LosTerminalUi::initStyle()
     {
@@ -34,5 +40,9 @@ namespace LosView
 
 
 
+    /**
+     * @brief initConnect
+     *
+     */
     void LosTerminalUi::initConnect() {}
 } /* namespace LosView */

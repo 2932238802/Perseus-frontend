@@ -51,6 +51,7 @@ namespace LosCore
         if (L_runner->state() != QProcess::NotRunning)
         {
             L_runner->kill();
+            L_runner->waitForFinished();
         }
     }
 
@@ -67,13 +68,12 @@ namespace LosCore
     {
         auto &router = LosCore::LosRouter::instance();
         connect(&router, &LosCore::LosRouter::_cmd_runScript, this,
-                [this](const QString &script_path, const QString &working_dir, const QStringList &args)
+                [this](const QString &working_dir, const QString &script_path, const QStringList &args)
                 {
                     this->L_args       = std::move(args);
                     this->L_workingDir = std::move(working_dir);
                     this->start(script_path);
                 });
-
         connect(&router, &LosCore::LosRouter::_cmd_autoInstallTool, this, &LosScriptRunner::onAutoInstallTool);
         connect(L_runner, &QProcess::readyReadStandardOutput, this,
                 [this]()
@@ -100,10 +100,17 @@ namespace LosCore
 
         connect(L_runner, &QProcess::errorOccurred, this,
                 [=](QProcess::ProcessError error) { ERR("The compiled program failed to start", "LosScriptRunner"); });
+        connect(L_runner, &QProcess::errorOccurred, this,
+                [this](QProcess::ProcessError err) { INF("LosScriptRunner error: " + QString::number(err), "LosScriptRunner"); });
     }
 
 
 
+    /**
+     * @brief getScriptsInstallDir
+     *
+     * @return QString
+     */
     QString LosScriptRunner::getScriptsInstallDir()
     {
         auto &ins = LosState::instance();
@@ -137,9 +144,8 @@ namespace LosCore
     {
         auto plat = LosPlatform::getOs();
         QString allPath{getScriptsInstallDir()};
-        allPath = plat == LosCommon::LosPlatform_Constants::OsType::WINDOWS
-                      ? allPath + "/windows/" + config.L_scriptWin
-                      : allPath + "/linux/" + config.L_scriptLinux;
+        allPath = plat == LosCommon::LosPlatform_Constants::OsType::WINDOWS ? allPath + "/windows/" + config.L_scriptWin
+                                                                            : allPath + "/linux/" + config.L_scriptLinux;
         QFileInfo file(allPath);
         if (!file.exists())
         {
@@ -150,7 +156,5 @@ namespace LosCore
         this->L_workingDir = file.absolutePath();
         this->start(plat == LosCommon::LosPlatform_Constants::OsType::WINDOWS ? "\"" + allPath + "\"" : allPath);
     }
-
-
 
 } /* namespace LosCore */

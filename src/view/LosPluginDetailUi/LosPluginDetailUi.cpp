@@ -4,6 +4,11 @@
 
 namespace LosView
 {
+    /**
+     * @brief Construct a new Los Plugin Detail Ui:: Los Plugin Detail Ui object
+     *
+     * @param parent
+     */
     LosPluginDetailUi::LosPluginDetailUi(QWidget *parent) : QWidget(parent), ui(new Ui::LosPluginDetailUi)
     {
         ui->setupUi(this);
@@ -75,8 +80,8 @@ namespace LosView
          * 如果是卸载操作
          * - removeRecursively 递归删除
          */
-        QString extDir = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +
-                         LosCommon::LosPluginDetailUi_Constants::PLUGIN_EXTENSION_SAVE_PATH;
+        QString extDir =
+            QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + LosCommon::LosPluginDetailUi_Constants::PLUGIN_EXTENSION_SAVE_PATH;
         if (ui->btn_install->text() == "Uninstall")
         {
             QString pluginPath = extDir + LOS_info.L_id;
@@ -138,11 +143,9 @@ namespace LosView
                         {
                             safeThis->ui->btn_install->setText("Uninstall");
                             safeThis->ui->btn_install->setEnabled(true);
-                            safeThis->ui->btn_install->setStyleSheet(
-                                "background-color: #2a2d2e; color: #d4d4d4; border: 1px solid #333333;");
+                            safeThis->ui->btn_install->setStyleSheet("background-color: #2a2d2e; color: #d4d4d4; border: 1px solid #333333;");
                             QFile::remove(zip_path);
-                            emit LosCore::LosRouter::instance()._cmd_net_PluginPath(
-                                QDir(fileInfo.absolutePath()).filePath(fileInfo.baseName()));
+                            emit LosCore::LosRouter::instance()._cmd_net_PluginPath(QDir(fileInfo.absolutePath()).filePath(fileInfo.baseName()));
                         }
                         else
                         {
@@ -164,10 +167,7 @@ namespace LosView
         process->start("powershell", args);
 #else
         QStringList args;
-        args << "-O"
-             << "UTF-8"
-                "-o"
-             << zip_path << "-d" << targetDir;
+        args << "-O" << "UTF-8" << "-o" << zip_path << "-d" << targetDir;
         process->start("unzip", args);
 #endif
     }
@@ -191,8 +191,7 @@ namespace LosView
          * - 解压到 .perseus 的extension 文件夹里面
          */
         connect(ui->btn_install, &QPushButton::clicked, this, &LosPluginDetailUi::onDownloadBtnClicked);
-        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_net_downloadFinished, this,
-                &LosPluginDetailUi::onDownloadFinished);
+        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_net_downloadFinished, this, &LosPluginDetailUi::onDownloadFinished);
     }
 
 } /* namespace LosView */
