@@ -66,8 +66,7 @@ void Perseus::OnFileLoaded(bool isc, bool run_analysis)
         return;
     }
 
-    LosModel::LosFilePath projectPath =
-        LosCore::LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR);
+    LosModel::LosFilePath projectPath = LosCore::LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR);
 
     ui->project_dir_label->setText(projectPath.getFilePath());
 
@@ -80,71 +79,68 @@ void Perseus::OnFileLoaded(bool isc, bool run_analysis)
     QString curPath{projectPath.getFilePath()};
     int L_curGen      = ++L_buildGeneration; /* 记录本次构建的代次 */
     auto *newRootNode = LosModel::LosFileNode::create(curPath, nullptr);
-    LosModel::LosFileNode::build(
-        newRootNode, curPath,
-        [this, curPath, newRootNode, L_curGen, run_analysis]()
-        {
-            /*
-             * 代次守卫
-             * - 若当前代次已不是最新（说明在本次 build 完成前OnFileLoaded 又被调用了）
-             * - 则丢弃本次结果，避免竞争
-             */
-            if (L_curGen != L_buildGeneration)
-            {
-                delete newRootNode;
-                return;
-            }
-            auto oldModel = LOS_treeModel;
-            auto oldRoot  = LOS_rootNode;
-            LOS_rootNode  = newRootNode;
-            LOS_treeModel = new LosModel::LosFileTreeModel(LOS_rootNode, this);
-            ui->explorer_treeview->updateExplorer(LOS_treeModel);
-            INF("load project suc:" + curPath, "Perseus");
+    LosModel::LosFileNode::build(newRootNode, curPath,
+                                 [this, curPath, newRootNode, L_curGen, run_analysis]()
+                                 {
+                                     /*
+                                      * 代次守卫
+                                      * - 若当前代次已不是最新（说明在本次 build 完成前OnFileLoaded 又被调用了）
+                                      * - 则丢弃本次结果，避免竞争
+                                      */
+                                     if (L_curGen != L_buildGeneration)
+                                     {
+                                         delete newRootNode;
+                                         return;
+                                     }
+                                     auto oldModel = LOS_treeModel;
+                                     auto oldRoot  = LOS_rootNode;
+                                     LOS_rootNode  = newRootNode;
+                                     LOS_treeModel = new LosModel::LosFileTreeModel(LOS_rootNode, this);
+                                     ui->explorer_treeview->updateExplorer(LOS_treeModel);
+                                     INF("load project suc:" + curPath, "Perseus");
 
-            /*
-             * 只在用户主动打开项目时运行 cmake 分析
-             * 文件系统变化（_cmd_fileSystemChanged）仅刷新文件树，不重跑 cmake
-             * 避免 cmake 写入 build/ → 触发 watcher → 再次 analyse → 死循环
-             */
-            if (run_analysis)
-            {
-                LOS_configMgr->create(curPath);
-                LOS_configMgr->analyse(curPath);
-            }
+                                     /*
+                                      * 只在用户主动打开项目时运行 cmake 分析
+                                      * 文件系统变化（_cmd_fileSystemChanged）仅刷新文件树，不重跑 cmake
+                                      * 避免 cmake 写入 build/ → 触发 watcher → 再次 analyse → 死循环
+                                      */
+                                     if (run_analysis)
+                                     {
+                                         LOS_configMgr->create(curPath);
+                                         LOS_configMgr->analyse(curPath);
+                                     }
 
-            if (L_filesWatcher)
-            {
-                if (!L_filesWatcher->directories().isEmpty())
-                    L_filesWatcher->removePaths(L_filesWatcher->directories());
-                L_filesWatcher->addPath(curPath);
-
-                /*
-                 * 递归监听所有子目录
-                 * - 避免 cmake 写 build/ 时触发 directoryChanged  _cmd_fileSystemChanged 死循环
-                 * - 但排除构建输出目录及版本控制目录
-                 */
-                const QString buildDirPath = QDir(curPath).filePath(LosCommon::LosConfig_Constants::BUILD_NAME);
-                QDirIterator it(curPath, QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden,
-                                QDirIterator::Subdirectories);
-                while (it.hasNext())
-                {
-                    QString dir     = it.next();
-                    QString dirName = QFileInfo(dir).fileName();
-                    /* 跳过 build/ 及其所有子目录 */
-                    if (dir == buildDirPath || dir.startsWith(buildDirPath + QDir::separator()))
-                        continue;
-                    /* 跳过 .git 版本控制目录 */
-                    if (dirName == ".git")
-                        continue;
-                    L_filesWatcher->addPath(dir);
-                }
-            }
-            emit LosCore::LosRouter::instance()._cmd_fileTreeDone();
-            if (oldModel)
-            {
-                oldModel->deleteLater();
-            }
-        });
+                                     if (L_filesWatcher)
+                                     {
+                                         if (!L_filesWatcher->directories().isEmpty())
+                                             L_filesWatcher->removePaths(L_filesWatcher->directories());
+                                         L_filesWatcher->addPath(curPath);
+                                         /*
+                                          * 递归监听所有子目录
+                                          * - 避免 cmake 写 build/ 时触发 directoryChanged  _cmd_fileSystemChanged 死循环
+                                          * - 但排除构建输出目录及版本控制目录
+                                          */
+                                         const QString buildDirPath = QDir(curPath).filePath(LosCommon::LosConfig_Constants::BUILD_NAME);
+                                         QDirIterator it(curPath, QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden, QDirIterator::Subdirectories);
+                                         while (it.hasNext())
+                                         {
+                                             QString dir     = it.next();
+                                             QString dirName = QFileInfo(dir).fileName();
+                                             /* 跳过 build/ 及其所有子目录 */
+                                             if (dir == buildDirPath || dir.startsWith(buildDirPath + QDir::separator()))
+                                                 continue;
+                                             /* 跳过 .git 版本控制目录 */
+                                             if (dirName == ".git")
+                                                 continue;
+                                             L_filesWatcher->addPath(dir);
+                                         }
+                                     }
+                                     emit LosCore::LosRouter::instance()._cmd_fileTreeDone();
+                                     if (oldModel)
+                                     {
+                                         oldModel->deleteLater();
+                                     }
+                                 });
 }
 
 
@@ -159,8 +155,8 @@ void Perseus::OnFileLoaded(bool isc, bool run_analysis)
  */
 void Perseus::onFilesBtnClicked()
 {
-    QString pathChoose = QFileDialog::getExistingDirectory(
-        this, tr("Open Project Folder"), "", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    QString pathChoose =
+        QFileDialog::getExistingDirectory(this, tr("Open Project Folder"), "", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     if (pathChoose.isEmpty())
     {
         QString filePath = QFileDialog::getOpenFileName(this, tr("Select a file to open its directory"));
@@ -176,8 +172,7 @@ void Perseus::onFilesBtnClicked()
         }
         LosModel::LosFilePath projectFilepath(pathChoose);
         bool isSuc = projectFilepath.isExist();
-        LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR,
-                                                                 projectFilepath);
+        LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, projectFilepath);
         SUC("load " + pathChoose, "Perseus");
         this->OnFileLoaded(isSuc);
     }
@@ -242,8 +237,11 @@ void Perseus::onProjectBtnClicked(bool checked)
 
 
 
-/*
- * - 打印日志
+/**
+ * @brief onLog
+ * 打印日志
+ *
+ * @param log
  */
 void Perseus::onLog(const QString &log)
 {
@@ -252,11 +250,11 @@ void Perseus::onLog(const QString &log)
 
 
 
-/*
+/**
+ * @brief onZoomUi
  * 字体缩放实现
- * - this->setStyleSheet(this->styleSheet());
- * - 增加对应的 格式 修复
- * -
+ *
+ * @param delta
  */
 void Perseus::onZoomUi(int delta)
 {
@@ -277,9 +275,11 @@ void Perseus::onZoomUi(int delta)
 
 
 
-/*
- * onToolChainMissing
- * - 工具 丢失 请求 安装
+/**
+ * @brief onToolChainMissing
+ * 工具 丢失 请求 安装
+ *
+ * @param config
  */
 void Perseus::onToolChainMissing(const LosCommon::LosToolChain_Constants::ToolChainConfig &config)
 {
@@ -290,9 +290,9 @@ void Perseus::onToolChainMissing(const LosCommon::LosToolChain_Constants::ToolCh
 
 
 
-/*
+/**
+ * @brief onDebounceTimeOut
  * onDebounceTimeOut
- * - 时间到了 发送信号
  */
 void Perseus::onDebounceTimeOut()
 {
@@ -301,9 +301,8 @@ void Perseus::onDebounceTimeOut()
 
 
 
-/*
- * 文件树 发生 变动的时候
- * 发送一个信号 过去
+/**
+ * @brief onDirectoryChanged
  */
 void Perseus::onDirectoryChanged()
 {
@@ -335,8 +334,7 @@ void Perseus::OnTogglePanelBtnClicked()
     else
     {
         widget->setVisible(true);
-        if (!L_rightSplitterSizes.isEmpty() && L_rightSplitterSizes.size() == currentSizes.size() &&
-            L_rightSplitterSizes.value(idx) > 0)
+        if (!L_rightSplitterSizes.isEmpty() && L_rightSplitterSizes.size() == currentSizes.size() && L_rightSplitterSizes.value(idx) > 0)
         {
             splitter->setSizes(L_rightSplitterSizes);
             return;
@@ -398,8 +396,7 @@ void Perseus::initConnect()
         },
         Qt::QueuedConnection);
     connect(ui->project_btn, &QRadioButton::toggled, this, &Perseus::onProjectBtnClicked);
-    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_toolChainMissing, this,
-            &Perseus::onToolChainMissing);
+    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_toolChainMissing, this, &Perseus::onToolChainMissing);
     connect(ui->setting_btn, &QPushButton::clicked, this,
             [=, this]()
             {
@@ -424,26 +421,24 @@ void Perseus::initConnect()
                                  LosModel::LosFilePath projectFile(filePath);
                                  if (!projectFile.isExist())
                                      return;
-                                 LosCore::LosState::instance().set<LosModel::LosFilePath>(
-                                     LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, projectFile.getAbsolutePath());
-                                 SUC("choose a file And the file project dir: " + projectFile.getAbsolutePath(),
-                                     "Perseus");
+                                 LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR,
+                                                                                          projectFile.getAbsolutePath());
+                                 SUC("choose a file And the file project dir: " + projectFile.getAbsolutePath(), "Perseus");
                                  this->OnFileLoaded(true);
                              });
-    ui->files_btn->addOption(
-        "choose a dir",
-        [this]()
-        {
-            QString dir = QFileDialog::getExistingDirectory(this, tr("Open a dir!", "", QFileDialog::ShowDirsOnly));
-            if (dir.isEmpty() || LOS_tabUi == nullptr)
-                return;
-            LOS_tabUi->closeAllTabs();
-            LosModel::LosFilePath dirPath(dir);
-            LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR,
-                                                                     dirPath.getAbsoluteFilePath());
-            SUC("choose a dir: " + dirPath.getAbsoluteFilePath(), "Perseus");
-            this->OnFileLoaded(true);
-        });
+    ui->files_btn->addOption("choose a dir",
+                             [this]()
+                             {
+                                 QString dir = QFileDialog::getExistingDirectory(this, tr("Open a dir!", "", QFileDialog::ShowDirsOnly));
+                                 if (dir.isEmpty() || LOS_tabUi == nullptr)
+                                     return;
+                                 LOS_tabUi->closeAllTabs();
+                                 LosModel::LosFilePath dirPath(dir);
+                                 LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR,
+                                                                                          dirPath.getAbsoluteFilePath());
+                                 SUC("choose a dir: " + dirPath.getAbsoluteFilePath(), "Perseus");
+                                 this->OnFileLoaded(true);
+                             });
     ui->files_btn->addSeparator();
     ui->files_btn->addOption("version",
                              [this]()
@@ -494,11 +489,9 @@ void Perseus::initShotcut()
 {
     LosCore::LosShortcutManager::instance().reg(
         LosCommon::ShortCut::RUN_SINGLE_FILE, this, [this]() { onRunSingleFileBtnClicked(); }, "run single file");
+    LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::FILE_OPEN, this, [this]() { onFilesBtnClicked(); }, "open folder");
     LosCore::LosShortcutManager::instance().reg(
-        LosCommon::ShortCut::FILE_OPEN, this, [this]() { onFilesBtnClicked(); }, "open folder");
-    LosCore::LosShortcutManager::instance().reg(
-        LosCommon::ShortCut::CODE_FORMAT, this, [=]() { emit LosCore::LosRouter::instance()._cmd_codeFormat(); },
-        "format text");
+        LosCommon::ShortCut::CODE_FORMAT, this, [=]() { emit LosCore::LosRouter::instance()._cmd_codeFormat(); }, "format text");
     LosCore::LosShortcutManager::instance().reg(
         LosCommon::ShortCut::FILE_SAVE, this,
         [=, this]()
@@ -509,8 +502,7 @@ void Perseus::initShotcut()
             {
                 INF("rebuild..", "Perseus");
                 emit LosCore::LosRouter::instance()._cmd_lsp_msg_didChangeWatchedFiles(
-                    LOS_tabUi -> getCurFilePath(),
-                    LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Changed);
+                    LOS_tabUi -> getCurFilePath(), LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Changed);
             };
         },
         "run single file");
@@ -530,8 +522,7 @@ void Perseus::initShotcut()
             this->onZoomUi(-2);
         },
         "zoom out");
-    LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::COMMANDS, this,
-                                                [this]() { LOS_cmdPalette->showPalette(); });
+    LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::COMMANDS, this, [this]() { LOS_cmdPalette->showPalette(); });
 
     LosCore::LosShortcutManager::instance().reg(
         LosCommon::ShortCut::EDIT_UNDO, this,
@@ -572,8 +563,7 @@ void Perseus::initShotcut()
                                                         return;
                                                     }
                                                 });
-    LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::TOGGLE_BOTTOM_PANEL, this,
-                                                [this]() { OnTogglePanelBtnClicked(); });
+    LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::TOGGLE_BOTTOM_PANEL, this, [this]() { OnTogglePanelBtnClicked(); });
 }
 
 
@@ -636,9 +626,7 @@ LosCommon::LosSession_Constants::Config Perseus::collectConfig()
     {
         conf.L_curFilePaths.append(path);
     }
-    conf.L_curProDir = LosCore::LosState::instance()
-                           .get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR)
-                           .getFilePath();
+    conf.L_curProDir     = LosCore::LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR).getFilePath();
     conf.L_curActiveFile = LOS_tabUi->getCurFilePath();
     return conf;
 }

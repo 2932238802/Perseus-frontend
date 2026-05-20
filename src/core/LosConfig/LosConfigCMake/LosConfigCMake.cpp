@@ -6,7 +6,15 @@ namespace LosCore
     static struct regis_t<LosConfigCMake> reg_cmake("CMake");
     QStringList LosConfigCMake::files{"CMakeLists.txt"};
     LosConfigCMake::LosConfigCMake(QObject *parent) : LosConfig(parent) {}
-
+    LosConfigCMake::~LosConfigCMake()
+    {
+        // 有 且 在运行 就杀死
+        if (L_process && L_process->state() != QProcess::NotRunning)
+        {
+            L_process->kill();
+            L_process->waitForFinished(500);
+        }
+    }
 
 
     /**
@@ -47,7 +55,7 @@ namespace LosCore
         connect(pro, &QProcess::errorOccurred, this,
                 [pro, this](QProcess::ProcessError err) { ERR("cmake process error: " + QString::number(err), "LosConfigCMake"); });
         connect(pro, &QProcess::finished, this,
-                [=](int exit_code, QProcess::ExitStatus status)
+                [this, pro, projectPath](int exit_code, QProcess::ExitStatus status)
                 {
                     if (exit_code == 0 && status == QProcess::NormalExit)
                     {
@@ -63,6 +71,7 @@ namespace LosCore
                     {
                         ERR("cmake run error!", "LosConfigCMake");
                     }
+                    L_process = nullptr;
                     pro->deleteLater();
                 });
         QString msg{LosCommon::LosConfig_Constants::CMAKE};

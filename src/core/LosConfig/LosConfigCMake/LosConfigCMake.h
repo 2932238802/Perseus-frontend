@@ -18,8 +18,7 @@ namespace LosCore
         Q_OBJECT
       public:
         explicit LosConfigCMake(QObject *parent = nullptr);
-
-        ~LosConfigCMake() override = default;
+        ~LosConfigCMake() override;
 
       public: /* tool */
         void analyse(const QString &) override;

@@ -2,15 +2,23 @@
 
 namespace LosCore
 {
-
+    /**
+     * @brief Construct a new Los Lsp C Make:: Los Lsp C Make object
+     *
+     * @param parent
+     */
     LosLspCMake::LosLspCMake(QObject *parent) : LosLspClient(parent)
     {
         initConnect();
     }
 
 
-    /*
-     * 开始
+
+    /**
+     * @brief start
+     *
+     * @param start_up_args
+     * @param exe_path
      */
     void LosLspCMake::start(const QStringList &start_up_args, const QString &exe_path)
     {
@@ -23,8 +31,10 @@ namespace LosCore
 
 
 
-    /*
-     * 处理 请求
+    /**
+     * @brief dealLspMessage
+     *
+     * @param obj
      */
     void LosLspCMake::dealLspMessage(const QJsonObject &obj)
     {
@@ -219,8 +229,8 @@ namespace LosCore
                 {
                     QJsonObject diagObj = diagVal.toObject();
                     LosCommon::LosLsp_Constants::LosDiagnostic d;
-                    d.message = diagObj["message"].toString();
-                    d.ds = static_cast<LosCommon::LosLsp_Constants::DiagnosticSeverity>(diagObj["severity"].toInt());
+                    d.message         = diagObj["message"].toString();
+                    d.ds              = static_cast<LosCommon::LosLsp_Constants::DiagnosticSeverity>(diagObj["severity"].toInt());
                     QJsonObject start = diagObj["range"].toObject()["start"].toObject();
                     QJsonObject end   = diagObj["range"].toObject()["end"].toObject();
                     d.startLine       = start["line"].toInt();
@@ -231,9 +241,7 @@ namespace LosCore
                 }
                 emit LosRouter::instance()._cmd_lsp_result_diagnostics(filePath, diagList);
 
-                /*
-                 * 直接开始分析吧
-                 */
+                // 直接开始分析吧
                 emit LosRouter::instance()._cmd_lsp_request_semantic(filePath);
             }
         }
@@ -241,22 +249,20 @@ namespace LosCore
 
 
 
-    /*
-     * - 初始化 连接
+    /**
+     * @brief initConnect
+     * 初始化 连接
      */
     void LosLspCMake::initConnect()
     {
-        /*
-         * 开始的时候 发送 初始化 信息
-         */
+        // 开始的时候 发送 初始化 信息
         connect(L_process, &QProcess::started, this, &LosLspCMake::sendInitializeRequest);
         connect(L_process, &QProcess::readyReadStandardError, this,
                 [this]() { INF(QString::fromUtf8(L_process->readAllStandardError()), "LosLspCMake"); });
         connect(L_process, &QProcess::errorOccurred, this,
                 [this](QProcess::ProcessError err) { INF("QProcess error: " + QString::number(err), "LosLspCMake"); });
         connect(L_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this,
-                [this](int code, QProcess::ExitStatus status)
-                { INF("QProcess finished, code: " + QString::number(code), "LosLspCMake"); });
+                [this](int code, QProcess::ExitStatus status) { INF("QProcess finished, code: " + QString::number(code), "LosLspCMake"); });
         auto &router = LosCore::LosRouter::instance();
         connect(&router, &LosRouter::_cmd_lsp_request_hover, this,
                 [this](const QString &filePath, int line, int col) { this->requestHover(filePath, line, col); });
@@ -287,13 +293,16 @@ namespace LosCore
      * - neocmakelsp 的核心补全功能，对客户端能力无强依赖，空对象完全够用
      * - 所以 capabilities 为空
      */
+    /**
+     * @brief sendInitializeRequest
+     *
+     */
     void LosLspCMake::sendInitializeRequest()
     {
         QJsonObject params;
         params["processId"] = QCoreApplication::applicationPid();
-        QString absPath     = LosCore::LosState::instance()
-                              .get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR)
-                              .getAbsoluteFilePath();
+        QString absPath =
+            LosCore::LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR).getAbsoluteFilePath();
         params["rootUri"] = QUrl::fromLocalFile(absPath).toString();
         QJsonObject completion;
         QJsonObject textDocument;
@@ -307,11 +316,12 @@ namespace LosCore
 
 
 
-    /*
-     * - 发送 初始化 通知
-     * - 1 客户端 —> 服务端 initialize
-     * - 2 服务端 -> 客户端 initialize
-     * - 3 客户端 → 服务端	Notification (不带 id)
+    /**
+     * @brief sendInitializeMsg
+     * 发送 初始化 通知
+     * 客户端 —> 服务端 initialize
+     * 服务端 -> 客户端 initialize
+     * 客户端 → 服务端	Notification
      */
     void LosLspCMake::sendInitializeMsg()
     {

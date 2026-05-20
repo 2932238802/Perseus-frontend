@@ -478,10 +478,8 @@ namespace LosView
      */
     void LosEditorUi::updateLineNumberAreaWidth()
     {
-        /*
-         * 左、上、右、下
-         * getLineNumberWidth 获取一个 左侧的长度
-         */
+        // 左、上、右、下
+        // getLineNumberWidth 获取一个 左侧的长度
         setViewportMargins(getLineNumberWidth(), 0, 0, 0);
     }
 
@@ -528,12 +526,10 @@ namespace LosView
             viewport()->setCursor(Qt::IBeamCursor);
             return;
         }
-
         if (L_lastCursor.selectionStart() == cursor.selectionStart() && L_lastCursor.selectionEnd() == cursor.selectionEnd())
         {
             return;
         }
-
         L_lastCursor = cursor;
         QTextEdit::ExtraSelection sel;
         sel.cursor = cursor;
@@ -615,7 +611,6 @@ namespace LosView
 
     /**
      * @brief hideCompletionPopup
-     *
      */
     void LosEditorUi::hideCompletionPopup()
     {
@@ -676,7 +671,6 @@ namespace LosView
      * @brief onTextChanged
      * - 变脏的信号
      * - 修复 防止 抖动的逻辑
-     *
      */
     void LosEditorUi::onTextChanged()
     {
@@ -697,7 +691,8 @@ namespace LosView
 
 
     /**
-     * @brief onDebounceTimeout 防抖语法补全
+     * @brief onDebounceTimeout
+     * 防抖语法补全
      */
     void LosEditorUi::onDebounceTimeout()
     {
@@ -721,7 +716,6 @@ namespace LosView
         L_oldWord = getWordUnderCursor();
         emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(LOS_filePath -> getFilePath(), this->toPlainText());
         emit LosCore::LosRouter::instance()._cmd_lsp_request_completeion(LOS_filePath -> getFilePath(), line, col);
-        emit LosCore::LosRouter::instance()._cmd_lsp_request_semantic(LOS_filePath -> getFilePath());
     }
 
 

@@ -683,6 +683,26 @@ QDialog#LosSettingsUi {
     line-height: 1.6;
 }
 
+#statusbar_widget {
+    background-color: #191a21;
+    border-top: 1px solid #111114;
+}
+
+#statusbar_widget QLabel {
+    color: #6272a4;
+    font-size: 12px;
+    padding: 0px 4px;
+}
+
+#statusbar_label {
+    color: #6272a4;
+}
+
+#statusbar_lang_label {
+    color: #6272a4;
+    font-family: "JetBrains Mono", "Consolas", monospace;
+}
+
 #project_dir_label {
     color: #f8f8f2;
     font-family: "JetBrains Mono", "Consolas", monospace;

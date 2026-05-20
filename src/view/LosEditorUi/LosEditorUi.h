@@ -80,8 +80,7 @@ namespace LosView
         int getLineNumberWidth() const;
 
       public: /* set */
-        void loadContextAndPath(QSharedPointer<LosModel::LosFileContext> context,
-                                QSharedPointer<LosModel::LosFilePath> file_path);
+        void loadContextAndPath(QSharedPointer<LosModel::LosFileContext> context, QSharedPointer<LosModel::LosFilePath> file_path);
         bool save();
         void insertCompletion(const QString &completion);
         void lineNumberAreaPaintEvent(QPaintEvent *event);

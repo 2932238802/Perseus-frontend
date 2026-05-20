@@ -4,7 +4,6 @@
 
 
 
-
 namespace LosView
 {
 
@@ -148,9 +147,11 @@ namespace LosView
 
 
 
-    /*
-     * get
+    /**
+     * @brief getCurEditor
      * 获取当前编辑器
+     *
+     * @return LosEditorUi*
      */
     LosEditorUi *LosEditorTabUi::getCurEditor()
     {
@@ -163,8 +164,10 @@ namespace LosView
 
 
 
-    /*
-     * get
+    /**
+     * @brief tabCount
+     *
+     * @return int
      */
     int LosEditorTabUi::tabCount() const
     {
@@ -173,8 +176,10 @@ namespace LosView
 
 
 
-    /*
-     * get
+    /**
+     * @brief getCurFilePath
+     *
+     * @return QString
      */
     QString LosEditorTabUi::getCurFilePath() const
     {
@@ -184,6 +189,11 @@ namespace LosView
 
 
 
+    /**
+     * @brief getOpenFiles
+     *
+     * @return QStringList
+     */
     QStringList LosEditorTabUi::getOpenFiles() const
     {
         return LOS_pathToUi.keys();
@@ -209,8 +219,10 @@ namespace LosView
 
 
 
-    /*
+    /**
+     * @brief onTabCloseRequested
      * 关闭 ui 点击
+     * @param index
      */
     void LosEditorTabUi::onTabCloseRequested(int index)
     {
@@ -218,19 +230,16 @@ namespace LosView
         if (!wi)
             return;
         LosEditorUi *editor = qobject_cast<LosEditorUi *>(wi);
-
-        /*
-         * 补充
-         */
+        // 补充
         if (editor)
         {
             if (editor->isDirty())
             {
                 QString fileName = L_tabWidget->tabText(index);
                 fileName.replace(" *", "");
-                QMessageBox::StandardButton res = QMessageBox::warning(
-                    this, "save tips", QString("file '%1' has been modified. save changes?").arg(fileName),
-                    QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save);
+                QMessageBox::StandardButton res =
+                    QMessageBox::warning(this, "save tips", QString("file '%1' has been modified. save changes?").arg(fileName),
+                                         QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save);
                 if (res == QMessageBox::Save)
                 {
                     if (!editor->save())
@@ -326,20 +335,18 @@ namespace LosView
 
 
 
-    /*
-     * - 点击 上侧的标签页 实现类似的功能
-     * - 修复 qobject_cast
+    /**
+     * @brief onTabClicked
+     * 点击 上侧的标签页 实现类似的功能
+     * 修复 qobject_cast
+     * @param index
      */
     void LosEditorTabUi::onTabClicked(int index)
     {
         if (index < 0 || index >= L_tabWidget->count())
         {
-            /*
-             * 无效
-             */
             return;
         }
-
         auto *widget = qobject_cast<LosEditorUi *>(L_tabWidget->widget(index));
         if (!widget)
             return;
@@ -348,10 +355,11 @@ namespace LosView
     }
 
 
-    
 
-
-
+    /**
+     * @brief onOpenPlugin
+     * @param info
+     */
     void LosEditorTabUi::onOpenPlugin(const LosCommon::LosNet_Constants::PluginInfo &info)
     {
         for (int i = 0; i < L_tabWidget->count(); i++)
@@ -372,13 +380,18 @@ namespace LosView
 
 
 
+    /**
+     * @brief onFileRenamed
+     *
+     * @param old_path
+     * @param new_path
+     */
     void LosEditorTabUi::onFileRenamed(const QString &old_path, const QString &new_path)
     {
         if (!LOS_pathToUi.contains(old_path))
         {
             return;
         }
-
         LosEditorUi *editor = LOS_pathToUi.take(old_path);
         LOS_pathToUi.insert(new_path, editor);
         int index = L_tabWidget->indexOf(editor);
@@ -396,8 +409,6 @@ namespace LosView
 
     /**
      * @brief onGotoLineShort
-     * -
-     *
      */
     void LosEditorTabUi::onGotoLineShortcut()
     {
@@ -532,7 +543,6 @@ namespace LosView
         auto *tabBar = L_tabWidget ? L_tabWidget->findChild<QTabBar *>() : nullptr;
         if (!tabBar || index < 0 || index >= tabBar->count())
             return;
-
         auto *btn = new QToolButton(tabBar);
         btn->setObjectName("tab_close_btn");
         btn->setText(QStringLiteral("\u00D7"));
@@ -541,7 +551,6 @@ namespace LosView
         btn->setFocusPolicy(Qt::NoFocus);
         btn->setFixedSize(18, 18);
         btn->setStyleSheet(LosCommon::LosEditorTableUi_Constants::CLOSE_BTN_STYLE);
-
         connect(btn, &QToolButton::clicked, this,
                 [this, btn]()
                 {
@@ -569,12 +578,12 @@ namespace LosView
     void LosEditorTabUi::initShortCut()
     {
         LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::GOTO_LINE, this,
-                                                    [this]() { 
-                                                        INF("ctrl + g","LosEditorTabUi");
-                                                        this->onGotoLineShortcut(); 
+                                                    [this]()
+                                                    {
+                                                        INF("ctrl + g", "LosEditorTabUi");
+                                                        this->onGotoLineShortcut();
                                                     });
-        LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::SEARCH_FIND, this,
-                                                    [this]() { this->onFindShortcut(); });
+        LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::SEARCH_FIND, this, [this]() { this->onFindShortcut(); });
     }
 
 
@@ -595,26 +604,21 @@ namespace LosView
         {
         case LosCommon::LosToolChain_Constants::LosLanguage::CXX:
         {
-            emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(
-                lang, LosCommon::LosToolChain_Constants::LosTool::CLANGD);
-            emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(
-                lang, LosCommon::LosToolChain_Constants::LosTool::CLANG_FORMAT);
+            emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(lang, LosCommon::LosToolChain_Constants::LosTool::CLANGD);
+            emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(lang, LosCommon::LosToolChain_Constants::LosTool::CLANG_FORMAT);
             L_checkedLanguage.insert(LosCommon::LosToolChain_Constants::LosLanguage::CXX);
             return;
         }
         case LosCommon::LosToolChain_Constants::LosLanguage::RUST:
         {
-            emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(
-                lang, LosCommon::LosToolChain_Constants::LosTool::RUST_ANALYZER);
-            emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(
-                lang, LosCommon::LosToolChain_Constants::LosTool::CARGO);
+            emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(lang, LosCommon::LosToolChain_Constants::LosTool::RUST_ANALYZER);
+            emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(lang, LosCommon::LosToolChain_Constants::LosTool::CARGO);
             L_checkedLanguage.insert(LosCommon::LosToolChain_Constants::LosLanguage::RUST);
             return;
         }
         case LosCommon::LosToolChain_Constants::LosLanguage::PYTHON:
         {
-            emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(
-                lang, LosCommon::LosToolChain_Constants::LosTool::PYRIGHT);
+            emit LosCore::LosRouter::instance()._cmd_checkLanguageToolchain(lang, LosCommon::LosToolChain_Constants::LosTool::PYRIGHT);
             L_checkedLanguage.insert(LosCommon::LosToolChain_Constants::LosLanguage::PYTHON);
             return;
         }
@@ -624,8 +628,7 @@ namespace LosView
 
         if (LosModel::LosFilePath(file_path).getFileName() == "CMakeLists.txt")
         {
-            emit LosCore::LosRouter::instance()._cmd_checkSingleTool(
-                LosCommon::LosToolChain_Constants::LosTool::NEOCMAKELSP);
+            emit LosCore::LosRouter::instance()._cmd_checkSingleTool(LosCommon::LosToolChain_Constants::LosTool::NEOCMAKELSP);
         }
     }
 

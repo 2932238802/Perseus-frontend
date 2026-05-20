@@ -26,7 +26,6 @@ namespace LosCore
         {
             L_runner->setWorkingDirectory(L_workingDir);
         }
-
 #ifdef Q_OS_WIN
         QStringList winArgs;
         winArgs << "/c" << main_file_path;
@@ -48,10 +47,10 @@ namespace LosCore
      */
     void LosScriptRunner::stop()
     {
-        if (L_runner->state() != QProcess::NotRunning)
+        if (L_runner && L_runner->state() != QProcess::NotRunning)
         {
             L_runner->kill();
-            L_runner->waitForFinished();
+            L_runner->waitForFinished(300);
         }
     }
 
@@ -156,5 +155,4 @@ namespace LosCore
         this->L_workingDir = file.absolutePath();
         this->start(plat == LosCommon::LosPlatform_Constants::OsType::WINDOWS ? "\"" + allPath + "\"" : allPath);
     }
-
 } /* namespace LosCore */

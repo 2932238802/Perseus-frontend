@@ -60,8 +60,12 @@ namespace LosCore
 
 
 
-    /*
+    /**
+     * @brief didChangeWatchedFiles
      * 监听 文件结构 改变
+     *
+     * @param file_path
+     * @param type
      */
     void LosLspManager::didChangeWatchedFiles(const QString &file_path, int type)
     {
@@ -69,17 +73,17 @@ namespace LosCore
         {
             if (auto client = LOS_clients.value(LosCommon::LosToolChain_Constants::LosTool::CLANGD, nullptr))
             {
-                client->didChangeWatchedFiles(
-                    file_path,
-                    static_cast<LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type>(type));
+                client->didChangeWatchedFiles(file_path, static_cast<LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type>(type));
             }
         }
     }
 
 
 
-    /*
-     * 发送 语法 高亮请求
+    /**
+     * @brief onSemantic
+     *
+     * @param file_paht
      */
     void LosLspManager::onSemantic(const QString &file_paht)
     {
@@ -148,14 +152,14 @@ namespace LosCore
 
 
 
-    /*
-     * onLspReady
-     * - _cmd_lspReady
-     * - 这个信号进行触发
-     * - onCheckSingleTool 这个函数会触发
+    /**
+     * @brief onLspReady
+     *
+     * @param tool
+     * @param exePath
+     * @param asgs
      */
-    void LosLspManager::onLspReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath,
-                                   const QStringList &asgs)
+    void LosLspManager::onLspReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath, const QStringList &asgs)
     {
         if (!LOS_clients.contains(tool))
         {
@@ -215,13 +219,11 @@ namespace LosCore
         if (oldClient)
         {
             oldClient->didClose(oldPath);
-            oldClient->didChangeWatchedFiles(
-                oldPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::DELETE);
+            oldClient->didChangeWatchedFiles(oldPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::DELETE);
         }
         if (newClient)
         {
-            newClient->didChangeWatchedFiles(
-                newPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Created);
+            newClient->didChangeWatchedFiles(newPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Created);
             QFile f(newPath);
             if (f.open(QIODevice::ReadOnly | QIODevice::Text))
             {

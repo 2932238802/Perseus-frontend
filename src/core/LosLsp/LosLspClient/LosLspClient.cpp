@@ -3,8 +3,10 @@
 
 namespace LosCore
 {
-    /*
-     * - construct
+    /**
+     * @brief Construct a new Los Lsp Client:: Los Lsp Client object
+     *
+     * @param parent
      */
     LosLspClient::LosLspClient(QObject *parent) : QObject(parent)
     {
@@ -234,6 +236,8 @@ namespace LosCore
      */
     void LosLspClient::didChangeWatchedFiles(const QString &filePath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type type)
     {
+        if (!L_isinit)
+            return;
         QJsonObject params, change;
         QJsonArray changes;
         change["uri"]  = QUrl::fromLocalFile(filePath).toString();
@@ -260,7 +264,6 @@ namespace LosCore
         {
             didClose(oldPath);
         };
-
         didChangeWatchedFiles(oldPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::DELETE);
         didChangeWatchedFiles(newPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Created);
         if (open)
@@ -287,7 +290,7 @@ namespace LosCore
      */
     void LosLspClient::sendRequest(const QString &method, const QJsonObject &params, LosLspType type)
     {
-        if (!L_process || L_process->state() != QProcess::NotRunning)
+        if (!L_process || L_process->state() != QProcess::Running)
         {
             return;
         }
@@ -327,8 +330,8 @@ namespace LosCore
 
 
     /**
-     * @brief processRawData 手动解析数据
-     *
+     * @brief processRawData
+     * 手动解析数据
      */
     void LosLspClient::processRawData()
     {
@@ -375,7 +378,4 @@ namespace LosCore
             }
         }
     }
-
-
-
 } /* namespace LosCore */
