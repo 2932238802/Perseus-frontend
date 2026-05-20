@@ -321,6 +321,8 @@ namespace LosCore
         connect(L_process, &QProcess::started, this, &LosLspPython::sendInitializeRequest);
         connect(L_process, &QProcess::readyReadStandardError, this,
                 [this]() { INF(QString::fromUtf8(L_process->readAllStandardError()), "LosLspPython"); });
+        connect(L_process, &QProcess::errorOccurred, this,
+                [this](QProcess::ProcessError err) { INF("Python LSP process error: " + QString::number(err), "LosLspPython"); });
         connect(&router, &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this,
                 [this](const QString &compile_commands_path, auto type) { this->didChangeWatchedFiles(compile_commands_path, type); });
         connect(&router, &LosRouter::_cmd_lsp_request_hover, this,

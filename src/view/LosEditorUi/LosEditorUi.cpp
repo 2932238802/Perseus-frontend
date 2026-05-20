@@ -777,17 +777,7 @@ namespace LosView
             L_hoverPopup->setMaximumWidth(600);
             L_hoverPopup->setAttribute(Qt::WA_ShowWithoutActivating, true);
             L_hoverPopup->setFocusPolicy(Qt::NoFocus);
-            L_hoverPopup->setStyleSheet(QStringLiteral(R"(
-                QLabel {
-                    background-color: #21222c;
-                    color: #f8f8f2;
-                    border: 1px solid #bd93f9;
-                    border-radius: 6px;
-                    padding: 6px 10px;
-                    font-family: "Microsoft YaHei", "Segoe UI", sans-serif;
-                    font-size: 13px;
-                }
-            )"));
+            L_hoverPopup->setStyleSheet(LosCommon::LosEditorUi_Constants::HOVER_POP_STYLE);
         }
 
         L_hoverPopup->setText(html);

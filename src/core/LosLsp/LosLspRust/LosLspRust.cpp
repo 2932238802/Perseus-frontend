@@ -299,7 +299,8 @@ namespace LosCore
 
 
 
-    /*
+    /**
+     * @brief  sendInitializedMsg
      * 处理初始化
      */
     void LosLspRust::sendInitializedMsg()
@@ -309,19 +310,19 @@ namespace LosCore
 
 
 
-    /*
-     * - 初始化 连接
+    /**
+     * @brief initConnect
+     * 初始化 连接
+     *
      */
     void LosLspRust::initConnect()
     {
         auto &router = LosRouter::instance();
-        /*
-         * 开始的时候 发送 初始化 信息先
-         * - LosLspRust
-         */
         connect(L_process, &QProcess::started, this, &LosLspRust::sendInitializeRequest);
         connect(L_process, &QProcess::readyReadStandardError, this,
                 [this]() { INF(QString::fromUtf8(L_process->readAllStandardError()), "LosLspRust"); });
+        connect(L_process, &QProcess::errorOccurred, this,
+                [this](QProcess::ProcessError err) { INF("Rust LSP process error: " + QString::number(err), "LosLspRust"); });
         connect(&router, &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this,
                 [this](const QString &compile_commands_path, auto type) { this->didChangeWatchedFiles(compile_commands_path, type); });
         connect(&router, &LosRouter::_cmd_lsp_request_hover, this,

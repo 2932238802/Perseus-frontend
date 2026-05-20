@@ -24,29 +24,30 @@ namespace LosCore
 
 
 
-    /*
-     * 初始化 链接
+    /**
+     * @brief initConnect 初始化 链接
+     *
      */
     void LosLspClangd::initConnect()
     {
         auto &router = LosRouter::instance();
-        /*
-         * 开始的时候 发送 初始化 信息先
-         */
+        // 开始的时候 发送 初始化 信息先
         connect(L_process, &QProcess::started, this, &LosLspClangd::sendInitializeRequest);
         connect(L_process, &QProcess::readyReadStandardError, this,
                 [this]() { INF(QString::fromUtf8(L_process->readAllStandardError()), "LosLspClangd"); });
+        connect(L_process, &QProcess::errorOccurred, this,
+                [this](QProcess::ProcessError err) { INF("Clangd process error: " + QString::number(err), "LosLspClangd"); });
         connect(&router, &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this,
-                [this](const QString &compile_commands_path, auto type)
-                { this->didChangeWatchedFiles(compile_commands_path, type); });
+                [this](const QString &compile_commands_path, auto type) { this->didChangeWatchedFiles(compile_commands_path, type); });
         connect(&router, &LosRouter::_cmd_lsp_request_hover, this,
                 [this](const QString &filePath, int line, int col) { this->requestHover(filePath, line, col); });
     }
 
 
 
-    /*
-     * - 发送初始化请求
+    /**
+     * @brief sendInitializeRequest 发送初始化请求
+     *
      */
     void LosLspClangd::sendInitializeRequest()
     {
@@ -223,7 +224,7 @@ namespace LosCore
                     QJsonObject diagObj = diagnostics[i].toObject();
                     LosCommon::LosLsp_Constants::LosDiagnostic d;
                     d.message = diagObj["message"].toString();
-                    d.ds = static_cast<LosCommon::LosLsp_Constants::DiagnosticSeverity>(diagObj["severity"].toInt());
+                    d.ds      = static_cast<LosCommon::LosLsp_Constants::DiagnosticSeverity>(diagObj["severity"].toInt());
 
                     QJsonObject start = diagObj["range"].toObject()["start"].toObject();
                     QJsonObject end   = diagObj["range"].toObject()["end"].toObject();

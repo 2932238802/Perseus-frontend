@@ -25,7 +25,6 @@ namespace LosCore
          * 文本定义
          */
         void _cmd_whereDefine(int line, int col, const QString &file_path);
-        void _cmd_whereDefine_probe(int line, int col, const QString &file_path);
 
         /*
          * 打开文件 给 lsp 的请求
@@ -57,9 +56,7 @@ namespace LosCore
         /*
          * 文件树的修改
          */
-        void
-        _cmd_lsp_msg_didChangeWatchedFiles(const QString &,
-                                           LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type);
+        void _cmd_lsp_msg_didChangeWatchedFiles(const QString &, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type);
         /*
          * 补全的结果 返回
          */
@@ -100,8 +97,7 @@ namespace LosCore
         /*
          * lsp
          */
-        void _cmd_lspReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath,
-                           const QStringList &args);
+        void _cmd_lspReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath, const QStringList &args);
 
 
 
@@ -131,23 +127,17 @@ namespace LosCore
 
 
 
-        
         // ----------------------------------------------------------------------------
-        // 启动 语言分析器
-        void _cmd_changeLang(const QString &file_path);
-
         // 启动ui 督促 下载
         void _cmd_toolChainMissing(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
 
         // 构建工具完备
-        void _cmd_buildToolReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath,
-                                 const QStringList &args);
+        void _cmd_buildToolReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath, const QStringList &args);
 
         // 单个工具完备
-        void _cmd_toolChainReady(LosCommon::LosToolChain_Constants::LosLanguage lang,
-                                 LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath);
-        void _cmd_checkLanguageToolchain(LosCommon::LosToolChain_Constants::LosLanguage lang,
-                                         LosCommon::LosToolChain_Constants::LosTool tool);
+        void _cmd_toolChainReady(LosCommon::LosToolChain_Constants::LosLanguage lang, LosCommon::LosToolChain_Constants::LosTool tool,
+                                 const QString &exePath);
+        void _cmd_checkLanguageToolchain(LosCommon::LosToolChain_Constants::LosLanguage lang, LosCommon::LosToolChain_Constants::LosTool tool);
         void _cmd_checkSingleTool(LosCommon::LosToolChain_Constants::LosTool tool);
 
 
@@ -186,6 +176,5 @@ namespace LosCore
 
 
         // ----------------------------------------------------------------------------
-        
     };
 } /* namespace LosCore */

@@ -1,4 +1,5 @@
 #include "LosLspClient.h"
+#include <qprocess.h>
 
 namespace LosCore
 {
@@ -278,7 +279,7 @@ namespace LosCore
 
 
     /**
-     * @brief
+     * @brief sendRequest 发送请求
      *
      * @param method
      * @param params
@@ -286,6 +287,10 @@ namespace LosCore
      */
     void LosLspClient::sendRequest(const QString &method, const QJsonObject &params, LosLspType type)
     {
+        if (!L_process || L_process->state() != QProcess::NotRunning)
+        {
+            return;
+        }
         QJsonObject request;
         request["jsonrpc"] = "2.0";
         int id             = L_id.fetch_add(1);
@@ -293,7 +298,6 @@ namespace LosCore
         request["id"]     = id;
         request["method"] = method;
         request["params"] = params;
-
         QJsonDocument doc(request);
         QByteArray jb     = doc.toJson(QJsonDocument::Compact);
         QByteArray header = LosCommon::LosLsp_Constants::CONTENT_LENGTH + QByteArray::number(jb.size()) + LosCommon::LosLsp_Constants::LSP_RNRN;
@@ -323,7 +327,7 @@ namespace LosCore
 
 
     /**
-     * @brief 手动解析数据
+     * @brief processRawData 手动解析数据
      *
      */
     void LosLspClient::processRawData()
