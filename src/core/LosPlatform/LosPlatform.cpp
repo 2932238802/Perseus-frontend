@@ -1,4 +1,5 @@
 #include "LosPlatform.h"
+#include <QFile>
 
 namespace LosCore
 {

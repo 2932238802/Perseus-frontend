@@ -21,6 +21,12 @@ namespace LosView
     }
 
 
+
+    /**
+     * @brief setPluginInfo
+     *
+     * @param info
+     */
     void LosPluginDetailUi::setPluginInfo(const LosCommon::LosNet_Constants::PluginInfo &info)
     {
         LOS_info = info;
@@ -76,7 +82,6 @@ namespace LosView
          * - 保存的位置
          * L_id
          * - 默认是 文件的名字
-         *
          * 如果是卸载操作
          * - removeRecursively 递归删除
          */
@@ -106,11 +111,16 @@ namespace LosView
 
 
 
+    /**
+     * @brief onDownloadFinished
+     *
+     * @param zip_path
+     */
     void LosPluginDetailUi::onDownloadFinished(const QString &zip_path)
     {
         /*
          * 打印 下载的zip 信息
-         * - 可删
+         * 可删
          */
         INF(zip_path, "LosPluginDetailUi");
         if (!zip_path.contains(LOS_info.L_id))
@@ -174,8 +184,8 @@ namespace LosView
 
 
 
-    /*
-     * 初始化连接
+    /**
+     * @brief initConnect
      */
     void LosPluginDetailUi::initConnect()
     {

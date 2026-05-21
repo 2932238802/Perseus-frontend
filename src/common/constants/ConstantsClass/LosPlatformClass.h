@@ -1,6 +1,7 @@
 #pragma once
 #include <QString>
 #include <QStringList>
+#include <qdebug.h>
 
 namespace LosCommon
 {

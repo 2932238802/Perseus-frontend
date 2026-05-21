@@ -1,6 +1,7 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
 #include "core/LosShortcutManager/LosShortcutManager.h"
+#include <cstdio>
 
 /**
  * @brief Construct a new Perseus:: Perseus object
@@ -266,10 +267,6 @@ void Perseus::onZoomUi(int delta)
         newSize = LosCommon::Perseus_Constants::ZOOM_MAX;
     font.setPointSize(newSize);
     QApplication::setFont(font);
-
-    /*
-     * 缩放 之后 重新 适应一下 样式
-     */
     this->setStyleSheet(this->styleSheet());
 }
 
@@ -410,7 +407,7 @@ void Perseus::initConnect()
                 ui->left_panel_stack->setCurrentIndex(1);
                 LosCore::LosNet::instance().requestPlugin();
             });
-
+            
     ui->files_btn->addOption("choose a file",
                              [this]()
                              {
@@ -444,7 +441,7 @@ void Perseus::initConnect()
                              [this]()
                              {
                                  QString versionInfo = QString("<h3>Perseus IDE</h3>"
-                                                               "<p><b>Version:</b> 1.0.80 (Build: %1)</p>"
+                                                               "<p><b>Version:</b> 1.106 (Build: %1)</p>"
                                                                "<p><b>Qt version:</b> Qt %2</p>"
                                                                "<hr>"
                                                                "<p>Copyright &copy; 2026 LosAngelous</p>")
@@ -570,11 +567,9 @@ void Perseus::initShotcut()
 
 /**
  * @brief initSession
- *
  */
 void Perseus::initSession()
 {
-
     LosCommon::LosSession_Constants::Config conf;
     if (!LosCore::LosSession::instance().loadConfig(&conf))
         return;

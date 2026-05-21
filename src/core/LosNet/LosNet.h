@@ -1,23 +1,7 @@
 #pragma once
-#include "common/constants/ConstantsClass/LosNetClass.h"
-#include "common/constants/ConstantsStr/LosNetStr.h"
-#include "core/LosLog/LosLog.h"
-#include "core/LosRouter/LosRouter.h"
-#include <QDir>
-#include <QList>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
 #include <QObject>
-#include <qfileinfo.h>
-#include <qglobal.h>
-#include <qjsonarray.h>
-#include <qjsondocument.h>
-#include <qjsonobject.h>
-#include <qnetworkaccessmanager.h>
-#include <qnetworkreply.h>
-#include <qnetworkrequest.h>
-#include <qstringview.h>
-#include <qurl.h>
+#include <QNetworkReply>
+
 
 namespace LosCore
 {

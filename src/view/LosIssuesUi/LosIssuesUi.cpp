@@ -7,8 +7,10 @@
 
 namespace LosView
 {
-    /*
-     * construct
+    /**
+     * @brief Construct a new Los Issues Ui:: Los Issues Ui object
+     * 
+     * @param parent 
      */
     LosIssuesUi::LosIssuesUi(QWidget *parent) : QWidget(parent)
     {
@@ -19,9 +21,12 @@ namespace LosView
     LosIssuesUi::~LosIssuesUi() {}
 
 
-
-    /*
-     * - 更新下册的
+   
+    /**
+     * @brief onUpdateTable
+     * 
+     * @param file_path 
+     * @param diags 
      */
     void LosIssuesUi::onUpdateTable(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags)
     {
@@ -94,8 +99,9 @@ namespace LosView
 
 
 
-    /*
-     * - 初始化
+   
+    /**
+     * @brief initUi
      */
     void LosIssuesUi::initUi()
     {
@@ -117,8 +123,9 @@ namespace LosView
 
 
 
-    /*
-     * - 样式
+    /**
+     * @brief initStyle
+     * 
      */
     void LosIssuesUi::initStyle()
     {
@@ -127,8 +134,9 @@ namespace LosView
 
 
 
-    /*
-     * - 连接
+    /**
+     * @brief initConnect
+     * 
      */
     void LosIssuesUi::initConnect()
     {

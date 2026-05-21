@@ -52,8 +52,9 @@ namespace LosView
 
 
 
-    /*
-     * - 保存标签页
+    /**
+     * @brief saveTab
+     * 标签页的保存
      */
     void LosEditorTabUi::saveTab()
     {
@@ -358,7 +359,9 @@ namespace LosView
 
     /**
      * @brief onOpenPlugin
-     * @param info
+     * 插件界面的打开
+     * 
+     * @param info 
      */
     void LosEditorTabUi::onOpenPlugin(const LosCommon::LosNet_Constants::PluginInfo &info)
     {
@@ -382,9 +385,9 @@ namespace LosView
 
     /**
      * @brief onFileRenamed
-     *
-     * @param old_path
-     * @param new_path
+     * 
+     * @param old_path 
+     * @param new_path 
      */
     void LosEditorTabUi::onFileRenamed(const QString &old_path, const QString &new_path)
     {
@@ -409,6 +412,7 @@ namespace LosView
 
     /**
      * @brief onGotoLineShort
+     * 跳转到指定的行
      */
     void LosEditorTabUi::onGotoLineShortcut()
     {
