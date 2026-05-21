@@ -13,19 +13,18 @@ namespace LosModel
     class LosFileTreeModel : public QAbstractItemModel
     {
         Q_OBJECT
-      public:
+      public: // construct
         explicit LosFileTreeModel(LosFileNode *rootNode, QObject *parent = nullptr);
         ~LosFileTreeModel() override;
 
-
       public:                                                                                             /* override */
         QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override; /* 问行数 */
-        QModelIndex parent(const QModelIndex &child) const override; /* 找爸爸 */
+        QModelIndex parent(const QModelIndex &child) const override;                                      /* 找爸爸 */
         bool hasChildren(const QModelIndex &parent = QModelIndex()) const override;
         Qt::ItemFlags flags(const QModelIndex &index) const override;
-        int rowCount(const QModelIndex &parent = QModelIndex()) const override;             /* 问行数 */
-        int columnCount(const QModelIndex &parent = QModelIndex()) const override;          /* 问列数 */
-        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override; /* 要数据 */
+        int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+        int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+        QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
         bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
       public: /* tool */

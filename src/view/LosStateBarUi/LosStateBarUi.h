@@ -12,10 +12,16 @@ namespace LosView
         explicit LosStateBarUi(QWidget *parent = nullptr);
         ~LosStateBarUi() = default;
 
-      private:
-        void initStyle();
+      public: // tool
+        void setCodingBarLabel(const QString &text);
+        void setLangLabel(const QString &text);
 
       private:
+        void initStyle();
+        void initConnect();
+
+      private:
+        QLabel *L_codingLabel  = nullptr;
         QLabel *L_messageLabel = nullptr;
         QLabel *L_langLabel    = nullptr;
     };

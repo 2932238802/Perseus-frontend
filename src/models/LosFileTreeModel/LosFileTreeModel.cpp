@@ -1,4 +1,5 @@
 #include "models/LosFileTreeModel/LosFileTreeModel.h"
+#include "common/util/GetFileIcon.h"
 #include "core/LosFileSystem/LosFileSystem.h"
 #include "core/LosRouter/LosRouter.h"
 #include "models/LosFileNode/LosFileNode.h"
@@ -9,8 +10,7 @@
 namespace LosModel
 {
 
-    LosFileTreeModel::LosFileTreeModel(LosFileNode *rootNode, QObject *parent)
-        : QAbstractItemModel{parent}, LOS_rootNode(rootNode){};
+    LosFileTreeModel::LosFileTreeModel(LosFileNode *rootNode, QObject *parent) : QAbstractItemModel{parent}, LOS_rootNode(rootNode){};
 
     LosFileTreeModel::~LosFileTreeModel()
     {
@@ -59,8 +59,11 @@ namespace LosModel
 
 
 
-    /*
+    /**
+     * @brief parent
      * 找爸爸
+     * @param child
+     * @return QModelIndex
      */
     QModelIndex LosFileTreeModel::parent(const QModelIndex &child) const
     {
@@ -82,8 +85,12 @@ namespace LosModel
 
 
 
-    /*
-     * 判断孩子
+    /**
+     * @brief hasChildren
+     *
+     * @param parent
+     * @return true
+     * @return false
      */
     bool LosFileTreeModel::hasChildren(const QModelIndex &parent) const
     {
@@ -100,8 +107,11 @@ namespace LosModel
 
 
 
-    /*
-     * 设置节点的交互标志 允许被选中和点击
+    /**
+     * @brief flags
+     *
+     * @param index
+     * @return Qt::ItemFlags
      */
     Qt::ItemFlags LosFileTreeModel::flags(const QModelIndex &index) const
     {
@@ -112,8 +122,11 @@ namespace LosModel
 
 
 
-    /*
-     * 问行数
+    /**
+     * @brief rowCount
+     *
+     * @param parent
+     * @return int
      */
     int LosFileTreeModel::rowCount(const QModelIndex &parent) const
     {
@@ -133,8 +146,11 @@ namespace LosModel
 
 
 
-    /*
-     * 问列数
+    /**
+     * @brief columnCount
+     *
+     * @param parent
+     * @return int
      */
     int LosFileTreeModel::columnCount(const QModelIndex &parent) const
     {
@@ -144,8 +160,12 @@ namespace LosModel
 
 
 
-    /*
-     * 要数据
+    /**
+     * @brief data
+     *
+     * @param index
+     * @param role
+     * @return QVariant
      */
     QVariant LosFileTreeModel::data(const QModelIndex &index, int role) const
     {
@@ -163,52 +183,17 @@ namespace LosModel
         }
         case Qt::DecorationRole:
         {
-            static QFileIconProvider iconProvider;
             if (node->getFileType() == LosCommon::LOS_ENUM_FileType::FT_FOLDER)
-            {
-                return QIcon(":/icons/folder_white.png");
-            }
-            else
-            {
-                auto file      = node->getFile();
-                QString suffix = file.getSuffix();
-                if (suffix == "cpp" || suffix == "cc" || suffix == "cxx")
-                {
-                    return QIcon(":/icons/cpp_white.png");
-                }
-                else if (file.getFileName() == "CMakeLists.txt")
-                {
-                    return QIcon(":/icons/cmake_white.png");
-                }
-                else if (suffix == "h" || suffix == "hpp")
-                {
-                    return QIcon(":/icons/h_white.png");
-                }
-                else if (suffix == "md")
-                {
-                    return QIcon(":/icons/md_white.png");
-                }
-                else if (suffix == "txt")
-                {
-                    return QIcon(":/icons/txt_white.png");
-                }
-                else if (suffix == "out" || suffix == "exe")
-                {
-                    return QIcon(":/icons/exe_white.png");
-                }
-                else if (suffix == "json")
-                {
-                    return QIcon(":/icons/json_white.png");
-                }
-                else if (suffix == "rs")
-                {
-                    return QIcon(":/icons/rust_white.png");
-                }
-                else
-                {
-                    return iconProvider.icon(QFileIconProvider::File);
-                }
-            }
+                return LosCommon::GetFileIcon(":/icons/folder_white.png");
+            const auto &file     = node->getFile();
+            const QString &name  = file.getFileName();
+            const QString suffix = file.getSuffix().toLower();
+            if (auto it = LosCommon::kIconByName.constFind(name); it != LosCommon::kIconByName.cend())
+                return LosCommon::GetFileIcon(it.value());
+            if (auto it = LosCommon::kIconBySuffix.constFind(suffix); it != LosCommon::kIconBySuffix.cend())
+                return LosCommon::GetFileIcon(it.value());
+            static QFileIconProvider provider;
+            return provider.icon(QFileIconProvider::File);
         }
         default:
         {
@@ -219,8 +204,14 @@ namespace LosModel
 
 
 
-    /*
-     * - 设置数据
+    /**
+     * @brief setData
+     *
+     * @param index
+     * @param value
+     * @param role
+     * @return true
+     * @return false
      */
     bool LosFileTreeModel::setData(const QModelIndex &index, const QVariant &value, int role)
     {
@@ -256,8 +247,11 @@ namespace LosModel
 
 
 
-    /*
-     * 获取 内部 节点
+    /**
+     * @brief nodeFromIndex
+     *
+     * @param index
+     * @return LosFileNode*
      */
     LosFileNode *LosFileTreeModel::nodeFromIndex(const QModelIndex &index)
     {
@@ -270,8 +264,8 @@ namespace LosModel
 
     /**
      * @brief getRoot 获取根节点
-     * 
-     * @return LosModel::LosFileNode* 
+     *
+     * @return LosModel::LosFileNode*
      */
     LosModel::LosFileNode *LosFileTreeModel::getRoot() const
     {

@@ -4,6 +4,7 @@
 #include "common/constants/ConstantsNum/PerseusNum.h"
 #include "common/constants/ConstantsStr/ShortCut.h"
 #include "core/LosConfig/LosConfigManager/LosConfigManager.h"
+#include "core/LosEncodingDetector/LosEncodingDetector.h"
 #include "core/LosLsp/LosLspClient/LosLspClient.h"
 #include "core/LosLsp/LosLspManager/LosLspManager.h"
 #include "core/LosNet/LosNet.h"
@@ -40,6 +41,7 @@
 #include <QPointer>
 #include <QShortcut>
 #include <QTimer>
+#include <cstdio>
 #include <qfiledialog.h>
 #include <qfilesystemwatcher.h>
 #include <qpushbutton.h>

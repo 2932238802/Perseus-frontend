@@ -2,6 +2,7 @@
 #include "common/constants/ConstantsStr/LosPluginDetailUiStr.h"
 #include "core/LosNet/LosNet.h"
 #include "core/LosRouter/LosRouter.h"
+#include "core/LosLog/LosLog.h"
 
 #include <QDir>
 #include <QPointer>

@@ -439,20 +439,20 @@
      </layout>
     </item>
     <item>
-      <widget class="LosView::LosStateBarUi" name="statusbar_widget" native="true">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>24</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>24</height>
-        </size>
-       </property>
-      </widget>
+     <widget class="LosView::LosStateBarUi" name="statusbar_widget" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>24</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>24</height>
+       </size>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -491,6 +491,11 @@
    <extends>QWidget</extends>
    <header>view/LosToolBarUi/LosToolBarUi.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>LosView::LosStateBarUi</class>
+   <extends>QWidget</extends>
+   <header>view/LosStateBarUi/LosStateBarUi.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

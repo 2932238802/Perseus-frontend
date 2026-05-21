@@ -1,6 +1,7 @@
 
 #include "LosEditorTabUi.h"
 #include "core/LosLog/LosLog.h"
+#include "core/LosRouter/LosRouter.h"
 
 
 
@@ -114,7 +115,7 @@ namespace LosView
         {
             return;
         }
-        auto filePath = file.getFilePath();
+        auto filePath = file.getAbsoluteFilePath();
         checkLspAnsFormat(filePath);
 
         if (LOS_pathToUi.contains(filePath))
@@ -132,6 +133,7 @@ namespace LosView
         installCloseButton(newIndex);
         LOS_pathToUi.insert(filePath, editor);
         L_tabWidget->setCurrentWidget(editor);
+        emit LosCore::LosRouter::instance()._cmd_fileChanged(file.getAbsoluteFilePath());
     }
 
 
@@ -353,6 +355,7 @@ namespace LosView
             return;
         widget->setFocus();
         QString filePath = LOS_pathToUi.key(widget);
+        emit LosCore::LosRouter::instance()._cmd_fileChanged(filePath);
     }
 
 
@@ -360,8 +363,8 @@ namespace LosView
     /**
      * @brief onOpenPlugin
      * 插件界面的打开
-     * 
-     * @param info 
+     *
+     * @param info
      */
     void LosEditorTabUi::onOpenPlugin(const LosCommon::LosNet_Constants::PluginInfo &info)
     {
@@ -385,9 +388,9 @@ namespace LosView
 
     /**
      * @brief onFileRenamed
-     * 
-     * @param old_path 
-     * @param new_path 
+     *
+     * @param old_path
+     * @param new_path
      */
     void LosEditorTabUi::onFileRenamed(const QString &old_path, const QString &new_path)
     {

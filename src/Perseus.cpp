@@ -1,7 +1,6 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
-#include "core/LosShortcutManager/LosShortcutManager.h"
-#include <cstdio>
+
 
 /**
  * @brief Construct a new Perseus:: Perseus object
@@ -207,8 +206,9 @@ void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
 
 
 
-/*
- * 点击运行按钮
+/**
+ * @brief onRunSingleFileBtnClicked
+ * 
  */
 void Perseus::onRunSingleFileBtnClicked()
 {
@@ -385,10 +385,8 @@ void Perseus::initConnect()
         &LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_fileSystemChanged, this,
         [=, this]()
         {
-            /*
-             * 文件系统变化仅刷新文件树，不重新运行 cmake analyse
-             * 防止 cmake 写 build/ → watcher 触发 → 再次 analyse → 死循环
-             */
+            // 文件系统变化仅刷新文件树，不重新运行 cmake analyse
+            // 防止 cmake 写 build/ → watcher 触发 → 再次 analyse → 死循环
             OnFileLoaded(true, false);
         },
         Qt::QueuedConnection);
@@ -407,7 +405,7 @@ void Perseus::initConnect()
                 ui->left_panel_stack->setCurrentIndex(1);
                 LosCore::LosNet::instance().requestPlugin();
             });
-            
+
     ui->files_btn->addOption("choose a file",
                              [this]()
                              {

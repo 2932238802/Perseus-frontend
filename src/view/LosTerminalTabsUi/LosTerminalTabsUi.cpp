@@ -1,5 +1,5 @@
 #include "LosTerminalTabsUi.h"
-#include "common/util/GetPushBtn.h"
+#include "common/util/GetBtn.h"
 #include <qpushbutton.h>
 #include <qtabbar.h>
 
@@ -90,9 +90,8 @@ namespace LosView
         }
         L_usedTerminalIds.insert(newId);
         newOne->setProperty("terminal_id", newId);
-        QPushButton *closeBtn =
-            LosCommon::GetPushBtn("x", LosCommon::LosTerminal_Constants::CLOSEBTN_STYLE, QSize(16, 16));
-        int newIndex = addTab(newOne, QString("sh - %1").arg(newId));
+        QPushButton *closeBtn = LosCommon::GetBtn<QPushButton>("x", LosCommon::LosTerminal_Constants::CLOSEBTN_STYLE, QSize(16, 16), newOne);
+        int newIndex          = addTab(newOne, QString("sh - %1").arg(newId));
         connect(closeBtn, &QPushButton::clicked, this,
                 [this, newOne]()
                 {

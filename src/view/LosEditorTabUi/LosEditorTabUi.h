@@ -88,10 +88,9 @@ namespace LosView
          */
         void installCloseButton(int index);
 
-
       private: /* params */
         QSet<LosCommon::LosToolChain_Constants::LosLanguage> L_checkedLanguage;
         QTabWidget *L_tabWidget;
-        QMap<QString, LosView::LosEditorUi *> LOS_pathToUi;
+        QMap<QString, LosView::LosEditorUi *> LOS_pathToUi; // 左侧是 absoluteFilePath 就是全路径
     };
 } /* namespace LosView */

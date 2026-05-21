@@ -24,6 +24,10 @@
         <file alias="files_black.png">resources/icons/files_black.png</file>
         <file alias="files_white.png">resources/icons/files_white.png</file>
         <file alias="theme.png">resources/icons/theme.png</file>
+        <file alias="python_black.png">resources/icons/python_black.png</file>
+        <file alias="python_white.png">resources/icons/python_white.png</file>
+        <file alias="html_black.png">resources/icons/html_black.png</file>
+        <file alias="html_white.png">resources/icons/html_white.png</file>
     </qresource>
     <qresource prefix="/web">
         <file>resources/web/xterm/addon-fit.min.js</file>

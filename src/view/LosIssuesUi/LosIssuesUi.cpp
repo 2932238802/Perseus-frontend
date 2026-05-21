@@ -117,8 +117,6 @@ namespace LosView
         L_table->setShowGrid(false);
         L_table->horizontalHeader()->setStretchLastSection(true);
         L_table->verticalHeader()->setVisible(false);
-        L_table->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-        L_table->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
     }
 
 
