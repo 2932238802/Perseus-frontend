@@ -26,6 +26,13 @@ namespace LosView
 
 
 
+    /**
+     * @brief addOption
+     *
+     * @param text
+     * @param f
+     * @return QAction*
+     */
     QAction *LosDropdownButtonUi::addOption(const QString &text, std::function<void()> f)
     {
         QAction *action = L_menu->addAction(text);
@@ -35,6 +42,10 @@ namespace LosView
 
 
 
+    /**
+     * @brief addSeparator
+     *
+     */
     void LosDropdownButtonUi::addSeparator()
     {
         L_menu->addSeparator();

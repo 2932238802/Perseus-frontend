@@ -137,5 +137,26 @@ namespace LosCore
 
 
         // ----------------------------------------------------------------------------
+
+
+
+        // ----------------------------------------------------------------------------
+        /**
+         * @brief 工具栏 信号
+         *
+         */
+        void _cmd_chooseFileBtnClick();
+        void _cmd_chooseDirBtnClick();
+        void _cmd_settingBtnClick();
+        void _cmd_runBtnClick();
+        void _cmd_projectBtnToggled(bool checked);
+
+        /**
+         * @brief 底部 tab 显示/隐藏切换
+         * - 0=Output, 1=Issues, 2=Terminal
+         */
+        void _cmd_bottomTabVisibilityChanged(int tabIndex, bool visible);
+
+        // ----------------------------------------------------------------------------
     };
 } /* namespace LosCore */

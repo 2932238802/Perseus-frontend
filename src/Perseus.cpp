@@ -1,5 +1,6 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
+#include "core/LosRouter/LosRouter.h"
 
 
 /**
@@ -68,7 +69,7 @@ void Perseus::OnFileLoaded(bool isc, bool run_analysis)
 
     LosModel::LosFilePath projectPath = LosCore::LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR);
 
-    ui->project_dir_label->setText(projectPath.getFilePath());
+    ui->toolbar_widget->getProjectDirLabel()->setText(projectPath.getFilePath());
 
     if (!projectPath.isExist())
     {
@@ -208,7 +209,7 @@ void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
 
 /**
  * @brief onRunSingleFileBtnClicked
- * 
+ *
  */
 void Perseus::onRunSingleFileBtnClicked()
 {
@@ -357,9 +358,46 @@ void Perseus::OnTogglePanelBtnClicked()
 
 
 /**
+ * @brief onFileChooseBtnClicked
+ */
+void Perseus::onFileChooseBtnClicked()
+{
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Select a file!"));
+    if (filePath.isEmpty() || LOS_tabUi == nullptr)
+        return;
+    LOS_tabUi->closeAllTabs();
+    LosModel::LosFilePath projectFile(filePath);
+    if (!projectFile.isExist())
+        return;
+    LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, projectFile.getAbsolutePath());
+    SUC("choose a file And the file project dir: " + projectFile.getAbsolutePath(), "Perseus");
+    this->OnFileLoaded(true);
+}
+
+
+
+/**
+ * @brief onDirChooseBtnClick
+ */
+void Perseus::onDirChooseBtnClick()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Open a dir!", "", QFileDialog::ShowDirsOnly));
+    if (dir.isEmpty() || LOS_tabUi == nullptr)
+        return;
+    LOS_tabUi->closeAllTabs();
+    LosModel::LosFilePath dirPath(dir);
+    LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, dirPath.getAbsoluteFilePath());
+    SUC("choose a dir: " + dirPath.getAbsoluteFilePath(), "Perseus");
+    this->OnFileLoaded(true);
+}
+
+
+
+/**
  * @brief
  * initConnect
  * - 初始化连接
+ * - 工具栏控件由 LosToolBarUi 自己管理, 这里只通过 LosRouter 信号订阅行为
  */
 void Perseus::initConnect()
 {
@@ -376,13 +414,15 @@ void Perseus::initConnect()
     L_timer->setSingleShot(true);
     L_timer->setInterval(300);
     L_filesWatcher = new QFileSystemWatcher(this);
+
+    auto &router = LosCore::LosRouter::instance();
+
+    /* ---------- 文件系统 / 编辑器内部 ---------- */
     connect(L_timer, &QTimer::timeout, this, &Perseus::onDebounceTimeOut);
     connect(L_filesWatcher, &QFileSystemWatcher::directoryChanged, this, &Perseus::onDirectoryChanged);
-    connect(ui->files_btn, &QPushButton::clicked, this, &Perseus::onFilesBtnClicked);
     connect(ui->explorer_treeview, &QTreeView::activated, this, &Perseus::onExplorerFileDoubleClicked);
-    connect(ui->run_singleFile_btn, &QPushButton::clicked, this, &Perseus::onRunSingleFileBtnClicked);
     connect(
-        &LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_fileSystemChanged, this,
+        &router, &LosCore::LosRouter::_cmd_fileSystemChanged, this,
         [=, this]()
         {
             // 文件系统变化仅刷新文件树，不重新运行 cmake analyse
@@ -390,14 +430,44 @@ void Perseus::initConnect()
             OnFileLoaded(true, false);
         },
         Qt::QueuedConnection);
-    connect(ui->project_btn, &QRadioButton::toggled, this, &Perseus::onProjectBtnClicked);
-    connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_toolChainMissing, this, &Perseus::onToolChainMissing);
-    connect(ui->setting_btn, &QPushButton::clicked, this,
-            [=, this]()
+    connect(&router, &LosCore::LosRouter::_cmd_toolChainMissing, this, &Perseus::onToolChainMissing);
+
+    /* ---------- 工具栏 (LosToolBarUi → Router → 这里) ---------- */
+    /* File 下拉的两个选项 */
+    connect(&router, &LosCore::LosRouter::_cmd_chooseFileBtnClick, this, &Perseus::onFileChooseBtnClicked);
+    connect(&router, &LosCore::LosRouter::_cmd_chooseDirBtnClick, this, &Perseus::onDirChooseBtnClick);
+
+    /* Run 按钮 */
+    connect(&router, &LosCore::LosRouter::_cmd_runBtnClick, this, &Perseus::onRunSingleFileBtnClicked);
+
+    /* CMake Pro? radio */
+    connect(&router, &LosCore::LosRouter::_cmd_projectBtnToggled, this, &Perseus::onProjectBtnClicked);
+
+    /* Set 按钮 */
+    connect(&router, &LosCore::LosRouter::_cmd_settingBtnClick, this,
+            [this]()
             {
                 LosView::LosSettingsUi settingDialog(this);
                 settingDialog.exec();
             });
+
+    /* View 下拉: 切换 Output / Issues / Terminal 三个 tab 的可见性 */
+    auto *viewBtn  = ui->toolbar_widget->getViewBtn();
+    using BotIdx   = LosCommon::Perseus_Constants::BottomTabWidget;
+
+    auto registerToggle = [this, viewBtn](const QString &title, int idx)
+    {
+        QAction *act = viewBtn->addOption(title, [] { /* toggled 信号已经处理, 这里留空 */ });
+        act->setCheckable(true);
+        act->setChecked(true);
+        connect(act, &QAction::toggled, this,
+                [this, idx](bool visible) { ui->bottom_tabwidget->setTabVisible(idx, visible); });
+    };
+    registerToggle("Output",   BotIdx::OUTPUT);
+    registerToggle("Issues",   BotIdx::PROBLEMS);
+    registerToggle("Terminal", BotIdx::TERMINAL);
+
+    /* ---------- 左侧活动栏 ---------- */
     connect(ui->act_explorer_btn, &QPushButton::clicked, this, [this]() { ui->left_panel_stack->setCurrentIndex(0); });
     connect(ui->act_extensions_btn, &QPushButton::clicked, this,
             [this]()
@@ -405,48 +475,6 @@ void Perseus::initConnect()
                 ui->left_panel_stack->setCurrentIndex(1);
                 LosCore::LosNet::instance().requestPlugin();
             });
-
-    ui->files_btn->addOption("choose a file",
-                             [this]()
-                             {
-                                 QString filePath = QFileDialog::getOpenFileName(this, tr("Select a file!"));
-                                 if (filePath.isEmpty() || LOS_tabUi == nullptr)
-                                     return;
-                                 LOS_tabUi->closeAllTabs();
-                                 LosModel::LosFilePath projectFile(filePath);
-                                 if (!projectFile.isExist())
-                                     return;
-                                 LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR,
-                                                                                          projectFile.getAbsolutePath());
-                                 SUC("choose a file And the file project dir: " + projectFile.getAbsolutePath(), "Perseus");
-                                 this->OnFileLoaded(true);
-                             });
-    ui->files_btn->addOption("choose a dir",
-                             [this]()
-                             {
-                                 QString dir = QFileDialog::getExistingDirectory(this, tr("Open a dir!", "", QFileDialog::ShowDirsOnly));
-                                 if (dir.isEmpty() || LOS_tabUi == nullptr)
-                                     return;
-                                 LOS_tabUi->closeAllTabs();
-                                 LosModel::LosFilePath dirPath(dir);
-                                 LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR,
-                                                                                          dirPath.getAbsoluteFilePath());
-                                 SUC("choose a dir: " + dirPath.getAbsoluteFilePath(), "Perseus");
-                                 this->OnFileLoaded(true);
-                             });
-    ui->files_btn->addSeparator();
-    ui->files_btn->addOption("version",
-                             [this]()
-                             {
-                                 QString versionInfo = QString("<h3>Perseus IDE</h3>"
-                                                               "<p><b>Version:</b> 1.106 (Build: %1)</p>"
-                                                               "<p><b>Qt version:</b> Qt %2</p>"
-                                                               "<hr>"
-                                                               "<p>Copyright &copy; 2026 LosAngelous</p>")
-                                                           .arg(__DATE__)
-                                                           .arg(QT_VERSION_STR);
-                                 QMessageBox::about(this, tr("About Perseus"), versionInfo);
-                             });
 }
 
 

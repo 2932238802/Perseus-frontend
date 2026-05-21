@@ -1,3 +1,41 @@
+/* ============================================================
+ *  Perseus Editor - 主题样式表 (Dracula 风格)
+ *
+ *  目录:
+ *    1. 全局基础         (主窗口 / 通用 QWidget / 字体)
+ *    2. 通用控件         (QToolTip / QMenu / QMessageBox)
+ *    3. 顶部工具栏        (#toolbar_widget 及其按钮)
+ *    4. 左侧活动栏        (#activity_bar_widget)
+ *    5. 主体分割器        (QSplitter)
+ *    6. 文件树           (QTreeView)
+ *    7. 编辑器 Tab        (#editor_tabwidget)
+ *    8. 底部 Tab         (#bottom_tabwidget)
+ *    9. 输出 / 编辑器     (QPlainTextEdit)
+ *   10. 终端面板         (#terminal_tabs)
+ *   11. 插件市场         (#LosPlugUi)
+ *   12. 插件详情         (#LosPluginDetailUi)
+ *   13. 设置面板         (#LosSettingsUi)
+ *   14. 滚动条           (QScrollBar)
+ *   15. 通用控件         (QPushButton / QLineEdit / QComboBox / QCheckBox)
+ *   16. 底部状态栏       (LosView::LosStateBarUi)
+ *
+ *  调色板 (Dracula):
+ *    背景         #282a36
+ *    更暗背景      #21222c
+ *    最暗 / 边框   #191a21
+ *    选中 / 行     #44475a
+ *    深紫蓝       #6272a4
+ *    主紫色       #bd93f9
+ *    前景         #f8f8f2
+ *    辅紫         #caa9fa
+ *    强调红       #ff5555
+ * ============================================================ */
+
+
+/* ============================================================
+ *  1. 全局基础
+ * ============================================================ */
+
 QMainWindow {
     background-color: #282a36;
     color: #f8f8f2;
@@ -21,6 +59,11 @@ QTabBar::base {
     border-bottom: 0px;
     border-top: 0px;
 }
+
+
+/* ============================================================
+ *  2. 通用控件 (Tooltip / Menu / MessageBox / InputDialog)
+ * ============================================================ */
 
 QToolTip {
     background-color: #21222c;
@@ -73,13 +116,22 @@ QInputDialog {
     color: #f8f8f2;
 }
 
+
+/* ============================================================
+ *  3. 顶部工具栏 (#toolbar_widget)
+ *     - 包含 icon_btn / files_btn / view_btn / setting_btn
+ *       run_singleFile_btn / project_btn / project_dir_label
+ * ============================================================ */
+
 #toolbar_widget {
     background-color: #21222c;
     border-bottom: 1px solid #191a21;
 }
 
+/* 工具栏左侧普通按钮 (扁平、悬停高亮) */
 #icon_btn,
 #files_btn,
+#view_btn,
 #run_singleFile_btn,
 #setting_btn {
     border: 1px solid transparent;
@@ -89,6 +141,7 @@ QInputDialog {
     padding: 5px 12px;
 }
 
+/* 左上角 "P" 图标按钮 */
 #icon_btn {
     font-weight: bold;
     color: #bd93f9;
@@ -100,6 +153,7 @@ QInputDialog {
 
 #icon_btn:hover,
 #files_btn:hover,
+#view_btn:hover,
 #run_singleFile_btn:hover,
 #setting_btn:hover {
     background-color: #44475a;
@@ -108,59 +162,14 @@ QInputDialog {
 
 #icon_btn:pressed,
 #files_btn:pressed,
+#view_btn:pressed,
 #run_singleFile_btn:pressed,
 #setting_btn:pressed {
     background-color: #6272a4;
     color: #ffffff;
 }
 
-#activity_bar {
-    background-color: #21222c;
-    border-right: 1px solid #191a21;
-}
-
-#activity_bar QPushButton {
-    background: transparent;
-    border: none;
-    border-left: 3px solid transparent;
-    padding: 10px 6px;
-}
-
-#activity_bar QPushButton:hover {
-    background: transparent;
-    background-color: transparent;
-    border-left: 3px solid #6272a4;
-}
-
-#activity_bar QPushButton:checked {
-    border-left: 3px solid #bd93f9;
-    background: transparent;
-    background-color: transparent;
-}
-
-#activity_bar QPushButton:pressed {
-    background: transparent;
-    background-color: transparent;
-}
-
-#act_explorer_btn {
-    image: url(:/icons/files_black.png);
-}
-
-#act_explorer_btn:hover,
-#act_explorer_btn:checked {
-    image: url(:/icons/files_white.png);
-}
-
-#act_extensions_btn {
-    image: url(:/icons/chajian_black.png);
-}
-
-#act_extensions_btn:hover,
-#act_extensions_btn:checked {
-    image: url(:/icons/chajian_white.png);
-}
-
+/* 工具栏单选按钮 "CMake Pro?" */
 #project_btn {
     background-color: transparent;
     color: #6272a4;
@@ -178,6 +187,7 @@ QInputDialog {
     color: #bd93f9;
 }
 
+/* 单选按钮的小圆点 */
 #project_btn::indicator {
     width: 12px;
     height: 12px;
@@ -195,6 +205,83 @@ QInputDialog {
     background-color: #bd93f9;
 }
 
+/* 工具栏右侧 "项目路径" 显示标签 */
+#project_dir_label {
+    color: #f8f8f2;
+    font-family: "JetBrains Mono", "Consolas", monospace;
+    background-color: #44475a;
+    border: 1px solid #6272a4;
+    border-radius: 4px;
+    padding: 4px 12px;
+    margin-right: 10px;
+}
+
+#project_dir_label:hover {
+    background-color: #6272a4;
+    border: 1px solid #bd93f9;
+}
+
+
+/* ============================================================
+ *  4. 左侧活动栏 (#activity_bar_widget)
+ *     - 仿 VSCode 左侧最窄的那一列
+ *     - 选中: 左侧出现紫色高亮线
+ *     - 切换图标 (黑/白) 来表达 hover/checked
+ * ============================================================ */
+
+#activity_bar_widget {
+    background-color: #21222c;
+    border-right: 1px solid #191a21;
+}
+
+#activity_bar_widget QPushButton {
+    background: transparent;
+    border: none;
+    border-left: 3px solid transparent;
+    padding: 10px 6px;
+}
+
+#activity_bar_widget QPushButton:hover {
+    background-color: transparent;
+    border-left: 3px solid #6272a4;
+}
+
+#activity_bar_widget QPushButton:checked {
+    background-color: transparent;
+    border-left: 3px solid #bd93f9;
+}
+
+#activity_bar_widget QPushButton:pressed {
+    background-color: transparent;
+}
+
+/* 文件树按钮 */
+#act_explorer_btn {
+    image: url(:/icons/files_black.png);
+}
+
+#act_explorer_btn:hover,
+#act_explorer_btn:checked {
+    image: url(:/icons/files_white.png);
+}
+
+/* 插件按钮 */
+#act_extensions_btn {
+    image: url(:/icons/chajian_black.png);
+}
+
+#act_extensions_btn:hover,
+#act_extensions_btn:checked {
+    image: url(:/icons/chajian_white.png);
+}
+
+
+/* ============================================================
+ *  5. 主体分割器 (QSplitter)
+ *     - 横向: 左侧栏 / 右侧编辑器
+ *     - 纵向: 编辑器 / 底部面板
+ * ============================================================ */
+
 QSplitter::handle {
     background-color: #191a21;
     margin: 0px;
@@ -204,6 +291,12 @@ QSplitter::handle:horizontal:hover,
 QSplitter::handle:vertical:hover {
     background-color: #bd93f9;
 }
+
+
+/* ============================================================
+ *  6. 文件树 (QTreeView)
+ *     - 用于左侧的资源管理器
+ * ============================================================ */
 
 QTreeView {
     background-color: #282a36;
@@ -246,6 +339,12 @@ QTreeView::branch:selected {
     background-color: #44475a;
 }
 
+
+/* ============================================================
+ *  7. 编辑器 Tab (#editor_tabwidget)
+ *     - 顶部已打开的代码文件页签
+ * ============================================================ */
+
 #editor_tabwidget::pane {
     border: 0px solid transparent;
     background-color: #282a36;
@@ -286,6 +385,12 @@ QTreeView::branch:selected {
     width: 20px;
 }
 
+
+/* ============================================================
+ *  8. 底部 Tab (#bottom_tabwidget)
+ *     - Output / Issues / Terminal
+ * ============================================================ */
+
 #bottom_tabwidget::pane {
     border: 0px solid transparent;
     background-color: #282a36;
@@ -316,6 +421,11 @@ QTreeView::branch:selected {
     color: #f8f8f2;
 }
 
+
+/* ============================================================
+ *  9. 编辑区 / 输出 (QPlainTextEdit)
+ * ============================================================ */
+
 QPlainTextEdit {
     background-color: #282a36;
     color: #f8f8f2;
@@ -330,6 +440,11 @@ QPlainTextEdit {
     background-color: #282a36;
     color: #f8f8f2;
 }
+
+
+/* ============================================================
+ * 10. 终端面板 (#terminal_tabs)
+ * ============================================================ */
 
 #terminal_tabs::pane {
     border: 0px solid transparent;
@@ -371,6 +486,11 @@ QPlainTextEdit {
     background-color: #ff5555;
     border-radius: 3px;
 }
+
+
+/* ============================================================
+ * 11. 插件市场 (#LosPlugUi)
+ * ============================================================ */
 
 #LosPlugUi {
     background-color: #282a36;
@@ -421,51 +541,73 @@ QPlainTextEdit {
     border-radius: 0px;
 }
 
-QScrollBar:vertical {
+
+/* ============================================================
+ * 12. 插件详情 (#LosPluginDetailUi)
+ * ============================================================ */
+
+#LosPluginDetailUi {
+    background-color: #282a36;
+}
+
+#LosPluginDetailUi #label_icon {
+    background-color: #21222c;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+#LosPluginDetailUi #label_name {
+    color: #f8f8f2;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+#LosPluginDetailUi #label_version {
+    color: #6272a4;
+    font-family: "JetBrains Mono", "Consolas", monospace;
+}
+
+#LosPluginDetailUi #btn_install {
+    background-color: #bd93f9;
+    color: #282a36;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 6px 28px;
+    min-width: 100px;
+    border: 1px solid #bd93f9;
+}
+
+#LosPluginDetailUi #btn_install:hover {
+    background-color: #caa9fa;
+    border: 1px solid #caa9fa;
+}
+
+#LosPluginDetailUi #btn_install:pressed {
+    background-color: #9580d4;
+    border: 1px solid #9580d4;
+    color: #f8f8f2;
+}
+
+#LosPluginDetailUi #btn_install:disabled {
+    background-color: #44475a;
+    color: #6272a4;
+    border: 1px solid #44475a;
+}
+
+#LosPluginDetailUi #text_description {
     background-color: transparent;
-    width: 14px;
+    color: #f8f8f2;
     border: none;
-    margin: 0px;
+    border-top: 1px solid #44475a;
+    margin-top: 20px;
+    padding-top: 20px;
+    line-height: 1.6;
 }
 
-QScrollBar::handle:vertical {
-    background-color: rgba(98, 114, 164, 0.5);
-    border-radius: 0px;
-    min-height: 30px;
-    margin: 0px;
-}
 
-QScrollBar::handle:vertical:hover {
-    background-color: rgba(189, 147, 249, 0.7);
-}
-
-QScrollBar:horizontal {
-    background-color: transparent;
-    height: 14px;
-    border: none;
-    margin: 0px;
-}
-
-QScrollBar::handle:horizontal {
-    background-color: rgba(98, 114, 164, 0.5);
-    border-radius: 0px;
-    min-width: 30px;
-    margin: 0px;
-}
-
-QScrollBar::handle:horizontal:hover {
-    background-color: rgba(189, 147, 249, 0.7);
-}
-
-QScrollBar::add-line,
-QScrollBar::sub-line,
-QScrollBar::add-page,
-QScrollBar::sub-page {
-    background-color: transparent;
-    height: 0px;
-    width: 0px;
-    border: none;
-}
+/* ============================================================
+ * 13. 设置面板 (#LosSettingsUi)
+ * ============================================================ */
 
 QDialog#LosSettingsUi {
     background-color: #282a36;
@@ -625,98 +767,63 @@ QDialog#LosSettingsUi {
     color: #f8f8f2;
 }
 
-#LosPluginDetailUi {
-    background-color: #282a36;
-}
 
-#LosPluginDetailUi #label_icon {
-    background-color: #21222c;
-    border-radius: 8px;
-    padding: 4px;
-}
+/* ============================================================
+ * 14. 滚动条 (QScrollBar)
+ *     - 半透明、悬停时变紫
+ * ============================================================ */
 
-#LosPluginDetailUi #label_name {
-    color: #f8f8f2;
-    font-size: 1.8em;
-    font-weight: bold;
-}
-
-#LosPluginDetailUi #label_version {
-    color: #6272a4;
-    font-family: "JetBrains Mono", "Consolas", monospace;
-}
-
-#LosPluginDetailUi #btn_install {
-    background-color: #bd93f9;
-    color: #282a36;
-    font-weight: bold;
-    border-radius: 4px;
-    padding: 6px 28px;
-    min-width: 100px;
-    border: 1px solid #bd93f9;
-}
-
-#LosPluginDetailUi #btn_install:hover {
-    background-color: #caa9fa;
-    border: 1px solid #caa9fa;
-}
-
-#LosPluginDetailUi #btn_install:pressed {
-    background-color: #9580d4;
-    border: 1px solid #9580d4;
-    color: #f8f8f2;
-}
-
-#LosPluginDetailUi #btn_install:disabled {
-    background-color: #44475a;
-    color: #6272a4;
-    border: 1px solid #44475a;
-}
-
-#LosPluginDetailUi #text_description {
+QScrollBar:vertical {
     background-color: transparent;
-    color: #f8f8f2;
+    width: 14px;
     border: none;
-    border-top: 1px solid #44475a;
-    margin-top: 20px;
-    padding-top: 20px;
-    line-height: 1.6;
+    margin: 0px;
 }
 
-#statusbar_widget {
-    background-color: #191a21;
-    border-top: 1px solid #111114;
+QScrollBar::handle:vertical {
+    background-color: rgba(98, 114, 164, 0.5);
+    border-radius: 0px;
+    min-height: 30px;
+    margin: 0px;
 }
 
-#statusbar_widget QLabel {
-    color: #6272a4;
-    font-size: 12px;
-    padding: 0px 4px;
+QScrollBar::handle:vertical:hover {
+    background-color: rgba(189, 147, 249, 0.7);
 }
 
-#statusbar_label {
-    color: #6272a4;
+QScrollBar:horizontal {
+    background-color: transparent;
+    height: 14px;
+    border: none;
+    margin: 0px;
 }
 
-#statusbar_lang_label {
-    color: #6272a4;
-    font-family: "JetBrains Mono", "Consolas", monospace;
+QScrollBar::handle:horizontal {
+    background-color: rgba(98, 114, 164, 0.5);
+    border-radius: 0px;
+    min-width: 30px;
+    margin: 0px;
 }
 
-#project_dir_label {
-    color: #f8f8f2;
-    font-family: "JetBrains Mono", "Consolas", monospace;
-    background-color: #44475a;
-    border: 1px solid #6272a4;
-    border-radius: 4px;
-    padding: 4px 12px;
-    margin-right: 10px;
+QScrollBar::handle:horizontal:hover {
+    background-color: rgba(189, 147, 249, 0.7);
 }
 
-#project_dir_label:hover {
-    background-color: #6272a4;
-    border: 1px solid #bd93f9;
+QScrollBar::add-line,
+QScrollBar::sub-line,
+QScrollBar::add-page,
+QScrollBar::sub-page {
+    background-color: transparent;
+    height: 0px;
+    width: 0px;
+    border: none;
 }
+
+
+/* ============================================================
+ * 15. 通用控件 (QPushButton / QLineEdit / QComboBox / QCheckBox)
+ *     - 这一段是 *默认* 样式, 各模块如果有需要可以再覆盖
+ * ============================================================ */
 
 QPushButton {
     background-color: #44475a;
@@ -796,4 +903,52 @@ QCheckBox::indicator:hover {
 QCheckBox::indicator:checked {
     background-color: #bd93f9;
     border: 1px solid #bd93f9;
+}
+
+
+/* ============================================================
+ * 16. 底部状态栏 (LosView::LosStateBarUi)
+ *     - 仿 VSCode 底部那一条
+ *     - 顶部 1px 分隔线 + 内边距 + 悬停高亮
+ *
+ *  注意: QSS 里 :: 已被子控件占用, C++ 命名空间要写成 --
+ *        LosView::LosStateBarUi  →  LosView--LosStateBarUi
+ * ============================================================ */
+
+/* 状态栏整体 (背景 + 顶部分隔线) */
+LosView--LosStateBarUi {
+    background-color: #21222c;
+    border-top: 1px solid #191a21;
+}
+
+/* 状态栏内所有 QLabel 默认样式 */
+LosView--LosStateBarUi QLabel {
+    color: #6272a4;
+    font-size: 12px;
+    padding: 0 8px;
+    margin: 0;
+    background: transparent;
+}
+
+/* 鼠标悬停时的高亮背景 */
+LosView--LosStateBarUi QLabel:hover {
+    background-color: #44475a;
+    color: #f8f8f2;
+}
+
+/* 左侧消息: "Ready" / "Loading..." */
+#statusbar_label {
+    color: #6272a4;
+}
+
+/* 右侧文件编码 (UTF-8 / GBK / ...) */
+#statusbar_coding_label {
+    color: #bd93f9;
+    font-family: "JetBrains Mono", "Consolas", monospace;
+}
+
+/* 右侧文件语言 (cpp / py / rs / ...) */
+#statusbar_lang_label {
+    color: #f8f8f2;
+    font-family: "JetBrains Mono", "Consolas", monospace;
 }

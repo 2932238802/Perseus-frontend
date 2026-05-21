@@ -6,9 +6,6 @@
 #include <qpushbutton.h>
 #include <qtmetamacros.h>
 #include <qwidget.h>
-#include <qaction.h>
-#include <qmenu.h>
-#include <qpushbutton.h>
 
 namespace LosView
 {
@@ -18,7 +15,6 @@ namespace LosView
       public:
         explicit LosDropdownButtonUi(QWidget *parent = nullptr);
         explicit LosDropdownButtonUi(const QString &, QWidget *parent = nullptr);
-
         QAction *addOption(const QString &, std::function<void()>);
         void addSeparator();
         QMenu *getMenu() const;

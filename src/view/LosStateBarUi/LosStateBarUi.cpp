@@ -57,23 +57,28 @@ namespace LosView
     /**
      * @brief initStyle
      * 初始化样式
+     * - 高度交给 .ui 控制 (26 px)
+     * - margin / spacing 全部交给 QSS 的 padding 接管
+     *   这样视觉上左右内边距由 perseus_style.qss 统一调整
      */
     void LosStateBarUi::initStyle()
     {
-        setMinimumHeight(24);
-        setMaximumHeight(24);
         auto *layout = new QHBoxLayout(this);
-        layout->setContentsMargins(8, 0, 8, 0);
-        layout->setSpacing(4);
+        layout->setContentsMargins(0, 0, 0, 0);
+        layout->setSpacing(0);
+
         L_messageLabel = new QLabel("Ready", this);
         L_messageLabel->setObjectName("statusbar_label");
         layout->addWidget(L_messageLabel);
+
         layout->addStretch();
+
         L_codingLabel = new QLabel("UTF-8", this);
         L_codingLabel->setObjectName("statusbar_coding_label");
-        L_langLabel = new QLabel("UnKnow File", this);
-        L_langLabel->setObjectName("statusbar_lang_label");
         layout->addWidget(L_codingLabel);
+
+        L_langLabel = new QLabel("Unknown File", this);
+        L_langLabel->setObjectName("statusbar_lang_label");
         layout->addWidget(L_langLabel);
     }
 

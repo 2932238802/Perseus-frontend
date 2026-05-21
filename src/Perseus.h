@@ -118,6 +118,8 @@ class Perseus : public QMainWindow
     void onDebounceTimeOut();
     void onDirectoryChanged();
     void OnTogglePanelBtnClicked();
+    void onFileChooseBtnClicked();
+    void onDirChooseBtnClick();
 
   private:
     Ui::Perseus *ui;
