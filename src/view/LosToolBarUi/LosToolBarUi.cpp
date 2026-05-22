@@ -1,4 +1,7 @@
 #include "LosToolBarUi.h"
+#include "common/constants/ConstantsNum/PerseusNum.h"
+#include "common/constants/ConstantsStr/LosPanelManagerStr.h"
+#include "core/LosRouter/LosRouter.h"
 #include <QHBoxLayout>
 
 
@@ -12,15 +15,17 @@ namespace LosView
     LosToolBarUi::LosToolBarUi(QWidget *parent) : QWidget(parent)
     {
         initStyle();
+        initViewBtn();
         initFilesBtn();
     }
     LosToolBarUi::~LosToolBarUi() = default;
 
 
-    /*
-     * initStyle
-     * - 创建并布局所有按钮
-     * - objectName 必须和 perseus_style.qss 里的 #xxx 选择器一致
+    
+    /**
+     * @brief initStyle
+     * 创建并布局所有按钮
+     * objectName 必须和 perseus_style.qss 里的 #xxx 选择器一致
      */
     void LosToolBarUi::initStyle()
     {
@@ -67,9 +72,9 @@ namespace LosView
 
         /*
          * 行为绑定: 全部 emit 到 Router, 由 Perseus 监听
-         * - setting / run / project 是简单按钮, click → emit
-         * - files 的下拉项在 initFilesBtn() 里挂
-         * - view 的下拉项由 Perseus 注册 (因为它要操作 ui->bottom_tabwidget)
+         * setting / run / project 是简单按钮, click → emit
+         * files 的下拉项在 initFilesBtn() 里挂
+         * view 的下拉项由 Perseus 注册 (因为它要操作 ui->bottom_tabwidget)
          */
         connect(LOS_settingBtn, &QPushButton::clicked, this, [] { emit LosCore::LosRouter::instance()._cmd_settingBtnClick(); });
         connect(LOS_runBtn, &QPushButton::clicked, this, [] { emit LosCore::LosRouter::instance()._cmd_runBtnClick(); });
@@ -78,18 +83,14 @@ namespace LosView
     }
 
 
-    /*
-     * initFilesBtn
-     * - File 下拉菜单的 3 项: choose file / choose dir / version
+    /**
+     * @brief initFilesBtn
      */
     void LosToolBarUi::initFilesBtn()
     {
         LOS_filesBtn->addOption("choose a file", [] { emit LosCore::LosRouter::instance()._cmd_chooseFileBtnClick(); });
-
         LOS_filesBtn->addOption("choose a dir", [] { emit LosCore::LosRouter::instance()._cmd_chooseDirBtnClick(); });
-
         LOS_filesBtn->addSeparator();
-
         LOS_filesBtn->addOption("version",
                                 [this]()
                                 {
@@ -102,6 +103,36 @@ namespace LosView
                                                               .arg(QT_VERSION_STR);
                                     QMessageBox::about(this, tr("About Perseus"), versionInfo);
                                 });
+    }
+
+
+
+    /**
+     * @brief initViewBtn
+     *
+     */
+    void LosToolBarUi::initViewBtn()
+    {
+        registerToggle("Output", LosCommon::Perseus_Constants::OUTPUT);
+        registerToggle("Issues", LosCommon::Perseus_Constants::ISSUES);
+        registerToggle("Terminal", LosCommon::Perseus_Constants::TERMINAL);
+    }
+
+
+
+    /**
+     * @brief
+     *
+     * @param title
+     * @param idx
+     */
+    void LosToolBarUi::registerToggle(const QString &title, int idx)
+    {
+        QAction *act = LOS_viewBtn->addOption(title, []() {});
+        act->setCheckable(true);
+        act->setChecked(true);
+        connect(act, &QAction::toggled, this,
+                [this, idx](bool visible) { emit LosCore::LosRouter::instance()._cmd_bottomTabVisibilityChanged(idx, visible); });
     }
 
 } // namespace LosView

@@ -37,13 +37,16 @@ namespace LosView
         explicit LosToolBarUi(QWidget *parent = nullptr);
         ~LosToolBarUi() override;
 
-      public: /* 暴露给 Perseus 用，可读不可改 */
+      public: // public tool
         QLabel *getProjectDirLabel() const { return LOS_projectDirLabel; }
-        LosView::LosDropdownButtonUi *getViewBtn() const { return LOS_viewBtn; }
 
       private: /* init */
         void initStyle();
         void initFilesBtn();
+        void initViewBtn();
+
+      private: // private tool
+        void registerToggle(const QString &title, int idx);
 
       private: /* params */
         QPushButton *LOS_iconBtn                   = nullptr;

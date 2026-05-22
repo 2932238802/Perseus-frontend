@@ -49,16 +49,13 @@ namespace LosCore
         // 诊断的结构 返回
         // 文本定义的位置的返回 是lsp 返回
         void _cmd_lsp_result_diagnostics(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags);
-
         void _cmd_lsp_result_definition(const QString &file_name, int line);
-
-        void _cmd_lsp_result_hover(const QString &md_content);
+        void _cmd_lsp_result_hover(const QString absoluteFilePath, const QString &md_content);
 
         // 语义高亮
         void _cmd_lsp_result_semanticTokens(const QJsonArray &arr);
 
         void _cmd_lsp_result_semanticLegend(const QStringList &, const QStringList &);
-
 
         // 从诊断的结果 ctrl 点击 跳转到指定位置
         void _cmd_gotoFile(const QString &file_path, int line);
@@ -150,11 +147,7 @@ namespace LosCore
         void _cmd_settingBtnClick();
         void _cmd_runBtnClick();
         void _cmd_projectBtnToggled(bool checked);
-
-        /**
-         * @brief 底部 tab 显示/隐藏切换
-         * - 0=Output, 1=Issues, 2=Terminal
-         */
+        // - 0=Output, 1=Issues, 2=Terminal
         void _cmd_bottomTabVisibilityChanged(int tabIndex, bool visible);
 
         // ----------------------------------------------------------------------------

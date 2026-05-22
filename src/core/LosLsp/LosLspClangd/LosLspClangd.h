@@ -22,9 +22,6 @@ namespace LosCore
         void initConnect();
         void sendInitializeRequest();
         void sendInitializedMsg();
-
-      private:
-
     };
 
 } /* namespace LosCore */

@@ -7,7 +7,7 @@ namespace LosCommon
         enum BottomTabWidget
         {
             OUTPUT   = 0,
-            PROBLEMS = 1,
+            ISSUES   = 1,
             TERMINAL = 2
         };
 

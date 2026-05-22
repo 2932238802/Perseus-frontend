@@ -35,7 +35,8 @@ namespace LosCore
     {
         if (obj.contains("id"))
         {
-            int id = obj["id"].toInt();
+            int id                   = obj["id"].toInt();
+            QString absoluteFilePath = L_idToAbsoluteFilePath.take(id);
             if (!L_idToType.contains(id))
                 return;
             LosLspType type = L_idToType.take(id);
@@ -137,11 +138,11 @@ namespace LosCore
                             hoverText = arr.first().toObject()["value"].toString();
                         }
                     }
-                    emit LosRouter::instance()._cmd_lsp_result_hover(hoverText);
+                    emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath, hoverText);
                 }
                 else
                 {
-                    emit LosRouter::instance()._cmd_lsp_result_hover("");
+                    emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath, "");
                 }
                 break;
             }

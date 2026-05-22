@@ -63,6 +63,7 @@ namespace LosCore
         QHash<QString, int> L_fileVersions                            = {};
         QMap<int, LosLspType> L_idToType                              = {};
         QSet<QString> L_openedFiles                                   = {};
+        QMap<int, QString> L_idToAbsoluteFilePath                     = {};
     };
 
 } /* namespace LosCore */

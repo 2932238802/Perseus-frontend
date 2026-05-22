@@ -394,6 +394,16 @@ void Perseus::onDirChooseBtnClick()
 
 
 /**
+ * @brief onBottomVisibilityChanged
+ */
+void Perseus::onBottomVisibilityChanged(int index, bool visible)
+{
+    ui->bottom_tabwidget->setTabVisible(index, visible);
+}
+
+
+
+/**
  * @brief
  * initConnect
  * - 初始化连接
@@ -417,33 +427,17 @@ void Perseus::initConnect()
 
     auto &router = LosCore::LosRouter::instance();
 
-    /* ---------- 文件系统 / 编辑器内部 ---------- */
     connect(L_timer, &QTimer::timeout, this, &Perseus::onDebounceTimeOut);
     connect(L_filesWatcher, &QFileSystemWatcher::directoryChanged, this, &Perseus::onDirectoryChanged);
     connect(ui->explorer_treeview, &QTreeView::activated, this, &Perseus::onExplorerFileDoubleClicked);
-    connect(
-        &router, &LosCore::LosRouter::_cmd_fileSystemChanged, this,
-        [=, this]()
-        {
-            // 文件系统变化仅刷新文件树，不重新运行 cmake analyse
-            // 防止 cmake 写 build/ → watcher 触发 → 再次 analyse → 死循环
-            OnFileLoaded(true, false);
-        },
-        Qt::QueuedConnection);
+    connect(&router, &LosCore::LosRouter::_cmd_fileSystemChanged, this, [=, this]() { OnFileLoaded(true, false); }, Qt::QueuedConnection);
     connect(&router, &LosCore::LosRouter::_cmd_toolChainMissing, this, &Perseus::onToolChainMissing);
 
-    /* ---------- 工具栏 (LosToolBarUi → Router → 这里) ---------- */
-    /* File 下拉的两个选项 */
     connect(&router, &LosCore::LosRouter::_cmd_chooseFileBtnClick, this, &Perseus::onFileChooseBtnClicked);
     connect(&router, &LosCore::LosRouter::_cmd_chooseDirBtnClick, this, &Perseus::onDirChooseBtnClick);
 
-    /* Run 按钮 */
     connect(&router, &LosCore::LosRouter::_cmd_runBtnClick, this, &Perseus::onRunSingleFileBtnClicked);
-
-    /* CMake Pro? radio */
     connect(&router, &LosCore::LosRouter::_cmd_projectBtnToggled, this, &Perseus::onProjectBtnClicked);
-
-    /* Set 按钮 */
     connect(&router, &LosCore::LosRouter::_cmd_settingBtnClick, this,
             [this]()
             {
@@ -451,23 +445,7 @@ void Perseus::initConnect()
                 settingDialog.exec();
             });
 
-    /* View 下拉: 切换 Output / Issues / Terminal 三个 tab 的可见性 */
-    auto *viewBtn  = ui->toolbar_widget->getViewBtn();
-    using BotIdx   = LosCommon::Perseus_Constants::BottomTabWidget;
-
-    auto registerToggle = [this, viewBtn](const QString &title, int idx)
-    {
-        QAction *act = viewBtn->addOption(title, [] { /* toggled 信号已经处理, 这里留空 */ });
-        act->setCheckable(true);
-        act->setChecked(true);
-        connect(act, &QAction::toggled, this,
-                [this, idx](bool visible) { ui->bottom_tabwidget->setTabVisible(idx, visible); });
-    };
-    registerToggle("Output",   BotIdx::OUTPUT);
-    registerToggle("Issues",   BotIdx::PROBLEMS);
-    registerToggle("Terminal", BotIdx::TERMINAL);
-
-    /* ---------- 左侧活动栏 ---------- */
+    connect(&router, &LosCore::LosRouter::_cmd_bottomTabVisibilityChanged, this, &Perseus::onBottomVisibilityChanged);
     connect(ui->act_explorer_btn, &QPushButton::clicked, this, [this]() { ui->left_panel_stack->setCurrentIndex(0); });
     connect(ui->act_extensions_btn, &QPushButton::clicked, this,
             [this]()

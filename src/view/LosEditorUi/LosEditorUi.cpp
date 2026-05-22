@@ -1,6 +1,7 @@
 #include "LosEditorUi.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "common/constants/ConstantsStr/LosEditorUiStr.h"
+#include "common/util/CheckLang.h"
 #include "common/util/FindMatchBracket.h"
 #include "common/util/GetLeadingWhiteSpace.h"
 #include <qevent.h>
@@ -92,7 +93,7 @@ namespace LosView
                 break;
             }
             }
-            format.setToolTip(a.message);
+            // format.setToolTip(a.message);
             selections.format = format;
 
             QTextDocument *doc    = this->document();
@@ -610,6 +611,36 @@ namespace LosView
 
 
     /**
+     * @brief
+     *
+     * @param markdownContent
+     */
+    void LosEditorUi::onHover_Clangd(const QString &markdownContent)
+    {
+        if (markdownContent.isEmpty())
+        {
+            hideHoverPopup();
+            return;
+        }
+        QString html = markdownContent;
+        html.replace("&", "&amp;");
+        html.replace("<", "&lt;");
+        html.replace(">", "&gt;");
+        html.replace("```cpp\n", "<pre style='color:#8be9fd; font-family:Consolas; margin: 5px 0;'>");
+        html.replace("```c\n", "<pre style='color:#8be9fd; font-family:Consolas; margin: 5px 0;'>");
+        html.replace("```", "</pre>");
+        QRegularExpression boldRegex("\\*\\*(.*?)\\*\\*");
+        html.replace(boldRegex, "<b>\\1</b>");
+        QRegularExpression inlineCodeRegex("`([^`]+)`");
+        html.replace(inlineCodeRegex, "<code style='color:#f1fa8c; background-color:#44475a; padding:2px 4px; "
+                                      "border-radius:3px;'>\\1</code>");
+        html.replace("\n", "<br>");
+        showHoverPopup(html);
+    }
+
+
+
+    /**
      * @brief hideCompletionPopup
      */
     void LosEditorUi::hideCompletionPopup()
@@ -721,38 +752,31 @@ namespace LosView
 
 
     /**
-     * @brief
+     * @brief onHover
      *
      * @param markdownContent
      */
-    void LosEditorUi::onHover_Clangd(const QString &markdownContent)
+    void LosEditorUi::onHover(const QString &absolute_file_path, const QString &markdownContent)
     {
-        if (markdownContent.isEmpty())
-        {
-            hideHoverPopup();
+        if (!LOS_filePath || LOS_filePath->getAbsoluteFilePath() != absolute_file_path)
             return;
+        auto lang = LosCommon::CheckLang(absolute_file_path);
+        switch (lang)
+        {
+        case LosCommon::LosToolChain_Constants::LosLanguage::CXX:
+        {
+            onHover_Clangd(markdownContent);
+            break;
         }
-        QString html = markdownContent;
-        html.replace("&", "&amp;");
-        html.replace("<", "&lt;");
-        html.replace(">", "&gt;");
-        html.replace("```cpp\n", "<pre style='color:#8be9fd; font-family:Consolas; margin: 5px 0;'>");
-        html.replace("```c\n", "<pre style='color:#8be9fd; font-family:Consolas; margin: 5px 0;'>");
-        html.replace("```", "</pre>");
-        QRegularExpression boldRegex("\\*\\*(.*?)\\*\\*");
-        html.replace(boldRegex, "<b>\\1</b>");
-        QRegularExpression inlineCodeRegex("`([^`]+)`");
-        html.replace(inlineCodeRegex, "<code style='color:#f1fa8c; background-color:#44475a; padding:2px 4px; "
-                                      "border-radius:3px;'>\\1</code>");
-        html.replace("\n", "<br>");
-        showHoverPopup(html);
+        default:
+            break;
+        }
     }
 
 
 
     /**
      * @brief showHoverPopup 显示自绘 hover 浮窗
-     *
      * @param html 已转换为 rich text 的 hover 内容
      */
     void LosEditorUi::showHoverPopup(const QString &html)
@@ -850,10 +874,6 @@ namespace LosView
                 brackPos = pos;
                 bracket  = curChar;
             }
-        }
-
-        if (brackPos == -1)
-        {
             return;
         }
 

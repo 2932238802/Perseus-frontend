@@ -47,7 +47,6 @@ namespace LosCore
 
     /**
      * @brief sendInitializeRequest 发送初始化请求
-     *
      */
     void LosLspClangd::sendInitializeRequest()
     {
@@ -65,8 +64,8 @@ namespace LosCore
 
 
 
-    /*
-     * 处理初始化
+    /**
+     * @brief sendInitializedMsg
      */
     void LosLspClangd::sendInitializedMsg()
     {
@@ -84,7 +83,8 @@ namespace LosCore
     {
         if (obj.contains("id"))
         {
-            int id = obj["id"].toInt();
+            int id                   = obj["id"].toInt();
+            QString absoluteFilePath = L_idToAbsoluteFilePath.take(id);
             if (!L_idToType.contains(id))
                 return;
             LosLspType type = L_idToType.take(id);
@@ -171,14 +171,11 @@ namespace LosCore
                     QJsonObject result   = obj["result"].toObject();
                     QJsonObject contents = result["contents"].toObject();
                     QString hoverText    = contents["value"].toString();
-                    /*
-                     * 悬停 提示 前端 ui 进行渲染
-                     */
-                    emit LosRouter::instance()._cmd_lsp_result_hover(hoverText);
+                    emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath,hoverText);
                 }
                 else
                 {
-                    emit LosRouter::instance()._cmd_lsp_result_hover("");
+                    emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath,"");
                 }
                 break;
             }

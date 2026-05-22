@@ -14,7 +14,6 @@
 
 namespace LosCore
 {
-
     class LosLspCMake : public LosLspClient
     {
         Q_OBJECT
@@ -24,11 +23,10 @@ namespace LosCore
         void dealLspMessage(const QJsonObject &obj) override;
         ~LosLspCMake() override = default;
 
-
-      private: /* init */
+      private: // init
         void initConnect();
 
-      private: /* tool */
+      private: // tool
         void sendInitializeRequest();
         void sendInitializeMsg();
     };

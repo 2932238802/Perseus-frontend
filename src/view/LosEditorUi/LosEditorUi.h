@@ -101,11 +101,12 @@ namespace LosView
         void hideHoverPopup();
         void hideCompletionPopup();
         void clearHoverUnderline();
+        void onHover_Clangd(const QString &markdownContent);
 
       private slots: // chs
         void onTextChanged();
         void onDebounceTimeout();
-        void onHover_Clangd(const QString &markdownContent);
+        void onHover(const QString &absolute_file_path, const QString &markdownContent);
         void onSemanticLegend(const QStringList &, const QStringList &);
         void onSemanticTokens(const QJsonArray &);
         void onCutKeyClicked();

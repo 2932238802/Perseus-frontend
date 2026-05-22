@@ -298,9 +298,12 @@ namespace LosCore
         request["jsonrpc"] = "2.0";
         int id             = L_id.fetch_add(1);
         L_idToType.insert(id, type);
-        request["id"]     = id;
-        request["method"] = method;
-        request["params"] = params;
+        QString uri                = params["textDocument"].toObject()["uri"].toString();
+        QString filePath           = QUrl(uri).toLocalFile();
+        L_idToAbsoluteFilePath[id] = filePath;
+        request["id"]              = id;
+        request["method"]          = method;
+        request["params"]          = params;
         QJsonDocument doc(request);
         QByteArray jb     = doc.toJson(QJsonDocument::Compact);
         QByteArray header = LosCommon::LosLsp_Constants::CONTENT_LENGTH + QByteArray::number(jb.size()) + LosCommon::LosLsp_Constants::LSP_RNRN;

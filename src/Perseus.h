@@ -120,6 +120,7 @@ class Perseus : public QMainWindow
     void OnTogglePanelBtnClicked();
     void onFileChooseBtnClicked();
     void onDirChooseBtnClick();
+    void onBottomVisibilityChanged(int, bool);
 
   private:
     Ui::Perseus *ui;

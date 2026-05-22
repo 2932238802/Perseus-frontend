@@ -145,6 +145,7 @@ namespace LosCore
         if (obj.contains("id"))
         {
             int id = obj["id"].toInt();
+            QString absoluteFilePath = L_idToAbsoluteFilePath.take(id);
             if (!L_idToType.contains(id))
             {
                 return;
@@ -209,7 +210,7 @@ namespace LosCore
                 QJsonObject rst      = obj["result"].toObject();
                 QJsonObject contents = rst["contents"].toObject();
                 QString hoverText    = contents["value"].toString();
-                emit LosRouter::instance()._cmd_lsp_result_hover(hoverText);
+                emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath,hoverText);
                 break;
             }
             case LosCore::LosLspType::REQ_DEFINE:
