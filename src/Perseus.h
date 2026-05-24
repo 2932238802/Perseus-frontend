@@ -129,6 +129,7 @@ class Perseus : public QMainWindow
     QFileSystemWatcher *L_filesWatcher             = nullptr;
     QTimer *L_timer                                = nullptr;
     QList<int> L_rightSplitterSizes                = {};
+    LosView::LosSettingsUi *LOS_setting            = nullptr;
     LosModel::LosFileNode *LOS_rootNode            = nullptr;
     LosModel::LosFileTreeModel *LOS_treeModel      = nullptr;
     LosView::LosEditorTabUi *LOS_tabUi             = nullptr;

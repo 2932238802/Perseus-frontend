@@ -1,4 +1,7 @@
 #include "LosSettingsUi.h"
+#include "common/constants/ConstantsClass/LosToolChainClass.h"
+#include "core/LosRouter/LosRouter.h"
+
 #include "ui_LosSettingsUi.h"
 
 
@@ -43,12 +46,11 @@ namespace LosView
 
     /**
      * @brief initConnect
-     *
-     *
      * 初始化 连接
      */
     void LosSettingsUi::initConnect()
     {
+        auto &router = LosCore::LosRouter::instance();
         connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [this]() { accept(); });
         connect(ui->buttonBox, &QDialogButtonBox::rejected, this, [this]() { reject(); });
         connect(ui->category_list, &QListWidget::currentRowChanged, ui->pages_stack, &QStackedWidget::setCurrentIndex);
@@ -58,6 +60,69 @@ namespace LosView
             connect(applyBtn, &QPushButton::clicked, this, &LosSettingsUi::onSaveSettings);
         }
         connect(ui->btn_install_cmake, &QPushButton::clicked, this, &LosSettingsUi::onCMakeInstallBtnClicked);
+        connect(&router, &LosCore::LosRouter::_cmd_findExePathAndSetSettingUi, this, &LosSettingsUi::onFindExePath);
+    }
+
+
+
+    /**
+     * @brief Set the Installed object
+     *
+     * @param tool
+     */
+    void LosSettingsUi::setInstalled(LosCommon::LosToolChain_Constants::LosTool tool)
+    {
+        using LosTool                  = LosCommon::LosToolChain_Constants::LosTool;
+        auto setInstallButtonInstalled = [](QPushButton *button)
+        {
+            if (!button)
+                return;
+            button->setText("Installed");
+            button->setEnabled(false);
+            button->setCursor(Qt::ArrowCursor);
+            button->setProperty("installed", true);
+            button->style()->unpolish(button);
+            button->style()->polish(button);
+            button->update();
+        };
+
+        switch (tool)
+        {
+        case LosTool::CMAKE:
+            setInstallButtonInstalled(ui->btn_install_cmake);
+            break;
+        case LosTool::NINJA:
+            setInstallButtonInstalled(ui->btn_install_ninja);
+            break;
+        case LosTool::GIT:
+            setInstallButtonInstalled(ui->btn_install_git);
+            break;
+        case LosTool::G_PLUS_PLUS:
+            setInstallButtonInstalled(ui->btn_install_gxx);
+            break;
+        case LosTool::CLANGD:
+            setInstallButtonInstalled(ui->btn_install_clangd);
+            break;
+        case LosTool::CLANG_FORMAT:
+            setInstallButtonInstalled(ui->btn_install_clang_format);
+            break;
+        case LosTool::NEOCMAKELSP:
+            setInstallButtonInstalled(ui->btn_install_neocmakelsp);
+            break;
+        case LosTool::CARGO:
+        case LosTool::RUSTC:
+        case LosTool::RUST_ANALYZER:
+            setInstallButtonInstalled(ui->btn_install_rust);
+            break;
+        case LosTool::PYTHON:
+            setInstallButtonInstalled(ui->btn_install_python);
+            break;
+        case LosTool::PYRIGHT:
+            setInstallButtonInstalled(ui->btn_install_pyright);
+            break;
+        default:
+            break;
+        }
     }
 
 
@@ -72,10 +137,71 @@ namespace LosView
         INF("save ...", "LosSettingsUi");
     }
 
+
+
+    /**
+     * @brief 设置 exe 路径
+     *
+     * @param file_path
+     * @param tool
+     */
+    void LosSettingsUi::onFindExePath(const QString &file_path, LosCommon::LosToolChain_Constants::LosTool tool)
+    {
+        SUC("file_path: " + file_path, "LosSettingsUi");
+        setInstalled(tool);
+        switch (tool)
+        {
+        case (LosCommon::LosToolChain_Constants::LosTool::RUSTC):
+        {
+            ui->edit_rustc_path->setText(file_path);
+            break;
+        }
+        case (LosCommon::LosToolChain_Constants::LosTool::CMAKE):
+        {
+            ui->edit_cmake_path->setText(file_path);
+            break;
+        }
+        case (LosCommon::LosToolChain_Constants::LosTool::CARGO):
+        {
+            ui->edit_cargo_path->setText(file_path);
+            break;
+        }
+        case (LosCommon::LosToolChain_Constants::LosTool::PYTHON):
+        {
+            ui->edit_python_path->setText(file_path);
+            break;
+        }
+        case (LosCommon::LosToolChain_Constants::LosTool::PYRIGHT):
+        {
+            ui->edit_pyright_path->setText(file_path);
+            break;
+        }
+        case (LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS):
+        {
+            ui->edit_gxx_path->setText(file_path);
+            break;
+        }
+        case (LosCommon::LosToolChain_Constants::LosTool::CLANG_FORMAT):
+        {
+            ui->edit_clang_format_path->setText(file_path);
+            break;
+        }
+        case (LosCommon::LosToolChain_Constants::LosTool::NEOCMAKELSP):
+        {
+            ui->edit_neocmakelsp_path->setText(file_path);
+            break;
+        }
+        default:
+        {
+            break;
+        }
+        }
+    }
+
+
+
     /**
      * @brief
-     *
-     *
      */
     void LosSettingsUi::onCMakeInstallBtnClicked() {}
 

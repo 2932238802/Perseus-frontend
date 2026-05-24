@@ -28,6 +28,7 @@ namespace LosCommon
             {
                 return bundledPath;
             }
+            // 找不到 就在 系统路径下面找
             QString sysPath = QStandardPaths::findExecutable(exeName);
             if (!sysPath.isEmpty())
             {

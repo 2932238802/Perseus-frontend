@@ -1,5 +1,6 @@
 
 #pragma once
+#include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
 #include <QDialog>
@@ -25,18 +26,22 @@ namespace LosView
     class LosSettingsUi : public QDialog
     {
         Q_OBJECT
-      public:
+      public: // construct
         explicit LosSettingsUi(QWidget *parent = nullptr);
         ~LosSettingsUi();
 
-      private:
+      private: // init
         void initStyle();
         void initConnect();
 
-      private slots:
-        void onSaveSettings();
+      private: // private tool
+        void setInstalled(LosCommon::LosToolChain_Constants::LosTool tool);
 
-      public slots:
+      private slots: // chs
+        void onSaveSettings();
+        void onFindExePath(const QString &file_path, LosCommon::LosToolChain_Constants::LosTool tool);
+
+      public slots: // chs
         void onCMakeInstallBtnClicked();
 
       private:

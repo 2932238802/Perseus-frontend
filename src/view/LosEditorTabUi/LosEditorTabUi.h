@@ -43,11 +43,11 @@ namespace LosView
     class LosEditorTabUi : public QWidget
     {
         Q_OBJECT
-      public: /* construct */
+      public: // construct
         explicit LosEditorTabUi(QTabWidget *tabWidget, QWidget *object = nullptr);
         ~LosEditorTabUi() override;
 
-      public: /* tool */
+      public: // tool
         void closeTab(int index);
         void closeAllTabs();
         void saveTab();
@@ -55,14 +55,14 @@ namespace LosView
         void openFile(const LosModel::LosFilePath &file);
         void formatTab();
 
-      public: /* get */
+      public: // get
         LosEditorUi *getCurEditor();
         int tabCount() const;
         QString getCurFilePath() const;
         QStringList getOpenFiles() const;
         int getCurEditIndex() const;
 
-      private slots: /* chs */
+      private slots: // chs
         void onTabCloseRequested(int index);
         void onEditDirty(const QString &file_path, bool is_dirty);
         void onDefineResult(const QString &file_path, int line);
@@ -74,21 +74,19 @@ namespace LosView
         void onGotoLineShortcut();
         void onFindShortcut();
 
-      private: /* init */
+      private: // init
         void initConnect();
         void initTabBar();
         void initShortCut();
 
-      private: /* tool */
+      private: // tool
         void checkLspAnsFormat(const QString &file_path);
-        /*
-         * 为指定 index 的 tab 装配一个自绘的关闭按钮
-         * - Qt 原生 close-button 依赖系统图标,在深色主题下经常显示为空白/红块
-         * - 用 QToolButton + × 字符完全自绘,保证样式一致
-         */
+        // 为指定 index 的 tab 装配一个自绘的关闭按钮
+        // - Qt 原生 close-button 依赖系统图标,在深色主题下经常显示为空白/红块
+        // - 用 QToolButton + × 字符完全自绘,保证样式一致
         void installCloseButton(int index);
 
-      private: /* params */
+      private: // params
         QSet<LosCommon::LosToolChain_Constants::LosLanguage> L_checkedLanguage;
         QTabWidget *L_tabWidget;
         QMap<QString, LosView::LosEditorUi *> LOS_pathToUi; // 左侧是 absoluteFilePath 就是全路径

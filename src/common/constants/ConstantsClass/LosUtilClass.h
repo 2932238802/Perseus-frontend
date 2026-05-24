@@ -1,6 +1,6 @@
 #pragma once
-#include<QString>
-#include<QStringList>
+#include <QString>
+#include <QStringList>
 
 namespace LosCommon
 {
@@ -8,7 +8,5 @@ namespace LosCommon
     {
         SYSTEM_TOOLCHAIN_CONFIG_JSON,
         COMMON_DIR
-
-
     };
 };

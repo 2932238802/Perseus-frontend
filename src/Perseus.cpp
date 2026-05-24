@@ -1,6 +1,7 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
 #include "core/LosRouter/LosRouter.h"
+#include "view/LosSettingsUi/LosSettingsUi.h"
 
 
 /**
@@ -421,6 +422,7 @@ void Perseus::initConnect()
     LOS_toolChainMgr = new LosCore::LosToolChainManager(this);
     LOS_scriptRunner = new LosCore::LosScriptRunner(this);
     L_timer          = new QTimer(this);
+    LOS_setting      = new LosView::LosSettingsUi(this);
     L_timer->setSingleShot(true);
     L_timer->setInterval(300);
     L_filesWatcher = new QFileSystemWatcher(this);
@@ -432,19 +434,11 @@ void Perseus::initConnect()
     connect(ui->explorer_treeview, &QTreeView::activated, this, &Perseus::onExplorerFileDoubleClicked);
     connect(&router, &LosCore::LosRouter::_cmd_fileSystemChanged, this, [=, this]() { OnFileLoaded(true, false); }, Qt::QueuedConnection);
     connect(&router, &LosCore::LosRouter::_cmd_toolChainMissing, this, &Perseus::onToolChainMissing);
-
     connect(&router, &LosCore::LosRouter::_cmd_chooseFileBtnClick, this, &Perseus::onFileChooseBtnClicked);
     connect(&router, &LosCore::LosRouter::_cmd_chooseDirBtnClick, this, &Perseus::onDirChooseBtnClick);
-
     connect(&router, &LosCore::LosRouter::_cmd_runBtnClick, this, &Perseus::onRunSingleFileBtnClicked);
     connect(&router, &LosCore::LosRouter::_cmd_projectBtnToggled, this, &Perseus::onProjectBtnClicked);
-    connect(&router, &LosCore::LosRouter::_cmd_settingBtnClick, this,
-            [this]()
-            {
-                LosView::LosSettingsUi settingDialog(this);
-                settingDialog.exec();
-            });
-
+    connect(&router, &LosCore::LosRouter::_cmd_settingBtnClick, this, [this]() { LOS_setting->exec(); });
     connect(&router, &LosCore::LosRouter::_cmd_bottomTabVisibilityChanged, this, &Perseus::onBottomVisibilityChanged);
     connect(ui->act_explorer_btn, &QPushButton::clicked, this, [this]() { ui->left_panel_stack->setCurrentIndex(0); });
     connect(ui->act_extensions_btn, &QPushButton::clicked, this,

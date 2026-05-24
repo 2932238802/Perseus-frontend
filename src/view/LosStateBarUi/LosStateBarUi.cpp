@@ -11,7 +11,6 @@ namespace LosView
 {
     /**
      * @brief Construct a new Los State Bar Ui:: Los State Bar Ui object
-     *
      * @param parent
      */
     LosStateBarUi::LosStateBarUi(QWidget *parent) : QWidget(parent)
@@ -24,7 +23,6 @@ namespace LosView
 
     /**
      * @brief setCodingBarLabel
-     *
      * @param text
      */
     void LosStateBarUi::setCodingBarLabel(const QString &text)
@@ -40,7 +38,6 @@ namespace LosView
 
     /**
      * @brief setLangLabel
-     *
      * @param text
      */
     void LosStateBarUi::setLangLabel(const QString &text)
@@ -66,17 +63,13 @@ namespace LosView
         auto *layout = new QHBoxLayout(this);
         layout->setContentsMargins(0, 0, 0, 0);
         layout->setSpacing(0);
-
         L_messageLabel = new QLabel("Ready", this);
         L_messageLabel->setObjectName("statusbar_label");
         layout->addWidget(L_messageLabel);
-
         layout->addStretch();
-
         L_codingLabel = new QLabel("UTF-8", this);
         L_codingLabel->setObjectName("statusbar_coding_label");
         layout->addWidget(L_codingLabel);
-
         L_langLabel = new QLabel("Unknown File", this);
         L_langLabel->setObjectName("statusbar_lang_label");
         layout->addWidget(L_langLabel);

@@ -1,9 +1,17 @@
 #include "LosToolChainManager.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
+#include "common/util/StrToCategory.h"
+#include "common/util/StrToLanguage.h"
+#include "common/util/StrToTool.h"
+#include "core/LosRouter/LosRouter.h"
 
 namespace LosCore
 {
-
+    /**
+     * @brief Construct a new Los Tool Chain Manager:: Los Tool Chain Manager object
+     *
+     * @param parent
+     */
     LosToolChainManager::LosToolChainManager(QObject *parent) : QObject{parent}
     {
         initConfig();
@@ -34,7 +42,6 @@ namespace LosCore
 
     /**
      * @brief onCheckSingleTool
-     *
      * 检查 单个 sing tool
      *
      * @param tool
@@ -83,18 +90,15 @@ namespace LosCore
     /**
      * @brief initConfig
      * 读取 json
-     *
      */
     void LosToolChainManager::initConfig()
     {
         auto configFile(LosCommon::GetFilePathFromUp<LosCommon::FindFileType::SYSTEM_TOOLCHAIN_CONFIG_JSON>("toolchain_config.json"));
-
         if (!configFile)
         {
             ERR("config err! please exit!", "LosToolChainManager");
             return;
         }
-
         QFile file(*configFile);
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
@@ -118,7 +122,7 @@ namespace LosCore
             for (auto it = sharedTools.begin(); it != sharedTools.end(); ++it)
             {
                 QString toolNameStr       = it.key();
-                auto toolEnum             = stringToTool(toolNameStr);
+                auto toolEnum             = LosCommon::StrToTool(toolNameStr);
                 QJsonObject toolObj       = it.value().toObject();
                 LOS_toolConfigs[toolEnum] = parseToolNode(toolObj, toolNameStr);
                 if (toolObj.contains("supportedLanguages") && toolObj["supportedLanguages"].isArray())
@@ -126,7 +130,7 @@ namespace LosCore
                     QJsonArray langArray = toolObj["supportedLanguages"].toArray();
                     for (const QJsonValue &langVal : langArray)
                     {
-                        auto targetLang = stringToLanguage(langVal.toString());
+                        auto targetLang = LosCommon::StrToLanguage(langVal.toString());
                         if (targetLang != LosCommon::LosToolChain_Constants::LosLanguage::UNKNOWN)
                         {
                             if (!LOS_languageToolMap[targetLang].contains(toolEnum))
@@ -145,7 +149,7 @@ namespace LosCore
 
             for (auto langIt = toolchains.begin(); langIt != toolchains.end(); ++langIt)
             {
-                auto lang = stringToLanguage(langIt.key());
+                auto lang = LosCommon::StrToLanguage(langIt.key());
                 if (lang == LosCommon::LosToolChain_Constants::LosLanguage::UNKNOWN)
                     continue;
 
@@ -157,7 +161,7 @@ namespace LosCore
                     for (auto toolIt = tools.begin(); toolIt != tools.end(); ++toolIt)
                     {
                         QString toolNameStr       = toolIt.key();
-                        auto toolEnum             = stringToTool(toolNameStr);
+                        auto toolEnum             = LosCommon::StrToTool(toolNameStr);
                         LOS_toolConfigs[toolEnum] = parseToolNode(toolIt.value().toObject(), toolNameStr, lang);
                         if (!LOS_languageToolMap[lang].contains(toolEnum))
                         {
@@ -171,8 +175,9 @@ namespace LosCore
 
 
 
-    /*
-     * - 初始化链接
+    /**
+     * @brief initConnect
+     * 初始化链接
      */
     void LosToolChainManager::initConnect()
     {
@@ -182,7 +187,7 @@ namespace LosCore
         connect(&router, &LosRouter::_cmd_manuallySet, this,
                 [this](const LosCommon::LosToolChain_Constants::ToolChainConfig &config)
                 {
-                    auto tool = stringToTool(config.L_name);
+                    auto tool = LosCommon::StrToTool(config.L_name);
                     if (tool != LosCommon::LosToolChain_Constants::LosTool::UNKNOWN)
                         onCheckSingleTool(tool);
                 });
@@ -199,14 +204,17 @@ namespace LosCore
      */
     bool LosToolChainManager::validateExecutable(const LosCommon::LosToolChain_Constants::ToolChainConfig &config)
     {
-        auto toolEnum = stringToTool(config.L_name);
+        auto toolEnum = LosCommon::StrToTool(config.L_name);
         for (const auto &exeName : config.L_exeName)
         {
             auto pathOpt = LosCommon::FindExePath(exeName);
             if (pathOpt.has_value())
             {
-                SUC("find tool in" + *pathOpt, "LosToolChainManager");
-                L_activeToolPath[toolEnum] = pathOpt.value();
+                QString path(pathOpt.value());
+                L_activeToolPath[toolEnum] = path;
+                // 设置 setting ui 的路径
+                emit LosRouter::instance()._cmd_findExePathAndSetSettingUi(path, toolEnum);
+                SUC("config.L_name: " + config.L_name + " find tool in " + *pathOpt, "LosToolChainManager");
                 return true;
             }
         }
@@ -219,7 +227,6 @@ namespace LosCore
      * @brief parseToolNode
      * 解析 一个 toolIt config 解析
      *
-     *
      * @param toolObj
      * @param toolName
      * @return LosCommon::LosToolChain_Constants::ToolChainConfig
@@ -228,7 +235,7 @@ namespace LosCore
                                                                                           LosCommon::LosToolChain_Constants::LosLanguage language)
     {
         LosCommon::LosToolChain_Constants::ToolChainConfig config;
-        config.L_category   = stringToCategory(toolObj["category"].toString());
+        config.L_category   = LosCommon::StrToCategory(toolObj["category"].toString());
         config.L_name       = toolName;
         config.LOS_language = language;
         if (toolObj.contains("executables") && toolObj["executables"].isArray())
@@ -258,99 +265,6 @@ namespace LosCore
             config.L_scriptLinux = installs.contains("linux") ? installs["linux"].toString() : "";
         }
         return config;
-    }
-
-
-
-    /**
-     * @brief stringToLanguage
-     * 字符串 -> 具体枚举
-     * @param str
-     * @return LosCommon::LosToolChain_Constants::LosLanguage
-     */
-    LosCommon::LosToolChain_Constants::LosLanguage LosToolChainManager::stringToLanguage(const QString &str)
-    {
-        using namespace LosCommon::LosToolChain_Constants;
-        QString upperStr = str.toUpper();
-        if (upperStr == "CXX")
-            return LosLanguage::CXX;
-        if (upperStr == "LUA")
-            return LosLanguage::LUA;
-        if (upperStr == "RUST")
-            return LosLanguage::RUST;
-        if (upperStr == "JAVA")
-            return LosLanguage::JAVA;
-        if (upperStr == "PYTHON")
-            return LosLanguage::PYTHON;
-        if (upperStr == "CSHARP")
-            return LosLanguage::CSHARP;
-        if (upperStr == "CMAKE")
-            return LosLanguage::CMAKE;
-        return LosLanguage::UNKNOWN;
-    }
-
-
-
-    /**
-     * @brief stringToCategory
-     * 字符串 转 具体 枚举
-     *
-     * @param str
-     * @return LosCommon::LosToolChain_Constants::ToolCategory
-     */
-    LosCommon::LosToolChain_Constants::ToolCategory LosToolChainManager::stringToCategory(const QString &str)
-    {
-        using namespace LosCommon::LosToolChain_Constants;
-        QString upperStr = str.toUpper();
-        if (upperStr == "LSP")
-            return ToolCategory::LSP;
-        if (upperStr == "COMPILER")
-            return ToolCategory::Compiler;
-        if (upperStr == "FORMATTER")
-            return ToolCategory::Formatter;
-        if (upperStr == "LINTER")
-            return ToolCategory::Linter;
-        if (upperStr == "DEBUGGER")
-            return ToolCategory::Debugger;
-        if (upperStr == "BUILDTOOL")
-            return ToolCategory::BuildTool;
-        return ToolCategory::Compiler;
-    }
-
-
-
-    /*
-     * - 字符串 转 具体工具
-     */
-    LosCommon::LosToolChain_Constants::LosTool LosToolChainManager::stringToTool(const QString &str)
-    {
-        using namespace LosCommon::LosToolChain_Constants;
-        QString s = str.toLower();
-        if (s == "cmake")
-            return LosTool::CMAKE;
-        if (s == "ninja")
-            return LosTool::NINJA;
-        if (s == "git")
-            return LosTool::GIT;
-        if (s == "g++" || s == "g_plus_plus")
-            return LosTool::G_PLUS_PLUS;
-        if (s == "clangd")
-            return LosTool::CLANGD;
-        if (s == "clang-format" || s == "clang_format")
-            return LosTool::CLANG_FORMAT;
-        if (s == "cargo")
-            return LosTool::CARGO;
-        if (s == "rust-analyzer")
-            return LosTool::RUST_ANALYZER;
-        if (s == "neocmakelsp" || s == "neocmakelsp.exe")
-            return LosTool::NEOCMAKELSP;
-        if (s == "rustc")
-            return LosTool::RUSTC;
-        if (s == "python")
-            return LosTool::PYTHON;
-        if (s == "pyright" || s == "pyright-langserver")
-            return LosTool::PYRIGHT;
-        return LosTool::UNKNOWN;
     }
 
 } /* namespace LosCore */

@@ -415,7 +415,7 @@ namespace LosView
         connect(L_timer, &QTimer::timeout, this, &LosEditorUi::onDebounceTimeout);
         connect(&router, &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this, &LosEditorUi::showDiagnostic);
         connect(&router, &LosCore::LosRouter::_cmd_lsp_result_completion, this, &LosEditorUi::showCompletion);
-        connect(&router, &LosCore::LosRouter::_cmd_lsp_result_hover, this, &LosEditorUi::onHover_Clangd);
+        connect(&router, &LosCore::LosRouter::_cmd_lsp_result_hover, this, &LosEditorUi::onHover);
         connect(&router, &LosCore::LosRouter::_cmd_lsp_result_semanticLegend, this, &LosEditorUi::onSemanticLegend);
         connect(&router, &LosCore::LosRouter::_cmd_lsp_result_semanticTokens, this, &LosEditorUi::onSemanticTokens);
         connect(this, &LosEditorUi::blockCountChanged, this, &LosEditorUi::updateLineNumberAreaWidth);
@@ -781,10 +781,8 @@ namespace LosView
      */
     void LosEditorUi::showHoverPopup(const QString &html)
     {
-        /*
-         * 用一个顶层 Tool 窗口做浮窗, 不继承 parent 的焦点语义,
-         * 也不被 Qt 的 QToolTip 管理器影响
-         */
+        // 用一个顶层 Tool 窗口做浮窗, 不继承 parent 的焦点语义,
+        // 也不被 Qt 的 QToolTip 管理器影响
         if (!L_hoverPopup)
         {
             L_hoverPopup = new QLabel(nullptr, Qt::ToolTip | Qt::FramelessWindowHint);
@@ -797,18 +795,15 @@ namespace LosView
             L_hoverPopup->setFocusPolicy(Qt::NoFocus);
             L_hoverPopup->setStyleSheet(LosCommon::LosEditorUi_Constants::HOVER_POP_STYLE);
         }
-
         L_hoverPopup->setText(html);
         L_hoverPopup->adjustSize();
         QPoint anchor = L_lastHoverWordRectGlobal.isValid() ? L_lastHoverWordRectGlobal.bottomLeft() : L_lastHoverGlobal + QPoint(0, 20);
         anchor += QPoint(0, 4);
-
         QScreen *screen = QGuiApplication::screenAt(anchor);
         if (!screen)
             screen = QGuiApplication::primaryScreen();
         QRect available = screen ? screen->availableGeometry() : QRect(0, 0, 1920, 1080);
         QSize popupSize = L_hoverPopup->sizeHint();
-
         if (anchor.x() + popupSize.width() > available.right())
             anchor.setX(available.right() - popupSize.width() - 4);
         if (anchor.x() < available.left() + 4)
@@ -818,11 +813,11 @@ namespace LosView
             int above = L_lastHoverWordRectGlobal.top() - popupSize.height() - 4;
             anchor.setY(qMax(above, available.top() + 4));
         }
-
         L_hoverPopup->move(anchor);
         L_hoverPopup->show();
         L_hoverPopup->raise();
     }
+
 
 
     /**

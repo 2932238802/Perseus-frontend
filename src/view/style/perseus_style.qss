@@ -607,12 +607,21 @@ QPlainTextEdit {
 
 /* ============================================================
  * 13. 设置面板 (#LosSettingsUi)
+ *     - 左侧分类 + 右侧多页面
+ *     - Build & Run / Install Tools 页面支持滚动
  * ============================================================ */
 
 QDialog#LosSettingsUi {
     background-color: #282a36;
+    color: #f8f8f2;
 }
 
+QDialog#LosSettingsUi QWidget {
+    background-color: #282a36;
+    color: #f8f8f2;
+}
+
+/* 左侧分类列表 */
 #category_list {
     background-color: #21222c;
     border: none;
@@ -623,8 +632,9 @@ QDialog#LosSettingsUi {
 
 #category_list::item {
     color: #f8f8f2;
-    padding: 10px 16px;
+    padding: 11px 16px;
     border-left: 3px solid transparent;
+    min-height: 24px;
 }
 
 #category_list::item:hover {
@@ -639,11 +649,19 @@ QDialog#LosSettingsUi {
     border-left: 3px solid #bd93f9;
 }
 
-#pages_stack {
+/* 右侧页面容器 */
+#pages_stack,
+#page_editor,
+#page_terminal,
+#page_build,
+#page_install {
     background-color: #282a36;
     border: none;
 }
 
+/* 页面标题 */
+#label_title_editor,
+#label_title_terminal,
 #label_title_build,
 #label_title_install {
     color: #bd93f9;
@@ -654,23 +672,83 @@ QDialog#LosSettingsUi {
     font-weight: bold;
 }
 
-#page_build QLabel,
-#page_install QLabel {
-    color: #f8f8f2;
-    padding-right: 10px;
-}
-
+#label_editor_placeholder,
+#label_terminal_placeholder,
 #label_desc_install {
     color: #6272a4;
+    padding: 4px 0px;
 }
 
+#page_build QLabel,
+#page_install QLabel,
+#page_editor QLabel,
+#page_terminal QLabel {
+    color: #f8f8f2;
+    padding-right: 16px;
+}
+
+/* Build / Install 滚动区域 */
+#scrollArea_build_tools,
+#scrollArea_install_tools {
+    background-color: #282a36;
+    border: 1px solid #191a21;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+#scrollArea_build_tools > QWidget,
+#scrollArea_install_tools > QWidget,
+#scrollAreaWidgetContents_build_tools,
+#scrollAreaWidgetContents_install_tools {
+    background-color: #282a36;
+}
+
+#scrollArea_build_tools QScrollBar:vertical,
+#scrollArea_install_tools QScrollBar:vertical {
+    background-color: #21222c;
+    width: 12px;
+    border: none;
+    margin: 0px;
+}
+
+#scrollArea_build_tools QScrollBar::handle:vertical,
+#scrollArea_install_tools QScrollBar::handle:vertical {
+    background-color: rgba(98, 114, 164, 0.55);
+    border-radius: 6px;
+    min-height: 32px;
+    margin: 2px;
+}
+
+#scrollArea_build_tools QScrollBar::handle:vertical:hover,
+#scrollArea_install_tools QScrollBar::handle:vertical:hover {
+    background-color: rgba(189, 147, 249, 0.75);
+}
+
+#scrollArea_build_tools QScrollBar::add-line,
+#scrollArea_build_tools QScrollBar::sub-line,
+#scrollArea_build_tools QScrollBar::add-page,
+#scrollArea_build_tools QScrollBar::sub-page,
+#scrollArea_install_tools QScrollBar::add-line,
+#scrollArea_install_tools QScrollBar::sub-line,
+#scrollArea_install_tools QScrollBar::add-page,
+#scrollArea_install_tools QScrollBar::sub-page {
+    background-color: transparent;
+    height: 0px;
+    width: 0px;
+    border: none;
+}
+
+/* 工具路径输入框 */
 #page_build QLineEdit {
     background-color: #21222c;
     color: #f8f8f2;
     border: 1px solid #44475a;
     border-radius: 4px;
-    padding: 6px 10px;
+    padding: 8px 12px;
+    min-height: 22px;
     font-family: "JetBrains Mono", "Consolas", monospace;
+    selection-background-color: #bd93f9;
+    selection-color: #282a36;
 }
 
 #page_build QLineEdit:hover {
@@ -682,20 +760,28 @@ QDialog#LosSettingsUi {
     background-color: #21222c;
 }
 
+#page_build QLineEdit:disabled {
+    background-color: #191a21;
+    color: #6272a4;
+    border: 1px solid #21222c;
+}
+
+/* 浏览按钮 */
 #page_build QToolButton {
     background-color: #44475a;
     color: #f8f8f2;
     border: 1px solid #44475a;
     border-radius: 4px;
-    padding: 5px 14px;
+    padding: 7px 14px;
     font-weight: bold;
-    margin-left: 8px;
+    margin-left: 12px;
+    min-width: 38px;
 }
 
 #page_build QToolButton:hover {
     background-color: #6272a4;
     color: #ffffff;
-    border: 1px solid #6272a4;
+    border: 1px solid #bd93f9;
 }
 
 #page_build QToolButton:pressed {
@@ -704,8 +790,11 @@ QDialog#LosSettingsUi {
     border: 1px solid #bd93f9;
 }
 
-#buttonBox {
-    margin-top: 10px;
+/* 安装页说明与按钮 */
+#page_install QLabel {
+    min-height: 28px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 #page_install QPushButton {
@@ -713,13 +802,14 @@ QDialog#LosSettingsUi {
     color: #f8f8f2;
     border: 1px solid #6272a4;
     border-radius: 4px;
-    padding: 6px 16px;
+    padding: 8px 18px;
     font-weight: bold;
-    min-width: 80px;
+    min-width: 92px;
 }
 
 #page_install QPushButton:hover {
     background-color: #6272a4;
+    color: #ffffff;
     border: 1px solid #bd93f9;
 }
 
@@ -729,13 +819,52 @@ QDialog#LosSettingsUi {
     border: 1px solid #bd93f9;
 }
 
+#page_install QPushButton:disabled {
+    background-color: #21222c;
+    color: #6272a4;
+    border: 1px solid #21222c;
+}
+
+/* 已安装状态：C++ 里给按钮 setProperty("installed", true) 后生效 */
+#page_install QPushButton[installed="true"] {
+    background-color: #50fa7b;
+    color: #282a36;
+    border: 1px solid #50fa7b;
+    font-weight: bold;
+}
+
+#page_install QPushButton[installed="true"]:hover {
+    background-color: #69ff94;
+    color: #282a36;
+    border: 1px solid #69ff94;
+}
+
+#page_install QPushButton[installed="true"]:pressed {
+    background-color: #3fd96a;
+    color: #282a36;
+    border: 1px solid #3fd96a;
+}
+
+#page_install QPushButton[installed="true"]:disabled {
+    background-color: rgba(80, 250, 123, 0.26);
+    color: #f8f8f2;
+    border: 1px solid rgba(80, 250, 123, 0.45);
+    font-weight: bold;
+}
+
+/* 底部按钮区 */
+#buttonBox {
+    margin-top: 10px;
+    background-color: #282a36;
+}
+
 #buttonBox QPushButton {
     background-color: #44475a;
     color: #f8f8f2;
     border: 1px solid transparent;
     border-radius: 4px;
     padding: 6px 18px;
-    min-width: 65px;
+    min-width: 70px;
 }
 
 #buttonBox QPushButton:hover {

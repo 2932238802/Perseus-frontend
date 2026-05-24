@@ -26,27 +26,24 @@ namespace LosCore
     class LosToolChainManager : public QObject
     {
         Q_OBJECT
-
-      public:
+      public: // construct
         explicit LosToolChainManager(QObject *parent = nullptr);
         ~LosToolChainManager() = default;
 
-      public slots:
+      public slots: // hsc
         void onCheckLanguageToolchain(LosCommon::LosToolChain_Constants::LosLanguage lang, LosCommon::LosToolChain_Constants::LosTool tool);
         void onCheckSingleTool(LosCommon::LosToolChain_Constants::LosTool tool);
 
-      private:
+      private: // init
         void initConfig();
         void initConnect();
-        bool validateExecutable(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
 
-      private:
+      private: // private tool
         LosCommon::LosToolChain_Constants::ToolChainConfig
         parseToolNode(const QJsonObject &, const QString &,
                       LosCommon::LosToolChain_Constants::LosLanguage language = LosCommon::LosToolChain_Constants::LosLanguage::UNKNOWN);
-        LosCommon::LosToolChain_Constants::LosLanguage stringToLanguage(const QString &str);
-        LosCommon::LosToolChain_Constants::ToolCategory stringToCategory(const QString &str);
-        LosCommon::LosToolChain_Constants::LosTool stringToTool(const QString &str);
+        bool validateExecutable(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
+
 
       private:
         QHash<LosCommon::LosToolChain_Constants::LosLanguage, QList<LosCommon::LosToolChain_Constants::LosTool>> LOS_languageToolMap;

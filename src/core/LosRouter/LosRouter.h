@@ -97,7 +97,7 @@ namespace LosCore
                                  const QString &exePath);
         void _cmd_checkLanguageToolchain(LosCommon::LosToolChain_Constants::LosLanguage lang, LosCommon::LosToolChain_Constants::LosTool tool);
         void _cmd_checkSingleTool(LosCommon::LosToolChain_Constants::LosTool tool);
-
+        void _cmd_findExePathAndSetSettingUi(const QString &file_path, LosCommon::LosToolChain_Constants::LosTool tool);
 
 
         // ----------------------------------------------------------------------------

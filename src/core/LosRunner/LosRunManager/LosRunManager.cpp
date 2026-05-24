@@ -101,8 +101,12 @@ namespace LosCore
 
 
 
-    /*
-     * - 工具链 已完备
+    /**
+     * @brief onToolChainReady
+     *
+     * @param lan
+     * @param tool
+     * @param exePath
      */
     void LosRunManager::onToolChainReady(LosCommon::LosToolChain_Constants::LosLanguage lan, LosCommon::LosToolChain_Constants::LosTool tool,
                                          const QString &exePath)
@@ -116,9 +120,7 @@ namespace LosCore
                 LOS_runners[LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS] = new LosSingleCppRunner(this);
             }
             auto *runner = qobject_cast<LosSingleCppRunner *>(LOS_runners[LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS]);
-            /*
-             * 设置可执行 文件的位置
-             */
+            // 设置可执行 文件的位置
             runner->setExePath(exePath);
             runner->start(L_mainEntryFilePath);
             break;
@@ -155,8 +157,12 @@ namespace LosCore
 
 
 
-    /*
-     * - 构建工具 完毕
+    /**
+     * @brief onBuildToolReady
+     *
+     * @param tool
+     * @param exePath
+     * @param args
      */
     void LosRunManager::onBuildToolReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath, const QStringList &args)
     {
@@ -180,9 +186,7 @@ namespace LosCore
         }
         case LosCommon::LosToolChain_Constants::LosTool::CARGO:
         {
-            /*
-             * cargo
-             */
+            // cargo
             break;
         }
         default:
@@ -192,7 +196,8 @@ namespace LosCore
 
 
 
-    /*
+    /**
+     * @brief initConnect
      * 连接
      */
     void LosRunManager::initConnect()

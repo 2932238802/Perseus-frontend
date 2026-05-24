@@ -21,7 +21,7 @@ namespace LosView
     LosToolBarUi::~LosToolBarUi() = default;
 
 
-    
+
     /**
      * @brief initStyle
      * 创建并布局所有按钮
@@ -81,6 +81,7 @@ namespace LosView
         connect(LOS_projectBtn, &QRadioButton::toggled, this,
                 [](bool checked) { emit LosCore::LosRouter::instance()._cmd_projectBtnToggled(checked); });
     }
+
 
 
     /**
