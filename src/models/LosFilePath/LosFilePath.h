@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #pragma once
 #include "common/enum/LosFileType.h"
 #include "core/LosLog/LosLog.h"

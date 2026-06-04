@@ -1,3 +1,5 @@
+# Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 PROJECT_NAME="Perseus"
 BUILD_NAME="_build"
 RED='\033[0;31m'

@@ -1,9 +1,12 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #include "LosEditorUi.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "common/constants/ConstantsStr/LosEditorUiStr.h"
 #include "common/util/CheckLang.h"
 #include "common/util/FindMatchBracket.h"
 #include "common/util/GetLeadingWhiteSpace.h"
+#include "core/LosRouter/LosRouter.h"
 #include <qevent.h>
 #include <qnamespace.h>
 #include <qstringliteral.h>
@@ -570,26 +573,17 @@ namespace LosView
             nextLineIndent += LosCommon::LosEditorUi_Constants::BASE_INDENT;
         }
         cur.beginEditBlock();
-
         bool endBrack   = textAfter.trimmed().endsWith("}");
         bool beginBrack = textBefore.trimmed().startsWith("{");
         if (beginBrack && endBrack)
         {
-            cur.insertText("\n" + nextLineIndent + "\n" + LosCommon::LosEditorUi_Constants::BASE_INDENT);
+            cur.insertText("\n" + baseIndent + nextLineIndent + "\n" + baseIndent);
             cur.movePosition(QTextCursor::Up);
             cur.movePosition(QTextCursor::EndOfLine);
         }
-        else if (endBrack && !beginBrack && textAfter.trimmed().isEmpty())
+        else 
         {
-            if (baseIndent.size() >= QString(LosCommon::LosEditorUi_Constants::BASE_INDENT).size())
-            {
-                nextLineIndent = baseIndent.left(baseIndent.size() - QString(LosCommon::LosEditorUi_Constants::BASE_INDENT).size());
-            }
-            cur.insertText("\n" + nextLineIndent);
-        }
-        else
-        {
-            cur.insertText("\n" + baseIndent);
+            cur.insertText("\n" + baseIndent + nextLineIndent);
         }
         cur.endEditBlock();
         setTextCursor(cur);
@@ -838,19 +832,15 @@ namespace LosView
     void LosEditorUi::updateBrackHighlight()
     {
         L_bracketSelections.clear();
-
         if (document()->isEmpty())
         {
             highlightCurrentLine();
             return;
         }
-
         QTextCursor cursor = textCursor();
         int pos            = cursor.position();
-
-        int brackPos = -1;
+        int brackPos       = -1;
         QChar bracket;
-
         if (pos > 0)
         {
             QChar prevChar = document()->characterAt(pos - 1);
@@ -860,7 +850,6 @@ namespace LosView
                 bracket  = prevChar;
             }
         }
-
         if (brackPos == -1 && pos < document()->characterCount())
         {
             QChar curChar = document()->characterAt(pos);
@@ -871,34 +860,28 @@ namespace LosView
             }
             return;
         }
-
         int direction = LosCommon::IsLeftBrack(bracket) ? 1 : -1;
         int matchPos  = LosCommon::FindMatchingBracket(*document(), brackPos, bracket, direction);
-
         if (matchPos == -1)
         {
             return;
         }
-
         QTextCharFormat format;
         format.setBackground(QColor("#50fa7b"));
         format.setForeground(Qt::black);
         format.setFontWeight(QFont::Bold);
-
         QTextEdit::ExtraSelection sel1;
         QTextCursor c1(document());
         c1.setPosition(brackPos);
         c1.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
         sel1.cursor = c1;
         sel1.format = format;
-
         QTextEdit::ExtraSelection sel2;
         QTextCursor c2(document());
         c2.setPosition(matchPos);
         c2.movePosition(QTextCursor::NextCharacter, QTextCursor::KeepAnchor);
         sel2.cursor = c2;
         sel2.format = format;
-
         L_bracketSelections.append(sel1);
         L_bracketSelections.append(sel2);
     }
@@ -1146,9 +1129,7 @@ namespace LosView
         {
             updateHoverUnderline(event->pos());
         }
-        /*
-         * 鼠标离开当前悬停的单词矩形则隐藏 hover 浮窗
-         */
+        // 鼠标离开当前悬停的单词矩形则隐藏 hover 浮窗
         if (L_hoverPopup && L_hoverPopup->isVisible() && L_lastHoverWordRectGlobal.isValid())
         {
             QPoint g = event->globalPosition().toPoint();
@@ -1164,7 +1145,6 @@ namespace LosView
 
     /**
      * @brief leaveEvent
-     *
      * @param event
      */
     void LosEditorUi::leaveEvent(QEvent *event)

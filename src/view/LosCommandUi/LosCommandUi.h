@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #pragma once
 #include "common/constants/ConstantsClass/LosCommandUiClass.h"
 #include "common/constants/ConstantsNum/LosCommandUiNum.h"

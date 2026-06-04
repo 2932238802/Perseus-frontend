@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #include "LosToolBarUi.h"
 #include "common/constants/ConstantsNum/PerseusNum.h"
 #include "common/constants/ConstantsStr/LosPanelManagerStr.h"

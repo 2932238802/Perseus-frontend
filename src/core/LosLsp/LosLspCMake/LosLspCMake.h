@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #pragma once
 #include "common/util/DebugPJson.h"
 #include "core/LosLsp/LosLspClient/LosLspClient.h"

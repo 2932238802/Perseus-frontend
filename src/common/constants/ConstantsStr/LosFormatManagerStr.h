@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #pragma once
 /*
  * 格式化管理器参数配置

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #pragma once
 #include "common/constants/ConstantsStr/LosPluginDetailUiStr.h"
 #include "core/LosNet/LosNet.h"

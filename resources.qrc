@@ -1,3 +1,4 @@
+<!-- Copyright (c) 2026 LosAngelous (shengjie.lin) -->
 <RCC>
     <qresource prefix="/icons">
         <file alias="close.png">resources/icons/close.png</file>
@@ -28,6 +29,14 @@
         <file alias="python_white.png">resources/icons/python_white.png</file>
         <file alias="html_black.png">resources/icons/html_black.png</file>
         <file alias="html_white.png">resources/icons/html_white.png</file>
+    </qresource>
+    <qresource prefix="/highlight">
+        <file alias="languages/cpp.json">resources/highlight/languages/cpp.json</file>
+        <file alias="languages/python.json">resources/highlight/languages/python.json</file>
+        <file alias="themes/dracula.json">resources/highlight/themes/dracula.json</file>
+        <file alias="themes/light.json">resources/highlight/themes/light.json</file>
+        <file alias="themes/nord.json">resources/highlight/themes/nord.json</file>
+        <file alias="themes/monokai.json">resources/highlight/themes/monokai.json</file>
     </qresource>
     <qresource prefix="/web">
         <file>resources/web/xterm/addon-fit.min.js</file>

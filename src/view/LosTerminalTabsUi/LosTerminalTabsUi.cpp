@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #include "LosTerminalTabsUi.h"
 #include "common/util/GetBtn.h"
 #include <qpushbutton.h>

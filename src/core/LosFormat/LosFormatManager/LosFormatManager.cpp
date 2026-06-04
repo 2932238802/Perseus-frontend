@@ -1,12 +1,17 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 
 #include "LosFormatManager.h"
 
 
 namespace LosCore
 {
-
+    /**
+     * @brief Construct a new Los Format Manager:: Los Format Manager object
+     * 
+     * @param parent 
+     */
     LosFormatManager::LosFormatManager(QObject *parent) : QObject(parent) {}
-
     LosFormatManager &LosFormatManager::instance()
     {
         static LosFormatManager l;
@@ -15,9 +20,14 @@ namespace LosCore
 
 
 
-    /*
-     * 格式化文本
-     * - 暂时只是 处理 C++ 文件
+    /**
+     * @brief format
+     *
+     * @param out
+     * @param file_path
+     * @param raw_content
+     * @return true
+     * @return false
      */
     bool LosFormatManager::format(QString *out, const QString &file_path, const QString &raw_content)
     {
@@ -35,21 +45,15 @@ namespace LosCore
         }
         case LosCommon::LosToolChain_Constants::LosLanguage::CMAKE:
         {
-            /*
-             * neocmakelsp
-             */
+            // neocmakelsp
             if (!L_formats.contains(LosCommon::LosToolChain_Constants::LosLanguage::CMAKE))
             {
                 L_formats[LosCommon::LosToolChain_Constants::LosLanguage::CMAKE] = new LosFNeocmakelsp(this);
             }
-            return L_formats[LosCommon::LosToolChain_Constants::LosLanguage::CMAKE]->format(out, file_path,
-                                                                                            raw_content);
+            return L_formats[LosCommon::LosToolChain_Constants::LosLanguage::CMAKE]->format(out, file_path, raw_content);
         }
         default:
             return false;
         }
     }
-
-
-
 } /* namespace LosCore */

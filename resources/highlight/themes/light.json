@@ -1,0 +1,42 @@
+{
+  "name": "light",
+  "displayName": "Perseus Light",
+  "editor": {
+    "foreground": "#24292f",
+    "background": "#ffffff",
+    "selection": "#c8e1ff",
+    "lineNumber": "#8c959f",
+    "currentLine": "#f6f8fa"
+  },
+  "formats": {
+    "keyword": { "foreground": "#cf222e", "bold": true },
+    "qtKeyword": { "foreground": "#cf222e", "italic": true },
+    "preprocessor": { "foreground": "#953800" },
+    "builtin": { "foreground": "#8250df" },
+    "class": { "foreground": "#0550ae", "bold": true },
+    "struct": { "foreground": "#0550ae", "bold": true },
+    "type": { "foreground": "#0550ae" },
+    "typeParameter": { "foreground": "#0550ae" },
+    "interface": { "foreground": "#0550ae" },
+    "enum": { "foreground": "#0550ae" },
+    "function": { "foreground": "#8250df" },
+    "method": { "foreground": "#8250df" },
+    "decorator": { "foreground": "#8250df", "italic": true },
+    "string": { "foreground": "#0a3069" },
+    "char": { "foreground": "#0a3069" },
+    "comment": { "foreground": "#6e7781", "italic": true },
+    "number": { "foreground": "#0550ae" },
+    "operator": { "foreground": "#cf222e" },
+    "variable": { "foreground": "#24292f" },
+    "parameter": { "foreground": "#953800", "italic": true },
+    "property": { "foreground": "#116329" },
+    "field": { "foreground": "#116329" },
+    "macro": { "foreground": "#cf222e" },
+    "enumMember": { "foreground": "#0550ae" },
+    "namespace": { "foreground": "#24292f" },
+    "label": { "foreground": "#953800" },
+    "regexp": { "foreground": "#0a3069" },
+    "event": { "foreground": "#8250df" },
+    "modifier": { "foreground": "#cf222e" }
+  }
+}

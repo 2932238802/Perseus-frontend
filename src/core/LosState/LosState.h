@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #pragma once
 #include "common/constants/ConstantsStr/LosStateStr.h"
 
@@ -19,13 +21,29 @@ namespace LosCore
         LosState(const LosState &)            = delete;
         LosState &operator=(const LosState &) = delete;
 
-      public: /* tool */
+      public: // tool
+        /**
+         * @brief 设置全局状态信息
+         *
+         * @tparam T
+         * @param key
+         * @param value
+         */
         template <class T> void set(LosCommon::LosState_Constants::SG_STR key, const T &value)
         {
             QMutexLocker<QMutex> guard(&L_mtx);
             L_data[key] = QVariant::fromValue(value);
         }
 
+
+        /**
+         * @brief get 获取全局状态信息
+         *
+         * @tparam T
+         * @param s
+         * @param default_value
+         * @return T
+         */
         template <class T> T get(LosCommon::LosState_Constants::SG_STR s, const T &default_value = T())
         {
             QMutexLocker<QMutex> guard(&L_mtx);
@@ -36,6 +54,15 @@ namespace LosCore
             return L_data[s].value<T>();
         }
 
+
+        /**
+         * @brief 判断一下是不是包含全局状态信息
+         *
+         * @tparam T
+         * @param key
+         * @return true
+         * @return false
+         */
         template <class T> bool contain(LosCommon::LosState_Constants::SG_STR key) const
         {
             QMutexLocker<QMutex> guard(&L_mtx);

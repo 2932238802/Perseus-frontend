@@ -1,0 +1,89 @@
+{
+  "language": "python",
+  "displayName": "Python",
+  "rules": [
+    {
+      "name": "keyword",
+      "patterns": [
+        "\\bFalse\\b", "\\bNone\\b", "\\bTrue\\b", "\\band\\b", "\\bas\\b",
+        "\\bassert\\b", "\\basync\\b", "\\bawait\\b", "\\bbreak\\b", "\\bclass\\b",
+        "\\bcontinue\\b", "\\bdef\\b", "\\bdel\\b", "\\belif\\b", "\\belse\\b",
+        "\\bexcept\\b", "\\bfinally\\b", "\\bfor\\b", "\\bfrom\\b", "\\bglobal\\b",
+        "\\bif\\b", "\\bimport\\b", "\\bin\\b", "\\bis\\b", "\\blambda\\b",
+        "\\bnonlocal\\b", "\\bnot\\b", "\\bor\\b", "\\bpass\\b", "\\braise\\b",
+        "\\breturn\\b", "\\btry\\b", "\\bwhile\\b", "\\bwith\\b", "\\byield\\b"
+      ]
+    },
+    {
+      "name": "builtin",
+      "patterns": [
+        "\\babs\\b", "\\ball\\b", "\\bany\\b", "\\bascii\\b", "\\bbin\\b", "\\bbool\\b",
+        "\\bbreakpoint\\b", "\\bbytearray\\b", "\\bbytes\\b", "\\bcallable\\b", "\\bchr\\b",
+        "\\bclassmethod\\b", "\\bcompile\\b", "\\bcomplex\\b", "\\bdelattr\\b", "\\bdict\\b",
+        "\\bdir\\b", "\\bdivmod\\b", "\\benumerate\\b", "\\beval\\b", "\\bexec\\b",
+        "\\bfilter\\b", "\\bfloat\\b", "\\bformat\\b", "\\bfrozenset\\b", "\\bgetattr\\b",
+        "\\bglobals\\b", "\\bhasattr\\b", "\\bhash\\b", "\\bhelp\\b", "\\bhex\\b",
+        "\\bid\\b", "\\binput\\b", "\\bint\\b", "\\bisinstance\\b", "\\bissubclass\\b",
+        "\\biter\\b", "\\blen\\b", "\\blist\\b", "\\blocals\\b", "\\bmap\\b",
+        "\\bmax\\b", "\\bmemoryview\\b", "\\bmin\\b", "\\bnext\\b", "\\bobject\\b",
+        "\\boct\\b", "\\bopen\\b", "\\bord\\b", "\\bpow\\b", "\\bprint\\b",
+        "\\bproperty\\b", "\\brange\\b", "\\brepr\\b", "\\breversed\\b", "\\bround\\b",
+        "\\bset\\b", "\\bsetattr\\b", "\\bslice\\b", "\\bsorted\\b", "\\bstaticmethod\\b",
+        "\\bstr\\b", "\\bsum\\b", "\\bsuper\\b", "\\btuple\\b", "\\btype\\b", "\\bvars\\b", "\\bzip\\b"
+      ]
+    },
+    {
+      "name": "decorator",
+      "patterns": [
+        "@[A-Za-z_][A-Za-z0-9_\\.]*"
+      ]
+    },
+    {
+      "name": "class",
+      "patterns": [
+        "(?<=\\bclass\\s)[A-Za-z_][A-Za-z0-9_]*"
+      ]
+    },
+    {
+      "name": "function",
+      "patterns": [
+        "(?<=\\bdef\\s)[A-Za-z_][A-Za-z0-9_]*",
+        "\\b[A-Za-z_][A-Za-z0-9_]*(?=\\s*\\()"
+      ]
+    },
+    {
+      "name": "number",
+      "patterns": [
+        "\\b0[xX][0-9a-fA-F]+\\b",
+        "\\b0[bB][01]+\\b",
+        "\\b\\d+(\\.\\d+)?([eE][+-]?\\d+)?j?\\b"
+      ]
+    },
+    {
+      "name": "string",
+      "patterns": [
+        "[rRuUbBfF]*\\\"\\\"\\\".*?\\\"\\\"\\\"",
+        "[rRuUbBfF]*'''[^']*'''",
+        "[rRuUbBfF]*\\\"([^\\\"\\\\]|\\\\.)*\\\"",
+        "[rRuUbBfF]*'([^'\\\\]|\\\\.)*'"
+      ]
+    },
+    {
+      "name": "operator",
+      "patterns": [
+        "==|!=|<=|>=|//=|\\*\\*=|:=|->|[+\\-*/%@=<>:&|^~]"
+      ]
+    },
+    {
+      "name": "comment",
+      "patterns": [
+        "#[^\\n]*"
+      ]
+    }
+  ],
+  "multiLineComment": {
+    "name": "comment",
+    "start": "",
+    "end": ""
+  }
+}

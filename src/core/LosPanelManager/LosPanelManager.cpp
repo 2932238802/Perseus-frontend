@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #include "LosPanelManager.h"
 #include "common/constants/ConstantsStr/LosPanelManagerStr.h"
 #include "common/util/GetBtn.h"

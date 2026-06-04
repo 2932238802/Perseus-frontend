@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 
 RC_OK                   = 0
 RC_TOOL_MISSING         = 2      

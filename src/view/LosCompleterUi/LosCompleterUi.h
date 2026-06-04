@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #pragma once
 #include "common/constants/ConstantsNum/LosCompleterUiNum.h"
 #include "view/style/LosCompleterUi_style.h"

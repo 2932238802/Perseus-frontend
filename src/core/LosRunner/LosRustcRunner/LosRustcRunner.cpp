@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #include "LosRustcRunner.h"
 
 namespace LosCore

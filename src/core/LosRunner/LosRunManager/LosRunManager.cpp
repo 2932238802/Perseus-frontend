@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 
 #include "LosRunManager.h"
 
@@ -85,8 +87,9 @@ namespace LosCore
 
 
 
-    /*
-     * - 全部暂停
+    /**
+     * @brief stop
+     * 全部暂停
      */
     void LosRunManager::stop()
     {
@@ -111,6 +114,7 @@ namespace LosCore
     void LosRunManager::onToolChainReady(LosCommon::LosToolChain_Constants::LosLanguage lan, LosCommon::LosToolChain_Constants::LosTool tool,
                                          const QString &exePath)
     {
+        INF("checking " + exePath + " ...", "onToolChainReady");
         switch (tool)
         {
         case LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS:
@@ -159,7 +163,6 @@ namespace LosCore
 
     /**
      * @brief onBuildToolReady
-     *
      * @param tool
      * @param exePath
      * @param args
@@ -187,6 +190,7 @@ namespace LosCore
         case LosCommon::LosToolChain_Constants::LosTool::CARGO:
         {
             // cargo
+            
             break;
         }
         default:

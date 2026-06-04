@@ -1,6 +1,8 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #pragma once
-#include <QObject>
 #include <QNetworkReply>
+#include <QObject>
 
 
 namespace LosCore
@@ -14,22 +16,20 @@ namespace LosCore
             static LosNet _instance;
             return _instance;
         }
-
         LosNet(const LosNet &)            = delete;
         LosNet &operator=(const LosNet &) = delete;
 
-      public: /* tool plugin */
+      public: // tool plugin
         void requestPlugin();
         void dealPluginReply(const QByteArray &data);
 
-      public: /* tool hello */
+      public: // tool hello
         void requestInit();
         void dealInitReply(const QByteArray &data);
 
-      public: /* tool */
+      public: // tool
         void downloadPlugin(const QString &url, const QString &savePath);
         void fetchPluginReadme(const QString &urlStr, std::function<void(const QString &)> func);
-
 
       private:
         explicit LosNet(QObject *parent = nullptr);

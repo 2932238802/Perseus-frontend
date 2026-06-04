@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #include "models/LosFileTreeModel/LosFileTreeModel.h"
 #include "common/util/GetFileIcon.h"
 #include "core/LosFileSystem/LosFileSystem.h"

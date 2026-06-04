@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'

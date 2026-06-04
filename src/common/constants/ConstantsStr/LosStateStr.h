@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #pragma once
 
 namespace LosCommon
@@ -19,10 +21,10 @@ namespace LosCommon
     {
         enum class SG_STR
         {
-            PROJECT_DIR,
-            SCRIPTS_INSTALL_DIR,
-            PYTHON_EXE_PATH,
-            GXX_EXE_PATH,
+            PROJECT_DIR,         // 工作目录
+            SCRIPTS_INSTALL_DIR, // 脚本安装路径
+            PYTHON_EXE_PATH,     // python 安装路径
+            GXX_EXE_PATH,        
             RUSTC_EXE_PATH,
             CMAKE_EXE_PATH,
         };

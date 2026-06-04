@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #include "LosSettingsUi.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "core/LosRouter/LosRouter.h"
@@ -110,9 +112,13 @@ namespace LosView
             setInstallButtonInstalled(ui->btn_install_neocmakelsp);
             break;
         case LosTool::CARGO:
+            setInstallButtonInstalled(ui->btn_install_cargo);
+            break;
         case LosTool::RUSTC:
+            setInstallButtonInstalled(ui->btn_install_rustc);
+            break;
         case LosTool::RUST_ANALYZER:
-            setInstallButtonInstalled(ui->btn_install_rust);
+            setInstallButtonInstalled(ui->btn_install_rustc);
             break;
         case LosTool::PYTHON:
             setInstallButtonInstalled(ui->btn_install_python);
@@ -141,7 +147,6 @@ namespace LosView
 
     /**
      * @brief 设置 exe 路径
-     *
      * @param file_path
      * @param tool
      */
@@ -189,6 +194,26 @@ namespace LosView
         case (LosCommon::LosToolChain_Constants::LosTool::NEOCMAKELSP):
         {
             ui->edit_neocmakelsp_path->setText(file_path);
+            break;
+        }
+        case LosCommon::LosToolChain_Constants::LosTool::NINJA:
+        {
+            ui->edit_ninja_path->setText(file_path);
+            break;
+        }
+        case LosCommon::LosToolChain_Constants::LosTool::GIT:
+        {
+            ui->edit_git_path->setText(file_path);
+            break;
+        }
+        case LosCommon::LosToolChain_Constants::LosTool::CLANGD:
+        {
+            ui->edit_clangd_path->setText(file_path);
+            break;
+        }
+        case LosCommon::LosToolChain_Constants::LosTool::RUST_ANALYZER:
+        {
+            ui->edit_rust_analyzer_path->setText(file_path);
             break;
         }
         default:

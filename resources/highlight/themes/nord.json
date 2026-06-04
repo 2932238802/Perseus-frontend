@@ -1,0 +1,42 @@
+{
+  "name": "nord",
+  "displayName": "Nord",
+  "editor": {
+    "foreground": "#d8dee9",
+    "background": "#2e3440",
+    "selection": "#434c5e",
+    "lineNumber": "#4c566a",
+    "currentLine": "#3b4252"
+  },
+  "formats": {
+    "keyword": { "foreground": "#81a1c1" },
+    "qtKeyword": { "foreground": "#81a1c1", "italic": true },
+    "preprocessor": { "foreground": "#81a1c1" },
+    "builtin": { "foreground": "#8fbcbb" },
+    "class": { "foreground": "#8fbcbb", "bold": true },
+    "struct": { "foreground": "#8fbcbb", "bold": true },
+    "type": { "foreground": "#8fbcbb" },
+    "typeParameter": { "foreground": "#8fbcbb" },
+    "interface": { "foreground": "#8fbcbb" },
+    "enum": { "foreground": "#8fbcbb" },
+    "function": { "foreground": "#88c0d0" },
+    "method": { "foreground": "#88c0d0" },
+    "decorator": { "foreground": "#88c0d0", "italic": true },
+    "string": { "foreground": "#a3be8c" },
+    "char": { "foreground": "#a3be8c" },
+    "comment": { "foreground": "#616e88", "italic": true },
+    "number": { "foreground": "#b48ead" },
+    "operator": { "foreground": "#81a1c1" },
+    "variable": { "foreground": "#d8dee9" },
+    "parameter": { "foreground": "#d08770", "italic": true },
+    "property": { "foreground": "#ebcb8b" },
+    "field": { "foreground": "#ebcb8b" },
+    "macro": { "foreground": "#bf616a" },
+    "enumMember": { "foreground": "#b48ead" },
+    "namespace": { "foreground": "#d8dee9" },
+    "label": { "foreground": "#d08770" },
+    "regexp": { "foreground": "#a3be8c" },
+    "event": { "foreground": "#88c0d0" },
+    "modifier": { "foreground": "#81a1c1" }
+  }
+}

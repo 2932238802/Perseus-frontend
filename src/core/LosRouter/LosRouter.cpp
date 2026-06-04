@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 
 #include "core/LosRouter/LosRouter.h"
 #include <qobject.h>

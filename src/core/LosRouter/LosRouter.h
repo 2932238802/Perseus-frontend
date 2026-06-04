@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #pragma once
 #include "common/constants/ConstantsClass/LosLspClass.h"
 #include "common/constants/ConstantsClass/LosNetClass.h"

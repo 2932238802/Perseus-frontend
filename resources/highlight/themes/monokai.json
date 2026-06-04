@@ -1,0 +1,42 @@
+{
+  "name": "monokai",
+  "displayName": "Monokai Pro",
+  "editor": {
+    "foreground": "#f8f8f2",
+    "background": "#272822",
+    "selection": "#49483e",
+    "lineNumber": "#75715e",
+    "currentLine": "#3e3d32"
+  },
+  "formats": {
+    "keyword": { "foreground": "#f92672" },
+    "qtKeyword": { "foreground": "#f92672", "italic": true },
+    "preprocessor": { "foreground": "#f92672" },
+    "builtin": { "foreground": "#66d9ef", "italic": true },
+    "class": { "foreground": "#a6e22e", "italic": true },
+    "struct": { "foreground": "#a6e22e", "italic": true },
+    "type": { "foreground": "#66d9ef", "italic": true },
+    "typeParameter": { "foreground": "#66d9ef" },
+    "interface": { "foreground": "#66d9ef" },
+    "enum": { "foreground": "#66d9ef" },
+    "function": { "foreground": "#a6e22e" },
+    "method": { "foreground": "#a6e22e" },
+    "decorator": { "foreground": "#a6e22e", "italic": true },
+    "string": { "foreground": "#e6db74" },
+    "char": { "foreground": "#e6db74" },
+    "comment": { "foreground": "#75715e", "italic": true },
+    "number": { "foreground": "#ae81ff" },
+    "operator": { "foreground": "#f92672" },
+    "variable": { "foreground": "#f8f8f2" },
+    "parameter": { "foreground": "#fd971f", "italic": true },
+    "property": { "foreground": "#66d9ef" },
+    "field": { "foreground": "#66d9ef" },
+    "macro": { "foreground": "#f92672" },
+    "enumMember": { "foreground": "#ae81ff" },
+    "namespace": { "foreground": "#f8f8f2" },
+    "label": { "foreground": "#fd971f" },
+    "regexp": { "foreground": "#e6db74" },
+    "event": { "foreground": "#a6e22e" },
+    "modifier": { "foreground": "#f92672" }
+  }
+}

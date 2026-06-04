@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #include "view/LosPlugUi/LosPlugUi.h"
 #include "ui_LosPlugUi.h"
 

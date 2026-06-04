@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #include "LosFilePath.h"
 #include <qfileinfo.h>
 #include <qmimedatabase.h>

@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 set -e
 
 GREEN='\033[0;32m'

@@ -1,3 +1,5 @@
+# Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 cmake_minimum_required(VERSION 3.18)
 project(Perseus VERSION 0.1 LANGUAGES CXX)
 

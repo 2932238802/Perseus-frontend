@@ -1,0 +1,42 @@
+{
+  "name": "dracula",
+  "displayName": "Dracula",
+  "editor": {
+    "foreground": "#f8f8f2",
+    "background": "#282a36",
+    "selection": "#44475a",
+    "lineNumber": "#6272a4",
+    "currentLine": "#44475a"
+  },
+  "formats": {
+    "keyword": { "foreground": "#ff79c6" },
+    "qtKeyword": { "foreground": "#ff79c6", "italic": true },
+    "preprocessor": { "foreground": "#ff79c6" },
+    "builtin": { "foreground": "#8be9fd", "italic": true },
+    "class": { "foreground": "#8be9fd", "italic": true },
+    "struct": { "foreground": "#8be9fd", "italic": true },
+    "type": { "foreground": "#8be9fd", "italic": true },
+    "typeParameter": { "foreground": "#8be9fd" },
+    "interface": { "foreground": "#8be9fd" },
+    "enum": { "foreground": "#8be9fd" },
+    "function": { "foreground": "#50fa7b" },
+    "method": { "foreground": "#50fa7b" },
+    "decorator": { "foreground": "#50fa7b", "italic": true },
+    "string": { "foreground": "#f1fa8c" },
+    "char": { "foreground": "#f1fa8c" },
+    "comment": { "foreground": "#6272a4", "italic": true },
+    "number": { "foreground": "#bd93f9" },
+    "operator": { "foreground": "#ff79c6" },
+    "variable": { "foreground": "#f8f8f2" },
+    "parameter": { "foreground": "#ffb86c", "italic": true },
+    "property": { "foreground": "#66d9ef" },
+    "field": { "foreground": "#66d9ef" },
+    "macro": { "foreground": "#ff79c6" },
+    "enumMember": { "foreground": "#bd93f9" },
+    "namespace": { "foreground": "#f8f8f2" },
+    "label": { "foreground": "#ffb86c" },
+    "regexp": { "foreground": "#f1fa8c" },
+    "event": { "foreground": "#50fa7b" },
+    "modifier": { "foreground": "#ff79c6" }
+  }
+}

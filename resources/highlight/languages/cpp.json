@@ -1,0 +1,100 @@
+{
+  "language": "cpp",
+  "displayName": "C++",
+  "rules": [
+    {
+      "name": "keyword",
+      "patterns": [
+        "\\balignas\\b", "\\balignof\\b", "\\band\\b", "\\band_eq\\b", "\\basm\\b",
+        "\\bauto\\b", "\\bbitand\\b", "\\bbitor\\b", "\\bbool\\b", "\\bbreak\\b",
+        "\\bcase\\b", "\\bcatch\\b", "\\bchar\\b", "\\bchar8_t\\b", "\\bchar16_t\\b",
+        "\\bchar32_t\\b", "\\bclass\\b", "\\bcompl\\b", "\\bconcept\\b", "\\bconst\\b",
+        "\\bconsteval\\b", "\\bconstexpr\\b", "\\bconstinit\\b", "\\bconst_cast\\b", "\\bcontinue\\b",
+        "\\bco_await\\b", "\\bco_return\\b", "\\bco_yield\\b", "\\bdecltype\\b", "\\bdefault\\b",
+        "\\bdelete\\b", "\\bdo\\b", "\\bdouble\\b", "\\bdynamic_cast\\b", "\\belse\\b",
+        "\\benum\\b", "\\bexplicit\\b", "\\bexport\\b", "\\bextern\\b", "\\bfalse\\b",
+        "\\bfloat\\b", "\\bfor\\b", "\\bfriend\\b", "\\bgoto\\b", "\\bif\\b",
+        "\\binline\\b", "\\bint\\b", "\\blong\\b", "\\bmutable\\b", "\\bnamespace\\b",
+        "\\bnew\\b", "\\bnoexcept\\b", "\\bnot\\b", "\\bnot_eq\\b", "\\bnullptr\\b",
+        "\\boperator\\b", "\\bor\\b", "\\bor_eq\\b", "\\bprivate\\b", "\\bprotected\\b",
+        "\\bpublic\\b", "\\bregister\\b", "\\breinterpret_cast\\b", "\\brequires\\b", "\\breturn\\b",
+        "\\bshort\\b", "\\bsigned\\b", "\\bsizeof\\b", "\\bstatic\\b", "\\bstatic_assert\\b",
+        "\\bstatic_cast\\b", "\\bstruct\\b", "\\bswitch\\b", "\\btemplate\\b", "\\bthis\\b",
+        "\\bthread_local\\b", "\\bthrow\\b", "\\btrue\\b", "\\btry\\b", "\\btypedef\\b",
+        "\\btypeid\\b", "\\btypename\\b", "\\bunion\\b", "\\bunsigned\\b", "\\busing\\b",
+        "\\bvirtual\\b", "\\bvoid\\b", "\\bvolatile\\b", "\\bwchar_t\\b", "\\bwhile\\b",
+        "\\bxor\\b", "\\bxor_eq\\b"
+      ]
+    },
+    {
+      "name": "qtKeyword",
+      "patterns": [
+        "\\bsignals\\b", "\\bslots\\b", "\\bemit\\b", "\\bforeach\\b", "\\bforever\\b",
+        "\\bQ_OBJECT\\b", "\\bQ_GADGET\\b", "\\bQ_PROPERTY\\b", "\\bQ_SIGNAL\\b", "\\bQ_SLOT\\b",
+        "\\bQ_DECLARE_\\w+\\b", "\\bQ_ENUM\\b", "\\bQ_FLAG\\b"
+      ]
+    },
+    {
+      "name": "preprocessor",
+      "patterns": [
+        "^\\s*#\\s*[a-zA-Z_]+\\b",
+        "(?<=#include\\s)<[^>]+>"
+      ]
+    },
+    {
+      "name": "number",
+      "patterns": [
+        "\\b0[xX][0-9a-fA-F]+([uUlL]*)\\b",
+        "\\b0[bB][01]+([uUlL]*)\\b",
+        "\\b\\d+(\\.\\d+)?([eE][+-]?\\d+)?[fFlLuU]*\\b"
+      ]
+    },
+    {
+      "name": "string",
+      "patterns": [
+        "R\\\"([^\\s\\(\\\\]{0,16})\\([^\\)]*\\)\\1\\\"",
+        "u8?\\\"([^\\\"\\\\]|\\\\.)*\\\"",
+        "U\\\"([^\\\"\\\\]|\\\\.)*\\\"",
+        "L\\\"([^\\\"\\\\]|\\\\.)*\\\""
+      ]
+    },
+    {
+      "name": "char",
+      "patterns": [
+        "u8?'([^'\\\\]|\\\\.)*'",
+        "U'([^'\\\\]|\\\\.)*'",
+        "L'([^'\\\\]|\\\\.)*'"
+      ]
+    },
+    {
+      "name": "class",
+      "patterns": [
+        "\\b[A-Z][A-Za-z0-9_]*\\b",
+        "\\bQ[A-Za-z0-9_]+\\b"
+      ]
+    },
+    {
+      "name": "function",
+      "patterns": [
+        "\\b[A-Za-z_][A-Za-z0-9_]*(?=\\s*\\()"
+      ]
+    },
+    {
+      "name": "operator",
+      "patterns": [
+        "::|->|\\.|==|!=|<=|>=|&&|\\|\\||[+\\-*/%=&|^~!<>?:]"
+      ]
+    },
+    {
+      "name": "comment",
+      "patterns": [
+        "//[^\\n]*"
+      ]
+    }
+  ],
+  "multiLineComment": {
+    "name": "comment",
+    "start": "/\\*",
+    "end": "\\*/"
+  }
+}

@@ -1,7 +1,21 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #include "core/LosHighlighter/LosHighlighter.h"
+#include "common/constants/ConstantsClass/LosToolChainClass.h"
+
+#include <QColor>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QTextCursor>
 
 namespace LosCore
 {
+    /**
+     * @brief Construct a new Los Highlighter:: Los Highlighter object
+     * 
+     * @param doc 
+     */
     LosHighlighter::LosHighlighter(QTextDocument *doc) : QSyntaxHighlighter{doc}
     {
         initRule();
@@ -25,7 +39,6 @@ namespace LosCore
                 if (token.L_tokenType < L_semanticFormats.size())
                 {
                     QTextCharFormat format = L_semanticFormats.at(token.L_tokenType);
-
                     if (format.isValid())
                     {
                         if (L_readonlyModifierIndex != -1 && (token.L_tokenModifiers & (1 << L_readonlyModifierIndex)))
@@ -36,7 +49,6 @@ namespace LosCore
                         {
                             format.setFontItalic(true);
                         }
-
                         mergeFormat(token.L_startChar, token.L_length, format);
                     }
                 }
@@ -47,7 +59,7 @@ namespace LosCore
 
 
     /**
-     * @brief
+     * @brief mergeFormat
      *
      * @param start
      * @param length
@@ -63,6 +75,10 @@ namespace LosCore
         {
             mergedFormat.setForeground(format.foreground());
         }
+        if (format.hasProperty(QTextFormat::BackgroundBrush))
+        {
+            mergedFormat.setBackground(format.background());
+        }
         if (format.hasProperty(QTextFormat::FontItalic))
         {
             mergedFormat.setFontItalic(format.fontItalic());
@@ -71,76 +87,58 @@ namespace LosCore
         {
             mergedFormat.setFontWeight(format.fontWeight());
         }
+        if (format.hasProperty(QTextFormat::FontUnderline))
+        {
+            mergedFormat.setFontUnderline(format.fontUnderline());
+        }
         cursor.setCharFormat(mergedFormat);
     }
 
 
 
-    /*
-     * highlightByRegex
-     * - 通过 正则 匹配颜色
+    /**
+     * @brief highlightByRegex
+     * 通过 正则 匹配颜色
+     * @param str
      */
     void LosHighlighter::highlightByRegex(const QString &str)
     {
-        /*
-         * 传入的就是当前行的内容
-         */
         for (const LosCommon::LosHighligher_Constants::HighlightRule &rule : L_rules)
         {
-            /*
-             * 这里 匹配
-             */
             QRegularExpressionMatchIterator matchIt = rule.L_regex.globalMatch(str);
             while (matchIt.hasNext())
             {
                 QRegularExpressionMatch match = matchIt.next();
-                /*
-                 * 这里上色
-                 */
                 setFormat(match.capturedStart(), match.capturedLength(), rule.L_format);
             }
         }
-        /*
-         * 默认不在注释
-         */
+        if (!L_hasMultiLineComment)
+        {
+            setCurrentBlockState(0);
+            return;
+        }
+
         setCurrentBlockState(0);
         int startIndex = 0;
         if (previousBlockState() != 1)
         {
-            /*
-             * 不是注释 那么 就看 这一行
-             * 返回的是 起始位置 indexOf
-             */
             startIndex = str.indexOf(L_commentStartExpression);
         }
         while (startIndex >= 0)
         {
-            /*
-             * 从 找到 左半边 注释 开始 到 右边
-             */
             QRegularExpressionMatch match = L_commentEndExpression.match(str, startIndex);
             int endIndex                  = match.capturedStart();
             int commentLenth              = 0;
             if (endIndex == -1)
             {
-                /*
-                 * 这里 -1 就是找不到
-                 * 然后 设置 当前行 为 注释行 方便 给之后的 调用
-                 * 多看多看
-                 */
                 setCurrentBlockState(1);
                 commentLenth = str.length() - startIndex;
             }
             else
             {
-                /*
-                 * 末尾开始位置 - 开始位置 + 1 - 1 + 长度
-                 * abcdedab a = 0   a = 6
-                 */
                 commentLenth = endIndex - startIndex + match.capturedLength();
             }
             setFormat(startIndex, commentLenth, L_multiComment);
-            // /*1*/
             startIndex = str.indexOf(L_commentStartExpression, startIndex + commentLenth);
         }
     }
@@ -149,10 +147,7 @@ namespace LosCore
 
     /**
      * @brief updateSemanticTokens
-     *
-     *
      * @param in data
-     *
      * 更新一下
      * - [deltaLine, deltaChar, length, tokenType, modifiers]
      * - 分别是五个
@@ -180,28 +175,27 @@ namespace LosCore
             }
             L_semanticData[currentLine].append({currentChar, length, tokenType, modifiers});
         }
-
-        /*
-         * 重绘 这一块
-         */
         rehighlight();
     }
 
 
 
-    /*
-     * - 初始化 semantic 规则
+    /**
+     * @brief initSemanticLegend
+     * 
+     * @param legendTokenTypes 
+     * @param legendTokenModifiers 
      */
-    void LosHighlighter::initSemanticLegend(const QStringList &legendTokenTypes,
-                                            const QStringList &legendTokenModifiers)
+    void LosHighlighter::initSemanticLegend(const QStringList &legendTokenTypes, const QStringList &legendTokenModifiers)
     {
+        L_legendTokenTypes     = legendTokenTypes;
+        L_legendTokenModifiers = legendTokenModifiers;
         L_semanticFormats.clear();
         L_semanticFormats.resize(legendTokenTypes.size());
-
         for (int i = 0; i < legendTokenTypes.size(); ++i)
         {
             QString tokenName = legendTokenTypes.at(i);
-            if (L_themeConfig.contains(tokenName))
+            if (L_themeConfig.contains(tokenName))  
             {
                 L_semanticFormats[i] = L_themeConfig.value(tokenName);
             }
@@ -210,110 +204,251 @@ namespace LosCore
                 L_semanticFormats[i] = QTextCharFormat();
             }
         }
-
         L_readonlyModifierIndex = legendTokenModifiers.indexOf("readonly");
         L_staticModifierIndex   = legendTokenModifiers.indexOf("static");
     }
 
 
 
-    /*
-     * - 初始化 绘图 规则
+    /**
+     * @brief setLang 设置语言
+     * @param lang
      */
-    void LosHighlighter::initRule()
+    void LosHighlighter::setLang(LosCommon::LosToolChain_Constants::LosLanguage lang)
     {
-        LosCommon::LosHighligher_Constants::HighlightRule rule;
-
-        const QString keywordPatterns[] = {
-            QStringLiteral("\\bchar\\b"),     QStringLiteral("\\bclass\\b"),     QStringLiteral("\\bconst\\b"),
-            QStringLiteral("\\bdouble\\b"),   QStringLiteral("\\benum\\b"),      QStringLiteral("\\bexplicit\\b"),
-            QStringLiteral("\\bfriend\\b"),   QStringLiteral("\\binline\\b"),    QStringLiteral("\\bint\\b"),
-            QStringLiteral("\\blong\\b"),     QStringLiteral("\\bnamespace\\b"), QStringLiteral("\\boperator\\b"),
-            QStringLiteral("\\bprivate\\b"),  QStringLiteral("\\bprotected\\b"), QStringLiteral("\\bpublic\\b"),
-            QStringLiteral("\\bshort\\b"),    QStringLiteral("\\bsignals\\b"),   QStringLiteral("\\bsigned\\b"),
-            QStringLiteral("\\bslots\\b"),    QStringLiteral("\\bstatic\\b"),    QStringLiteral("\\bstruct\\b"),
-            QStringLiteral("\\btemplate\\b"), QStringLiteral("\\btypedef\\b"),   QStringLiteral("\\btypename\\b"),
-            QStringLiteral("\\bunion\\b"),    QStringLiteral("\\bunsigned\\b"),  QStringLiteral("\\bvirtual\\b"),
-            QStringLiteral("\\bvoid\\b"),     QStringLiteral("\\bvolatile\\b"),  QStringLiteral("\\bbool\\b"),
-            QStringLiteral("\\btrue\\b"),     QStringLiteral("\\bfalse\\b"),     QStringLiteral("\\bauto\\b"),
-            QStringLiteral("\\breturn\\b"),   QStringLiteral("\\busing\\b"),     QStringLiteral("\\bnew\\b"),
-            QStringLiteral("\\bdelete\\b"),   QStringLiteral("\\bnullptr\\b"),   QStringLiteral("\\bif\\b"),
-            QStringLiteral("\\belse\\b"),     QStringLiteral("\\bfor\\b"),       QStringLiteral("\\bwhile\\b"),
-            QStringLiteral("\\bdo\\b"),       QStringLiteral("\\bswitch\\b"),    QStringLiteral("\\bcase\\b"),
-            QStringLiteral("\\bbreak\\b"),    QStringLiteral("\\bcontinue\\b"),  QStringLiteral("\\bdefault\\b"),
-            QStringLiteral("\\bgoto\\b"),     QStringLiteral("\\bconstexpr\\b"), QStringLiteral("\\bcatch\\b"),
-            QStringLiteral("\\btry\\b"),      QStringLiteral("\\bthrow\\b")};
-        L_keyword.setForeground(QColor("#ff79c6"));
-        for (const auto &str : keywordPatterns)
+        if (L_curLang == lang)
         {
-            rule.L_regex  = QRegularExpression(str);
-            rule.L_format = L_keyword;
-            L_rules.append(rule);
+            return;
         }
-
-        QTextCharFormat preprocessorFormat;
-        preprocessorFormat.setForeground(QColor("#ff79c6"));
-        rule.L_regex  = QRegularExpression(QStringLiteral("#[a-zA-Z_]+\\b"));
-        rule.L_format = preprocessorFormat;
-        L_rules.append(rule);
-
-        L_class.setForeground(QColor("#8be9fd"));
-        L_class.setFontItalic(true);
-        rule.L_regex  = QRegularExpression(QStringLiteral("\\b[Q]?[A-Z][a-zA-Z0-9_]+\\b"));
-        rule.L_format = L_class;
-        L_rules.append(rule);
-
-        L_func.setForeground(QColor("#50fa7b"));
-        rule.L_regex  = QRegularExpression(QStringLiteral("\\b[A-Za-z0-9_]+(?=\\()"));
-        rule.L_format = L_func;
-        L_rules.append(rule);
-
-        L_str.setForeground(QColor("#f1fa8c"));
-        rule.L_regex  = QRegularExpression(QStringLiteral("\"[^\"]*\"|(?<=#include )<[^>]+>"));
-        rule.L_format = L_str;
-        L_rules.append(rule);
-
-        L_str.setForeground(QColor("#f1fa8c"));
-        rule.L_regex  = QRegularExpression(QStringLiteral("\"[^\"]*\""));
-        rule.L_format = L_str;
-        L_rules.append(rule);
-
-        L_singleComment.setForeground(QColor("#6272a4"));
-        L_singleComment.setFontItalic(true);
-        rule.L_regex  = QRegularExpression(QStringLiteral("//[^\n]*"));
-        rule.L_format = L_singleComment;
-        L_rules.append(rule);
-
-        L_multiComment.setForeground(QColor("#6272a4"));
-        L_multiComment.setFontItalic(true);
-        L_commentStartExpression = QRegularExpression(QStringLiteral("/\\*"));
-        L_commentEndExpression   = QRegularExpression(QStringLiteral("\\*/"));
-
-        L_themeConfig["class"]  = L_class;
-        L_themeConfig["struct"] = L_class;
-        L_themeConfig["type"]   = L_class;
-
-        L_themeConfig["function"] = L_func;
-        L_themeConfig["method"]   = L_func;
-
-        L_themeConfig["string"]  = L_str;
-        L_themeConfig["keyword"] = L_keyword;
-        L_themeConfig["comment"] = L_singleComment;
-
-        QTextCharFormat varFormat;
-        varFormat.setForeground(QColor("#f8f8f2"));
-        L_themeConfig["variable"]  = varFormat;
-        L_themeConfig["parameter"] = varFormat;
-        L_themeConfig["property"]  = varFormat;
-
-        QTextCharFormat macroFormat;
-        macroFormat.setForeground(QColor("#ff79c6"));
-        L_themeConfig["macro"] = macroFormat;
-
-        QTextCharFormat enumMemberFormat;
-        enumMemberFormat.setForeground(QColor("#bd93f9"));
-        L_themeConfig["enumMember"] = enumMemberFormat;
+        L_curLang = lang;
+        initRule();
+        rehighlight();
     }
 
 
+
+    /**
+     * @brief setTheme 设置高亮主题
+     * @param themeName 主题名，例如 dracula / light / nord / monokai
+     */
+    void LosHighlighter::setTheme(const QString &themeName)
+    {
+        if (L_curThemeName == themeName)
+        {
+            return;
+        }
+        L_curThemeName = themeName;
+        initRule();
+        rehighlight();
+    }
+
+
+
+    /**
+     * @brief initRule
+     */
+    void LosHighlighter::initRule()
+    {
+        L_rules.clear();
+        L_themeConfig.clear();
+        L_multiComment = QTextCharFormat();
+        L_commentStartExpression = QRegularExpression();
+        L_commentEndExpression   = QRegularExpression();
+        L_hasMultiLineComment    = false;
+        if (!loadThemeFromJson(themeConfigPath()))
+        {
+            loadThemeFromJson(QStringLiteral(":/highlight/themes/dracula.json"));
+        }
+        loadLanguageFromJson(languageConfigPath());
+        if (!L_legendTokenTypes.isEmpty())
+        {
+            initSemanticLegend(L_legendTokenTypes, L_legendTokenModifiers);
+        }
+    }
+
+
+
+    /**
+     * @brief loadThemeFromJson 从 json 中读取主题样式
+     * @param themePath 主题 json 路径
+     * @return 是否读取成功
+     */
+    bool LosHighlighter::loadThemeFromJson(const QString &themePath)
+    {
+        QFile file(themePath);
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            return false;
+        }
+
+        QJsonParseError error;
+        const QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &error);
+        if (error.error != QJsonParseError::NoError || !doc.isObject())
+        {
+            return false;
+        }
+
+        const QJsonObject root    = doc.object();
+        const QJsonObject formats = root.value(QStringLiteral("formats")).toObject();
+        if (formats.isEmpty())
+        {
+            return false;
+        }
+
+        for (auto it = formats.begin(); it != formats.end(); ++it)
+        {
+            if (!it.value().isObject())
+            {
+                continue;
+            }
+            L_themeConfig[it.key()] = parseFormat(it.value().toObject());
+        }
+
+        return true;
+    }
+
+
+
+    /**
+     * @brief loadLanguageFromJson 从 json 中读取语言正则规则
+     * @param languagePath 语言 json 路径
+     * @return 是否读取成功
+     */
+    bool LosHighlighter::loadLanguageFromJson(const QString &languagePath)
+    {
+        QFile file(languagePath);
+        if (!file.open(QIODevice::ReadOnly))
+        {
+            return false;
+        }
+
+        QJsonParseError error;
+        const QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &error);
+        if (error.error != QJsonParseError::NoError || !doc.isObject())
+        {
+            return false;
+        }
+
+        const QJsonObject root = doc.object();
+        const QJsonArray rules = root.value(QStringLiteral("rules")).toArray();
+
+        for (const QJsonValue &ruleValue : rules)
+        {
+            if (!ruleValue.isObject())
+            {
+                continue;
+            }
+
+            const QJsonObject ruleObject = ruleValue.toObject();
+            const QString name           = ruleObject.value(QStringLiteral("name")).toString();
+            const QJsonArray patterns    = ruleObject.value(QStringLiteral("patterns")).toArray();
+
+            if (name.isEmpty() || patterns.isEmpty())
+            {
+                continue;
+            }
+
+            const QTextCharFormat format = L_themeConfig.value(name);
+
+            for (const QJsonValue &patternValue : patterns)
+            {
+                const QString pattern = patternValue.toString();
+                if (pattern.isEmpty())
+                {
+                    continue;
+                }
+
+                LosCommon::LosHighligher_Constants::HighlightRule rule;
+                rule.L_regex = QRegularExpression(pattern);
+                if (!rule.L_regex.isValid())
+                {
+                    continue;
+                }
+
+                rule.L_format = format;
+                L_rules.append(rule);
+            }
+        }
+
+        const QJsonObject multiLineComment = root.value(QStringLiteral("multiLineComment")).toObject();
+        const QString commentName          = multiLineComment.value(QStringLiteral("name")).toString();
+        const QString startPattern         = multiLineComment.value(QStringLiteral("start")).toString();
+        const QString endPattern           = multiLineComment.value(QStringLiteral("end")).toString();
+
+        if (!commentName.isEmpty() && !startPattern.isEmpty() && !endPattern.isEmpty())
+        {
+            L_commentStartExpression = QRegularExpression(startPattern);
+            L_commentEndExpression   = QRegularExpression(endPattern);
+            L_multiComment           = L_themeConfig.value(commentName);
+            L_hasMultiLineComment    = L_commentStartExpression.isValid() && L_commentEndExpression.isValid();
+        }
+
+        return true;
+    }
+
+
+
+    /**
+     * @brief parseFormat 把 json 样式转换成 QTextCharFormat
+     * @param obj json 样式对象
+     * @return QTextCharFormat
+     */
+    QTextCharFormat LosHighlighter::parseFormat(const QJsonObject &obj) const
+    {
+        QTextCharFormat format;
+
+        if (obj.contains(QStringLiteral("foreground")))
+        {
+            format.setForeground(QColor(obj.value(QStringLiteral("foreground")).toString()));
+        }
+
+        if (obj.contains(QStringLiteral("background")))
+        {
+            format.setBackground(QColor(obj.value(QStringLiteral("background")).toString()));
+        }
+
+        if (obj.value(QStringLiteral("italic")).toBool(false))
+        {
+            format.setFontItalic(true);
+        }
+
+        if (obj.value(QStringLiteral("bold")).toBool(false))
+        {
+            format.setFontWeight(QFont::Bold);
+        }
+
+        if (obj.value(QStringLiteral("underline")).toBool(false))
+        {
+            format.setFontUnderline(true);
+        }
+
+        return format;
+    }
+
+
+
+    /**
+     * @brief languageConfigPath 获取当前语言配置路径
+     * @return 语言 json 路径
+     */
+    QString LosHighlighter::languageConfigPath() const
+    {
+        if (L_curLang == LosCommon::LosToolChain_Constants::LosLanguage::PYTHON)
+        {
+            return QStringLiteral(":/highlight/languages/python.json");
+        }
+
+        return QStringLiteral(":/highlight/languages/cpp.json");
+    }
+
+
+
+    /**
+     * @brief themeConfigPath 获取当前主题配置路径
+     * @return 主题 json 路径
+     */
+    QString LosHighlighter::themeConfigPath() const
+    {
+        return QStringLiteral(":/highlight/themes/%1.json").arg(L_curThemeName);
+    }
 } /* namespace LosCore */

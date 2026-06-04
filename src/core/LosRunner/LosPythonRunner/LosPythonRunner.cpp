@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 
 #include "LosPythonRunner.h"
 
@@ -66,7 +68,6 @@ namespace LosCore
 
     /**
      * @brief
-     *
      * @param file_path
      */
     void LosPythonRunner::setExePath(const QString &file_path)
@@ -79,7 +80,6 @@ namespace LosCore
 
     /**
      * @brief initConnect
-     *
      */
     void LosPythonRunner::initConnect()
     {

@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #pragma once
 #include "common/constants/ConstantsStr/LosConfigStr.h"
 #include "common/util/CheckLang.h"

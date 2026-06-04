@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 #include "LosToolChainManager.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "common/util/StrToCategory.h"

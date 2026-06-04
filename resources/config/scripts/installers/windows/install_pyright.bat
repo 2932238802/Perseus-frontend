@@ -1,3 +1,4 @@
+@REM Copyright (c) 2026 LosAngelous (shengjie.lin)
 @echo off
 echo ==== Starting Pyright Installation ====
 where npm >nul 2>nul

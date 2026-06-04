@@ -1,3 +1,5 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
 
 #include "core/LosLog/LosLog.h"
 namespace LosCore
