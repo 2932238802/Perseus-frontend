@@ -3,15 +3,18 @@
 
 
 #include "LosTerminal.h"
-
+#include "core/LosState/LosState.h"
+#include "core/LosLog/LosLog.h"
+#include "models/LosFilePath/LosFilePath.h"
+#include <QDir>
 
 namespace LosCore
 {
     /**
      * @brief Construct a new Los Terminal:: Los Terminal object
      * @brief ~LosTerminal
-     * 
-     * @param parent 
+     *
+     * @param parent
      */
     LosTerminal::LosTerminal(QObject *parent) : QObject(parent)
     {
@@ -38,6 +41,15 @@ namespace LosCore
         {
             return;
         }
+        const QString projectDir =
+            LosCore::LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR).getFilePath();
+        QString cwd = projectDir;
+        if (cwd.isEmpty() || !QDir(cwd).exists())
+        {
+            cwd = QDir::homePath();
+        }
+        L_process->setWorkingDirectory(cwd);
+        INF("terminal cwd: " + cwd, "LosTerminal");
 #ifdef Q_OS_WIN
         L_process->start("powershell.exe");
 #else
@@ -63,7 +75,6 @@ namespace LosCore
 
     /**
      * @brief 把 Qt的输出 发射给 term.js
-     *
      */
     void LosTerminal::onReadyReadStdErr()
     {
@@ -130,7 +141,6 @@ namespace LosCore
     {
         connect(L_process, &QProcess::readyReadStandardOutput, this, &LosTerminal::onReadyReadStdOut);
         connect(L_process, &QProcess::readyReadStandardError, this, &LosTerminal::onReadyReadStdErr);
-        connect(L_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this,
-                &LosTerminal::onProcessFinished);
+        connect(L_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &LosTerminal::onProcessFinished);
     }
 } /* namespace LosCore */

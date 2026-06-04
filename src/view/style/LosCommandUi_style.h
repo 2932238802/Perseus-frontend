@@ -5,35 +5,38 @@
 
 namespace LosStyle
 {
-
-    inline const QString LosCommandUi_style()
+    /*
+     * - 模板字符串, 占位符 @key@ 由 LosCore::LosThemeManager 替换
+     * - 替换后再 setStyleSheet 到目标控件
+     */
+    inline const QString LosCommandUi_styleTemplate()
     {
         return QString(R"(
             #PaletteContainer {
-                background-color: #21222c;
-                border: 1px solid #bd93f9;
+                background-color: @panelBg@;
+                border: 1px solid @primary@;
                 border-radius: 8px;
             }
 
             QLineEdit {
                 background-color: transparent;
-                color: #f8f8f2;
+                color: @foreground@;
                 border: none;
-                border-bottom: 1px solid #44475a;
+                border-bottom: 1px solid @selection@;
                 padding: 12px 15px;
                 font-family: "Microsoft YaHei", sans-serif;
                 font-size: 14px;
-                selection-background-color: #bd93f9;
-                selection-color: #282a36;
+                selection-background-color: @primary@;
+                selection-color: @background@;
             }
 
             QLineEdit:focus {
-                border-bottom: 1px solid #bd93f9;
+                border-bottom: 1px solid @primary@;
             }
 
             QListWidget {
                 background-color: transparent;
-                color: #f8f8f2;
+                color: @foreground@;
                 border: none;
                 outline: none;
                 padding: 6px;
@@ -48,13 +51,13 @@ namespace LosStyle
             }
 
             QListWidget::item:hover {
-                background-color: #44475a;
+                background-color: @selection@;
             }
 
             QListWidget::item:selected {
-                background-color: #44475a;
-                color: #bd93f9;
-                border-left: 3px solid #bd93f9;
+                background-color: @selection@;
+                color: @primary@;
+                border-left: 3px solid @primary@;
                 border-radius: 0px;
             }
         )");

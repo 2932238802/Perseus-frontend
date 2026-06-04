@@ -232,8 +232,10 @@ void Perseus::onRunSingleFileBtnClicked()
 
 
 
-/*
- * - 项目 按钮的点击
+/**
+ * @brief 项目 按钮的点击
+ *
+ * @param checked
  */
 void Perseus::onProjectBtnClicked(bool checked)
 {
@@ -442,6 +444,8 @@ void Perseus::initConnect()
     connect(&router, &LosCore::LosRouter::_cmd_projectBtnToggled, this, &Perseus::onProjectBtnClicked);
     connect(&router, &LosCore::LosRouter::_cmd_settingBtnClick, this, [this]() { LOS_setting->exec(); });
     connect(&router, &LosCore::LosRouter::_cmd_bottomTabVisibilityChanged, this, &Perseus::onBottomVisibilityChanged);
+    connect(&router, &LosCore::LosRouter::_cmd_themeChanged, this,
+            [this](const QString &name) { this->setStyleSheet(LosCore::LosThemeManager::instance().buildMainQss(name)); });
     connect(ui->act_explorer_btn, &QPushButton::clicked, this, [this]() { ui->left_panel_stack->setCurrentIndex(0); });
     connect(ui->act_extensions_btn, &QPushButton::clicked, this,
             [this]()
@@ -473,7 +477,7 @@ void Perseus::initStyle()
     ui->bottom_tabwidget->setTabText(1, QString::fromUtf8(u8"Issues"));
     ui->bottom_tabwidget->setTabText(2, QString::fromUtf8(u8"Terminal"));
     INF("perseus Engine Initialized ... ", "Perseus");
-    this->setStyleSheet(LosStyle::perseus_getStyle());
+    this->setStyleSheet(LosCore::LosThemeManager::instance().buildMainQss(LosCore::LosThemeManager::instance().currentTheme()));
 }
 
 
@@ -573,12 +577,15 @@ void Perseus::initSession()
     LosCommon::LosSession_Constants::Config conf;
     if (!LosCore::LosSession::instance().loadConfig(&conf))
         return;
+    if (!conf.L_themeName.isEmpty())
+    {
+        LosCore::LosThemeManager::instance().setTheme(conf.L_themeName);
+    }
     LosModel::LosFilePath file(conf.L_curProDir);
     bool isSuc = file.isExist();
     LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, file);
     if (!LOS_tabUi || !isSuc)
         return;
-
     connect(
         &LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_fileTreeDone, this,
         [conf, this]()
@@ -623,5 +630,6 @@ LosCommon::LosSession_Constants::Config Perseus::collectConfig()
     }
     conf.L_curProDir     = LosCore::LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR).getFilePath();
     conf.L_curActiveFile = LOS_tabUi->getCurFilePath();
+    conf.L_themeName     = LosCore::LosThemeManager::instance().currentTheme();
     return conf;
 }

@@ -153,5 +153,16 @@ namespace LosCore
         void _cmd_bottomTabVisibilityChanged(int tabIndex, bool visible);
 
         // ----------------------------------------------------------------------------
+        /**
+         * @brief 主题切换信号
+         * - 由 LosThemeManager::setTheme 发射
+         * - 订阅方:
+         *   - Perseus       重新 setStyleSheet 全局 QSS
+         *   - LosEditorUi   调用 LOS_highlighter->setTheme
+         *   - 各浮窗控件     重新 setStyleSheet 自己的浮窗 QSS
+         */
+        void _cmd_themeChanged(const QString &themeName);
+
+        // ----------------------------------------------------------------------------
     };
 } /* namespace LosCore */

@@ -5,6 +5,7 @@
 #include "common/constants/ConstantsStr/LosPanelManagerStr.h"
 #include "core/LosRouter/LosRouter.h"
 #include <QHBoxLayout>
+#include <QSizePolicy>
 
 
 namespace LosView
@@ -28,6 +29,10 @@ namespace LosView
      * @brief initStyle
      * 创建并布局所有按钮
      * objectName 必须和 perseus_style.qss 里的 #xxx 选择器一致
+     *
+     * 尺寸策略:
+     * - 不再使用 setFixedSize 锁死按钮宽高 (会导致字体放大后内容被截断)
+     * - 改用 setMinimumSize + sizePolicy::Preferred, 让按钮根据字体大小自适应
      */
     void LosToolBarUi::initStyle()
     {
@@ -37,29 +42,34 @@ namespace LosView
 
         LOS_iconBtn = new QPushButton("P", this);
         LOS_iconBtn->setObjectName("icon_btn");
-        LOS_iconBtn->setFixedSize(30, 30);
+        LOS_iconBtn->setMinimumSize(30, 30);
+        LOS_iconBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         layout->addWidget(LOS_iconBtn);
 
         LOS_filesBtn = new LosView::LosDropdownButtonUi(this);
         LOS_filesBtn->setObjectName("files_btn");
-        LOS_filesBtn->setFixedSize(80, 30);
+        LOS_filesBtn->setMinimumSize(80, 30);
+        LOS_filesBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         LOS_filesBtn->setText("File");
         layout->addWidget(LOS_filesBtn);
 
         LOS_viewBtn = new LosView::LosDropdownButtonUi(this);
         LOS_viewBtn->setObjectName("view_btn");
-        LOS_viewBtn->setFixedSize(80, 30);
+        LOS_viewBtn->setMinimumSize(80, 30);
+        LOS_viewBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         LOS_viewBtn->setText("View");
         layout->addWidget(LOS_viewBtn);
 
         LOS_settingBtn = new QPushButton("Set", this);
         LOS_settingBtn->setObjectName("setting_btn");
-        LOS_settingBtn->setFixedSize(80, 30);
+        LOS_settingBtn->setMinimumSize(80, 30);
+        LOS_settingBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         layout->addWidget(LOS_settingBtn);
 
         LOS_runBtn = new QPushButton("Run", this);
         LOS_runBtn->setObjectName("run_singleFile_btn");
-        LOS_runBtn->setFixedSize(80, 30);
+        LOS_runBtn->setMinimumSize(80, 30);
+        LOS_runBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         layout->addWidget(LOS_runBtn);
 
         LOS_projectBtn = new QRadioButton("CMake Pro?", this);

@@ -1,6 +1,7 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosSingleCppRunner.h"
+#include <qglobal.h>
 
 
 namespace LosCore
@@ -137,17 +138,13 @@ namespace LosCore
                 [this]()
                 {
                     QString msg{"\n==== result ===="};
-                    while (L_runPro->canReadLine())
+                    QByteArray data = L_runPro->readAllStandardOutput();
+                    if (!data.isEmpty())
                     {
-                        QByteArray rawData = L_runPro->readLine();
-                        QString lineStr    = QString::fromLocal8Bit(rawData).trimmed();
-                        if (!lineStr.isEmpty())
-                        {
-                            msg += QString("\n%1").arg(lineStr);
-                        }
+                        QString outputStr = QString::fromLocal8Bit(data);
+                        QString msg       = QString("\n==== result ====\n%1\n================").arg(outputStr);
+                        INF(msg, "LosSingleCppRunner");
                     }
-                    msg += "\n================\n";
-                    INF(msg, "LosSingleCppRunner");
                 });
 
         connect(L_runPro, &QProcess::readyReadStandardError, this,

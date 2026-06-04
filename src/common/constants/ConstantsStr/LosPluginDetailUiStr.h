@@ -6,7 +6,6 @@
  * LosPluginDetailUi
  * - PLUGIN_EXTENSION_SAVE_PATH
  *   - 保存的路径位置
- *   - TODO: 要跨平台修改
  */
 
 namespace LosCommon

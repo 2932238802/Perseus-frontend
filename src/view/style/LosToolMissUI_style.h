@@ -1,53 +1,54 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
+#pragma once
 #include <QString>
 
 namespace LosStyle
 {
-    inline QString LosToolMissUI_getStyle()
+    inline QString LosToolMissUI_styleTemplate()
     {
         return QString(R"(
             QDialog {
-                background-color: #282a36;
-                color: #f8f8f2;
+                background-color: @background@;
+                color: @foreground@;
             }
 
             QLabel {
-                color: #f8f8f2;
+                color: @foreground@;
             }
 
             QPushButton {
-                background-color: #44475a;
-                border: 1px solid #44475a;
+                background-color: @selection@;
+                border: 1px solid @selection@;
                 padding: 6px 12px;
                 border-radius: 4px;
-                color: #f8f8f2;
+                color: @foreground@;
             }
             QPushButton:hover {
-                background-color: #6272a4;
-                border: 1px solid #bd93f9;
-                color: #ffffff;
+                background-color: @muted@;
+                border: 1px solid @primary@;
+                color: @highlightFg@;
             }
             QPushButton:pressed {
-                background-color: #bd93f9;
-                color: #282a36;
+                background-color: @primary@;
+                color: @background@;
             }
 
             QPushButton#primaryBtn {
-                background-color: #bd93f9;
-                border: 1px solid #bd93f9;
+                background-color: @primary@;
+                border: 1px solid @primary@;
                 padding: 8px 16px;
                 font-weight: bold;
-                color: #282a36;
+                color: @background@;
             }
             QPushButton#primaryBtn:hover {
-                background-color: #caa9fa;
-                border: 1px solid #caa9fa;
+                background-color: @primaryHover@;
+                border: 1px solid @primaryHover@;
             }
             QPushButton#primaryBtn:pressed {
-                background-color: #9580d4;
-                border: 1px solid #9580d4;
-                color: #f8f8f2;
+                background-color: @primaryPressed@;
+                border: 1px solid @primaryPressed@;
+                color: @foreground@;
             }
         )");
     };

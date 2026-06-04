@@ -5,39 +5,39 @@
 
 namespace LosStyle
 {
-    inline const QString LosCommandArgsUi_style()
+    inline const QString LosCommandArgsUi_styleTemplate()
     {
         return QString(R"(
             QDialog {
-                background-color: #282a36;
-                border: 1px solid #bd93f9;
+                background-color: @background@;
+                border: 1px solid @primary@;
                 border-radius: 6px;
             }
             QLabel {
-                color: #f8f8f2;
+                color: @foreground@;
                 font-family: "Microsoft YaHei", sans-serif;
                 font-size: 13px;
             }
             QLabel#label_title {
-                color: #bd93f9;
+                color: @primary@;
                 font-size: 16px;
                 font-weight: bold;
-                border-bottom: 1px solid #44475a;
+                border-bottom: 1px solid @selection@;
                 padding-bottom: 8px;
             }
             QLineEdit {
-                background-color: #21222c;
-                color: #f8f8f2;
-                border: 1px solid #44475a;
+                background-color: @panelBg@;
+                color: @foreground@;
+                border: 1px solid @selection@;
                 border-radius: 3px;
                 padding: 6px 10px;
                 font-family: "Consolas", monospace;
                 font-size: 13px;
-                selection-background-color: #bd93f9;
-                selection-color: #282a36;
+                selection-background-color: @primary@;
+                selection-color: @background@;
             }
             QLineEdit:focus {
-                border: 1px solid #bd93f9;
+                border: 1px solid @primary@;
             }
             QScrollArea {
                 background-color: transparent;
@@ -46,8 +46,8 @@ namespace LosStyle
                 background-color: transparent;
             }
             QPushButton {
-                background-color: #44475a;
-                color: #f8f8f2;
+                background-color: @selection@;
+                color: @foreground@;
                 border: none;
                 border-radius: 3px;
                 padding: 6px 18px;
@@ -55,23 +55,23 @@ namespace LosStyle
                 font-size: 13px;
             }
             QPushButton:hover {
-                background-color: #6272a4;
+                background-color: @muted@;
             }
             QPushButton:pressed {
-                background-color: #bd93f9;
-                color: #282a36;
+                background-color: @primary@;
+                color: @background@;
             }
             QPushButton#btn_run {
-                background-color: #bd93f9;
-                color: #282a36;
+                background-color: @primary@;
+                color: @background@;
                 font-weight: bold;
             }
             QPushButton#btn_run:hover {
-                background-color: #caa9fa;
+                background-color: @primaryHover@;
             }
             QPushButton#btn_run:pressed {
-                background-color: #9580d4;
-                color: #f8f8f2;
+                background-color: @primaryPressed@;
+                color: @foreground@;
             }
         )");
     }

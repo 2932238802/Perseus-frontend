@@ -37,6 +37,12 @@
         <file alias="themes/light.json">resources/highlight/themes/light.json</file>
         <file alias="themes/nord.json">resources/highlight/themes/nord.json</file>
         <file alias="themes/monokai.json">resources/highlight/themes/monokai.json</file>
+        <file alias="themes/cyberpunk2077.json">resources/highlight/themes/cyberpunk2077.json</file>
+        <file alias="themes/winter_is_coming.json">resources/highlight/themes/winter_is_coming.json</file>
+        <file alias="themes/github.json">resources/highlight/themes/github.json</file>
+        <file alias="themes/abyss.json">resources/highlight/themes/abyss.json</file>
+        <file alias="themes/darcula.json">resources/highlight/themes/darcula.json</file>
+        <file alias="themes/ubuntu.json">resources/highlight/themes/ubuntu.json</file>
     </qresource>
     <qresource prefix="/web">
         <file>resources/web/xterm/addon-fit.min.js</file>

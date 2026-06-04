@@ -40,6 +40,23 @@ file(GLOB_RECURSE CORE_SOURCES
 
 add_library(PerseusCore STATIC ${CORE_SOURCES})
 
+# libgit2
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+set(BUILD_TESTS       OFF CACHE BOOL "" FORCE)
+set(BUILD_CLI         OFF CACHE BOOL "" FORCE)
+set(BUILD_EXAMPLES    OFF CACHE BOOL "" FORCE)
+
+set(USE_SSH   OFF CACHE STRING "" FORCE)
+set(USE_HTTPS ON  CACHE STRING "" FORCE)
+set(USE_NSEC  OFF CACHE BOOL "" FORCE)
+
+add_subdirectory(third_party/libgit2)
+
+target_link_libraries(PerseusCore PUBLIC libgit2package)
+
+target_include_directories(PerseusCore PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libgit2/include
+)
 target_include_directories(PerseusCore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 target_link_libraries(PerseusCore PUBLIC

@@ -4,6 +4,7 @@
 
 #include "LosCommandArgsUi.h"
 #include "core/LosRouter/LosRouter.h"
+#include "core/LosTheme/LosThemeManager.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include "ui_LosCommandArgsUi.h"
 #include <qfiledialog.h>
@@ -97,9 +98,7 @@ namespace LosView
         QDir dirE(dir);
         if (!dirE.exists())
         {
-            QMessageBox::critical(
-                this, "Path Error",
-                QString("The directory does not exist:\n%1\n\nPlease select a valid directory.").arg(dir));
+            QMessageBox::critical(this, "Path Error", QString("The directory does not exist:\n%1\n\nPlease select a valid directory.").arg(dir));
             return;
         }
 
@@ -128,8 +127,8 @@ namespace LosView
      */
     void LosCommandArgsUi::onBrowseBtnClicked()
     {
-        QString selectDir = QFileDialog::getExistingDirectory(
-            this, "select working dir", "", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+        QString selectDir =
+            QFileDialog::getExistingDirectory(this, "select working dir", "", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
         if (!selectDir.isEmpty())
         {
             ui->L_dirEdit->setText(selectDir);
@@ -143,7 +142,9 @@ namespace LosView
      */
     void LosCommandArgsUi::initStyle()
     {
-        this->setStyleSheet(LosStyle::LosCommandArgsUi_style());
+        const QString qss = LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosCommandArgsUi_styleTemplate(),
+                                                                               LosCore::LosThemeManager::instance().currentTheme());
+        this->setStyleSheet(qss);
     }
 
 
@@ -157,6 +158,12 @@ namespace LosView
         connect(ui->btn_browse, &QPushButton::clicked, this, &LosCommandArgsUi::onBrowseBtnClicked);
         connect(ui->btn_run, &QPushButton::clicked, this, &LosCommandArgsUi::onRunBtnClicked);
         connect(ui->btn_cancel, &QPushButton::clicked, this, &QDialog::reject); /* Cancel直接关闭 */
+        connect(&router, &LosCore::LosRouter::_cmd_themeChanged, this,
+                [this](const QString &name)
+                {
+                    const QString qss = LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosCommandArgsUi_styleTemplate(), name);
+                    this->setStyleSheet(qss);
+                });
     }
 
 } /* namespace LosView */

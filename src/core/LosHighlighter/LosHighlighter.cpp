@@ -2,6 +2,7 @@
 
 #include "core/LosHighlighter/LosHighlighter.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
+#include "core/LosTheme/LosThemeManager.h"
 
 #include <QColor>
 #include <QFile>
@@ -13,11 +14,13 @@ namespace LosCore
 {
     /**
      * @brief Construct a new Los Highlighter:: Los Highlighter object
-     * 
-     * @param doc 
+     *
+     * @param doc
      */
     LosHighlighter::LosHighlighter(QTextDocument *doc) : QSyntaxHighlighter{doc}
     {
+        // 同步当前应用的主题, 防止硬编码 dracula 与全局主题不一致
+        L_curThemeName = LosCore::LosThemeManager::instance().currentTheme();
         initRule();
     }
 
@@ -182,9 +185,9 @@ namespace LosCore
 
     /**
      * @brief initSemanticLegend
-     * 
-     * @param legendTokenTypes 
-     * @param legendTokenModifiers 
+     *
+     * @param legendTokenTypes
+     * @param legendTokenModifiers
      */
     void LosHighlighter::initSemanticLegend(const QStringList &legendTokenTypes, const QStringList &legendTokenModifiers)
     {
@@ -195,7 +198,7 @@ namespace LosCore
         for (int i = 0; i < legendTokenTypes.size(); ++i)
         {
             QString tokenName = legendTokenTypes.at(i);
-            if (L_themeConfig.contains(tokenName))  
+            if (L_themeConfig.contains(tokenName))
             {
                 L_semanticFormats[i] = L_themeConfig.value(tokenName);
             }
@@ -251,7 +254,7 @@ namespace LosCore
     {
         L_rules.clear();
         L_themeConfig.clear();
-        L_multiComment = QTextCharFormat();
+        L_multiComment           = QTextCharFormat();
         L_commentStartExpression = QRegularExpression();
         L_commentEndExpression   = QRegularExpression();
         L_hasMultiLineComment    = false;

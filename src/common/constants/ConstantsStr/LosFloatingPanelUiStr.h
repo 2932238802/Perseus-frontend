@@ -5,9 +5,6 @@
 
 namespace LosCommon
 {
-    /*
-     * 悬浮面板与弹窗的 UI 样式常量
-     */
     namespace LosFloatingPanelUi_Constants
     {
         namespace LosGotoLinePopupUi_Constants
@@ -60,6 +57,6 @@ namespace LosCommon
                                                                                 background-color: #45475a; 
                                                                             }
                                                                         )";
-        } // namespace LosFindPopupUii_Constants
+        } // namespace LosFindPopupUi_Constants
     } /* namespace LosFloatingPanelUi_Constants */
 } // namespace LosCommon

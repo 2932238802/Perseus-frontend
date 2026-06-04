@@ -32,22 +32,22 @@
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <item>
-     <widget class="LosView::LosToolBarUi" name="toolbar_widget" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>40</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>40</height>
-       </size>
-      </property>
-     </widget>
-    </item>
+     <item>
+      <widget class="LosView::LosToolBarUi" name="toolbar_widget" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>40</height>
+        </size>
+       </property>
+      </widget>
+     </item>
     <item>
      <layout class="QHBoxLayout" name="body_layout">
       <property name="spacing">
@@ -315,22 +315,22 @@
       </item>
      </layout>
     </item>
-    <item>
-     <widget class="LosView::LosStateBarUi" name="statusbar_widget" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>26</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>26</height>
-       </size>
-      </property>
-     </widget>
-    </item>
+     <item>
+      <widget class="LosView::LosStateBarUi" name="statusbar_widget" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>26</height>
+        </size>
+       </property>
+      </widget>
+     </item>
    </layout>
   </widget>
  </widget>

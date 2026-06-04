@@ -431,6 +431,14 @@ namespace LosView
                     highlightCurrentLine();
                 });
         connect(&router, &LosCore::LosRouter::_cmd_openFile_suc, this, &LosEditorUi::onOpenFileSuc);
+        connect(&router, &LosCore::LosRouter::_cmd_themeChanged, this,
+                [this](const QString &name)
+                {
+                    if (LOS_highlighter)
+                    {
+                        LOS_highlighter->setTheme(name);
+                    }
+                });
     }
 
 
@@ -581,7 +589,7 @@ namespace LosView
             cur.movePosition(QTextCursor::Up);
             cur.movePosition(QTextCursor::EndOfLine);
         }
-        else 
+        else
         {
             cur.insertText("\n" + baseIndent + nextLineIndent);
         }

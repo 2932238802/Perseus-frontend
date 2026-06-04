@@ -3,6 +3,8 @@
 
 #include "LosCommandUi.h"
 
+#include "core/LosTheme/LosThemeManager.h"
+
 namespace LosView
 {
 
@@ -74,7 +76,11 @@ namespace LosView
         containerLayout->addWidget(L_lists);
         mainLayout->addWidget(container);
         setFixedSize(630, 380);
-        this->setStyleSheet(LosStyle::LosCommandUi_style());
+        // 注: 这里继续用 setFixedSize 是为了让 Popup 居中行为可预测;
+        // 若日后字体过大导致内容溢出, 需改为 setMinimumSize 并配合 sizeHint 自适应.
+        const QString qss = LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosCommandUi_styleTemplate(),
+                                                                               LosCore::LosThemeManager::instance().currentTheme());
+        this->setStyleSheet(qss);
     }
 
 
@@ -88,6 +94,12 @@ namespace LosView
         connect(L_searchBox, &QLineEdit::textChanged, this, &LosCommandUi::onSearchTextChanged);
         connect(L_lists, &QListWidget::itemClicked, this, &LosCommandUi::executeSelectedItem);
         connect(&router, &LosCore::LosRouter::_cmd_net_PluginPath, this, &LosCommandUi::onPluginPath);
+        connect(&router, &LosCore::LosRouter::_cmd_themeChanged, this,
+                [this](const QString &name)
+                {
+                    const QString qss = LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosCommandUi_styleTemplate(), name);
+                    this->setStyleSheet(qss);
+                });
     }
 
 

@@ -7,8 +7,10 @@
 
 namespace LosCore
 {
-    /*
-     * - 获取单例
+    /**
+     * @brief 单例模式
+     * 
+     * @return LosSession& 
      */
     LosSession &LosSession::instance()
     {
@@ -17,8 +19,11 @@ namespace LosCore
     }
 
 
-    /*
-     * - 获取 config 文件夹
+
+    /**
+     * @brief getDefaultConfigAbsoluteFilePath 获取 本地的session.json
+     * 
+     * @return QString 
      */
     QString LosSession::getDefaultConfigAbsoluteFilePath()
     {
@@ -69,6 +74,12 @@ namespace LosCore
 
         conf->L_curActiveFile = root["activeFile"].toString();
 
+        const QString themeName = root["themeName"].toString();
+        if (!themeName.isEmpty())
+        {
+            conf->L_themeName = themeName;
+        }
+
         QJsonArray filesArray = root["openFiles"].toArray();
         for (const auto &fileVal : filesArray)
         {
@@ -98,6 +109,7 @@ namespace LosCore
             filesList.append(str);
         }
         obj["openFiles"] = filesList;
+        obj["themeName"] = conf.L_themeName;
         obj["version"]   = 1;
         QJsonDocument doc(obj);
         QFile file(getDefaultConfigAbsoluteFilePath());

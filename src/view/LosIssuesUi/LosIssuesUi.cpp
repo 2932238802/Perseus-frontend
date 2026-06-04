@@ -4,6 +4,7 @@
 
 #include "view/LosIssuesUi/LosIssuesUi.h"
 #include "common/constants/ConstantsStr/LosIssuesUiStr.h"
+#include "core/LosTheme/LosThemeManager.h"
 
 
 
@@ -11,8 +12,8 @@ namespace LosView
 {
     /**
      * @brief Construct a new Los Issues Ui:: Los Issues Ui object
-     * 
-     * @param parent 
+     *
+     * @param parent
      */
     LosIssuesUi::LosIssuesUi(QWidget *parent) : QWidget(parent)
     {
@@ -23,12 +24,12 @@ namespace LosView
     LosIssuesUi::~LosIssuesUi() {}
 
 
-   
+
     /**
      * @brief onUpdateTable
-     * 
-     * @param file_path 
-     * @param diags 
+     *
+     * @param file_path
+     * @param diags
      */
     void LosIssuesUi::onUpdateTable(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &diags)
     {
@@ -101,7 +102,6 @@ namespace LosView
 
 
 
-   
     /**
      * @brief initUi
      */
@@ -125,24 +125,35 @@ namespace LosView
 
     /**
      * @brief initStyle
-     * 
+     *
      */
     void LosIssuesUi::initStyle()
     {
-        this->L_table->setStyleSheet(LosStyle::LosIssuesUi_getStyle());
+        const QString qss = LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosIssuesUi_styleTemplate(),
+                                                                               LosCore::LosThemeManager::instance().currentTheme());
+        this->L_table->setStyleSheet(qss);
     }
 
 
 
     /**
      * @brief initConnect
-     * 
+     *
      */
     void LosIssuesUi::initConnect()
     {
         if (L_table)
             connect(L_table, &QTableWidget::cellDoubleClicked, this, &LosIssuesUi::onTableDoubleClicked);
         connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this, &LosIssuesUi::onUpdateTable);
+        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_themeChanged, this,
+                [this](const QString &name)
+                {
+                    if (this->L_table)
+                    {
+                        const QString qss = LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosIssuesUi_styleTemplate(), name);
+                        this->L_table->setStyleSheet(qss);
+                    }
+                });
     }
 
 } /* namespace LosView */

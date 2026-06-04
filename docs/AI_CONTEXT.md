@@ -34,6 +34,7 @@
 | LSP 后端 | clangd（C++）、rust-analyzer（Rust）、neocmakelsp（CMake）、pyright（Python） | |
 | 终端栈 | xterm.js + QWebChannel + QWebEngineView（Linux 走 `script -q`，Win 走 `powershell.exe`） | |
 | 测试 | Qt Test + CTest，源文件 `test/LosTest.cpp`，目标名 `LosTest` | 链接到 `PerseusCore` |
+| 版本控制库 | **libgit2 v1.9.4**（git submodule，源码在 `third_party/libgit2`，静态链接） | 用于本地 Git 仓库追踪；HTTPS 经 OpenSSL 启用，SSH 暂关闭；链接 target 为 `libgit2package`；因 clang-18+C90 探测失败已 `USE_NSEC OFF` |
 
 ---
 
@@ -71,6 +72,8 @@ Perseus-frontend/
 │       ├── LosCommandUi/  LosCommandArgsUi/  LosDropdownButtonUi/  LosFloatingPanelUi/
 │       ├── LosIssuesUi/  LosPlugUi/  LosPluginDetailUi/  LosSettingsUi/  LosToolMissUi/
 ├── resources/  resources.qrc     # 图标、xterm.js 等
+├── third_party/                  # 第三方依赖源码（与 src 物理隔离）
+│   └── libgit2/                  # libgit2 v1.9.4（git submodule，静态链接）
 ├── docs/                         # 详细文档（见 §9 导航）
 ├── test/                         # Qt Test
 ├── tools/                        # 周边脚本

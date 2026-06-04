@@ -2,6 +2,7 @@
 
 
 #include "LosPythonRunner.h"
+#include <qstringview.h>
 
 
 namespace LosCore
@@ -86,7 +87,16 @@ namespace LosCore
         connect(L_runner, &QProcess::readyReadStandardError, this,
                 [this]() { ERR(QString::fromLocal8Bit(L_runner->readAllStandardError()), "LosPythonRunner"); });
         connect(L_runner, &QProcess::readyReadStandardOutput, this,
-                [this]() { INF(QString::fromLocal8Bit(L_runner->readAllStandardOutput()), "LosPythonRunner"); });
+                [this]()
+                {
+                    QByteArray data = L_runner->readAllStandardOutput();
+                    if (!data.isEmpty())
+                    {
+                        QString str = QString::fromLocal8Bit(data);
+                        QString msg = QString("\n==== result ====\n%1\n================").arg(str);
+                        INF(msg, "LosPythonRunner");
+                    }
+                });
         connect(L_runner, &QProcess::finished, this,
                 [this](int exitCode, QProcess::ExitStatus exitStatus)
                 {

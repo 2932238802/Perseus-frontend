@@ -8,6 +8,28 @@
     "lineNumber": "#8c959f",
     "currentLine": "#f6f8fa"
   },
+  "ui": {
+    "background":      "#ffffff",
+    "panelBg":         "#f6f8fa",
+    "borderStrong":    "#d0d7de",
+    "selection":       "#c8e1ff",
+    "muted":           "#8c959f",
+    "primary":         "#0969da",
+    "foreground":      "#24292f",
+    "primaryHover":    "#218bff",
+    "primaryPressed":  "#0550ae",
+    "danger":          "#cf222e",
+    "success":         "#1a7f37",
+    "successHover":    "#2da44e",
+    "successPressed":  "#116329",
+    "highlightFg":     "#ffffff",
+    "mutedAlpha50":    "rgba(140, 149, 159, 0.5)",
+    "mutedAlpha55":    "rgba(140, 149, 159, 0.55)",
+    "primaryAlpha70":  "rgba(9, 105, 218, 0.6)",
+    "primaryAlpha75":  "rgba(9, 105, 218, 0.7)",
+    "successAlpha26":  "rgba(26, 127, 55, 0.20)",
+    "successAlpha45":  "rgba(26, 127, 55, 0.40)"
+  },
   "formats": {
     "keyword": { "foreground": "#cf222e", "bold": true },
     "qtKeyword": { "foreground": "#cf222e", "italic": true },

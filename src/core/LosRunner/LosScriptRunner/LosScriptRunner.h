@@ -29,8 +29,6 @@ namespace LosCore
      * onAutoInstallTool
      * - 处理安装编译器的请求
      * - 运行对应的脚本
-     *
-     *
      */
     class LosScriptRunner : public LosAbstractRunner
     {

@@ -56,7 +56,6 @@ namespace LosCore
             return;
         }
         auto config = LOS_toolConfigs.value(tool);
-
         if (validateExecutable(config))
         {
             QString foundPath = L_activeToolPath[tool];
@@ -67,15 +66,12 @@ namespace LosCore
             case LosCommon::LosToolChain_Constants::ToolCategory::BuildTool:
                 emit LosCore::LosRouter::instance()._cmd_buildToolReady(tool, foundPath, config.L_startupArgs);
                 break;
-
             case LosCommon::LosToolChain_Constants::ToolCategory::Compiler:
                 emit LosCore::LosRouter::instance()._cmd_toolChainReady(config.LOS_language, tool, foundPath);
                 break;
-
             case LosCommon::LosToolChain_Constants::ToolCategory::LSP:
                 emit LosCore::LosRouter::instance()._cmd_lspReady(tool, foundPath, config.L_startupArgs);
                 break;
-
             default:
                 break;
             }

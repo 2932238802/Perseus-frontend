@@ -3,8 +3,12 @@
 #include "LosSettingsUi.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "core/LosRouter/LosRouter.h"
+#include "core/LosTheme/LosThemeManager.h"
 
 #include "ui_LosSettingsUi.h"
+
+#include <QJsonObject>
+#include <QStringList>
 
 
 
@@ -20,6 +24,7 @@ namespace LosView
     {
         ui->setupUi(this);
         initStyle();
+        initThemePage();
         initConnect();
     }
     LosSettingsUi::~LosSettingsUi()
@@ -63,6 +68,7 @@ namespace LosView
         }
         connect(ui->btn_install_cmake, &QPushButton::clicked, this, &LosSettingsUi::onCMakeInstallBtnClicked);
         connect(&router, &LosCore::LosRouter::_cmd_findExePathAndSetSettingUi, this, &LosSettingsUi::onFindExePath);
+        connect(ui->combo_theme, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LosSettingsUi::onThemeComboChanged);
     }
 
 
@@ -228,6 +234,92 @@ namespace LosView
     /**
      * @brief
      */
-    void LosSettingsUi::onCMakeInstallBtnClicked() {}
+    void LosSettingsUi::onCMakeInstallBtnClicked() {
+        
+    }
+
+
+
+    /**
+     * @brief initThemePage
+     * - 填充主题下拉, 选中当前主题, 渲染初始预览
+     */
+    void LosSettingsUi::initThemePage()
+    {
+        if (!ui->combo_theme)
+        {
+            return;
+        }
+        ui->combo_theme->blockSignals(true);
+        ui->combo_theme->clear();
+        const QStringList all = LosCore::LosThemeManager::instance().availableThemes();
+        for (const auto &name : all)
+        {
+            const QJsonObject obj = LosCore::LosThemeManager::instance().themeJson(name);
+            const QString display = obj.value(QStringLiteral("displayName")).toString(name);
+            ui->combo_theme->addItem(display, name);
+        }
+        const QString cur  = LosCore::LosThemeManager::instance().currentTheme();
+        const int curIndex = ui->combo_theme->findData(cur);
+        if (curIndex >= 0)
+        {
+            ui->combo_theme->setCurrentIndex(curIndex);
+        }
+        ui->combo_theme->blockSignals(false);
+        updateThemePreview(cur);
+    }
+
+
+
+    /**
+     * @brief updateThemePreview
+     * 用主题里的 editor 颜色渲染一段示例代码
+     */
+    void LosSettingsUi::updateThemePreview(const QString &themeName)
+    {
+        if (!ui->edit_theme_preview)
+        {
+            return;
+        }
+        const QJsonObject obj    = LosCore::LosThemeManager::instance().themeJson(themeName);
+        const QJsonObject editor = obj.value(QStringLiteral("editor")).toObject();
+        const QString bg         = editor.value("background").toString("#282a36");
+        const QString fg         = editor.value("foreground").toString("#f8f8f2");
+        const QString lineColor  = editor.value("lineNumber").toString("#6272a4");
+        const QString sel        = editor.value("selection").toString("#44475a");
+        const QString css        = QStringLiteral("QPlainTextEdit { background-color: %1; color: %2; border: 1px solid %3; "
+                                                         "selection-background-color: %4; selection-color: %2; padding: 8px; "
+                                                         "font-family: 'JetBrains Mono', 'Consolas', monospace; }")
+                                .arg(bg, fg, lineColor, sel);
+        ui->edit_theme_preview->setStyleSheet(css);
+        ui->edit_theme_preview->setPlainText(QStringLiteral("// Perseus theme preview\n"
+                                                            "#include <QString>\n\n"
+                                                            "int main(int argc, char *argv[]) {\n"
+                                                            "    QString message = \"Hello, world!\";\n"
+                                                            "    // The quick brown fox jumps over the lazy dog\n"
+                                                            "    return 0;\n"
+                                                            "}\n"));
+    }
+
+
+
+    /**
+     * @brief onThemeComboChanged
+     * - 立即生效: 通过 ThemeManager 切换 + 刷新预览
+     */
+    void LosSettingsUi::onThemeComboChanged(int index)
+    {
+        if (index < 0 || !ui->combo_theme)
+        {
+            return;
+        }
+        const QString themeName = ui->combo_theme->itemData(index).toString();
+        if (themeName.isEmpty())
+        {
+            return;
+        }
+        LosCore::LosThemeManager::instance().setTheme(themeName);
+        updateThemePreview(themeName);
+    }
 
 } /* namespace LosView */

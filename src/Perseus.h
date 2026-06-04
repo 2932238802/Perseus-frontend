@@ -1,7 +1,6 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
-
 #include "common/constants/ConstantsClass/LosSessionClass.h"
 #include "common/constants/ConstantsNum/PerseusNum.h"
 #include "common/constants/ConstantsStr/ShortCut.h"
@@ -16,6 +15,7 @@
 #include "core/LosSesssion/LosSesssion.h"
 #include "core/LosShortcutManager/LosShortcutManager.h"
 #include "core/LosState/LosState.h"
+#include "core/LosTheme/LosThemeManager.h"
 #include "core/LosToolChainManager/LosToolChainManager.h"
 #include "models/LosFileNode/LosFileNode.h"
 #include "models/LosFilePath/LosFilePath.h"

@@ -5,13 +5,13 @@
 
 namespace LosStyle
 {
-    inline const QString LosCompleterUi_getStyle()
+    inline const QString LosCompleterUi_styleTemplate()
     {
         return QString(R"(
         QListView {
-            background-color: #282a36;
-            color: #f8f8f2;
-            border: 1px solid #bd93f9;
+            background-color: @background@;
+            color: @foreground@;
+            border: 1px solid @primary@;
             border-radius: 6px;
             font-family: "JetBrains Mono", "Consolas", "Menlo", monospace;
             font-size: 13px;
@@ -26,12 +26,12 @@ namespace LosStyle
             border: none;
         }
         QListView::item:hover {
-            background-color: #44475a;
-            color: #f8f8f2;
+            background-color: @selection@;
+            color: @foreground@;
         }
         QListView::item:selected {
-            background-color: #bd93f9;
-            color: #282a36;
+            background-color: @primary@;
+            color: @background@;
             border: none;
             font-weight: bold;
         }
@@ -42,12 +42,12 @@ namespace LosStyle
             margin: 2px;
         }
         QScrollBar::handle:vertical {
-            background-color: #6272a4;
+            background-color: @muted@;
             border-radius: 4px;
             min-height: 20px;
         }
         QScrollBar::handle:vertical:hover {
-            background-color: #bd93f9;
+            background-color: @primary@;
         }
         QScrollBar::add-line, QScrollBar::sub-line,
         QScrollBar::add-page, QScrollBar::sub-page {

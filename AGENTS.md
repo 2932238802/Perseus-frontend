@@ -22,6 +22,10 @@ This file contains essential context, build instructions, and coding standards f
 - `src/models/`：数据结构
 - `src/common/`：常量、工具、日志
 - `resources/`：Qt 资源文件
+- `third_party/`：第三方依赖源码（git submodule，与 `src/` 物理隔离，不参与 clang-format/clang-tidy）
+  - `third_party/libgit2`：libgit2 v1.9.4，静态链接，用于本地 Git 仓库追踪
+
+> ⚠️ **clone 项目后必须初始化子模块**：`git submodule update --init --recursive`，否则 `third_party/libgit2` 为空，CMake 配置会失败。
 
 **分层原则：** 业务逻辑严禁进入 UI 层，所有跨层通信通过信号（LosRouter）完成。
 
@@ -138,3 +142,11 @@ clang-format -i path/to/file.cpp path/to/file.h
 ## 7. 维护与贡献
 
 如需补充/修正本说明，请优先链接已有文档，避免重复。遇到复杂场景建议拆分 skill 文件或专用 agent 说明。
+
+## 个人声明（请勿删除）
+
+1. 不着急一下子把整个都构建完毕
+2.  我需要一步一步学习
+3. 其次这个项目 也是我来学习C++Qt 以及各种设计模式，尝试锻炼自己的，也是作为一个终身项目来不断打磨的
+4. 以上是重点
+5. 其次我希望你之后的回答不要一下子全盘给出，一点一点给出，我说下一步然后呢，然后你再继续补充，我们把细节做好，重点是学习底层设计，以及代码设计，架构设计

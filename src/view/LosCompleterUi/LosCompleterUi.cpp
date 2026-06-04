@@ -2,6 +2,9 @@
 
 #include "view/LosCompleterUi/LosCompleterUi.h"
 
+#include "core/LosRouter/LosRouter.h"
+#include "core/LosTheme/LosThemeManager.h"
+
 namespace LosView
 {
     /**
@@ -17,6 +20,7 @@ namespace LosView
         setCompletionMode(QCompleter::PopupCompletion);
         setCaseSensitivity(Qt::CaseInsensitive);
         initStyle();
+        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_themeChanged, this, [this](const QString &) { initStyle(); });
     }
     LosCompleterUi::~LosCompleterUi() {}
 
@@ -40,12 +44,16 @@ namespace LosView
 
     /**
      * @brief initStyle
-     * - 初始化样式
+     * - 初始化样式 (走 ThemeManager 解析模板占位符)
      */
     void LosCompleterUi::initStyle()
     {
         auto popup = this->popup();
-        popup->setStyleSheet(LosStyle::LosCompleterUi_getStyle());
+        if (!popup)
+            return;
+        const QString qss = LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosCompleterUi_styleTemplate(),
+                                                                               LosCore::LosThemeManager::instance().currentTheme());
+        popup->setStyleSheet(qss);
         popup->setFrameShape(QFrame::NoFrame);
         popup->setAttribute(Qt::WA_TranslucentBackground, false);
         popup->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

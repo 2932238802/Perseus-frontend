@@ -19,6 +19,7 @@ namespace LosCommon
             QStringList L_curFilePaths{};
             QString L_curProDir     = "";
             QString L_curActiveFile = "";
+            QString L_themeName     = "dracula";
         };
 
     } /* namespace LosSession_Constants */

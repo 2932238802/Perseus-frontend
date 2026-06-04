@@ -2,11 +2,12 @@
 
 #include "LosToolMissUi.h"
 
+#include "core/LosTheme/LosThemeManager.h"
+
 
 namespace LosView
 {
-    LosToolMissUi::LosToolMissUi(const LosCommon::LosToolChain_Constants::ToolChainConfig &config, QWidget *parent)
-        : QDialog{parent}
+    LosToolMissUi::LosToolMissUi(const LosCommon::LosToolChain_Constants::ToolChainConfig &config, QWidget *parent) : QDialog{parent}
     {
         initStyle(config);
     }
@@ -79,12 +80,16 @@ namespace LosView
         layout->addLayout(secondaryBtnLayout);
 
         layout->addSpacing(10);
-        auto *hintLabel =
-            new QLabel("<small>After installation, restart Perseus or manually set the path in settings.</small>");
+        auto *hintLabel = new QLabel("<small>After installation, restart Perseus or manually set the path in settings.</small>");
         hintLabel->setWordWrap(true);
-        hintLabel->setStyleSheet("color: #6272a4;");
+        // 使用主题 muted 色 (这里直接读 token, 不订阅 themeChanged 因为对话框模态短生命)
+        const QString muted =
+            LosCore::LosThemeManager::instance().uiTokens(LosCore::LosThemeManager::instance().currentTheme()).value("muted", "#6272a4");
+        hintLabel->setStyleSheet(QString("color: %1;").arg(muted));
         layout->addWidget(hintLabel);
 
-        setStyleSheet(LosStyle::LosToolMissUI_getStyle());
+        const QString qss = LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosToolMissUI_styleTemplate(),
+                                                                               LosCore::LosThemeManager::instance().currentTheme());
+        setStyleSheet(qss);
     }
 } /* namespace LosView */

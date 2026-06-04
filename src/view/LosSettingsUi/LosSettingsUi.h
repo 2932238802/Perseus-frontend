@@ -5,6 +5,7 @@
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
+#include <QComboBox>
 #include <QDialog>
 #include <QListWidget>
 #include <QPushButton>
@@ -38,10 +39,13 @@ namespace LosView
 
       private: // private tool
         void setInstalled(LosCommon::LosToolChain_Constants::LosTool tool);
+        void initThemePage();
+        void updateThemePreview(const QString &themeName);
 
       private slots: // chs
         void onSaveSettings();
         void onFindExePath(const QString &file_path, LosCommon::LosToolChain_Constants::LosTool tool);
+        void onThemeComboChanged(int index);
 
       public slots: // chs
         void onCMakeInstallBtnClicked();
