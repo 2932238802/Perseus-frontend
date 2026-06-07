@@ -23,6 +23,7 @@ namespace LosView
         void initConnect();
 
       private:
+        QLabel *L_gitPath      = nullptr;
         QLabel *L_codingLabel  = nullptr;
         QLabel *L_messageLabel = nullptr;
         QLabel *L_langLabel    = nullptr;

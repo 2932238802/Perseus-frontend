@@ -21,6 +21,7 @@ namespace LosModel
     {
         loadFile(L_filePath);
     }
+    
 
 
 
@@ -190,6 +191,8 @@ namespace LosModel
     {
         loadFile(file);
     }
+
+
 
 
     QDebug operator<<(QDebug debug, const LosFilePath &path)

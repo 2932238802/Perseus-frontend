@@ -1,0 +1,8 @@
+LosTest_autogen/timestamp: \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/test/CMakeLists.txt \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/test/LosTest.cpp \
+	/usr/share/cmake-3.28/Modules/CTest.cmake \
+	/usr/share/cmake-3.28/Modules/CTestTargets.cmake \
+	/usr/share/cmake-3.28/Modules/CTestUseLaunchers.cmake \
+	/usr/share/cmake-3.28/Modules/DartConfiguration.tcl.in \
+	/usr/bin/cmake

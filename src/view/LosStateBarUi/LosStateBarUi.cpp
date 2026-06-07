@@ -69,6 +69,9 @@ namespace LosView
         L_messageLabel->setObjectName("statusbar_label");
         layout->addWidget(L_messageLabel);
         layout->addStretch();
+        L_gitPath = new QLabel("none git", this);
+        L_gitPath->setObjectName("statusbar_git_label");
+        layout->addWidget(L_gitPath);
         L_codingLabel = new QLabel("UTF-8", this);
         L_codingLabel->setObjectName("statusbar_coding_label");
         layout->addWidget(L_codingLabel);
@@ -94,6 +97,7 @@ namespace LosView
                     // 当前先 简单的判断一下 文件后缀名
                     setLangLabel(LosCommon::getLangId(LosCommon::CheckLang(absolute_file_path)));
                 });
+        connect(&router, &LosCore::LosRouter::_cmd_getBranchName, this, [this](const QString &branch_name) { L_gitPath->setText(branch_name); });
     }
 
 } // namespace LosView

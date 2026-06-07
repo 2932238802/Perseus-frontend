@@ -1,0 +1,71 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"third_party/libgit2/src/libgit2/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "libgit2_autogen_timestamp_deps::@443a78629b8dc43e67db"
+		}
+	],
+	"id" : "libgit2_autogen::@443a78629b8dc43e67db",
+	"isGeneratorProvided" : true,
+	"name" : "libgit2_autogen",
+	"paths" : 
+	{
+		"build" : "third_party/libgit2/src/libgit2",
+		"source" : "third_party/libgit2/src/libgit2"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				1,
+				2
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2_autogen",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2_autogen.rule",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/libgit2_autogen/timestamp.rule",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "UTILITY"
+}

@@ -2,7 +2,9 @@
 
 #include "Perseus.h"
 #include "./ui_Perseus.h"
+#include "core/LosGitManager/LosGitManager.h"
 #include "core/LosRouter/LosRouter.h"
+#include "core/LosShortcutManager/LosShortcutManager.h"
 #include "view/LosSettingsUi/LosSettingsUi.h"
 
 
@@ -81,16 +83,11 @@ void Perseus::OnFileLoaded(bool isc, bool run_analysis)
     }
 
     QString curPath{projectPath.getFilePath()};
-    int L_curGen      = ++L_buildGeneration; /* 记录本次构建的代次 */
+    int L_curGen      = ++L_buildGeneration;
     auto *newRootNode = LosModel::LosFileNode::create(curPath, nullptr);
     LosModel::LosFileNode::build(newRootNode, curPath,
-                                 [this, curPath, newRootNode, L_curGen, run_analysis]()
+                                 [this, curPath, newRootNode, L_curGen, run_analysis, projectPath]()
                                  {
-                                     /*
-                                      * 代次守卫
-                                      * - 若当前代次已不是最新（说明在本次 build 完成前OnFileLoaded 又被调用了）
-                                      * - 则丢弃本次结果，避免竞争
-                                      */
                                      if (L_curGen != L_buildGeneration)
                                      {
                                          delete newRootNode;
@@ -102,12 +99,6 @@ void Perseus::OnFileLoaded(bool isc, bool run_analysis)
                                      LOS_treeModel = new LosModel::LosFileTreeModel(LOS_rootNode, this);
                                      ui->explorer_treeview->updateExplorer(LOS_treeModel);
                                      INF("load project suc:" + curPath, "Perseus");
-
-                                     /*
-                                      * 只在用户主动打开项目时运行 cmake 分析
-                                      * 文件系统变化（_cmd_fileSystemChanged）仅刷新文件树，不重跑 cmake
-                                      * 避免 cmake 写入 build/ → 触发 watcher → 再次 analyse → 死循环
-                                      */
                                      if (run_analysis)
                                      {
                                          LOS_configMgr->create(curPath);
@@ -119,11 +110,6 @@ void Perseus::OnFileLoaded(bool isc, bool run_analysis)
                                          if (!L_filesWatcher->directories().isEmpty())
                                              L_filesWatcher->removePaths(L_filesWatcher->directories());
                                          L_filesWatcher->addPath(curPath);
-                                         /*
-                                          * 递归监听所有子目录
-                                          * - 避免 cmake 写 build/ 时触发 directoryChanged  _cmd_fileSystemChanged 死循环
-                                          * - 但排除构建输出目录及版本控制目录
-                                          */
                                          const QString buildDirPath = QDir(curPath).filePath(LosCommon::LosConfig_Constants::BUILD_NAME);
                                          QDirIterator it(curPath, QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden, QDirIterator::Subdirectories);
                                          while (it.hasNext())
@@ -140,6 +126,7 @@ void Perseus::OnFileLoaded(bool isc, bool run_analysis)
                                          }
                                      }
                                      emit LosCore::LosRouter::instance()._cmd_fileTreeDone();
+                                     emit LosCore::LosRouter::instance()._cmd_initGitProject(projectPath.getFilePath());
                                      if (oldModel)
                                      {
                                          oldModel->deleteLater();
@@ -191,8 +178,6 @@ void Perseus::onFilesBtnClicked()
  * - 默认已经有 展开的问题
  *
  * @param index
- *
- *
  */
 void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
 {
@@ -427,12 +412,13 @@ void Perseus::initConnect()
     LOS_scriptRunner = new LosCore::LosScriptRunner(this);
     L_timer          = new QTimer(this);
     LOS_setting      = new LosView::LosSettingsUi(this);
+    {
+        LosCore::LosGitManager::instance(); // 这边单独调用一下 初始化一下
+    }
     L_timer->setSingleShot(true);
     L_timer->setInterval(300);
     L_filesWatcher = new QFileSystemWatcher(this);
-
     auto &router = LosCore::LosRouter::instance();
-
     connect(L_timer, &QTimer::timeout, this, &Perseus::onDebounceTimeOut);
     connect(L_filesWatcher, &QFileSystemWatcher::directoryChanged, this, &Perseus::onDirectoryChanged);
     connect(ui->explorer_treeview, &QTreeView::activated, this, &Perseus::onExplorerFileDoubleClicked);
@@ -524,12 +510,11 @@ void Perseus::initShotcut()
         },
         "zoom out");
     LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::COMMANDS, this, [this]() { LOS_cmdPalette->showPalette(); });
-
     LosCore::LosShortcutManager::instance().reg(
         LosCommon::ShortCut::EDIT_UNDO, this,
         [this]()
         {
-            auto edit = LOS_tabUi ? LOS_tabUi->getCurEditor() : nullptr;
+            auto *edit = qobject_cast<LosView::LosEditorUi *>(LOS_tabUi ? LOS_tabUi->getCurEditor() : nullptr);
             if (edit && edit->document()->isUndoAvailable())
                 edit->undo();
         },
@@ -538,7 +523,7 @@ void Perseus::initShotcut()
         LosCommon::ShortCut::EDIT_REDO, this,
         [this]()
         {
-            auto edit = LOS_tabUi ? LOS_tabUi->getCurEditor() : nullptr;
+            auto *edit = qobject_cast<LosView::LosEditorUi *>(LOS_tabUi ? LOS_tabUi->getCurEditor() : nullptr);
             if (edit && edit->document()->isRedoAvailable())
                 edit->redo();
         },
@@ -547,7 +532,7 @@ void Perseus::initShotcut()
         LosCommon::ShortCut::EDIT_REDO_ALT, this,
         [this]()
         {
-            auto edit = LOS_tabUi ? LOS_tabUi->getCurEditor() : nullptr;
+            auto *edit = qobject_cast<LosView::LosEditorUi *>(LOS_tabUi ? LOS_tabUi->getCurEditor() : nullptr);
             if (edit && edit->document()->isRedoAvailable())
                 edit->redo();
         },
@@ -565,6 +550,8 @@ void Perseus::initShotcut()
                                                     }
                                                 });
     LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::TOGGLE_BOTTOM_PANEL, this, [this]() { OnTogglePanelBtnClicked(); });
+    LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut ::TOGGLE_PREVIEW, this,
+                                                [this]() { emit LosCore::LosRouter::instance()._cmd_togglePreview(LOS_tabUi -> getCurFilePath()); });
 }
 
 

@@ -1,0 +1,960 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "test/LosTest"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"target_link_libraries",
+			"set_target_properties",
+			"include",
+			"find_package",
+			"find_dependency",
+			"_qt_internal_find_qt_dependencies",
+			"set_property",
+			"_qt_internal_find_third_party_dependencies"
+		],
+		"files" : 
+		[
+			"test/CMakeLists.txt",
+			"CMakeLists.txt",
+			"third_party/libgit2/src/libgit2/CMakeLists.txt",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6WebEngineWidgets/Qt6WebEngineWidgetsTargets.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6WebEngineWidgets/Qt6WebEngineWidgetsConfig.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6/Qt6Config.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Quick/Qt6QuickVersionlessTargets.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Quick/Qt6QuickConfig.cmake",
+			"/usr/share/cmake-3.28/Modules/CMakeFindDependencyMacro.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6/QtPublicDependencyHelpers.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6WebEngineCore/Qt6WebEngineCoreDependencies.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6WebEngineCore/Qt6WebEngineCoreConfig.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6WebEngineWidgets/Qt6WebEngineWidgetsDependencies.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Quick/Qt6QuickTargets.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6OpenGL/Qt6OpenGLVersionlessTargets.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6OpenGL/Qt6OpenGLConfig.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Quick/Qt6QuickDependencies.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Positioning/Qt6PositioningVersionlessTargets.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Positioning/Qt6PositioningConfig.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6PrintSupport/Qt6PrintSupportVersionlessTargets.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6PrintSupport/Qt6PrintSupportConfig.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsTargets.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsConfig.cmake",
+			"/usr/share/cmake-3.28/Modules/FindOpenGL.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6/FindWrapOpenGL.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Gui/Qt6GuiDependencies.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Gui/Qt6GuiConfig.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Widgets/Qt6WidgetsDependencies.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlVersionlessTargets.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Qml/Qt6QmlConfig.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Test/Qt6TestTargets.cmake",
+			"/usr/lib/x86_64-linux-gnu/cmake/Qt6Test/Qt6TestConfig.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 9,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 11,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 53,
+				"parent" : 3
+			},
+			{
+				"file" : 2
+			},
+			{
+				"command" : 1,
+				"file" : 2,
+				"line" : 68,
+				"parent" : 5
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 56,
+				"parent" : 3
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 63,
+				"parent" : 3
+			},
+			{
+				"command" : 4,
+				"file" : 1,
+				"line" : 20,
+				"parent" : 3
+			},
+			{
+				"file" : 5,
+				"parent" : 9
+			},
+			{
+				"command" : 4,
+				"file" : 5,
+				"line" : 167,
+				"parent" : 10
+			},
+			{
+				"file" : 4,
+				"parent" : 11
+			},
+			{
+				"command" : 3,
+				"file" : 4,
+				"line" : 62,
+				"parent" : 12
+			},
+			{
+				"file" : 3,
+				"parent" : 13
+			},
+			{
+				"command" : 2,
+				"file" : 3,
+				"line" : 71,
+				"parent" : 14
+			},
+			{
+				"command" : 3,
+				"file" : 4,
+				"line" : 50,
+				"parent" : 12
+			},
+			{
+				"file" : 12,
+				"parent" : 16
+			},
+			{
+				"command" : 6,
+				"file" : 12,
+				"line" : 39,
+				"parent" : 17
+			},
+			{
+				"command" : 5,
+				"file" : 9,
+				"line" : 108,
+				"parent" : 18
+			},
+			{
+				"command" : 4,
+				"file" : 8,
+				"line" : 76,
+				"parent" : 19
+			},
+			{
+				"file" : 11,
+				"parent" : 20
+			},
+			{
+				"command" : 3,
+				"file" : 11,
+				"line" : 50,
+				"parent" : 21
+			},
+			{
+				"file" : 10,
+				"parent" : 22
+			},
+			{
+				"command" : 6,
+				"file" : 10,
+				"line" : 39,
+				"parent" : 23
+			},
+			{
+				"command" : 5,
+				"file" : 9,
+				"line" : 108,
+				"parent" : 24
+			},
+			{
+				"command" : 4,
+				"file" : 8,
+				"line" : 76,
+				"parent" : 25
+			},
+			{
+				"file" : 7,
+				"parent" : 26
+			},
+			{
+				"command" : 3,
+				"file" : 7,
+				"line" : 65,
+				"parent" : 27
+			},
+			{
+				"file" : 6,
+				"parent" : 28
+			},
+			{
+				"command" : 2,
+				"file" : 6,
+				"line" : 71,
+				"parent" : 29
+			},
+			{
+				"command" : 3,
+				"file" : 7,
+				"line" : 62,
+				"parent" : 27
+			},
+			{
+				"file" : 13,
+				"parent" : 31
+			},
+			{
+				"command" : 2,
+				"file" : 13,
+				"line" : 71,
+				"parent" : 32
+			},
+			{
+				"command" : 3,
+				"file" : 7,
+				"line" : 50,
+				"parent" : 27
+			},
+			{
+				"file" : 16,
+				"parent" : 34
+			},
+			{
+				"command" : 6,
+				"file" : 16,
+				"line" : 39,
+				"parent" : 35
+			},
+			{
+				"command" : 5,
+				"file" : 9,
+				"line" : 108,
+				"parent" : 36
+			},
+			{
+				"command" : 4,
+				"file" : 8,
+				"line" : 76,
+				"parent" : 37
+			},
+			{
+				"file" : 15,
+				"parent" : 38
+			},
+			{
+				"command" : 3,
+				"file" : 15,
+				"line" : 65,
+				"parent" : 39
+			},
+			{
+				"file" : 14,
+				"parent" : 40
+			},
+			{
+				"command" : 2,
+				"file" : 14,
+				"line" : 71,
+				"parent" : 41
+			},
+			{
+				"command" : 5,
+				"file" : 9,
+				"line" : 108,
+				"parent" : 24
+			},
+			{
+				"command" : 4,
+				"file" : 8,
+				"line" : 76,
+				"parent" : 43
+			},
+			{
+				"file" : 18,
+				"parent" : 44
+			},
+			{
+				"command" : 3,
+				"file" : 18,
+				"line" : 65,
+				"parent" : 45
+			},
+			{
+				"file" : 17,
+				"parent" : 46
+			},
+			{
+				"command" : 2,
+				"file" : 17,
+				"line" : 71,
+				"parent" : 47
+			},
+			{
+				"command" : 5,
+				"file" : 9,
+				"line" : 108,
+				"parent" : 18
+			},
+			{
+				"command" : 4,
+				"file" : 8,
+				"line" : 76,
+				"parent" : 49
+			},
+			{
+				"file" : 20,
+				"parent" : 50
+			},
+			{
+				"command" : 3,
+				"file" : 20,
+				"line" : 65,
+				"parent" : 51
+			},
+			{
+				"file" : 19,
+				"parent" : 52
+			},
+			{
+				"command" : 2,
+				"file" : 19,
+				"line" : 71,
+				"parent" : 53
+			},
+			{
+				"command" : 4,
+				"file" : 5,
+				"line" : 167,
+				"parent" : 10
+			},
+			{
+				"file" : 22,
+				"parent" : 55
+			},
+			{
+				"command" : 3,
+				"file" : 22,
+				"line" : 62,
+				"parent" : 56
+			},
+			{
+				"file" : 21,
+				"parent" : 57
+			},
+			{
+				"command" : 2,
+				"file" : 21,
+				"line" : 71,
+				"parent" : 58
+			},
+			{
+				"command" : 3,
+				"file" : 22,
+				"line" : 50,
+				"parent" : 56
+			},
+			{
+				"file" : 27,
+				"parent" : 60
+			},
+			{
+				"command" : 6,
+				"file" : 27,
+				"line" : 39,
+				"parent" : 61
+			},
+			{
+				"command" : 5,
+				"file" : 9,
+				"line" : 108,
+				"parent" : 62
+			},
+			{
+				"command" : 4,
+				"file" : 8,
+				"line" : 76,
+				"parent" : 63
+			},
+			{
+				"file" : 26,
+				"parent" : 64
+			},
+			{
+				"command" : 3,
+				"file" : 26,
+				"line" : 50,
+				"parent" : 65
+			},
+			{
+				"file" : 25,
+				"parent" : 66
+			},
+			{
+				"command" : 8,
+				"file" : 25,
+				"line" : 30,
+				"parent" : 67
+			},
+			{
+				"command" : 5,
+				"file" : 9,
+				"line" : 33,
+				"parent" : 68
+			},
+			{
+				"command" : 4,
+				"file" : 8,
+				"line" : 76,
+				"parent" : 69
+			},
+			{
+				"file" : 24,
+				"parent" : 70
+			},
+			{
+				"command" : 4,
+				"file" : 24,
+				"line" : 10,
+				"parent" : 71
+			},
+			{
+				"file" : 23,
+				"parent" : 72
+			},
+			{
+				"command" : 7,
+				"file" : 23,
+				"line" : 673,
+				"parent" : 73
+			},
+			{
+				"command" : 2,
+				"file" : 23,
+				"line" : 671,
+				"parent" : 73
+			},
+			{
+				"command" : 5,
+				"file" : 9,
+				"line" : 108,
+				"parent" : 36
+			},
+			{
+				"command" : 4,
+				"file" : 8,
+				"line" : 76,
+				"parent" : 76
+			},
+			{
+				"file" : 29,
+				"parent" : 77
+			},
+			{
+				"command" : 3,
+				"file" : 29,
+				"line" : 65,
+				"parent" : 78
+			},
+			{
+				"file" : 28,
+				"parent" : 79
+			},
+			{
+				"command" : 2,
+				"file" : 28,
+				"line" : 71,
+				"parent" : 80
+			},
+			{
+				"command" : 4,
+				"file" : 5,
+				"line" : 167,
+				"parent" : 10
+			},
+			{
+				"file" : 31,
+				"parent" : 82
+			},
+			{
+				"command" : 3,
+				"file" : 31,
+				"line" : 62,
+				"parent" : 83
+			},
+			{
+				"file" : 30,
+				"parent" : 84
+			},
+			{
+				"command" : 2,
+				"file" : 30,
+				"line" : 71,
+				"parent" : 85
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=gnu++20"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-fPIC"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "QT_CONCURRENT_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_CORE5COMPAT_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_CORE_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_GUI_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_NETWORK_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_OPENGL_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_POSITIONING_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_PRINTSUPPORT_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_QMLINTEGRATION_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_QMLMODELS_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_QML_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_QUICK_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_TESTCASE_BUILDDIR=\"/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/test\""
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_TESTCASE_SOURCEDIR=\"/home/losangelous/LosAngelous/Pro/Perseus-frontend/test\""
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_TESTLIB_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_WEBCHANNEL_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_WEBENGINECORE_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_WEBENGINEWIDGETS_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_WIDGETS_LIB"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 0,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/test/LosTest_autogen/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/src"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtWidgets"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtCore"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/lib/x86_64-linux-gnu/qt6/mkspecs/linux-g++"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtGui"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtNetwork"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtConcurrent"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtWebEngineWidgets"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtWebEngineCore"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtQuick"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtQml"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtQmlIntegration"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtQmlModels"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtOpenGL"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtWebChannel"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtPositioning"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtPrintSupport"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtTest"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "/usr/include/x86_64-linux-gnu/qt6/QtCore5Compat"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					2,
+					2
+				],
+				"standard" : "20"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "PerseusCore::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "libgit2package::@443a78629b8dc43e67db"
+		},
+		{
+			"id" : "LosTest_autogen_timestamp_deps::@36f028580bb02cc8272a"
+		},
+		{
+			"backtrace" : 0,
+			"id" : "LosTest_autogen::@36f028580bb02cc8272a"
+		}
+	],
+	"id" : "LosTest::@36f028580bb02cc8272a",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "../libPerseusCore.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6Test.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "../third_party/libgit2/libgit2.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 6,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libssl.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 6,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libcrypto.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 6,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libz.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 6,
+				"fragment" : "-lrt",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "-lstdc++exp",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 8,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6Concurrent.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 8,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6WebEngineWidgets.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 15,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6WebEngineCore.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 30,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6Quick.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 33,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6QmlModels.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 42,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6OpenGL.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 48,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6Positioning.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 54,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6PrintSupport.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 8,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 59,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6Gui.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 74,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libGLX.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 75,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libOpenGL.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 8,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6WebChannel.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 81,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6Qml.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 8,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6Network.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 8,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6Core5Compat.so.6.4.2",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 86,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libQt6Core.so.6.4.2",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "LosTest",
+	"nameOnDisk" : "LosTest",
+	"paths" : 
+	{
+		"build" : "test",
+		"source" : "test"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				2
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				3
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "build/test/LosTest_autogen/mocs_compilation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "test/LosTest.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/test/LosTest_autogen/timestamp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/test/LosTest_autogen/timestamp.rule",
+			"sourceGroupIndex" : 2
+		}
+	],
+	"type" : "EXECUTABLE"
+}

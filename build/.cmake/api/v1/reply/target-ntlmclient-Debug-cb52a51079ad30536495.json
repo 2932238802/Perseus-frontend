@@ -1,0 +1,291 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "third_party/libgit2/deps/ntlmclient/CMakeFiles/ntlmclient.dir/ntlmclient_autogen/mocs_compilation.cpp.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/ntlmclient/CMakeFiles/ntlmclient.dir/ntlm.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/ntlmclient/CMakeFiles/ntlmclient.dir/util.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/ntlmclient/CMakeFiles/ntlmclient.dir/unicode_builtin.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/ntlmclient/CMakeFiles/ntlmclient.dir/crypt_openssl.c.o"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"add_definitions"
+		],
+		"files" : 
+		[
+			"third_party/libgit2/deps/ntlmclient/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 39,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 22,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 4,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 23,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 12,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=gnu++23"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "CRYPT_OPENSSL"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "NTLM_STATIC=1"
+				},
+				{
+					"backtrace" : 4,
+					"define" : "OPENSSL_API_COMPAT=0x10100000L"
+				},
+				{
+					"backtrace" : 5,
+					"define" : "UNICODE_BUILTIN=1"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 0,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/ntlmclient/ntlmclient_autogen/include"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "23"
+			},
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-D_GNU_SOURCE  -Wall -Wextra -Wno-documentation-deprecated-sync -Wno-missing-field-initializers -Wmissing-declarations -Wstrict-aliasing -Wstrict-prototypes -Wdeclaration-after-statement -Wshift-count-overflow -Wunused-const-variable -Wunused-function -Wint-conversion -Wc99-c11-compat -Wformat -Wformat-security -Wno-implicit-fallthrough -g -D_DEBUG -O0 -std=c90"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "CRYPT_OPENSSL"
+				},
+				{
+					"backtrace" : 3,
+					"define" : "NTLM_STATIC=1"
+				},
+				{
+					"backtrace" : 4,
+					"define" : "OPENSSL_API_COMPAT=0x10100000L"
+				},
+				{
+					"backtrace" : 5,
+					"define" : "UNICODE_BUILTIN=1"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 0,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/ntlmclient/ntlmclient_autogen/include"
+				}
+			],
+			"language" : "C",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "90"
+			},
+			"sourceIndexes" : 
+			[
+				1,
+				3,
+				5,
+				7
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"id" : "ntlmclient_autogen_timestamp_deps::@8f15ddfd98c2421c2e46"
+		},
+		{
+			"backtrace" : 0,
+			"id" : "ntlmclient_autogen::@8f15ddfd98c2421c2e46"
+		}
+	],
+	"id" : "ntlmclient::@8f15ddfd98c2421c2e46",
+	"name" : "ntlmclient",
+	"paths" : 
+	{
+		"build" : "third_party/libgit2/deps/ntlmclient",
+		"source" : "third_party/libgit2/deps/ntlmclient"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				3,
+				5,
+				7
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				2,
+				4,
+				6,
+				8
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				9
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				10
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/ntlmclient/ntlmclient_autogen/mocs_compilation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/ntlmclient/ntlm.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "third_party/libgit2/deps/ntlmclient/ntlm.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/ntlmclient/util.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "third_party/libgit2/deps/ntlmclient/util.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/ntlmclient/unicode_builtin.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "third_party/libgit2/deps/ntlmclient/unicode_builtin.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/ntlmclient/crypt_openssl.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "third_party/libgit2/deps/ntlmclient/crypt_openssl.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/ntlmclient/ntlmclient_autogen/timestamp",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/ntlmclient/ntlmclient_autogen/timestamp.rule",
+			"sourceGroupIndex" : 3
+		}
+	],
+	"type" : "OBJECT_LIBRARY"
+}

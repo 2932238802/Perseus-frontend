@@ -1,0 +1,1705 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "third_party/libgit2/libgit2.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"install",
+			"target_compile_definitions",
+			"target_include_directories",
+			"set_target_properties"
+		],
+		"files" : 
+		[
+			"third_party/libgit2/src/libgit2/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 67,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 148,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 84,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 69,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 72,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=gnu++23"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 3,
+					"define" : "LIBGIT2_FILENAME=\"git2\""
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 0,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/src/libgit2/libgit2package_autogen/include"
+				},
+				{
+					"backtrace" : 4,
+					"isSystem" : true,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/src/libgit2"
+				},
+				{
+					"backtrace" : 4,
+					"isSystem" : true,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/src/util"
+				},
+				{
+					"backtrace" : 4,
+					"isSystem" : true,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/include"
+				},
+				{
+					"backtrace" : 4,
+					"isSystem" : true,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/gen_headers"
+				},
+				{
+					"backtrace" : 4,
+					"isSystem" : true,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/llhttp"
+				},
+				{
+					"backtrace" : 4,
+					"isSystem" : true,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre"
+				},
+				{
+					"backtrace" : 4,
+					"isSystem" : true,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/xdiff"
+				},
+				{
+					"backtrace" : 4,
+					"isSystem" : true,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/ntlmclient"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "23"
+			},
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"id" : "llhttp::@b62bfa6c6b2b54fa1094"
+		},
+		{
+			"id" : "pcre::@1f62067979833730d42e"
+		},
+		{
+			"id" : "xdiff::@3758e9176b9a11d0f923"
+		},
+		{
+			"id" : "ntlmclient::@8f15ddfd98c2421c2e46"
+		},
+		{
+			"id" : "libgit2::@443a78629b8dc43e67db"
+		},
+		{
+			"id" : "util::@2c39e9c7f66e47787f00"
+		},
+		{
+			"id" : "libgit2package_autogen_timestamp_deps::@443a78629b8dc43e67db"
+		},
+		{
+			"backtrace" : 0,
+			"id" : "libgit2package_autogen::@443a78629b8dc43e67db"
+		}
+	],
+	"id" : "libgit2package::@443a78629b8dc43e67db",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "lib"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "/usr/local"
+		}
+	},
+	"name" : "libgit2package",
+	"nameOnDisk" : "libgit2.a",
+	"paths" : 
+	{
+		"build" : "third_party/libgit2/src/libgit2",
+		"source" : "third_party/libgit2/src/libgit2"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"name" : "Object Libraries",
+			"sourceIndexes" : 
+			[
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36,
+				37,
+				38,
+				39,
+				40,
+				41,
+				42,
+				43,
+				44,
+				45,
+				46,
+				47,
+				48,
+				49,
+				50,
+				51,
+				52,
+				53,
+				54,
+				55,
+				56,
+				57,
+				58,
+				59,
+				60,
+				61,
+				62,
+				63,
+				64,
+				65,
+				66,
+				67,
+				68,
+				69,
+				70,
+				71,
+				72,
+				73,
+				74,
+				75,
+				76,
+				77,
+				78,
+				79,
+				80,
+				81,
+				82,
+				83,
+				84,
+				85,
+				86,
+				87,
+				88,
+				89,
+				90,
+				91,
+				92,
+				93,
+				94,
+				95,
+				96,
+				97,
+				98,
+				99,
+				100,
+				101,
+				102,
+				103,
+				104,
+				105,
+				106,
+				107,
+				108,
+				109,
+				110,
+				111,
+				112,
+				113,
+				114,
+				115,
+				116,
+				117,
+				118,
+				119,
+				120,
+				121,
+				122,
+				123,
+				124,
+				125,
+				126,
+				127,
+				128,
+				129,
+				130,
+				131,
+				132,
+				133,
+				134,
+				135,
+				136,
+				137,
+				138,
+				139,
+				140,
+				141,
+				142,
+				143,
+				144,
+				145,
+				146,
+				147,
+				148,
+				149,
+				150,
+				151,
+				152,
+				153,
+				154,
+				155,
+				156,
+				157,
+				158,
+				159,
+				160,
+				161,
+				162,
+				163,
+				164,
+				165,
+				166,
+				167,
+				168,
+				169,
+				170,
+				171,
+				172,
+				173,
+				174,
+				175,
+				176,
+				177,
+				178,
+				179,
+				180,
+				181,
+				182,
+				183,
+				184,
+				185,
+				186,
+				187,
+				188,
+				189,
+				190,
+				191,
+				192,
+				193,
+				194,
+				195,
+				196,
+				197,
+				198,
+				199,
+				200,
+				201,
+				202,
+				203,
+				204,
+				205,
+				206,
+				207,
+				208,
+				209
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				210
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				211
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/libgit2package_autogen/mocs_compilation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/util_autogen/mocs_compilation.cpp.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/alloc.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/allocators/debugalloc.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/allocators/failalloc.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/allocators/stdalloc.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/allocators/win32_leakcheck.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/date.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/errors.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/filebuf.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/fs_path.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/futils.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/hash.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/net.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/pool.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/posix.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/pqueue.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/rand.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/regexp.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/runtime.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/sortedcache.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/str.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/strlist.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/thread.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/tsort.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/utf8.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/util.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/varint.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/vector.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/wildmatch.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/zstream.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/unix/map.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/unix/process.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/unix/realpath.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/hash/collisiondetect.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/hash/sha1dc/sha1.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/hash/sha1dc/ubc_check.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/util/CMakeFiles/util.dir/hash/openssl.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/libgit2_autogen/mocs_compilation.cpp.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/annotated_commit.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/apply.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/attr.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/attr_file.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/attrcache.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/blame.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/blame_git.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/blob.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/branch.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/buf.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/cache.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/checkout.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/cherrypick.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/clone.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/commit.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/commit_graph.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/commit_list.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config_cache.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config_file.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config_list.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config_mem.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config_parse.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config_snapshot.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/crlf.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/delta.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/describe.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_driver.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_file.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_generate.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_parse.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_print.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_stats.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_tform.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_xdiff.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/email.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/fetch.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/fetchhead.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/filter.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/grafts.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/graph.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/hashsig.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/ident.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/ignore.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/index.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/index_map.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/indexer.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/iterator.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/libgit2.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/mailmap.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/merge.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/merge_driver.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/merge_file.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/message.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/midx.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/mwindow.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/notes.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/object.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/object_api.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/odb.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/odb_loose.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/odb_mempack.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/odb_pack.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/oid.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/oidarray.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/pack-objects.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/pack.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/parse.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/patch.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/patch_generate.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/patch_parse.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/path.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/pathspec.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/proxy.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/push.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/reader.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/rebase.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/refdb.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/refdb_fs.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/reflog.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/refs.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/refspec.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/remote.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/repository.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/reset.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/revert.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/revparse.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/revwalk.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/settings.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/signature.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/stash.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/status.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/strarray.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/mbedtls.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/openssl.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/openssl_dynamic.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/openssl_legacy.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/registry.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/schannel.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/socket.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/stransport.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/tls.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/submodule.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/sysdir.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/tag.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/trace.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/trailer.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transaction.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transport.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/auth.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/auth_gssapi.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/auth_ntlmclient.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/auth_sspi.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/credential.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/credential_helpers.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/git.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/http.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/httpclient.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/httpparser.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/local.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/smart.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/smart_pkt.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/smart_protocol.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/ssh.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/ssh_exec.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/ssh_libssh2.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/winhttp.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/tree-cache.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/tree.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/worktree.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/llhttp_autogen/mocs_compilation.cpp.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/api.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/http.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/llhttp.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_autogen/mocs_compilation.cpp.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_byte_order.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_chartables.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_compile.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_config.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_dfa_exec.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_exec.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_fullinfo.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_get.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_globals.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_jit_compile.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_maketables.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_newline.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_ord2utf8.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_refcount.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_string_utils.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_study.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_tables.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_ucd.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_valid_utf8.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_version.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_xclass.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcreposix.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/xdiff/CMakeFiles/xdiff.dir/xdiff_autogen/mocs_compilation.cpp.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/xdiff/CMakeFiles/xdiff.dir/xdiffi.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/xdiff/CMakeFiles/xdiff.dir/xemit.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/xdiff/CMakeFiles/xdiff.dir/xhistogram.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/xdiff/CMakeFiles/xdiff.dir/xmerge.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/xdiff/CMakeFiles/xdiff.dir/xpatience.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/xdiff/CMakeFiles/xdiff.dir/xprepare.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/xdiff/CMakeFiles/xdiff.dir/xutils.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/ntlmclient/CMakeFiles/ntlmclient.dir/ntlmclient_autogen/mocs_compilation.cpp.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/ntlmclient/CMakeFiles/ntlmclient.dir/ntlm.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/ntlmclient/CMakeFiles/ntlmclient.dir/util.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/ntlmclient/CMakeFiles/ntlmclient.dir/unicode_builtin.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/ntlmclient/CMakeFiles/ntlmclient.dir/crypt_openssl.c.o",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/libgit2package_autogen/timestamp",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/libgit2package_autogen/timestamp.rule",
+			"sourceGroupIndex" : 3
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

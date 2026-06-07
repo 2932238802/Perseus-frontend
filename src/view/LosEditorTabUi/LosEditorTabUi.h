@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "common/constants/ConstantsClass/LosEditorTabUiClass.h"
 #include "common/constants/ConstantsStr/LosEditorTableUiStr.h"
 #include "common/constants/ConstantsStr/ShortCut.h"
 #include "common/util/CheckLang.h"
@@ -11,15 +12,12 @@
 #include "models/LosFileContext/LosFileContext.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include "view/LosEditorUi/LosEditorUi.h"
+#include "view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.h"
 #include "view/LosFloatingPanelUi/LosFloatingPanelUi.h"
 #include "view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.h"
 #include "view/LosPluginDetailUi/LosPluginDetailUi.h"
+#include "view/LosPreview/LosPreview.h"
 
-#include "common/constants/ConstantsStr/LosEditorTableUiStr.h"
-#include "common/constants/ConstantsStr/ShortCut.h"
-#include "core/LosShortcutManager/LosShortcutManager.h"
-#include "view/LosEditorUi/LosEditorUi.h"
-#include "view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.h"
 #include <QDebug>
 #include <QObject>
 #include <QSharedPointer>
@@ -58,7 +56,7 @@ namespace LosView
         void formatTab();
 
       public: // get
-        LosEditorUi *getCurEditor();
+        QWidget *getCurEditor(LosCommon::LosEditorTableUi_Constants::EditorType = LosCommon::LosEditorTableUi_Constants::EditorType::CODE);
         int tabCount() const;
         QString getCurFilePath() const;
         QStringList getOpenFiles() const;
@@ -75,6 +73,7 @@ namespace LosView
         void onFileRenamed(const QString &old_path, const QString &new_path);
         void onGotoLineShortcut();
         void onFindShortcut();
+        void onTogglePreview(const QString &absolute_file_path); // 切换当前标签页的预览状态
 
       private: // init
         void initConnect();
@@ -83,14 +82,12 @@ namespace LosView
 
       private: // tool
         void checkLspAnsFormat(const QString &file_path);
-        // 为指定 index 的 tab 装配一个自绘的关闭按钮
-        // - Qt 原生 close-button 依赖系统图标,在深色主题下经常显示为空白/红块
-        // - 用 QToolButton + × 字符完全自绘,保证样式一致
         void installCloseButton(int index);
 
       private: // params
         QSet<LosCommon::LosToolChain_Constants::LosLanguage> L_checkedLanguage;
         QTabWidget *L_tabWidget;
-        QMap<QString, LosView::LosEditorUi *> LOS_pathToUi; // 左侧是 absoluteFilePath 就是全路径
+        QMap<QString, LosView::LosEditorUi *> LOS_pathToUi;     // 左侧是 absoluteFilePath 就是全路径
+        QMap<QString, LosView::LosPreview *> LOS_pathToPreview; // 预览的逻辑
     };
 } /* namespace LosView */

@@ -17,6 +17,7 @@ namespace LosCommon
             PYTHON,
             CSHARP,
             CMAKE,
+            MARKDOWN,
             UNKNOWN,
         };
 

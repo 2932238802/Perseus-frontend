@@ -1,15 +1,25 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
-
 #include "LosEditorTabUi.h"
+#include "common/constants/ConstantsClass/LosEditorTabUiClass.h"
+#include "common/constants/ConstantsClass/LosToolChainClass.h"
+#include "common/util/CheckLang.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
-
-
+#include "view/LosEditorUi/LosEditorUi.h"
+#include "view/LosPreview/LosMDPreview/LosMDPreview.h"
+#include "view/LosPreview/LosPreview.h"
+#include <qfileinfo.h>
+#include <qobject.h>
 
 namespace LosView
 {
-
+    /**
+     * @brief Construct a new Los Editor Tab Ui:: Los Editor Tab Ui object
+     * 
+     * @param tab_widget 
+     * @param parent 
+     */
     LosEditorTabUi::LosEditorTabUi(QTabWidget *tab_widget, QWidget *parent) : L_tabWidget{tab_widget}, QWidget{parent}
     {
         initConnect();
@@ -20,13 +30,14 @@ namespace LosView
             L_tabWidget->setTabsClosable(false);
         }
     }
-
     LosEditorTabUi::~LosEditorTabUi() {}
 
 
 
-    /*
-     * 关闭标签页
+    /**
+     * @brief closeTab 关闭标签
+     * 
+     * @param index 
      */
     void LosEditorTabUi::closeTab(int index)
     {
@@ -119,7 +130,6 @@ namespace LosView
         }
         auto filePath = file.getAbsoluteFilePath();
         checkLspAnsFormat(filePath);
-
         if (LOS_pathToUi.contains(filePath))
         {
             LosEditorUi *editor = LOS_pathToUi.value(filePath);
@@ -141,13 +151,16 @@ namespace LosView
 
 
     /**
-     * @brief
-     *
+     * @brief 格式化内容
      */
     void LosEditorTabUi::formatTab()
     {
-        if (getCurEditor())
-            getCurEditor()->format();
+        auto widget = getCurEditor();
+        if (widget != nullptr)
+        {
+            auto editor = qobject_cast<LosEditorUi *>(widget);
+            editor->format();
+        }
     }
 
 
@@ -158,11 +171,15 @@ namespace LosView
      *
      * @return LosEditorUi*
      */
-    LosEditorUi *LosEditorTabUi::getCurEditor()
+    QWidget *LosEditorTabUi::getCurEditor(LosCommon::LosEditorTableUi_Constants::EditorType type)
     {
-        if (L_tabWidget != nullptr)
+        if (type == LosCommon::LosEditorTableUi_Constants::EditorType::CODE)
         {
             return qobject_cast<LosEditorUi *>(L_tabWidget->currentWidget());
+        }
+        else if (type == LosCommon::LosEditorTableUi_Constants::EditorType::PREVIEW)
+        {
+            return qobject_cast<LosPreview *>(L_tabWidget->currentWidget());
         }
         return nullptr;
     }
@@ -188,8 +205,18 @@ namespace LosView
      */
     QString LosEditorTabUi::getCurFilePath() const
     {
-        auto widget = qobject_cast<LosEditorUi *>(L_tabWidget->currentWidget());
-        return widget != nullptr ? LOS_pathToUi.key(widget) : "";
+        QWidget *cur = L_tabWidget->currentWidget();
+        // 当前是源码 tab: 从 LOS_pathToUi 反查路径
+        if (auto *editor = qobject_cast<LosEditorUi *>(cur))
+        {
+            return LOS_pathToUi.key(editor);
+        }
+        // 当前是预览 tab: 从 LOS_pathToPreview 反查路径
+        if (auto *preview = qobject_cast<LosPreview *>(cur))
+        {
+            return LOS_pathToPreview.key(preview);
+        }
+        return "";
     }
 
 
@@ -260,17 +287,22 @@ namespace LosView
             }
             QString filePath = LOS_pathToUi.key(editor);
             if (!filePath.isEmpty())
+            {
                 LOS_pathToUi.remove(filePath);
+            }
         }
+        
         L_tabWidget->removeTab(index);
         wi->deleteLater();
     }
 
 
 
-    /*
-     * 如果编辑器 修改
-     * - 使用 ● 作为脏标记,视觉上比 * 更清爽
+    /**
+     * @brief 
+     * 
+     * @param file_path 
+     * @param is_dirty 
      */
     void LosEditorTabUi::onEditDirty(const QString &file_path, bool is_dirty)
     {
@@ -295,29 +327,39 @@ namespace LosView
 
 
 
-    /*
+    /**
+     * @brief onDefineResult 定义跳转
+     *
+     * @param file_path
+     * @param line
      */
     void LosEditorTabUi::onDefineResult(const QString &file_path, int line)
     {
         openFile(file_path);
-        if (nullptr != getCurEditor())
+        auto widget = getCurEditor();
+        if (nullptr != widget)
         {
-            getCurEditor()->gotoLine(line);
+            auto editor = qobject_cast<LosEditorUi *>(widget);
+            editor->gotoLine(line);
         }
     }
 
 
 
-    /*
-     * 双击
+    /**
+     * @brief 错误信息跳转
+     *
+     * @param file_path
+     * @param line
      */
     void LosEditorTabUi::onDoubleClickedOnIssue(const QString &file_path, int line)
     {
         openFile(file_path);
-        auto editor = getCurEditor();
-        if (editor)
+        auto widget = getCurEditor();
+        if (widget != nullptr)
         {
-            editor->gotoLine(line);
+            auto editer = qobject_cast<LosEditorUi *>(widget);
+            editer->gotoLine(line);
         }
     }
 
@@ -421,9 +463,10 @@ namespace LosView
      */
     void LosEditorTabUi::onGotoLineShortcut()
     {
-        auto editor = getCurEditor();
-        if (!editor)
+        auto widget = getCurEditor();
+        if (!widget)
             return;
+        auto *editor                               = qobject_cast<LosEditorUi *>(widget);
         int maxLines                               = editor->document()->blockCount();
         LosView::LosGotoLinePopupUi *contentWidget = new LosView::LosGotoLinePopupUi();
         LosView::LosFloatingPanelUi *dialog        = new LosView::LosFloatingPanelUi(contentWidget, true, this);
@@ -469,23 +512,62 @@ namespace LosView
 
 
     /**
+     * @brief 切换当前标签页的预览状态
+     *
+     * @param absolute_file_path
+     */
+    void LosEditorTabUi::onTogglePreview(const QString &absolute_file_path)
+    {
+        if (LosCommon::CheckLang(absolute_file_path) != LosCommon::LosToolChain_Constants::LosLanguage::MARKDOWN)
+        {
+            return;
+        }
+        if (getCurEditor(LosCommon::LosEditorTableUi_Constants::EditorType::PREVIEW) != nullptr)
+        {
+            if (LOS_pathToUi.contains(absolute_file_path))
+            {
+                L_tabWidget->setCurrentWidget(LOS_pathToUi.value(absolute_file_path));
+            }
+            return;
+        }
+        LosEditorUi *editor = LOS_pathToUi.value(absolute_file_path, nullptr);
+        if (editor == nullptr)
+        {
+            return;
+        }
+        LosPreview *preview = nullptr;
+        if (LOS_pathToPreview.contains(absolute_file_path))
+        {
+            preview = LOS_pathToPreview.value(absolute_file_path);
+        }
+        else
+        {
+            preview      = new LosMDPreview(this);
+            int newIndex = L_tabWidget->addTab(preview, QFileInfo(absolute_file_path).fileName() + " (Preview)");
+            installCloseButton(newIndex);
+            LOS_pathToPreview.insert(absolute_file_path, preview);
+        }
+        preview->render(editor->toPlainText());
+        L_tabWidget->setCurrentWidget(preview);
+    }
+
+
+
+    /**
      * @brief initConnect
      * - 初始化 信号槽
-     *
      */
     void LosEditorTabUi::initConnect()
     {
         auto &router = LosCore::LosRouter::instance();
         connect(L_tabWidget, &QTabWidget::tabCloseRequested, this, &LosEditorTabUi::onTabCloseRequested);
-        /*
-         * 收到 定义 结果 就去处理
-         */
         connect(&router, &LosCore::LosRouter::_cmd_lsp_result_definition, this, &LosEditorTabUi::onDefineResult);
         connect(&router, &LosCore::LosRouter::_cmd_gotoFile, this, &LosEditorTabUi::onDoubleClickedOnIssue);
         connect(&router, &LosCore::LosRouter::_cmd_codeFormat, this, &LosEditorTabUi::formatTab);
         connect(&router, &LosCore::LosRouter::_cmd_fileDirty, this, &LosEditorTabUi::onEditDirty);
         connect(&router, &LosCore::LosRouter::_cmd_openPluginDetail, this, &LosEditorTabUi::onOpenPlugin);
         connect(&router, &LosCore::LosRouter::_cmd_fileRenamed, this, &LosEditorTabUi::onFileRenamed);
+        connect(&router, &LosCore::LosRouter::LosRouter::_cmd_togglePreview, this, &LosEditorTabUi::onTogglePreview);
         if (L_tabWidget)
         {
             connect(L_tabWidget, &QTabWidget::currentChanged, this, &LosEditorTabUi::onTabClicked);

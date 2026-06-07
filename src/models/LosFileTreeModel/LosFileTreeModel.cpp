@@ -1,19 +1,34 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "models/LosFileTreeModel/LosFileTreeModel.h"
+#include "common/constants/ConstantsClass/LosFileTreeModelClass.h"
+#include "common/constants/ConstantsClass/LosFileType.h"
+#include "common/constants/ConstantsClass/LosGitManagerClass.h"
+#include "common/constants/ConstantsStr/LosFileTreeModelStr.h"
 #include "common/util/GetFileIcon.h"
 #include "core/LosFileSystem/LosFileSystem.h"
+#include "core/LosGitManager/LosGitManager.h"
 #include "core/LosRouter/LosRouter.h"
+#include "git2.h"
 #include "models/LosFileNode/LosFileNode.h"
+#include <qbrush.h>
 #include <qicon.h>
 #include <qnamespace.h>
+#include <qvariant.h>
 
 
 namespace LosModel
 {
-
-    LosFileTreeModel::LosFileTreeModel(LosFileNode *rootNode, QObject *parent) : QAbstractItemModel{parent}, LOS_rootNode(rootNode){};
-
+    /**
+     * @brief Construct a new Los File Tree Model:: Los File Tree Model object
+     *
+     * @param rootNode
+     * @param parent
+     */
+    LosFileTreeModel::LosFileTreeModel(LosFileNode *rootNode, QObject *parent) : QAbstractItemModel{parent}, LOS_rootNode(rootNode)
+    {
+        initConnect();
+    };
     LosFileTreeModel::~LosFileTreeModel()
     {
         if (LOS_rootNode)
@@ -197,6 +212,39 @@ namespace LosModel
             static QFileIconProvider provider;
             return provider.icon(QFileIconProvider::File);
         }
+        case Qt::ForegroundRole: // 这个是显示字体颜色
+        {
+            if (node->getFileType() == LosCommon::LOS_ENUM_FileType::FT_FOLDER)
+                return QVariant();
+            QString absPath    = node->getFile().getAbsoluteFilePath();
+            unsigned int flags = LosCore::LosGitManager::instance().statusOfFile(absPath);
+            if (flags & GIT_STATUS_WT_MODIFIED || flags & GIT_STATUS_INDEX_MODIFIED)
+                return QBrush(QColor(LosCommon::LosFileTreeModel_Constants::MODIFY_COLOR)); // 修改
+            if (flags & GIT_STATUS_WT_NEW)
+                return QBrush(QColor(LosCommon::LosFileTreeModel_Constants::WT_NEW_COLOR)); // 未跟踪新文件
+            if (flags & GIT_STATUS_INDEX_NEW)
+                return QBrush(QColor(LosCommon::LosFileTreeModel_Constants::INDEX_NEW_COLOR)); // 已暂存新增
+            return QVariant();
+        }
+        case (LosCommon::LosFileTreeModel_Constants::FileRole::GITSTATUS_ROLE):
+        {
+            if (node->getFileType() == LosCommon::LOS_ENUM_FileType::FT_FOLDER)
+            {
+                QString dirPath = node->getFile().getAbsoluteFilePath();
+                if (LosCore::LosGitManager::instance().folderHasBeenChanged(dirPath))
+                    return QStringLiteral("●");
+                return QVariant();
+            }
+            QString path       = node->getFile().getAbsoluteFilePath();
+            unsigned int flags = LosCore::LosGitManager::instance().statusOfFile(path);
+            if (flags & GIT_STATUS_WT_MODIFIED || flags & GIT_STATUS_INDEX_MODIFIED)
+                return QStringLiteral("M");
+            if (flags & GIT_STATUS_WT_NEW)
+                return QStringLiteral("U");
+            if (flags & GIT_STATUS_INDEX_NEW)
+                return QStringLiteral("A");
+            return QVariant();
+        }
         default:
         {
             return QVariant();
@@ -272,6 +320,12 @@ namespace LosModel
     LosModel::LosFileNode *LosFileTreeModel::getRoot() const
     {
         return LOS_rootNode;
+    }
+
+
+    void LosFileTreeModel::initConnect()
+    {
+        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_gitStatusUpdated, this, [this]() { emit layoutChanged(); });
     }
 
 } /* namespace LosModel */

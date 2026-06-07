@@ -1,0 +1,126 @@
+{
+	"BUILD_DIR" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/ntlmclient/ntlmclient_autogen",
+	"CMAKE_BINARY_DIR" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/ntlmclient",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/ntlmclient",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/ntlmclient/CMakeLists.txt"
+	],
+	"CMAKE_SOURCE_DIR" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend",
+	"DEP_FILE" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/ntlmclient/ntlmclient_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "ntlmclient_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/ntlmclient/crypt_openssl.h",
+			"MU",
+			"EWIEGA46WW/moc_crypt_openssl.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/ntlmclient/ntlm.h",
+			"MU",
+			"EWIEGA46WW/moc_ntlm.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/ntlmclient/unicode_builtin.h",
+			"MU",
+			"EWIEGA46WW/moc_unicode_builtin.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/ntlmclient/util.h",
+			"MU",
+			"EWIEGA46WW/moc_util.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/ntlmclient/ntlmclient_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/ntlmclient/ntlmclient_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"CRYPT_OPENSSL",
+		"NTLM_STATIC=1",
+		"OPENSSL_API_COMPAT=0x10100000L",
+		"UNICODE_BUILTIN=1"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/usr/include",
+		"/usr/include/c++/13",
+		"/usr/include/x86_64-linux-gnu/c++/13",
+		"/usr/include/c++/13/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/13/include",
+		"/usr/local/include",
+		"/usr/include/x86_64-linux-gnu"
+	],
+	"MOC_MACRO_NAMES" : 
+	[
+		"Q_OBJECT",
+		"Q_GADGET",
+		"Q_GADGET_EXPORT",
+		"Q_NAMESPACE",
+		"Q_NAMESPACE_EXPORT"
+	],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-std=gnu++23",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake-3.28/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/ntlmclient/ntlmclient_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 12,
+	"PARSE_CACHE_FILE" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/ntlmclient/CMakeFiles/ntlmclient_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/lib/qt6/libexec/moc",
+	"QT_UIC_EXECUTABLE" : "/usr/lib/qt6/libexec/uic",
+	"QT_VERSION_MAJOR" : 6,
+	"QT_VERSION_MINOR" : 4,
+	"SETTINGS_FILE" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/ntlmclient/CMakeFiles/ntlmclient_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/ntlmclient/crypt_openssl.c",
+			"MU",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/ntlmclient/ntlm.c",
+			"MU",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/ntlmclient/unicode_builtin.c",
+			"MU",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/ntlmclient/util.c",
+			"MU",
+			null
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [ "/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view" ],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

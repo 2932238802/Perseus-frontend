@@ -60,7 +60,9 @@ namespace LosCore
         semanticTokens["dynamicRegistration"] = false;
         semanticTokens["requests"]            = QJsonObject{{"full", true}};
         capabilities["textDocument"]          = QJsonObject{{"semanticTokens", semanticTokens}};
-        params["capabilities"]                = capabilities;
+        capabilities["general"] = QJsonObject{{"positionEncodings", QJsonArray{"utf-16"}}};
+        capabilities["offsetEncoding"] = QJsonArray{"utf-16"};
+        params["capabilities"]         = capabilities;
         sendRequest("initialize", params, LosLspType::REQ_INITIALIZE);
     }
 
@@ -197,7 +199,7 @@ namespace LosCore
                     if (result.contains("data"))
                     {
                         QJsonArray data = result["data"].toArray();
-                        emit LosRouter::instance()._cmd_lsp_result_semanticTokens(data);
+                        emit LosRouter::instance()._cmd_lsp_result_semanticTokens(absoluteFilePath, data);
                     }
                 }
                 break;

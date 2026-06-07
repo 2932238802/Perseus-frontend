@@ -5,16 +5,17 @@
 #include "core/LosTheme/LosThemeManager.h"
 
 #include <QColor>
+#include <QDebug>
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QTextBlock>
 #include <QTextCursor>
 
 namespace LosCore
 {
     /**
      * @brief Construct a new Los Highlighter:: Los Highlighter object
-     *
      * @param doc
      */
     LosHighlighter::LosHighlighter(QTextDocument *doc) : QSyntaxHighlighter{doc}
@@ -70,31 +71,48 @@ namespace LosCore
      */
     void LosHighlighter::mergeFormat(int start, int length, const QTextCharFormat &format)
     {
-        QTextCursor cursor(document());
-        cursor.setPosition(currentBlock().position() + start);
-        cursor.setPosition(currentBlock().position() + start + length, QTextCursor::KeepAnchor);
-        QTextCharFormat mergedFormat = cursor.charFormat();
-        if (format.hasProperty(QTextFormat::ForegroundBrush))
+        /*
+         * 必须用 QSyntaxHighlighter::setFormat / format, 而不是
+         * QTextCursor::setCharFormat:
+         * - setFormat 受 highlighter 管理, 每次 rehighlight 自动清空重来,
+         *   不会累积;
+         * - QTextCursor::setCharFormat 直接写进文档字符格式, 绕过清空机制,
+         *   导致斜体等样式在反复重绘中残留并向相邻字符扩散(整行变斜体).
+         *
+         * 这里基于"当前块"做边界钳制(currentBlock 当前正在 highlightBlock):
+         * start/length 是相对块首的列偏移, 上限为块内字符数(不含末尾分隔符).
+         */
+        const QString blockText = currentBlock().text();
+        const int textLen       = blockText.length();
+        if (start < 0)
+            start = 0;
+        if (start >= textLen)
+            return;
+        int end = start + length;
+        if (end > textLen)
+            end = textLen;
+        if (end <= start)
+            return;
+
+        /*
+         * 逐字符合并: 取该位置已有格式(正则高亮结果), 仅覆盖语义提供的属性,
+         * 保留其余(如正则设的前景色)
+         */
+        for (int i = start; i < end; ++i)
         {
-            mergedFormat.setForeground(format.foreground());
+            QTextCharFormat mergedFormat = this->format(i);
+            if (format.hasProperty(QTextFormat::ForegroundBrush))
+                mergedFormat.setForeground(format.foreground());
+            if (format.hasProperty(QTextFormat::BackgroundBrush))
+                mergedFormat.setBackground(format.background());
+            if (format.hasProperty(QTextFormat::FontItalic))
+                mergedFormat.setFontItalic(format.fontItalic());
+            if (format.hasProperty(QTextFormat::FontWeight))
+                mergedFormat.setFontWeight(format.fontWeight());
+            if (format.hasProperty(QTextFormat::FontUnderline))
+                mergedFormat.setFontUnderline(format.fontUnderline());
+            setFormat(i, 1, mergedFormat);
         }
-        if (format.hasProperty(QTextFormat::BackgroundBrush))
-        {
-            mergedFormat.setBackground(format.background());
-        }
-        if (format.hasProperty(QTextFormat::FontItalic))
-        {
-            mergedFormat.setFontItalic(format.fontItalic());
-        }
-        if (format.hasProperty(QTextFormat::FontWeight))
-        {
-            mergedFormat.setFontWeight(format.fontWeight());
-        }
-        if (format.hasProperty(QTextFormat::FontUnderline))
-        {
-            mergedFormat.setFontUnderline(format.fontUnderline());
-        }
-        cursor.setCharFormat(mergedFormat);
     }
 
 
@@ -178,7 +196,11 @@ namespace LosCore
             }
             L_semanticData[currentLine].append({currentChar, length, tokenType, modifiers});
         }
+        QTextDocument *doc = document();
+        bool wasModified   = doc->isModified();
         rehighlight();
+        if (doc->isModified() != wasModified)
+            doc->setModified(wasModified);
     }
 
 

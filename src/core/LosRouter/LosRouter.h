@@ -55,7 +55,7 @@ namespace LosCore
         void _cmd_lsp_result_hover(const QString absoluteFilePath, const QString &md_content);
 
         // 语义高亮
-        void _cmd_lsp_result_semanticTokens(const QJsonArray &arr);
+        void _cmd_lsp_result_semanticTokens(const QString &absolute_file_path, const QJsonArray &arr);
 
         void _cmd_lsp_result_semanticLegend(const QStringList &, const QStringList &);
 
@@ -68,6 +68,8 @@ namespace LosCore
         // lsp
         void _cmd_lspReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath, const QStringList &args);
 
+        // 切换标签页的预览状态
+        void _cmd_togglePreview(const QString &absolute_file_path);
 
 
         // ----------------------------------------------------------------------------
@@ -86,6 +88,8 @@ namespace LosCore
 
         // 切换文件
         void _cmd_fileChanged(const QString &absolute_file_path);
+
+
 
         // ----------------------------------------------------------------------------
         // 启动ui 督促 下载
@@ -135,8 +139,15 @@ namespace LosCore
         void _cmd_autoInstallTool(const LosCommon::LosToolChain_Constants::ToolChainConfig &);
 
 
-        // ----------------------------------------------------------------------------
 
+        // ----------------------------------------------------------------------------
+        /**
+         * @brief git的信号
+         *
+         */
+        void _cmd_initGitProject(const QString &path);
+        void _cmd_getBranchName(const QString &branch_name);
+        void _cmd_gitStatusUpdated();
 
 
         // ----------------------------------------------------------------------------
@@ -151,6 +162,8 @@ namespace LosCore
         void _cmd_projectBtnToggled(bool checked);
         // - 0=Output, 1=Issues, 2=Terminal
         void _cmd_bottomTabVisibilityChanged(int tabIndex, bool visible);
+
+
 
         // ----------------------------------------------------------------------------
         /**

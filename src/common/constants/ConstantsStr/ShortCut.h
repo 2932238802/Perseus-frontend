@@ -39,5 +39,6 @@ namespace LosCommon
         inline constexpr const char *FOCUS_TERMINAL      = "Ctrl+`";         /* 聚焦到底部终端 */
         inline constexpr const char *FONT_ZOOM_IN        = "Ctrl+>";         /* 放大字体 / 全局缩放增大 */
         inline constexpr const char *FONT_ZOOM_OUT       = "Ctrl+<";         /* 缩小字体 */
+        inline constexpr const char *TOGGLE_PREVIEW      = "Ctrl+Shift+/";   // 切换为预览状态
     } /* namespace ShortCut */
 } // namespace LosCommon

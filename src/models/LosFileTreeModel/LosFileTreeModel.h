@@ -33,6 +33,9 @@ namespace LosModel
         LosFileNode *nodeFromIndex(const QModelIndex &index);
         LosModel::LosFileNode *getRoot() const;
 
+      private: // init
+        void initConnect();
+
       private:
         LosModel::LosFileNode *LOS_rootNode;
     };

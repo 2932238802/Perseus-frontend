@@ -7,6 +7,8 @@
 
 #include "ui_LosSettingsUi.h"
 
+#include <QDir>
+#include <QFile>
 #include <QJsonObject>
 #include <QStringList>
 
@@ -25,6 +27,7 @@ namespace LosView
         ui->setupUi(this);
         initStyle();
         initThemePage();
+        initFormatPage();
         initConnect();
     }
     LosSettingsUi::~LosSettingsUi()
@@ -69,6 +72,8 @@ namespace LosView
         connect(ui->btn_install_cmake, &QPushButton::clicked, this, &LosSettingsUi::onCMakeInstallBtnClicked);
         connect(&router, &LosCore::LosRouter::_cmd_findExePathAndSetSettingUi, this, &LosSettingsUi::onFindExePath);
         connect(ui->combo_theme, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LosSettingsUi::onThemeComboChanged);
+        connect(ui->btn_format_reload, &QPushButton::clicked, this, &LosSettingsUi::onFormatReload);
+        connect(ui->btn_format_save, &QPushButton::clicked, this, &LosSettingsUi::onFormatSave);
     }
 
 
@@ -266,46 +271,13 @@ namespace LosView
             ui->combo_theme->setCurrentIndex(curIndex);
         }
         ui->combo_theme->blockSignals(false);
-        updateThemePreview(cur);
-    }
-
-
-
-    /**
-     * @brief updateThemePreview
-     * 用主题里的 editor 颜色渲染一段示例代码
-     */
-    void LosSettingsUi::updateThemePreview(const QString &themeName)
-    {
-        if (!ui->edit_theme_preview)
-        {
-            return;
-        }
-        const QJsonObject obj    = LosCore::LosThemeManager::instance().themeJson(themeName);
-        const QJsonObject editor = obj.value(QStringLiteral("editor")).toObject();
-        const QString bg         = editor.value("background").toString("#282a36");
-        const QString fg         = editor.value("foreground").toString("#f8f8f2");
-        const QString lineColor  = editor.value("lineNumber").toString("#6272a4");
-        const QString sel        = editor.value("selection").toString("#44475a");
-        const QString css        = QStringLiteral("QPlainTextEdit { background-color: %1; color: %2; border: 1px solid %3; "
-                                                         "selection-background-color: %4; selection-color: %2; padding: 8px; "
-                                                         "font-family: 'JetBrains Mono', 'Consolas', monospace; }")
-                                .arg(bg, fg, lineColor, sel);
-        ui->edit_theme_preview->setStyleSheet(css);
-        ui->edit_theme_preview->setPlainText(QStringLiteral("// Perseus theme preview\n"
-                                                            "#include <QString>\n\n"
-                                                            "int main(int argc, char *argv[]) {\n"
-                                                            "    QString message = \"Hello, world!\";\n"
-                                                            "    // The quick brown fox jumps over the lazy dog\n"
-                                                            "    return 0;\n"
-                                                            "}\n"));
     }
 
 
 
     /**
      * @brief onThemeComboChanged
-     * - 立即生效: 通过 ThemeManager 切换 + 刷新预览
+     * - 立即生效: 通过 ThemeManager 切换主题
      */
     void LosSettingsUi::onThemeComboChanged(int index)
     {
@@ -319,7 +291,74 @@ namespace LosView
             return;
         }
         LosCore::LosThemeManager::instance().setTheme(themeName);
-        updateThemePreview(themeName);
+    }
+
+
+
+    /**
+     * @brief clangFormatPath
+     * - 项目根目录下的 .clang-format 路径
+     */
+    static QString clangFormatPath()
+    {
+        return QDir::currentPath() + QStringLiteral("/.clang-format");
+    }
+
+
+
+    /**
+     * @brief initFormatPage
+     * - 打开设置时加载 .clang-format 内容到编辑区
+     */
+    void LosSettingsUi::initFormatPage()
+    {
+        onFormatReload();
+    }
+
+
+
+    /**
+     * @brief onFormatReload
+     * - 从磁盘重新读取 .clang-format, 覆盖编辑区(放弃未保存修改)
+     */
+    void LosSettingsUi::onFormatReload()
+    {
+        if (!ui->edit_clang_format)
+        {
+            return;
+        }
+        QFile file(clangFormatPath());
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            ui->edit_clang_format->setPlainText(QStringLiteral("# .clang-format not found in project root.\n"
+                                                               "# Type your config here and click Save to create it.\n"));
+            return;
+        }
+        ui->edit_clang_format->setPlainText(QString::fromUtf8(file.readAll()));
+        file.close();
+    }
+
+
+
+    /**
+     * @brief onFormatSave
+     * - 把编辑区内容写回 .clang-format
+     */
+    void LosSettingsUi::onFormatSave()
+    {
+        if (!ui->edit_clang_format)
+        {
+            return;
+        }
+        QFile file(clangFormatPath());
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
+        {
+            ERR("cannot write .clang-format: " + clangFormatPath(), "LosSettingsUi");
+            return;
+        }
+        file.write(ui->edit_clang_format->toPlainText().toUtf8());
+        file.close();
+        SUC("saved .clang-format", "LosSettingsUi");
     }
 
 } /* namespace LosView */

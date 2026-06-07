@@ -106,11 +106,12 @@ namespace LosView
         void onHover_Clangd(const QString &markdownContent);
 
       private slots: // chs
-        void onTextChanged();
+        void onContentsChange(int from, int charsRemoved, int charsAdded);
+        void onModificationChanged(bool changed);
         void onDebounceTimeout();
         void onHover(const QString &absolute_file_path, const QString &markdownContent);
         void onSemanticLegend(const QStringList &, const QStringList &);
-        void onSemanticTokens(const QJsonArray &);
+        void onSemanticTokens(const QString &absolute_file_path, const QJsonArray &);
         void onCutKeyClicked();
         void onCopyCurrentLine();
         void onControlKeyPressed();

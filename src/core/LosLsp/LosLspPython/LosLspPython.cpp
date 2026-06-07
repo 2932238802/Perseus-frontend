@@ -186,7 +186,7 @@ namespace LosCore
                     if (result.contains("data"))
                     {
                         QJsonArray data = result["data"].toArray();
-                        emit LosRouter::instance()._cmd_lsp_result_semanticTokens(data);
+                        emit LosRouter::instance()._cmd_lsp_result_semanticTokens(absoluteFilePath, data);
                     }
                 }
                 break;

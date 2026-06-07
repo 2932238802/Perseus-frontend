@@ -26,13 +26,12 @@ namespace LosCore
     LosNet::LosNet(QObject *parent) : QObject{parent}
     {
         L_net = new QNetworkAccessManager(this);
-        requestInit();
+        requestInit(); 
     }
 
 
     /**
      * @brief requestPlugin
-     *
      */
     void LosNet::requestPlugin()
     {
@@ -92,6 +91,7 @@ namespace LosCore
         QString reply = QString::fromUtf8(data);
         SUC("init net -> :" + reply, "LosNet");
     }
+
 
 
     /*

@@ -12,6 +12,7 @@
 #include <qstringliteral.h>
 #include <qtextcursor.h>
 #include <qtextobject.h>
+#include <stacktrace>
 
 namespace LosView
 {
@@ -104,12 +105,17 @@ namespace LosView
             int startPos          = startBlock.position() + a.startChar;
             QTextBlock endBlock   = doc->findBlockByNumber(a.endLine);
             int endPos            = endBlock.position() + a.endChar;
-
+            if (!startBlock.isValid() || !endBlock.isValid())
+                continue;
+            const int docLen = doc->characterCount();
+            startPos         = qBound(0, startPos, docLen - 1);
+            endPos           = qBound(0, endPos, docLen - 1);
+            if (startPos > endPos)
+                continue;
             QTextCursor cursor(doc);
             cursor.setPosition(startPos);
             cursor.setPosition(endPos, QTextCursor::KeepAnchor);
             selections.cursor = cursor;
-
             selectionsList.append(selections);
         }
         /*
@@ -178,8 +184,11 @@ namespace LosView
 
 
 
-    /*
-     * 导入内容
+    /**
+     * @brief  loadContextAndPath
+     *
+     * @param context
+     * @param file_path
      */
     void LosEditorUi::loadContextAndPath(QSharedPointer<LosModel::LosFileContext> context, QSharedPointer<LosModel::LosFilePath> file_path)
     {
@@ -227,7 +236,7 @@ namespace LosView
     void LosEditorUi::insertCompletion(const QString &completion)
     {
         if (!LOS_completer)
-            return;
+            return;     
         QTextCursor qtc     = textCursor();
         const int prefixLen = LOS_completer->completionPrefix().size();
         qtc.beginEditBlock();
@@ -414,7 +423,8 @@ namespace LosView
         // activated 有两种
         auto &router = LosCore::LosRouter::instance();
         connect(LOS_completer, QOverload<const QString &>::of(&QCompleter::activated), this, &LosEditorUi::insertCompletion);
-        connect(this->document(), &QTextDocument::contentsChanged, this, &LosEditorUi::onTextChanged);
+        connect(this->document(), &QTextDocument::contentsChange, this, &LosEditorUi::onContentsChange);
+        connect(this->document(), &QTextDocument::modificationChanged, this, &LosEditorUi::onModificationChanged);
         connect(L_timer, &QTimer::timeout, this, &LosEditorUi::onDebounceTimeout);
         connect(&router, &LosCore::LosRouter::_cmd_lsp_result_diagnostics, this, &LosEditorUi::showDiagnostic);
         connect(&router, &LosCore::LosRouter::_cmd_lsp_result_completion, this, &LosEditorUi::showCompletion);
@@ -701,24 +711,35 @@ namespace LosView
 
 
     /**
-     * @brief onTextChanged
-     * - 变脏的信号
-     * - 修复 防止 抖动的逻辑
+     * @brief onContentsChange
+     * - 带参数版的内容变化信号 (QTextDocument::contentsChange)
+     * - rehighlight() 只改字符格式不改内容, 此时 charsRemoved==charsAdded==0
+     *   据此过滤掉高亮重绘伪造的变化, 从根上断开
+     *   contentsChange -> semantic -> rehighlight -> contentsChange 死循环
      */
-    void LosEditorUi::onTextChanged()
+    void LosEditorUi::onContentsChange(int from, int charsRemoved, int charsAdded)
     {
+        Q_UNUSED(from);
+        if (charsRemoved == 0 && charsAdded == 0) // 修改格式 而不是内容
+            return;
         if (!LOS_context)
             return;
-        if (!L_dirty && LOS_filePath && this->document()->isModified())
-        {
-            L_dirty          = true;
-            QString filePath = LOS_filePath->getFilePath();
-            emit LosCore::LosRouter::instance()._cmd_fileDirty(filePath, true);
-            // 统一给timer处理
-            // emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(filePath, this -> toPlainText());
-            emit LosCore::LosRouter::instance()._cmd_lsp_request_semantic(filePath);
-        }
         L_timer->start(200);
+    }
+
+
+
+    /**
+     * @brief onModificationChanged 文件改动
+     *
+     * @param changed
+     */
+    void LosEditorUi::onModificationChanged(bool changed)
+    {
+        if (!LOS_filePath)
+            return;
+        L_dirty = changed;
+        emit LosCore::LosRouter::instance()._cmd_fileDirty(LOS_filePath -> getFilePath(), changed);
     }
 
 
@@ -731,6 +752,9 @@ namespace LosView
     {
         if (!LOS_filePath)
             return;
+        QString filePath = LOS_filePath->getFilePath();
+        emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(filePath, this -> toPlainText());
+        emit LosCore::LosRouter::instance()._cmd_lsp_request_semantic(filePath);
         QTextCursor cursor = this->textCursor();
         int line           = cursor.blockNumber();
         int col            = cursor.positionInBlock();
@@ -747,7 +771,6 @@ namespace LosView
         if (lastChar == ':' && (col < 2 || currentLineText.at(col - 2) != ':'))
             return;
         L_oldWord = getWordUnderCursor();
-        emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(LOS_filePath -> getFilePath(), this->toPlainText());
         emit LosCore::LosRouter::instance()._cmd_lsp_request_completeion(LOS_filePath -> getFilePath(), line, col);
     }
 
@@ -911,11 +934,17 @@ namespace LosView
 
     /**
      * @brief onSemanticTokens
+     * @param absolute_file_path token 所属文件
+     * @param data 语义 token 数组
      *
-     * @param data
+     * 必须按文件路径过滤: 该信号是全局广播, 同时打开多个文件时, 每个编辑器的
+     * highlighter 都会收到所有文件的 token. 不过滤会导致 A 文件的 token 被
+     * B 文件的 highlighter 套用 -> 高亮整体错位/张冠李戴.
      */
-    void LosEditorUi::onSemanticTokens(const QJsonArray &data)
+    void LosEditorUi::onSemanticTokens(const QString &absolute_file_path, const QJsonArray &data)
     {
+        if (!LOS_filePath || LOS_filePath->getAbsoluteFilePath() != absolute_file_path)
+            return;
         LOS_highlighter->updateSemanticTokens(data);
     }
 

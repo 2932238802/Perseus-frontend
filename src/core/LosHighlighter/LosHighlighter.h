@@ -17,6 +17,7 @@
 #include <qtextdocument.h>
 #include <qtextformat.h>
 
+
 namespace LosCore
 {
     class LosHighlighter : public QSyntaxHighlighter

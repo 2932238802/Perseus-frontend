@@ -20,6 +20,7 @@ namespace LosCommon
         };
 
 
+
         struct HighlightRule
         {
             QTextCharFormat L_format;

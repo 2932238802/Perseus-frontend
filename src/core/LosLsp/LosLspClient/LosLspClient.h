@@ -46,17 +46,17 @@ namespace LosCore
         void requestSemantic(const QString &);
         void didChangeWatchedFiles(const QString &filePath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type type);
 
-      public:
+      public: 
         virtual void handleFileRenamed(const QString &oldPath, const QString &newPath);
 
       protected:
         void sendRequest(const QString &method, const QJsonObject &params, LosLspType type);
         void sendNotification(const QString &method, const QJsonObject &params);
 
-      private slots:
+      private slots: // chs
         void processRawData();
 
-      protected:
+      protected: // params
         std::atomic<int> L_id                                         = 1;
         bool L_isinit                                                 = false;
         QProcess *L_process                                           = nullptr;
@@ -67,5 +67,4 @@ namespace LosCore
         QSet<QString> L_openedFiles                                   = {};
         QMap<int, QString> L_idToAbsoluteFilePath                     = {};
     };
-
 } /* namespace LosCore */

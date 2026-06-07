@@ -1,0 +1,202 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/llhttp_autogen/mocs_compilation.cpp.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/api.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/http.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/llhttp.c.o"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library"
+		],
+		"files" : 
+		[
+			"third_party/libgit2/deps/llhttp/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 4,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=gnu++23"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 0,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/llhttp/llhttp_autogen/include"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "23"
+			},
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-D_GNU_SOURCE  -Wall -Wextra -Wno-documentation-deprecated-sync -Wno-missing-field-initializers -Wmissing-declarations -Wstrict-aliasing -Wstrict-prototypes -Wdeclaration-after-statement -Wshift-count-overflow -Wunused-const-variable -Wunused-function -Wint-conversion -Wc99-c11-compat -Wformat -Wformat-security -g -D_DEBUG -O0 -std=c90"
+				},
+				{
+					"fragment" : "-Wno-unused-parameter -Wno-missing-declarations"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 0,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/llhttp/llhttp_autogen/include"
+				}
+			],
+			"language" : "C",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "90"
+			},
+			"sourceIndexes" : 
+			[
+				1,
+				2,
+				3
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"id" : "llhttp_autogen_timestamp_deps::@b62bfa6c6b2b54fa1094"
+		},
+		{
+			"backtrace" : 0,
+			"id" : "llhttp_autogen::@b62bfa6c6b2b54fa1094"
+		}
+	],
+	"id" : "llhttp::@b62bfa6c6b2b54fa1094",
+	"name" : "llhttp",
+	"paths" : 
+	{
+		"build" : "third_party/libgit2/deps/llhttp",
+		"source" : "third_party/libgit2/deps/llhttp"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				4
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				5
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				6
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/llhttp/llhttp_autogen/mocs_compilation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/llhttp/api.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/llhttp/http.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/llhttp/llhttp.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "third_party/libgit2/deps/llhttp/llhttp.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/llhttp/llhttp_autogen/timestamp",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/llhttp/llhttp_autogen/timestamp.rule",
+			"sourceGroupIndex" : 3
+		}
+	],
+	"type" : "OBJECT_LIBRARY"
+}

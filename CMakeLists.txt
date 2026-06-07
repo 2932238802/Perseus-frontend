@@ -13,10 +13,8 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     set(CMAKE_BUILD_TYPE Debug CACHE STRING "Build type" FORCE)
 endif()
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network Test)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS
@@ -53,6 +51,9 @@ set(USE_NSEC  OFF CACHE BOOL "" FORCE)
 add_subdirectory(third_party/libgit2)
 
 target_link_libraries(PerseusCore PUBLIC libgit2package)
+
+# std::stacktrace (C++23) 的实现库
+target_link_libraries(PerseusCore PUBLIC stdc++exp)
 
 target_include_directories(PerseusCore PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libgit2/include

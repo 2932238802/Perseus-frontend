@@ -24,6 +24,10 @@ namespace LosCommon
         {
             return LosCommon::LosToolChain_Constants::LosLanguage::RUST;
         }
+        else if (file_path.endsWith(".md"))
+        {
+            return LosCommon::LosToolChain_Constants::LosLanguage::MARKDOWN;
+        }
         return LosCommon::LosToolChain_Constants::LosLanguage::UNKNOWN;
     }
 } /* namespace LosCommon */

@@ -2,6 +2,7 @@
 
 #include "LosFileTreeUi.h"
 #include "core/LosRouter/LosRouter.h"
+#include "view/LosFileTreeDelegate/LosFileTreeDelegate.h"
 
 
 namespace LosView
@@ -20,12 +21,17 @@ namespace LosView
         setSelectionBehavior(QAbstractItemView::SelectRows);
         setSelectionMode(QAbstractItemView::SingleSelection);
         setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+        setItemDelegate(new LosFileTreeDelegate(this));
     }
 
 
 
-    /*
-     * 更新视图
+    /**
+     * @brief 更新视图
+     *
+     * @param newModel
+     * @return true
+     * @return false
      */
     bool LosFileTreeUi::updateExplorer(LosModel::LosFileTreeModel *newModel)
     {
@@ -34,7 +40,6 @@ namespace LosView
 
         QSet<QString> expandedPaths;
         getExpandedPaths(&expandedPaths);
-
         QString selectedPath;
         auto *oldModel = qobject_cast<LosModel::LosFileTreeModel *>(this->model());
         if (oldModel && selectionModel() && !selectionModel()->selectedIndexes().isEmpty())
@@ -51,8 +56,8 @@ namespace LosView
 
 
 
-    /*
-     * - customContextMenuRequested 右键
+    /**
+     * @brief 初始化链接
      */
     void LosFileTreeUi::initConnect()
     {
@@ -62,8 +67,9 @@ namespace LosView
 
 
 
-    /*
-     * - 初始化
+    /**
+     * @brief
+     *
      */
     void LosFileTreeUi::initStyle() {}
 
@@ -169,8 +175,7 @@ namespace LosView
         else if (selectedAction == newFolderAct)
         {
             bool ok;
-            QString folderName =
-                QInputDialog::getText(this, "New Folder", "Enter folder name:", QLineEdit::Normal, "", &ok);
+            QString folderName = QInputDialog::getText(this, "New Folder", "Enter folder name:", QLineEdit::Normal, "", &ok);
             if (ok && !folderName.trimmed().isEmpty())
             {
                 QString newFolderPath = QDir(targetDir).filePath(folderName.trimmed());
@@ -216,8 +221,7 @@ namespace LosView
         }
         else if (selectedAction == delAct)
         {
-            auto reply = QMessageBox::warning(this, "Delete", "delete:\n" + clickedPath + " ?",
-                                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+            auto reply = QMessageBox::warning(this, "Delete", "delete:\n" + clickedPath + " ?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
             if (reply == QMessageBox::Yes)
             {
                 deleteFileOrFolder(clickedPath);
@@ -243,8 +247,7 @@ namespace LosView
                 }
                 else
                 {
-                    QProcess::startDetached("bash", QStringList()
-                                                        << "-c" << QString("explorer.exe '%1'").arg(targetDir));
+                    QProcess::startDetached("bash", QStringList() << "-c" << QString("explorer.exe '%1'").arg(targetDir));
                 }
             }
             else if (type == LosCommon::LosPlatform_Constants::OsType::MACOS)
@@ -286,8 +289,7 @@ namespace LosView
             if (!node)
                 return;
             QString clickedPath = node->getFile().getFilePath();
-            auto reply          = QMessageBox::warning(this, "Delete", "delete:\n" + clickedPath + " ?",
-                                                       QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+            auto reply = QMessageBox::warning(this, "Delete", "delete:\n" + clickedPath + " ?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
             if (reply == QMessageBox::Yes)
             {
                 deleteFileOrFolder(clickedPath);
@@ -308,24 +310,23 @@ namespace LosView
 
 
 
-    /*
-     * - 复制文件
+    /**
+     * @brief copyFileOrFolder 复制文件和文件夹
+     *
+     * @param src_path
+     * @param des_path
      */
     void LosFileTreeUi::copyFileOrFolder(const QString &src_path, const QString &des_path)
     {
         LosModel::LosFilePath file(src_path);
         if (file.isFile())
         {
-            /*
-             * 如果是文件
-             */
             QFile::copy(src_path, des_path);
         }
         else if (file.isDir())
         {
             QDir dir(src_path);
             dir.mkpath(des_path);
-
             QFileInfoList list = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs | QDir::Hidden);
             for (const QFileInfo &info : list)
             {
@@ -336,8 +337,10 @@ namespace LosView
 
 
 
-    /*
-     * - 删除文件夹
+    /**
+     * @brief deleteFileOrFolder
+     *
+     * @param file_path
      */
     void LosFileTreeUi::deleteFileOrFolder(const QString &file_path)
     {
@@ -354,8 +357,12 @@ namespace LosView
 
 
 
-    /*
-     * - 展开到 指定的文件
+    /**
+     * @brief expandToFile 扩展到对应的文件
+     *
+     * @param file_path
+     * @return true
+     * @return false
      */
     bool LosFileTreeUi::expandToFile(const QString &file_path)
     {
@@ -376,8 +383,13 @@ namespace LosView
 
 
 
-    /*
-     * - 恢复展开
+    /**
+     * @brief restoreExpandedState
+     *
+     * @param expand_paths
+     * @param selected_path
+     * @return true
+     * @return false
      */
     bool LosFileTreeUi::restoreExpandedState(const QSet<QString> &expand_paths, const QString &selected_path)
     {
@@ -418,7 +430,6 @@ namespace LosView
                 }
             }
         };
-
         traverse(QModelIndex());
         return true;
     }
@@ -459,8 +470,7 @@ namespace LosView
     /*
      * - 找到 对应的 index
      */
-    QModelIndex LosFileTreeUi::findAndExpand(LosModel::LosFileNode *node, const QString &path,
-                                             const QModelIndex &parent_index)
+    QModelIndex LosFileTreeUi::findAndExpand(LosModel::LosFileNode *node, const QString &path, const QModelIndex &parent_index)
     {
         if (nullptr == node)
             return QModelIndex();

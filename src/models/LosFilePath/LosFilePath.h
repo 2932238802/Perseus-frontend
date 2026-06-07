@@ -1,7 +1,7 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
-#include "common/enum/LosFileType.h"
+#include "common/constants/ConstantsClass/LosFileType.h"
 #include "core/LosLog/LosLog.h"
 #include <QDebug>
 #include <QDir>
@@ -21,6 +21,7 @@ namespace LosModel
         LosFilePath(const QString &);
         LosFilePath(const LosFilePath &);
         ~LosFilePath() = default;
+       
 
       public: /* init */
         void loadFile(const QString &file_path);

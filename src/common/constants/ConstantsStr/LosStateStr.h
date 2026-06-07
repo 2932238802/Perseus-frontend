@@ -24,9 +24,9 @@ namespace LosCommon
             PROJECT_DIR,         // 工作目录
             SCRIPTS_INSTALL_DIR, // 脚本安装路径
             PYTHON_EXE_PATH,     // python 安装路径
-            GXX_EXE_PATH,        
             RUSTC_EXE_PATH,
             CMAKE_EXE_PATH,
+            GXX_EXE_PATH
         };
     } /* namespace LosState_Constants */
 } // namespace LosCommon

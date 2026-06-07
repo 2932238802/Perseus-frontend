@@ -1,0 +1,32 @@
+pcre_autogen/timestamp: \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/src/pcre/config.h \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/CMakeLists.txt \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/config.h.in \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_byte_order.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_chartables.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_compile.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_config.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_dfa_exec.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_exec.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_fullinfo.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_get.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_globals.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_jit_compile.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_maketables.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_newline.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_ord2utf8.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_refcount.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_string_utils.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_study.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_tables.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_ucd.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_valid_utf8.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_version.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcre_xclass.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcreposix.c \
+	/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre/pcreposix.h \
+	/usr/share/cmake-3.28/Modules/CheckFunctionExists.cmake \
+	/usr/share/cmake-3.28/Modules/CheckIncludeFile.cmake \
+	/usr/share/cmake-3.28/Modules/CheckIncludeFileCXX.cmake \
+	/usr/share/cmake-3.28/Modules/CheckTypeSize.cmake \
+	/usr/bin/cmake

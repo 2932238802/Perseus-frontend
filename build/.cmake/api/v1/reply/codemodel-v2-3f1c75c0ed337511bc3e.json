@@ -1,0 +1,747 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						9
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-44f60e1066bcf15531e5.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						31,
+						32,
+						33,
+						34,
+						35,
+						36,
+						37
+					]
+				},
+				{
+					"build" : "third_party/libgit2",
+					"childIndexes" : 
+					[
+						2
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third_party.libgit2-Debug-e9e9cb388315daea86c6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "third_party/libgit2"
+				},
+				{
+					"build" : "third_party/libgit2/src",
+					"childIndexes" : 
+					[
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third_party.libgit2.src-Debug-bd60e857c3299027fcde.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "third_party/libgit2/src"
+				},
+				{
+					"build" : "third_party/libgit2/deps/llhttp",
+					"jsonFile" : "directory-third_party.libgit2.deps.llhttp-Debug-4878dc88a46bed5e9ac4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "third_party/libgit2/deps/llhttp",
+					"targetIndexes" : 
+					[
+						44,
+						45,
+						46
+					]
+				},
+				{
+					"build" : "third_party/libgit2/deps/pcre",
+					"jsonFile" : "directory-third_party.libgit2.deps.pcre-Debug-0ea63d7b7a3e1c093922.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "third_party/libgit2/deps/pcre",
+					"targetIndexes" : 
+					[
+						50,
+						51,
+						52
+					]
+				},
+				{
+					"build" : "third_party/libgit2/deps/xdiff",
+					"jsonFile" : "directory-third_party.libgit2.deps.xdiff-Debug-51c3a9639428a6938d07.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "third_party/libgit2/deps/xdiff",
+					"targetIndexes" : 
+					[
+						56,
+						57,
+						58
+					]
+				},
+				{
+					"build" : "third_party/libgit2/deps/ntlmclient",
+					"jsonFile" : "directory-third_party.libgit2.deps.ntlmclient-Debug-6b45408a075ccfd74edc.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "third_party/libgit2/deps/ntlmclient",
+					"targetIndexes" : 
+					[
+						47,
+						48,
+						49
+					]
+				},
+				{
+					"build" : "third_party/libgit2/src/libgit2",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-third_party.libgit2.src.libgit2-Debug-31c3982562e97caaacb5.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "third_party/libgit2/src/libgit2",
+					"targetIndexes" : 
+					[
+						38,
+						39,
+						40,
+						41,
+						42,
+						43
+					]
+				},
+				{
+					"build" : "third_party/libgit2/src/util",
+					"jsonFile" : "directory-third_party.libgit2.src.util-Debug-162e2bf08c3121cc2368.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5.1"
+					},
+					"parentIndex" : 2,
+					"projectIndex" : 1,
+					"source" : "third_party/libgit2/src/util",
+					"targetIndexes" : 
+					[
+						53,
+						54,
+						55
+					]
+				},
+				{
+					"build" : "test",
+					"jsonFile" : "directory-test-Debug-451c0598f41488bb20b9.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "test",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23,
+						24,
+						25,
+						26,
+						27,
+						28,
+						29,
+						30
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						9
+					],
+					"name" : "Perseus",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19,
+						20,
+						21,
+						22,
+						23,
+						24,
+						25,
+						26,
+						27,
+						28,
+						29,
+						30,
+						31,
+						32,
+						33,
+						34,
+						35,
+						36,
+						37
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"name" : "libgit2",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						38,
+						39,
+						40,
+						41,
+						42,
+						43,
+						44,
+						45,
+						46,
+						47,
+						48,
+						49,
+						50,
+						51,
+						52,
+						53,
+						54,
+						55,
+						56,
+						57,
+						58
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 9,
+					"id" : "Continuous::@36f028580bb02cc8272a",
+					"jsonFile" : "target-Continuous-Debug-6ca41e244a146a2cb988.json",
+					"name" : "Continuous",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ContinuousBuild::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ContinuousBuild-Debug-3f281be7fb89c9e41780.json",
+					"name" : "ContinuousBuild",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ContinuousConfigure::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ContinuousConfigure-Debug-1250a8a8533edded2b1a.json",
+					"name" : "ContinuousConfigure",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ContinuousCoverage::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ContinuousCoverage-Debug-8050e6bb880307ecb9f7.json",
+					"name" : "ContinuousCoverage",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ContinuousMemCheck::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ContinuousMemCheck-Debug-3282583b0836aa577c74.json",
+					"name" : "ContinuousMemCheck",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ContinuousStart::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ContinuousStart-Debug-ccb9d55ffb8a307f3b38.json",
+					"name" : "ContinuousStart",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ContinuousSubmit::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ContinuousSubmit-Debug-0aeff4f23f19f64745e1.json",
+					"name" : "ContinuousSubmit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ContinuousTest::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ContinuousTest-Debug-c239a7cf500f09d56f70.json",
+					"name" : "ContinuousTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ContinuousUpdate::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ContinuousUpdate-Debug-b1459adcd1fabce5f953.json",
+					"name" : "ContinuousUpdate",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "Experimental::@36f028580bb02cc8272a",
+					"jsonFile" : "target-Experimental-Debug-282c056054932f646528.json",
+					"name" : "Experimental",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ExperimentalBuild::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ExperimentalBuild-Debug-11cc528d38d398f122a9.json",
+					"name" : "ExperimentalBuild",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ExperimentalConfigure::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ExperimentalConfigure-Debug-e7482d7055ad399891ed.json",
+					"name" : "ExperimentalConfigure",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ExperimentalCoverage::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ExperimentalCoverage-Debug-4019833d92ba23f39b5b.json",
+					"name" : "ExperimentalCoverage",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ExperimentalMemCheck::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ExperimentalMemCheck-Debug-dfa0a28c1aa7e786717e.json",
+					"name" : "ExperimentalMemCheck",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ExperimentalStart::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ExperimentalStart-Debug-85c42768a3948d1fe6be.json",
+					"name" : "ExperimentalStart",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ExperimentalSubmit::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ExperimentalSubmit-Debug-d7b41d72c1a1bc293a98.json",
+					"name" : "ExperimentalSubmit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ExperimentalTest::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ExperimentalTest-Debug-ddf3d2fc8af16b7b71cd.json",
+					"name" : "ExperimentalTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "ExperimentalUpdate::@36f028580bb02cc8272a",
+					"jsonFile" : "target-ExperimentalUpdate-Debug-1628b5f67e9779e9201c.json",
+					"name" : "ExperimentalUpdate",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "LosTest::@36f028580bb02cc8272a",
+					"jsonFile" : "target-LosTest-Debug-877b7381550f74649e26.json",
+					"name" : "LosTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "LosTest_autogen::@36f028580bb02cc8272a",
+					"jsonFile" : "target-LosTest_autogen-Debug-58e31c8974e6bb7782db.json",
+					"name" : "LosTest_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "LosTest_autogen_timestamp_deps::@36f028580bb02cc8272a",
+					"jsonFile" : "target-LosTest_autogen_timestamp_deps-Debug-0b09ac34c3115f47fb5f.json",
+					"name" : "LosTest_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "Nightly::@36f028580bb02cc8272a",
+					"jsonFile" : "target-Nightly-Debug-a48a9c72505e73455969.json",
+					"name" : "Nightly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "NightlyBuild::@36f028580bb02cc8272a",
+					"jsonFile" : "target-NightlyBuild-Debug-724c789110952cfdbec9.json",
+					"name" : "NightlyBuild",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "NightlyConfigure::@36f028580bb02cc8272a",
+					"jsonFile" : "target-NightlyConfigure-Debug-5c2e8e7d141b4e366669.json",
+					"name" : "NightlyConfigure",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "NightlyCoverage::@36f028580bb02cc8272a",
+					"jsonFile" : "target-NightlyCoverage-Debug-90e06847e305bf0480da.json",
+					"name" : "NightlyCoverage",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "NightlyMemCheck::@36f028580bb02cc8272a",
+					"jsonFile" : "target-NightlyMemCheck-Debug-5cd8b5fd68268a3bb1d3.json",
+					"name" : "NightlyMemCheck",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "NightlyMemoryCheck::@36f028580bb02cc8272a",
+					"jsonFile" : "target-NightlyMemoryCheck-Debug-7b403656027a14758ac2.json",
+					"name" : "NightlyMemoryCheck",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "NightlyStart::@36f028580bb02cc8272a",
+					"jsonFile" : "target-NightlyStart-Debug-e2635a520c95b4afeabd.json",
+					"name" : "NightlyStart",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "NightlySubmit::@36f028580bb02cc8272a",
+					"jsonFile" : "target-NightlySubmit-Debug-cd3114c0069cf49b7e70.json",
+					"name" : "NightlySubmit",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "NightlyTest::@36f028580bb02cc8272a",
+					"jsonFile" : "target-NightlyTest-Debug-98387beaed09b96183f7.json",
+					"name" : "NightlyTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "NightlyUpdate::@36f028580bb02cc8272a",
+					"jsonFile" : "target-NightlyUpdate-Debug-1feb85673d2a0c2ee79d.json",
+					"name" : "NightlyUpdate",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Perseus::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Perseus-Debug-789bd8a8d599fec14c7e.json",
+					"name" : "Perseus",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "PerseusCore::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-PerseusCore-Debug-26357a1ed1e3b61b35c7.json",
+					"name" : "PerseusCore",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "PerseusCore_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-PerseusCore_autogen-Debug-d2a70485af9b8070783c.json",
+					"name" : "PerseusCore_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "PerseusCore_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-PerseusCore_autogen_timestamp_deps-Debug-f7b53d17eb74d8e269a5.json",
+					"name" : "PerseusCore_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Perseus_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Perseus_autogen-Debug-938ccc3883bdc1ec5aea.json",
+					"name" : "Perseus_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Perseus_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Perseus_autogen_timestamp_deps-Debug-c6a3b464b43538b4b971.json",
+					"name" : "Perseus_autogen_timestamp_deps",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Perseus_qmlimportscan::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Perseus_qmlimportscan-Debug-0f13b9b8f3c1412109d9.json",
+					"name" : "Perseus_qmlimportscan",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "libgit2::@443a78629b8dc43e67db",
+					"jsonFile" : "target-libgit2-Debug-36a9f86102397e30391c.json",
+					"name" : "libgit2",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "libgit2_autogen::@443a78629b8dc43e67db",
+					"jsonFile" : "target-libgit2_autogen-Debug-72cbdacddf4d1e1570a3.json",
+					"name" : "libgit2_autogen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "libgit2_autogen_timestamp_deps::@443a78629b8dc43e67db",
+					"jsonFile" : "target-libgit2_autogen_timestamp_deps-Debug-da43eb31ee05fd42ec2a.json",
+					"name" : "libgit2_autogen_timestamp_deps",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "libgit2package::@443a78629b8dc43e67db",
+					"jsonFile" : "target-libgit2package-Debug-832bb5207b2ca55ff96a.json",
+					"name" : "libgit2package",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "libgit2package_autogen::@443a78629b8dc43e67db",
+					"jsonFile" : "target-libgit2package_autogen-Debug-e661056e5474d585966e.json",
+					"name" : "libgit2package_autogen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "libgit2package_autogen_timestamp_deps::@443a78629b8dc43e67db",
+					"jsonFile" : "target-libgit2package_autogen_timestamp_deps-Debug-064eb0e1c11f0adfc355.json",
+					"name" : "libgit2package_autogen_timestamp_deps",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "llhttp::@b62bfa6c6b2b54fa1094",
+					"jsonFile" : "target-llhttp-Debug-dfeb5981a9ef3ef37003.json",
+					"name" : "llhttp",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "llhttp_autogen::@b62bfa6c6b2b54fa1094",
+					"jsonFile" : "target-llhttp_autogen-Debug-5bff1745bb95fa13e4af.json",
+					"name" : "llhttp_autogen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "llhttp_autogen_timestamp_deps::@b62bfa6c6b2b54fa1094",
+					"jsonFile" : "target-llhttp_autogen_timestamp_deps-Debug-a4ac906460824bec8f96.json",
+					"name" : "llhttp_autogen_timestamp_deps",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "ntlmclient::@8f15ddfd98c2421c2e46",
+					"jsonFile" : "target-ntlmclient-Debug-cb52a51079ad30536495.json",
+					"name" : "ntlmclient",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "ntlmclient_autogen::@8f15ddfd98c2421c2e46",
+					"jsonFile" : "target-ntlmclient_autogen-Debug-997ff2c0d3944c36da8e.json",
+					"name" : "ntlmclient_autogen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "ntlmclient_autogen_timestamp_deps::@8f15ddfd98c2421c2e46",
+					"jsonFile" : "target-ntlmclient_autogen_timestamp_deps-Debug-87e7efb29991f9f69f4e.json",
+					"name" : "ntlmclient_autogen_timestamp_deps",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "pcre::@1f62067979833730d42e",
+					"jsonFile" : "target-pcre-Debug-9efa2e33d246abec4bbd.json",
+					"name" : "pcre",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "pcre_autogen::@1f62067979833730d42e",
+					"jsonFile" : "target-pcre_autogen-Debug-e153bbb98038a358332c.json",
+					"name" : "pcre_autogen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "pcre_autogen_timestamp_deps::@1f62067979833730d42e",
+					"jsonFile" : "target-pcre_autogen_timestamp_deps-Debug-918e9d1145c06b8992e2.json",
+					"name" : "pcre_autogen_timestamp_deps",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "util::@2c39e9c7f66e47787f00",
+					"jsonFile" : "target-util-Debug-e94f5d07f0d62cd1c17d.json",
+					"name" : "util",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "util_autogen::@2c39e9c7f66e47787f00",
+					"jsonFile" : "target-util_autogen-Debug-d370d9a0aac5776386f1.json",
+					"name" : "util_autogen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "util_autogen_timestamp_deps::@2c39e9c7f66e47787f00",
+					"jsonFile" : "target-util_autogen_timestamp_deps-Debug-d85c52db00f4e31f925f.json",
+					"name" : "util_autogen_timestamp_deps",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "xdiff::@3758e9176b9a11d0f923",
+					"jsonFile" : "target-xdiff-Debug-ac5f1c2a0119d3238e1f.json",
+					"name" : "xdiff",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "xdiff_autogen::@3758e9176b9a11d0f923",
+					"jsonFile" : "target-xdiff_autogen-Debug-57c7b89bbd140486798f.json",
+					"name" : "xdiff_autogen",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "xdiff_autogen_timestamp_deps::@3758e9176b9a11d0f923",
+					"jsonFile" : "target-xdiff_autogen_timestamp_deps-Debug-6cbe4b7333e6bacfaea1.json",
+					"name" : "xdiff_autogen_timestamp_deps",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build",
+		"source" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

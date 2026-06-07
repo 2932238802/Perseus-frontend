@@ -1,0 +1,456 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_autogen/mocs_compilation.cpp.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_byte_order.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_chartables.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_compile.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_config.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_dfa_exec.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_exec.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_fullinfo.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_get.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_globals.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_jit_compile.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_maketables.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_newline.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_ord2utf8.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_refcount.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_string_utils.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_study.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_tables.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_ucd.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_valid_utf8.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_version.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcre_xclass.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/deps/pcre/CMakeFiles/pcre.dir/pcreposix.c.o"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"add_definitions",
+			"include_directories"
+		],
+		"files" : 
+		[
+			"third_party/libgit2/deps/pcre/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 140,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 127,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 139,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=gnu++23"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "HAVE_CONFIG_H"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/pcre"
+				},
+				{
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre"
+				},
+				{
+					"backtrace" : 0,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/pcre/pcre_autogen/include"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/src/pcre"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "23"
+			},
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-D_GNU_SOURCE  -Wall -Wextra -Wno-documentation-deprecated-sync -Wno-missing-field-initializers -Wmissing-declarations -Wstrict-aliasing -Wstrict-prototypes -Wdeclaration-after-statement -Wshift-count-overflow -Wunused-const-variable -Wunused-function -Wint-conversion -Wc99-c11-compat -Wformat -Wformat-security -Wno-unused-function -Wno-implicit-fallthrough -Wno-unused-but-set-variable -Wno-dangling-pointer -g -D_DEBUG -O0 -std=c90"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "HAVE_CONFIG_H"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/pcre"
+				},
+				{
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre"
+				},
+				{
+					"backtrace" : 0,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/deps/pcre/pcre_autogen/include"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/src/pcre"
+				}
+			],
+			"language" : "C",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "90"
+			},
+			"sourceIndexes" : 
+			[
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"id" : "pcre_autogen_timestamp_deps::@1f62067979833730d42e"
+		},
+		{
+			"backtrace" : 0,
+			"id" : "pcre_autogen::@1f62067979833730d42e"
+		}
+	],
+	"id" : "pcre::@1f62067979833730d42e",
+	"name" : "pcre",
+	"paths" : 
+	{
+		"build" : "third_party/libgit2/deps/pcre",
+		"source" : "third_party/libgit2/deps/pcre"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				1
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				24
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				25
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/pcre_autogen/mocs_compilation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "build/third_party/libgit2/src/pcre/config.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_byte_order.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_chartables.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_compile.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_config.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_dfa_exec.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_exec.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_fullinfo.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_get.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_globals.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_jit_compile.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_maketables.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_newline.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_ord2utf8.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_refcount.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_string_utils.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_study.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_tables.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_ucd.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_valid_utf8.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_version.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcre_xclass.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/deps/pcre/pcreposix.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/pcre_autogen/timestamp",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/deps/pcre/pcre_autogen/timestamp.rule",
+			"sourceGroupIndex" : 3
+		}
+	],
+	"type" : "OBJECT_LIBRARY"
+}

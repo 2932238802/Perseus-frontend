@@ -1,0 +1,9 @@
+-rootPath
+/home/losangelous/LosAngelous/Pro/Perseus-frontend
+-cmake-output
+-output-file
+/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/.qt_plugins/Qt6_QmlPlugins_Imports_Perseus.cmake
+-importPath
+/home/losangelous/LosAngelous/Pro/Perseus-frontend/build
+-importPath
+/usr/lib/x86_64-linux-gnu/qt6/qml

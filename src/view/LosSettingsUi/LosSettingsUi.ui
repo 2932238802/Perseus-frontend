@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (c) 2026 LosAngelous (shengjie.lin) -->
-
 <ui version="4.0">
  <class>LosSettingsUi</class>
  <widget class="QDialog" name="LosSettingsUi">
@@ -51,18 +49,23 @@
        <height>16777215</height>
       </size>
      </property>
-     <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustToContents</enum>
-     </property>
      <property name="horizontalScrollBarPolicy">
       <enum>Qt::ScrollBarAsNeeded</enum>
      </property>
+     <property name="sizeAdjustPolicy">
+      <enum>QAbstractScrollArea::AdjustToContents</enum>
+     </property>
      <property name="currentRow">
-      <number>0</number>
+      <number>-1</number>
      </property>
      <item>
       <property name="text">
        <string>Editor</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Format</string>
       </property>
      </item>
      <item>
@@ -75,17 +78,17 @@
        <string>Build &amp; Run</string>
       </property>
      </item>
-      <item>
-       <property name="text">
-        <string>Install Tools</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Theme</string>
-       </property>
-      </item>
-     </widget>
+     <item>
+      <property name="text">
+       <string>Install Tools</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Theme</string>
+      </property>
+     </item>
+    </widget>
    </item>
    <item>
     <layout class="QVBoxLayout" name="right_layout">
@@ -98,7 +101,7 @@
      <item>
       <widget class="QStackedWidget" name="pages_stack">
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="page_editor">
         <layout class="QVBoxLayout" name="verticalLayout_editor">
@@ -118,19 +121,19 @@
            </property>
           </widget>
          </item>
-          <item>
-           <widget class="QLabel" name="label_editor_placeholder">
-            <property name="styleSheet">
-             <string>color: #888888;</string>
-            </property>
-            <property name="text">
-             <string>Editor settings will be added here.</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
+         <item>
+          <widget class="QLabel" name="label_editor_placeholder">
+           <property name="styleSheet">
+            <string>color: #888888;</string>
+           </property>
+           <property name="text">
+            <string>Editor settings will be added here.</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
          <item>
           <spacer name="verticalSpacer_editor">
            <property name="orientation">
@@ -143,6 +146,80 @@
             </size>
            </property>
           </spacer>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="page_format">
+        <layout class="QVBoxLayout" name="verticalLayout_format">
+         <property name="spacing">
+          <number>15</number>
+         </property>
+         <property name="leftMargin">
+          <number>20</number>
+         </property>
+         <property name="topMargin">
+          <number>20</number>
+         </property>
+         <property name="rightMargin">
+          <number>20</number>
+         </property>
+         <property name="bottomMargin">
+          <number>20</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_title_format">
+           <property name="text">
+            <string>&lt;h2&gt;Format&lt;/h2&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_desc_format">
+           <property name="text">
+            <string>Edit the project .clang-format configuration. Click Save to write it back.</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPlainTextEdit" name="edit_clang_format">
+           <property name="styleSheet">
+            <string>QPlainTextEdit { font-family: 'JetBrains Mono', 'Consolas', monospace; padding: 8px; }</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="hbox_format_btns">
+           <item>
+            <spacer name="hspacer_format_btns">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_format_reload">
+             <property name="text">
+              <string>Reload</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="btn_format_save">
+             <property name="text">
+              <string>Save</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
@@ -164,19 +241,19 @@
            </property>
           </widget>
          </item>
-          <item>
-           <widget class="QLabel" name="label_terminal_placeholder">
-            <property name="styleSheet">
-             <string>color: #888888;</string>
-            </property>
-            <property name="text">
-             <string>Terminal settings will be added here.</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
+         <item>
+          <widget class="QLabel" name="label_terminal_placeholder">
+           <property name="styleSheet">
+            <string>color: #888888;</string>
+           </property>
+           <property name="text">
+            <string>Terminal settings will be added here.</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
          <item>
           <spacer name="verticalSpacer_terminal">
            <property name="orientation">
@@ -558,19 +635,19 @@
            </property>
           </widget>
          </item>
-          <item>
-           <widget class="QLabel" name="label_desc_install">
-            <property name="styleSheet">
-             <string>color: #888888; margin-bottom: 10px;</string>
-            </property>
-            <property name="text">
-             <string>Click 'Install' to automatically run setup scripts in the background.</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
+         <item>
+          <widget class="QLabel" name="label_desc_install">
+           <property name="styleSheet">
+            <string>color: #888888; margin-bottom: 10px;</string>
+           </property>
+           <property name="text">
+            <string>Click 'Install' to automatically run setup scripts in the background.</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
          <item>
           <widget class="QScrollArea" name="scrollArea_install_tools">
            <property name="widgetResizable">
@@ -1016,128 +1093,108 @@
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                  <width>20</width>
-                  <height>40</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-             </layout>
-            </widget>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="page_theme">
-         <layout class="QVBoxLayout" name="verticalLayout_theme">
-          <property name="spacing">
-           <number>15</number>
-          </property>
-          <property name="leftMargin">
-           <number>20</number>
-          </property>
-          <property name="topMargin">
-           <number>20</number>
-          </property>
-          <property name="rightMargin">
-           <number>20</number>
-          </property>
-          <property name="bottomMargin">
-           <number>20</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_title_theme">
-            <property name="text">
-             <string>&lt;h2&gt;Theme&lt;/h2&gt;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_desc_theme">
-            <property name="text">
-             <string>Choose a color theme for the editor and UI. The change applies immediately.</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="hbox_theme_select">
-            <item>
-             <widget class="QLabel" name="label_theme_select">
-              <property name="text">
-               <string>Theme:</string>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>80</width>
-                <height>0</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="combo_theme">
-              <property name="minimumSize">
-               <size>
-                <width>240</width>
-                <height>0</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="hspacer_theme_select">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_theme_preview_caption">
-            <property name="text">
-             <string>Preview:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPlainTextEdit" name="edit_theme_preview">
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>200</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_theme">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
+          </widget>
+         </item>
+        </layout>
        </widget>
+       <widget class="QWidget" name="page_theme">
+        <layout class="QVBoxLayout" name="verticalLayout_theme">
+         <property name="spacing">
+          <number>15</number>
+         </property>
+         <property name="leftMargin">
+          <number>20</number>
+         </property>
+         <property name="topMargin">
+          <number>20</number>
+         </property>
+         <property name="rightMargin">
+          <number>20</number>
+         </property>
+         <property name="bottomMargin">
+          <number>20</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_title_theme">
+           <property name="text">
+            <string>&lt;h2&gt;Theme&lt;/h2&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_desc_theme">
+           <property name="text">
+            <string>Choose a color theme for the editor and UI. The change applies immediately.</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="hbox_theme_select">
+           <item>
+            <widget class="QLabel" name="label_theme_select">
+             <property name="minimumSize">
+              <size>
+               <width>80</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Theme:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="combo_theme">
+             <property name="minimumSize">
+              <size>
+               <width>240</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="hspacer_theme_select">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_theme">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
+      </widget>
      </item>
      <item>
       <layout class="QHBoxLayout" name="bottom_layout">

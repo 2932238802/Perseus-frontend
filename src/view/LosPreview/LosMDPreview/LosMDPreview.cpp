@@ -1,0 +1,57 @@
+// Copyright (c) 2026 LosAngelous (shengjie.lin)
+
+#include <QDesktopServices>
+#include <QVBoxLayout>
+
+#include "LosMDPreview.h"
+#include "core/LosTheme/LosThemeManager.h"
+#include "view/LosPreview/LosPreview.h"
+#include "view/style/LosMDPreview_style.h"
+
+namespace LosView
+{
+    LosMDPreview::LosMDPreview(QWidget *parent) : LosPreview(parent)
+    {
+        L_browser = new QTextBrowser(this);
+        L_browser->setOpenLinks(false);
+        connect(L_browser, &QTextBrowser::anchorClicked, this, &LosMDPreview::onAnchorClicked);
+        auto *layout = new QVBoxLayout(this);
+        layout->setContentsMargins(0, 0, 0, 0);
+        layout->addWidget(L_browser);
+        const QString theme = LosCore::LosThemeManager::instance().currentTheme();
+        L_browser->setStyleSheet(LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosMDPreview_styleTemplate(), theme));
+    }
+
+
+
+    /**
+     * @brief onAnchorClicked 处理预览中的链接点击
+     * - 外部链接(http/https)用系统默认浏览器打开
+     * - 其余(相对路径/锚点)预览场景下忽略, 避免 QTextBrowser 内部导航崩溃
+     * @param url 被点击的链接
+     */
+    void LosMDPreview::onAnchorClicked(const QUrl &url)
+    {
+        const QString scheme = url.scheme();
+        if (scheme == QStringLiteral("http") || scheme == QStringLiteral("https"))
+        {
+            QDesktopServices::openUrl(url);
+        }
+    }
+
+
+
+    /**
+     * @brief 直接渲染
+     *
+     * @param content
+     */
+    void LosMDPreview::render(const QString &content)
+    {
+        // 文档级 CSS 必须在 setMarkdown 之前设置, 否则不作用于本次渲染
+        const QString theme = LosCore::LosThemeManager::instance().currentTheme();
+        L_browser->document()->setDefaultStyleSheet(
+            LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosMDPreview_docCssTemplate(), theme));
+        L_browser->setMarkdown(content);
+    }
+} // namespace LosView

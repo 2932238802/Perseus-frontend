@@ -1,0 +1,2855 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/libgit2_autogen/mocs_compilation.cpp.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/annotated_commit.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/apply.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/attr.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/attr_file.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/attrcache.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/blame.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/blame_git.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/blob.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/branch.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/buf.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/cache.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/checkout.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/cherrypick.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/clone.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/commit.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/commit_graph.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/commit_list.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config_cache.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config_file.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config_list.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config_mem.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config_parse.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/config_snapshot.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/crlf.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/delta.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/describe.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_driver.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_file.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_generate.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_parse.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_print.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_stats.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_tform.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/diff_xdiff.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/email.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/fetch.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/fetchhead.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/filter.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/grafts.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/graph.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/hashsig.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/ident.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/ignore.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/index.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/index_map.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/indexer.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/iterator.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/libgit2.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/mailmap.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/merge.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/merge_driver.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/merge_file.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/message.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/midx.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/mwindow.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/notes.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/object.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/object_api.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/odb.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/odb_loose.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/odb_mempack.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/odb_pack.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/oid.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/oidarray.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/pack-objects.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/pack.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/parse.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/patch.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/patch_generate.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/patch_parse.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/path.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/pathspec.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/proxy.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/push.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/reader.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/rebase.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/refdb.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/refdb_fs.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/reflog.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/refs.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/refspec.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/remote.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/repository.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/reset.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/revert.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/revparse.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/revwalk.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/settings.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/signature.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/stash.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/status.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/strarray.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/mbedtls.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/openssl.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/openssl_dynamic.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/openssl_legacy.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/registry.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/schannel.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/socket.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/stransport.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/streams/tls.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/submodule.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/sysdir.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/tag.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/trace.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/trailer.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transaction.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transport.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/auth.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/auth_gssapi.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/auth_ntlmclient.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/auth_sspi.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/credential.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/credential_helpers.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/git.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/http.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/httpclient.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/httpparser.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/local.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/smart.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/smart_pkt.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/smart_protocol.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/ssh.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/ssh_exec.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/ssh_libssh2.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/transports/winhttp.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/tree-cache.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/tree.c.o"
+		},
+		{
+			"path" : "third_party/libgit2/src/libgit2/CMakeFiles/libgit2.dir/worktree.c.o"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_include_directories",
+			"target_sources"
+		],
+		"files" : 
+		[
+			"third_party/libgit2/src/libgit2/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 4,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 43,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 21,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 27,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=gnu++23"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 0,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/src/libgit2/libgit2_autogen/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/src/libgit2"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/src/util"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/gen_headers"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/llhttp"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/xdiff"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/ntlmclient"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "23"
+			},
+			"sourceIndexes" : 
+			[
+				0
+			]
+		},
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-D_GNU_SOURCE  -Wall -Wextra -Wno-documentation-deprecated-sync -Wno-missing-field-initializers -Wmissing-declarations -Wstrict-aliasing -Wstrict-prototypes -Wdeclaration-after-statement -Wshift-count-overflow -Wunused-const-variable -Wunused-function -Wint-conversion -Wc99-c11-compat -Wformat -Wformat-security -g -D_DEBUG -O0 -std=c90"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 0,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/src/libgit2/libgit2_autogen/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/src/libgit2"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/src/util"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/third_party/libgit2/gen_headers"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/llhttp"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/pcre"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/xdiff"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/third_party/libgit2/deps/ntlmclient"
+				}
+			],
+			"language" : "C",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "90"
+			},
+			"sourceIndexes" : 
+			[
+				94,
+				96,
+				98,
+				100,
+				102,
+				104,
+				106,
+				108,
+				110,
+				112,
+				114,
+				116,
+				118,
+				119,
+				121,
+				123,
+				125,
+				128,
+				131,
+				132,
+				133,
+				135,
+				136,
+				138,
+				139,
+				140,
+				142,
+				143,
+				145,
+				147,
+				149,
+				151,
+				153,
+				154,
+				156,
+				158,
+				160,
+				162,
+				164,
+				166,
+				168,
+				170,
+				172,
+				173,
+				174,
+				176,
+				178,
+				180,
+				182,
+				184,
+				185,
+				187,
+				189,
+				191,
+				192,
+				193,
+				195,
+				197,
+				199,
+				201,
+				202,
+				204,
+				205,
+				206,
+				207,
+				209,
+				211,
+				213,
+				215,
+				217,
+				219,
+				221,
+				223,
+				225,
+				227,
+				229,
+				231,
+				233,
+				234,
+				236,
+				237,
+				239,
+				241,
+				243,
+				246,
+				248,
+				249,
+				250,
+				251,
+				253,
+				255,
+				257,
+				258,
+				260,
+				263,
+				265,
+				267,
+				269,
+				271,
+				273,
+				275,
+				277,
+				279,
+				281,
+				283,
+				285,
+				287,
+				289,
+				290,
+				292,
+				293,
+				295,
+				298,
+				299,
+				300,
+				301,
+				302,
+				303,
+				305,
+				307,
+				309,
+				310,
+				312,
+				313,
+				314,
+				315,
+				317,
+				319,
+				320,
+				322,
+				325
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"id" : "libgit2_autogen_timestamp_deps::@443a78629b8dc43e67db"
+		},
+		{
+			"backtrace" : 0,
+			"id" : "libgit2_autogen::@443a78629b8dc43e67db"
+		}
+	],
+	"id" : "libgit2::@443a78629b8dc43e67db",
+	"name" : "libgit2",
+	"paths" : 
+	{
+		"build" : "third_party/libgit2/src/libgit2",
+		"source" : "third_party/libgit2/src/libgit2"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				94,
+				96,
+				98,
+				100,
+				102,
+				104,
+				106,
+				108,
+				110,
+				112,
+				114,
+				116,
+				118,
+				119,
+				121,
+				123,
+				125,
+				128,
+				131,
+				132,
+				133,
+				135,
+				136,
+				138,
+				139,
+				140,
+				142,
+				143,
+				145,
+				147,
+				149,
+				151,
+				153,
+				154,
+				156,
+				158,
+				160,
+				162,
+				164,
+				166,
+				168,
+				170,
+				172,
+				173,
+				174,
+				176,
+				178,
+				180,
+				182,
+				184,
+				185,
+				187,
+				189,
+				191,
+				192,
+				193,
+				195,
+				197,
+				199,
+				201,
+				202,
+				204,
+				205,
+				206,
+				207,
+				209,
+				211,
+				213,
+				215,
+				217,
+				219,
+				221,
+				223,
+				225,
+				227,
+				229,
+				231,
+				233,
+				234,
+				236,
+				237,
+				239,
+				241,
+				243,
+				246,
+				248,
+				249,
+				250,
+				251,
+				253,
+				255,
+				257,
+				258,
+				260,
+				263,
+				265,
+				267,
+				269,
+				271,
+				273,
+				275,
+				277,
+				279,
+				281,
+				283,
+				285,
+				287,
+				289,
+				290,
+				292,
+				293,
+				295,
+				298,
+				299,
+				300,
+				301,
+				302,
+				303,
+				305,
+				307,
+				309,
+				310,
+				312,
+				313,
+				314,
+				315,
+				317,
+				319,
+				320,
+				322,
+				325
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36,
+				37,
+				38,
+				39,
+				40,
+				41,
+				42,
+				43,
+				44,
+				45,
+				46,
+				47,
+				48,
+				49,
+				50,
+				51,
+				52,
+				53,
+				54,
+				55,
+				56,
+				57,
+				58,
+				59,
+				60,
+				61,
+				62,
+				63,
+				64,
+				65,
+				66,
+				67,
+				68,
+				69,
+				70,
+				71,
+				72,
+				73,
+				74,
+				75,
+				76,
+				77,
+				78,
+				79,
+				80,
+				81,
+				82,
+				83,
+				84,
+				85,
+				86,
+				87,
+				88,
+				89,
+				90,
+				91,
+				92,
+				93,
+				95,
+				97,
+				99,
+				101,
+				103,
+				105,
+				107,
+				109,
+				111,
+				113,
+				115,
+				117,
+				120,
+				122,
+				124,
+				126,
+				127,
+				129,
+				130,
+				134,
+				137,
+				141,
+				144,
+				146,
+				148,
+				150,
+				152,
+				155,
+				157,
+				159,
+				161,
+				163,
+				165,
+				167,
+				169,
+				171,
+				175,
+				177,
+				179,
+				181,
+				183,
+				186,
+				188,
+				190,
+				194,
+				196,
+				198,
+				200,
+				203,
+				208,
+				210,
+				212,
+				214,
+				216,
+				218,
+				220,
+				222,
+				224,
+				226,
+				228,
+				230,
+				232,
+				235,
+				238,
+				240,
+				242,
+				244,
+				245,
+				247,
+				252,
+				254,
+				256,
+				259,
+				261,
+				262,
+				264,
+				266,
+				268,
+				270,
+				272,
+				274,
+				276,
+				278,
+				280,
+				282,
+				284,
+				286,
+				288,
+				291,
+				294,
+				296,
+				297,
+				304,
+				306,
+				308,
+				311,
+				316,
+				318,
+				321,
+				323,
+				324,
+				326
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				327
+			]
+		},
+		{
+			"name" : "CMake Rules",
+			"sourceIndexes" : 
+			[
+				328
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/libgit2_autogen/mocs_compilation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/annotated_commit.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/apply.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/attr.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/blame.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/blob.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/branch.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/buffer.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/cert.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/checkout.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/cherrypick.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/clone.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/commit.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/common.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/config.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/cred_helpers.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/credential.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/credential_helpers.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/deprecated.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/describe.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/diff.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/email.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/errors.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/experimental.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/filter.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/global.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/graph.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/ignore.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/index.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/indexer.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/mailmap.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/merge.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/message.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/net.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/notes.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/object.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/odb.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/odb_backend.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/oid.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/oidarray.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/pack.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/patch.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/pathspec.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/proxy.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/rebase.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/refdb.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/reflog.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/refs.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/refspec.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/remote.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/repository.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/reset.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/revert.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/revparse.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/revwalk.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/signature.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/stash.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/status.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/stdint.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/strarray.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/submodule.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/alloc.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/commit.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/commit_graph.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/config.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/cred.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/credential.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/diff.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/email.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/errors.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/filter.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/hashsig.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/index.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/mempack.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/merge.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/midx.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/odb_backend.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/openssl.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/path.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/refdb_backend.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/refs.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/remote.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/repository.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/stream.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/sys/transport.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/tag.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/trace.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/transaction.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/transport.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/tree.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/types.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/version.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 3,
+			"path" : "third_party/libgit2/include/git2/worktree.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/annotated_commit.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/annotated_commit.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/apply.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/apply.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/attr.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/attr.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/attr_file.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/attr_file.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/attrcache.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/attrcache.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/blame.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/blame.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/blame_git.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/blame_git.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/blob.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/blob.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/branch.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/branch.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/buf.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/buf.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/cache.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/cache.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/checkout.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/checkout.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/cherrypick.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/clone.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/clone.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/commit.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/commit.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/commit_graph.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/commit_graph.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/commit_list.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/commit_list.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/common.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/config.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/config.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/config_backend.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/config_cache.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/config_file.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/config_list.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/config_list.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/config_mem.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/config_parse.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/config_parse.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/config_snapshot.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/crlf.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/delta.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/delta.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/describe.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/diff.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/diff.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/diff_driver.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/diff_driver.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/diff_file.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/diff_file.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/diff_generate.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/diff_generate.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/diff_parse.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/diff_parse.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/diff_print.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/diff_stats.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/diff_stats.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/diff_tform.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/diff_tform.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/diff_xdiff.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/diff_xdiff.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/email.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/email.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/fetch.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/fetch.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/fetchhead.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/fetchhead.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/filter.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/filter.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/grafts.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/grafts.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/graph.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/hashmap_oid.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/hashsig.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/ident.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/ignore.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/ignore.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/index.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/index.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/index_map.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/index_map.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/indexer.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/indexer.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/iterator.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/iterator.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/libgit2.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/mailmap.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/mailmap.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/merge.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/merge.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/merge_driver.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/merge_driver.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/merge_file.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/message.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/midx.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/midx.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/mwindow.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/mwindow.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/notes.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/notes.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/object.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/object.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/object_api.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/odb.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/odb.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/odb_loose.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/odb_mempack.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/odb_pack.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/oid.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/oid.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/oidarray.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/oidarray.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/pack-objects.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/pack-objects.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/pack.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/pack.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/parse.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/parse.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/patch.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/patch.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/patch_generate.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/patch_generate.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/patch_parse.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/patch_parse.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/path.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/path.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/pathspec.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/pathspec.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/proxy.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/proxy.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/push.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/push.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/reader.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/reader.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/rebase.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/refdb.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/refdb.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/refdb_fs.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/reflog.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/reflog.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/refs.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/refs.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/refspec.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/refspec.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/remote.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/remote.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/repo_template.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/repository.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/repository.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/reset.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/revert.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/revparse.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/revwalk.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/revwalk.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/settings.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/settings.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/signature.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/signature.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/stash.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/status.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/status.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/strarray.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/strarray.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/stream.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/streams/mbedtls.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/streams/mbedtls.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/streams/openssl.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/streams/openssl.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/streams/openssl_dynamic.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/streams/openssl_dynamic.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/streams/openssl_legacy.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/streams/openssl_legacy.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/streams/registry.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/streams/registry.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/streams/schannel.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/streams/schannel.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/streams/socket.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/streams/socket.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/streams/stransport.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/streams/stransport.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/streams/tls.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/streams/tls.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/submodule.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/submodule.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/sysdir.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/sysdir.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/tag.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/tag.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/trace.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/trace.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/trailer.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transaction.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/transaction.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transport.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/auth.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/transports/auth.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/auth_gssapi.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/transports/auth_negotiate.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/transports/auth_ntlm.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/auth_ntlmclient.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/auth_sspi.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/credential.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/credential_helpers.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/git.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/http.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/transports/http.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/httpclient.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/transports/httpclient.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/httpparser.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/transports/httpparser.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/local.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/smart.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/transports/smart.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/smart_pkt.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/smart_protocol.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/ssh.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/ssh_exec.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/transports/ssh_exec.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/ssh_libssh2.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/transports/ssh_libssh2.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/transports/winhttp.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/tree-cache.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/tree-cache.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/tree.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/tree.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/userdiff.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 4,
+			"compileGroupIndex" : 1,
+			"path" : "third_party/libgit2/src/libgit2/worktree.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 4,
+			"path" : "third_party/libgit2/src/libgit2/worktree.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/libgit2_autogen/timestamp",
+			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/third_party/libgit2/src/libgit2/libgit2_autogen/timestamp.rule",
+			"sourceGroupIndex" : 3
+		}
+	],
+	"type" : "OBJECT_LIBRARY"
+}
