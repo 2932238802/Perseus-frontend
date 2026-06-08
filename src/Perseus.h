@@ -22,6 +22,7 @@
 #include "models/LosFileTreeModel/LosFileTreeModel.h"
 #include "view/LosCommandArgsUi/LosCommandArgsUi.h"
 #include "view/LosCommandUi/LosCommandUi.h"
+#include "view/LosAuthUi/LosAuthUi.h"
 #include "view/LosEditorTabUi/LosEditorTabUi.h"
 #include "view/LosEditorUi/LosEditorUi.h"
 #include "view/LosFloatingPanelUi/LosFloatingPanelUi.h"
@@ -127,11 +128,13 @@ class Perseus : public QMainWindow
   private:
     Ui::Perseus *ui;
     bool L_project                                 = false;
+    bool L_loggedIn                                = false;
     int L_buildGeneration                          = 0;
     QFileSystemWatcher *L_filesWatcher             = nullptr;
     QTimer *L_timer                                = nullptr;
     QList<int> L_rightSplitterSizes                = {};
     LosView::LosSettingsUi *LOS_setting            = nullptr;
+    LosView::LosAuthUi *LOS_auth                   = nullptr;
     LosModel::LosFileNode *LOS_rootNode            = nullptr;
     LosModel::LosFileTreeModel *LOS_treeModel      = nullptr;
     LosView::LosEditorTabUi *LOS_tabUi             = nullptr;

@@ -272,8 +272,6 @@
 			[
 				0,
 				1,
-				54,
-				56,
 				58,
 				60,
 				62,
@@ -309,16 +307,16 @@
 				122,
 				124,
 				126,
-				127,
-				129,
-				131,
-				133,
+				128,
+				130,
+				132,
+				134,
 				135,
-				138,
-				140,
-				142,
-				144,
-				146,
+				137,
+				139,
+				141,
+				143,
+				145,
 				148,
 				150,
 				152,
@@ -327,15 +325,20 @@
 				158,
 				160,
 				162,
-				165,
+				164,
+				166,
 				168,
 				170,
 				172,
 				175,
-				177,
-				179,
-				181,
-				183
+				178,
+				180,
+				182,
+				185,
+				187,
+				189,
+				191,
+				193
 			]
 		}
 	],
@@ -369,8 +372,6 @@
 			[
 				0,
 				1,
-				54,
-				56,
 				58,
 				60,
 				62,
@@ -406,16 +407,16 @@
 				122,
 				124,
 				126,
-				127,
-				129,
-				131,
-				133,
+				128,
+				130,
+				132,
+				134,
 				135,
-				138,
-				140,
-				142,
-				144,
-				146,
+				137,
+				139,
+				141,
+				143,
+				145,
 				148,
 				150,
 				152,
@@ -424,15 +425,20 @@
 				158,
 				160,
 				162,
-				165,
+				164,
+				166,
 				168,
 				170,
 				172,
 				175,
-				177,
-				179,
-				181,
-				183
+				178,
+				180,
+				182,
+				185,
+				187,
+				189,
+				191,
+				193
 			]
 		},
 		{
@@ -491,7 +497,9 @@
 				51,
 				52,
 				53,
+				54,
 				55,
+				56,
 				57,
 				59,
 				61,
@@ -527,16 +535,16 @@
 				121,
 				123,
 				125,
-				128,
-				130,
-				132,
-				134,
+				127,
+				129,
+				131,
+				133,
 				136,
-				139,
-				141,
-				143,
-				145,
-				147,
+				138,
+				140,
+				142,
+				144,
+				146,
 				149,
 				151,
 				153,
@@ -545,46 +553,52 @@
 				159,
 				161,
 				163,
-				166,
+				165,
+				167,
 				169,
 				171,
 				173,
 				176,
-				178,
-				180,
-				182,
-				184,
+				179,
+				181,
+				183,
 				186,
-				187,
 				188,
-				189,
 				190,
-				191,
 				192,
-				193,
 				194,
-				195,
 				196,
-				197
+				197,
+				198,
+				199,
+				200,
+				201,
+				202,
+				203,
+				204,
+				205,
+				206,
+				207,
+				208
 			]
 		},
 		{
 			"name" : "",
 			"sourceIndexes" : 
 			[
-				137,
-				164,
-				167,
+				147,
 				174,
-				185,
-				198
+				177,
+				184,
+				195,
+				209
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				199
+				210
 			]
 		}
 	],
@@ -606,6 +620,16 @@
 		{
 			"backtrace" : 1,
 			"path" : "src/Perseus.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/common/constants/ConstantsClass/LosAgentClass.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/common/constants/ConstantsClass/LosAuthUiClass.h",
 			"sourceGroupIndex" : 1
 		},
 		{
@@ -690,6 +714,11 @@
 		},
 		{
 			"backtrace" : 1,
+			"path" : "src/common/constants/ConstantsNum/LosAuthUiNum.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
 			"path" : "src/common/constants/ConstantsNum/LosCommandUiNum.h",
 			"sourceGroupIndex" : 1
 		},
@@ -716,6 +745,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "src/common/constants/ConstantsStr/LLVM_formatStyle.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/common/constants/ConstantsStr/LosAuthUiStr.h",
 			"sourceGroupIndex" : 1
 		},
 		{
@@ -861,6 +895,28 @@
 		{
 			"backtrace" : 1,
 			"path" : "src/common/util/StrToTool.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/core/LosAgent/LosAgentClient/LosAgentClient.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/core/LosAgent/LosAgentClient/LosAgentClient.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/core/LosAgent/LosAgentManager/LosAgentManager.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/core/LosAgent/LosAgentManager/LosAgentManager.h",
 			"sourceGroupIndex" : 1
 		},
 		{
@@ -1312,6 +1368,17 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
+			"path" : "src/view/LosAuthUi/LosAuthUi.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/view/LosAuthUi/LosAuthUi.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
 			"path" : "src/view/LosCommandArgsUi/LosCommandArgsUi.cpp",
 			"sourceGroupIndex" : 0
 		},
@@ -1586,6 +1653,11 @@
 			"backtrace" : 1,
 			"path" : "src/view/Perseus.ui",
 			"sourceGroupIndex" : 2
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/view/style/LosAuthUi_style.h",
+			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,

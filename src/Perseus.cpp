@@ -2,10 +2,14 @@
 
 #include "Perseus.h"
 #include "./ui_Perseus.h"
+#include "common/constants/ConstantsClass/LosSessionClass.h"
+#include "common/constants/ConstantsStr/LosStateStr.h"
 #include "core/LosGitManager/LosGitManager.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosShortcutManager/LosShortcutManager.h"
+#include "core/LosState/LosState.h"
 #include "view/LosSettingsUi/LosSettingsUi.h"
+#include <QStyle>
 
 
 /**
@@ -412,13 +416,14 @@ void Perseus::initConnect()
     LOS_scriptRunner = new LosCore::LosScriptRunner(this);
     L_timer          = new QTimer(this);
     LOS_setting      = new LosView::LosSettingsUi(this);
+    LOS_auth         = new LosView::LosAuthUi(this);
     {
         LosCore::LosGitManager::instance(); // 这边单独调用一下 初始化一下
     }
     L_timer->setSingleShot(true);
     L_timer->setInterval(300);
     L_filesWatcher = new QFileSystemWatcher(this);
-    auto &router = LosCore::LosRouter::instance();
+    auto &router   = LosCore::LosRouter::instance();
     connect(L_timer, &QTimer::timeout, this, &Perseus::onDebounceTimeOut);
     connect(L_filesWatcher, &QFileSystemWatcher::directoryChanged, this, &Perseus::onDirectoryChanged);
     connect(ui->explorer_treeview, &QTreeView::activated, this, &Perseus::onExplorerFileDoubleClicked);
@@ -438,6 +443,30 @@ void Perseus::initConnect()
             {
                 ui->left_panel_stack->setCurrentIndex(1);
                 LosCore::LosNet::instance().requestPlugin();
+            });
+    connect(ui->act_auth_btn, &QPushButton::clicked, this, []() { emit LosCore::LosRouter::instance()._cmd_authBtnClick(); });
+    connect(&router, &LosCore::LosRouter::_cmd_authBtnClick, this,
+            [this]()
+            {
+                if (!L_loggedIn)
+                {
+                    LOS_auth->exec();
+                    return;
+                }
+                auto ret = QMessageBox::question(this, QStringLiteral("账户"), QStringLiteral("确定要登出吗?"), QMessageBox::Yes | QMessageBox::No,
+                                                 QMessageBox::No);
+                if (ret == QMessageBox::Yes)
+                {
+                    emit LosCore::LosRouter::instance()._cmd_auth_loginStateChanged(false);
+                }
+            });
+    connect(&router, &LosCore::LosRouter::_cmd_auth_loginStateChanged, this,
+            [this](bool loggedIn)
+            {
+                L_loggedIn = loggedIn;
+                ui->act_auth_btn->setProperty("logged", loggedIn);
+                ui->act_auth_btn->style()->unpolish(ui->act_auth_btn);
+                ui->act_auth_btn->style()->polish(ui->act_auth_btn);
             });
 }
 
@@ -571,6 +600,8 @@ void Perseus::initSession()
     LosModel::LosFilePath file(conf.L_curProDir);
     bool isSuc = file.isExist();
     LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, file);
+    LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN, conf.LOS_authConfig.L_token);
+    LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_USERNAME, conf.LOS_authConfig.L_username);
     if (!LOS_tabUi || !isSuc)
         return;
     connect(
@@ -583,7 +614,6 @@ void Perseus::initSession()
                 LOS_tabUi->openFile(file);
                 LOS_tabUi->blockSignals(false);
             }
-
             if (!conf.L_curActiveFile.isEmpty())
             {
                 LOS_tabUi->openFile(conf.L_curActiveFile);
@@ -618,5 +648,9 @@ LosCommon::LosSession_Constants::Config Perseus::collectConfig()
     conf.L_curProDir     = LosCore::LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR).getFilePath();
     conf.L_curActiveFile = LOS_tabUi->getCurFilePath();
     conf.L_themeName     = LosCore::LosThemeManager::instance().currentTheme();
+    LosCommon::LosSession_Constants::AuthConfig authConfig;
+    authConfig.L_username = LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_USERNAME);
+    authConfig.L_token    = LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN);
+    conf.LOS_authConfig   = authConfig;
     return conf;
 }

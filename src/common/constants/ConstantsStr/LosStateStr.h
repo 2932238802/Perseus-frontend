@@ -26,7 +26,10 @@ namespace LosCommon
             PYTHON_EXE_PATH,     // python 安装路径
             RUSTC_EXE_PATH,
             CMAKE_EXE_PATH,
-            GXX_EXE_PATH
+            GXX_EXE_PATH,
+
+            AUTH_USERNAME, // 用户名
+            AUTH_TOKEN,    // token
         };
     } /* namespace LosState_Constants */
 } // namespace LosCommon

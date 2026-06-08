@@ -99,6 +99,7 @@ Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/txt_black.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/json_white.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/files_white.png
+Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/auth_white.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/chajian_black.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/folder_black.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/theme.png
@@ -122,6 +123,7 @@ Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/folder_white.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/close.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/h_white.png
+Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/auth_black.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/json_black.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /usr/lib/qt6/libexec/rcc
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Automatic RCC for resources.qrc"

@@ -1,4 +1,3 @@
-<!-- Copyright (c) 2026 LosAngelous (shengjie.lin) -->
 <RCC>
     <qresource prefix="/icons">
         <file alias="close.png">resources/icons/close.png</file>
@@ -29,6 +28,10 @@
         <file alias="python_white.png">resources/icons/python_white.png</file>
         <file alias="html_black.png">resources/icons/html_black.png</file>
         <file alias="html_white.png">resources/icons/html_white.png</file>
+        <file alias="auth_black.png">resources/icons/auth_black.png</file>
+        <file alias="auth_white.png">resources/icons/auth_white.png</file>
+        <file alias="loginsuc_black.png">resources/icons/loginsuc_black.png</file>
+        <file alias="loginsuc_white.png">resources/icons/loginsuc_white.png</file>
     </qresource>
     <qresource prefix="/highlight">
         <file alias="languages/cpp.json">resources/highlight/languages/cpp.json</file>

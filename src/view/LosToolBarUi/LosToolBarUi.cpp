@@ -59,25 +59,20 @@ namespace LosView
         LOS_viewBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         LOS_viewBtn->setText("View");
         layout->addWidget(LOS_viewBtn);
-
         LOS_settingBtn = new QPushButton("Set", this);
         LOS_settingBtn->setObjectName("setting_btn");
         LOS_settingBtn->setMinimumSize(80, 30);
         LOS_settingBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         layout->addWidget(LOS_settingBtn);
-
         LOS_runBtn = new QPushButton("Run", this);
         LOS_runBtn->setObjectName("run_singleFile_btn");
         LOS_runBtn->setMinimumSize(80, 30);
         LOS_runBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         layout->addWidget(LOS_runBtn);
-
         LOS_projectBtn = new QRadioButton("CMake Pro?", this);
         LOS_projectBtn->setObjectName("project_btn");
         layout->addWidget(LOS_projectBtn);
-
         layout->addStretch();
-
         LOS_projectDirLabel = new QLabel("project dir", this);
         LOS_projectDirLabel->setObjectName("project_dir_label");
         layout->addWidget(LOS_projectDirLabel);

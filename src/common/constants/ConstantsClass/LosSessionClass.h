@@ -14,12 +14,19 @@ namespace LosCommon
      */
     namespace LosSession_Constants
     {
+        struct AuthConfig
+        {
+            QString L_username = "";
+            QString L_token    = "";
+        };
+
         struct Config
         {
             QStringList L_curFilePaths{};
-            QString L_curProDir     = "";
-            QString L_curActiveFile = "";
-            QString L_themeName     = "dracula";
+            QString L_curProDir       = "";
+            QString L_curActiveFile   = "";
+            QString L_themeName       = "dracula";
+            AuthConfig LOS_authConfig = {};
         };
 
     } /* namespace LosSession_Constants */

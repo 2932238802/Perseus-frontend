@@ -441,6 +441,18 @@
 			null
 		],
 		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/common/constants/ConstantsClass/LosAgentClass.h",
+			"MU",
+			"46LXQP2ZF5/moc_LosAgentClass.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/common/constants/ConstantsClass/LosAuthUiClass.h",
+			"MU",
+			"46LXQP2ZF5/moc_LosAuthUiClass.cpp",
+			null
+		],
+		[
 			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/common/constants/ConstantsClass/LosCommandUiClass.h",
 			"MU",
 			"46LXQP2ZF5/moc_LosCommandUiClass.cpp",
@@ -537,6 +549,12 @@
 			null
 		],
 		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/common/constants/ConstantsNum/LosAuthUiNum.h",
+			"MU",
+			"PXMKE6ZPD3/moc_LosAuthUiNum.cpp",
+			null
+		],
+		[
 			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/common/constants/ConstantsNum/LosCommandUiNum.h",
 			"MU",
 			"PXMKE6ZPD3/moc_LosCommandUiNum.cpp",
@@ -570,6 +588,12 @@
 			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/common/constants/ConstantsStr/LLVM_formatStyle.h",
 			"MU",
 			"5H3JPC7MPG/moc_LLVM_formatStyle.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/common/constants/ConstantsStr/LosAuthUiStr.h",
+			"MU",
+			"5H3JPC7MPG/moc_LosAuthUiStr.cpp",
 			null
 		],
 		[
@@ -744,6 +768,18 @@
 			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/common/util/StrToTool.h",
 			"MU",
 			"IM3RNMBNHA/moc_StrToTool.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosAgent/LosAgentClient/LosAgentClient.h",
+			"MU",
+			"5JNYUSNSN4/moc_LosAgentClient.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosAgent/LosAgentManager/LosAgentManager.h",
+			"MU",
+			"R62HXS3CHY/moc_LosAgentManager.cpp",
 			null
 		],
 		[
@@ -987,6 +1023,12 @@
 			null
 		],
 		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosAuthUi/LosAuthUi.h",
+			"MU",
+			"EWXA7ZUASR/moc_LosAuthUi.cpp",
+			null
+		],
+		[
 			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosCommandArgsUi/LosCommandArgsUi.h",
 			"MU",
 			"ZBX7B442JE/moc_LosCommandArgsUi.cpp",
@@ -1122,6 +1164,12 @@
 			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosToolMissUi/LosToolMissUi.h",
 			"MU",
 			"QWWXYFXHC2/moc_LosToolMissUi.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/style/LosAuthUi_style.h",
+			"MU",
+			"EJ4VAXFKT7/moc_LosAuthUi_style.cpp",
 			null
 		],
 		[
@@ -1264,6 +1312,16 @@
 	[
 		[
 			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/Perseus.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp",
 			"MU",
 			null
 		],
@@ -1469,6 +1527,11 @@
 		],
 		[
 			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/models/LosFileTreeModel/LosFileTreeModel.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosAuthUi/LosAuthUi.cpp",
 			"MU",
 			null
 		],

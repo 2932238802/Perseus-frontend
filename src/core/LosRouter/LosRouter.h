@@ -166,14 +166,18 @@ namespace LosCore
 
 
         // ----------------------------------------------------------------------------
-        /**
-         * @brief 主题切换信号
-         * - 由 LosThemeManager::setTheme 发射
-         * - 订阅方:
-         *   - Perseus       重新 setStyleSheet 全局 QSS
-         *   - LosEditorUi   调用 LOS_highlighter->setTheme
-         *   - 各浮窗控件     重新 setStyleSheet 自己的浮窗 QSS
-         */
+        // 网络部分
+        void _cmd_authBtnClick();
+        void _cmd_auth_login_request(const QString &username, const QString &password);
+        void _cmd_auth_register_request(const QString &username, const QString &password);
+        void _cmd_auth_response(bool success, const QString &message);
+        // 登录状态变化: true=已登录, false=已登出. 主窗据此切换 act_auth_btn 图标(auth <-> loginsuc)
+        void _cmd_auth_loginStateChanged(bool loggedIn);
+
+
+
+        // ----------------------------------------------------------------------------
+        // 主题切换部分
         void _cmd_themeChanged(const QString &themeName);
 
         // ----------------------------------------------------------------------------

@@ -4,8 +4,10 @@
 #include "LosNet.h"
 #include "common/constants/ConstantsClass/LosNetClass.h"
 #include "common/constants/ConstantsStr/LosNetStr.h"
+#include "common/constants/ConstantsStr/LosStateStr.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
+#include "core/LosState/LosState.h"
 #include <QDir>
 #include <QList>
 #include <QNetworkAccessManager>
@@ -26,7 +28,8 @@ namespace LosCore
     LosNet::LosNet(QObject *parent) : QObject{parent}
     {
         L_net = new QNetworkAccessManager(this);
-        requestInit(); 
+        initConnect();
+        requestInit();
     }
 
 
@@ -35,17 +38,55 @@ namespace LosCore
      */
     void LosNet::requestPlugin()
     {
-        request(LosCommon::LosNet_Constants::API::PLUGIN_API,
-                [this](const QByteArray &doc) { this->dealPluginReply(doc); });
+        requestGet(LosCommon::LosNet_Constants::API::PLUGIN_API, [this](const QByteArray &doc) { this->dealPluginReply(doc); });
     }
 
 
-    
+    /**
+     * @brief requestRegister
+     * - 拼 {"username","password"} JSON, POST 到注册接口
+     */
+    void LosNet::requestRegister(const QString &username, const QString &password)
+    {
+        QJsonObject body;
+        body["username"] = username;
+        body["password"] = password;
+        LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_USERNAME, username);
+        QByteArray data = QJsonDocument(body).toJson(QJsonDocument::Compact);
+        requestPost(LosCommon::LosNet_Constants::API::REGISTER_API, data, [this](const QByteArray &doc) { this->dealRegisterReply(doc); });
+    }
+
+
+
+    /**
+     * @brief requestLogin
+     * - 拼 {"username","password"} JSON, POST 到登录接口
+     */
+    void LosNet::requestLogin(const QString &username, const QString &password)
+    {
+        QJsonObject body;
+        body["username"] = username;
+        body["password"] = password;
+        LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_USERNAME, username);
+        QByteArray data = QJsonDocument(body).toJson(QJsonDocument::Compact);
+        requestPost(LosCommon::LosNet_Constants::API::LOGIN_API, data, [this](const QByteArray &doc) { this->dealLoginReply(doc); });
+    }
+
+
+
+    /**
+     * @brief
+     *
+     * @param token
+     */
+    void LosNet::requestAuthLogin(const QString &token) {}
+
+
 
     /**
      * @brief dealPluginReply
-     * 
-     * @param data 
+     *
+     * @param data
      */
     void LosNet::dealPluginReply(const QByteArray &data)
     {
@@ -78,14 +119,78 @@ namespace LosCore
 
 
 
-    /*
-     * - 初始化 请求
+    /**
+     * @brief
+     * "success": true, "message": "注册成功"
+     * @param data
+     */
+    void LosNet::dealRegisterReply(const QByteArray &data)
+    {
+        QJsonParseError err;
+        QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+        if (err.error != QJsonParseError::NoError)
+        {
+            ERR("解析失败", "LosNet");
+            emit LosRouter::instance()._cmd_auth_response(false, QStringLiteral("响应解析失败"));
+            return;
+        }
+        QJsonObject obj(doc.object());
+        bool suc       = obj["success"].toBool();
+        QString msgMsg = obj["message"].toString();
+        if (suc)
+        {
+            QString token = obj["token"].toString();
+            LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN, token);
+        }
+        emit LosRouter::instance()._cmd_auth_response(suc, msgMsg);
+    }
+
+
+
+    /**
+     * @brief
+     *
+     * @param data
+     */
+    void LosNet::dealLoginReply(const QByteArray &data)
+    {
+        QJsonParseError err;
+        QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+        if (err.error != QJsonParseError::NoError)
+        {
+            ERR("解析失败", "LosNet");
+            emit LosRouter::instance()._cmd_auth_response(false, QStringLiteral("响应解析失败"));
+            return;
+        }
+        QJsonObject obj(doc.object());
+        bool suc       = obj["success"].toBool();
+        QString msgMsg = obj["message"].toString();
+        if (suc)
+        {
+            QString token = obj["token"].toString();
+            LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN, token);
+        }
+        emit LosRouter::instance()._cmd_auth_response(suc, msgMsg);
+    }
+
+
+
+    /**
+     * @brief
+     *
      */
     void LosNet::requestInit()
     {
-        request(LosCommon::LosNet_Constants::API::ROOT_API,
-                [this](const QByteArray &doc) { this->dealInitReply(doc); });
+        requestGet(LosCommon::LosNet_Constants::API::ROOT_API, [this](const QByteArray &doc) { this->dealInitReply(doc); });
     }
+
+
+
+    /**
+     * @brief
+     *
+     * @param data
+     */
     void LosNet::dealInitReply(const QByteArray &data)
     {
         QString reply = QString::fromUtf8(data);
@@ -94,18 +199,17 @@ namespace LosCore
 
 
 
-    /*
-     * - 下载插件
+    /**
+     * @brief
+     *
+     * @param download_url
+     * @param savePath
      */
     void LosNet::downloadPlugin(const QString &download_url, const QString &savePath)
     {
-        /*
-         * 直接 get 就行 不用 content
-         */
         QUrl url(download_url);
         QNetworkRequest req(url);
         QNetworkReply *rep = L_net->get(req);
-
         conn(rep,
              [savePath](const QByteArray &data)
              {
@@ -127,8 +231,11 @@ namespace LosCore
 
 
 
-    /*
-     * - 获取 readme 界面
+    /**
+     * @brief
+     *
+     * @param url_str
+     * @param func
      */
     void LosNet::fetchPluginReadme(const QString &url_str, std::function<void(const QString &)> func)
     {
@@ -147,10 +254,13 @@ namespace LosCore
 
 
 
-    /*
-     * - 发送 request
+    /**
+     * @brief requestGet
+     *
+     * @param api
+     * @param func
      */
-    void LosNet::request(const QString &api, std::function<void(const QByteArray &)> func)
+    void LosNet::requestGet(const QString &api, std::function<void(const QByteArray &)> func)
     {
         QUrl url(LosCommon::LosNet_Constants::BASE_URL + api);
         QNetworkRequest req(url);
@@ -161,8 +271,29 @@ namespace LosCore
 
 
 
-    /*
-     * - 给 答复 进行连接
+    /**
+     * @brief Post
+     *
+     * @param api
+     * @param body
+     * @param func
+     */
+    void LosNet::requestPost(const QString &api, const QByteArray &body, std::function<void(const QByteArray &)> func)
+    {
+        QUrl url(LosCommon::LosNet_Constants::BASE_URL + api);
+        QNetworkRequest req(url);
+        req.setHeader(QNetworkRequest::ContentTypeHeader, LosCommon::LosNet_Constants::HEADER_TYPE::JSON_TYPE);
+        QNetworkReply *rep = L_net->post(req, body);
+        conn(rep, func);
+    }
+
+
+
+    /**
+     * @brief conn
+     *
+     * @param reply
+     * @param func
      */
     void LosNet::conn(QNetworkReply *reply, std::function<void(const QByteArray &)> func)
     {
@@ -182,10 +313,17 @@ namespace LosCore
 
 
 
-    /*
-     * - 初始化链接
+    /**
+     * @brief initConnect
      */
-    void LosNet::initConnect() {}
+    void LosNet::initConnect()
+    {
+        auto &router = LosRouter::instance();
+        connect(&router, &LosRouter::_cmd_auth_login_request, this,
+                [this](const QString &username, const QString &password) { this->requestLogin(username, password); });
+        connect(&router, &LosRouter::_cmd_auth_register_request, this,
+                [this](const QString &username, const QString &password) { this->requestRegister(username, password); });
+    }
 
 
 

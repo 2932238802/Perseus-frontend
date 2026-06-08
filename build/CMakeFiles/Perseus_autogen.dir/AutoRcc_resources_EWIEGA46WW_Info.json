@@ -29,6 +29,7 @@
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/txt_black.png",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/json_white.png",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/files_white.png",
+		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/auth_white.png",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/chajian_black.png",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/folder_black.png",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/theme.png",
@@ -52,6 +53,7 @@
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/folder_white.png",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/close.png",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/h_white.png",
+		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/auth_black.png",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/json_black.png"
 	],
 	"LOCK_FILE" : "/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles/Perseus_autogen.dir/AutoRcc_resources_EWIEGA46WW_Lock.lock",

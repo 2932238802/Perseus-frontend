@@ -21,7 +21,12 @@ namespace LosCore
 
       public: // tool plugin
         void requestPlugin();
+        void requestRegister(const QString &username, const QString &password);
+        void requestLogin(const QString &username, const QString &password);
+        void requestAuthLogin(const QString &token);
         void dealPluginReply(const QByteArray &data);
+        void dealRegisterReply(const QByteArray &data);
+        void dealLoginReply(const QByteArray &data);
 
       public: // tool hello
         void requestInit();
@@ -37,7 +42,8 @@ namespace LosCore
 
         void initConnect();
         void conn(QNetworkReply *reply, std::function<void(const QByteArray &)> func);
-        void request(const QString &api, std::function<void(const QByteArray &)> func);
+        void requestGet(const QString &api, std::function<void(const QByteArray &)> func);
+        void requestPost(const QString &api, const QByteArray &body, std::function<void(const QByteArray &)> func);
 
       private:
         QNetworkAccessManager *L_net;

@@ -157,11 +157,11 @@
 			"id" : "util::@2c39e9c7f66e47787f00"
 		},
 		{
-			"id" : "libgit2package_autogen_timestamp_deps::@443a78629b8dc43e67db"
-		},
-		{
 			"backtrace" : 0,
 			"id" : "libgit2package_autogen::@443a78629b8dc43e67db"
+		},
+		{
+			"id" : "libgit2package_autogen_timestamp_deps::@443a78629b8dc43e67db"
 		}
 	],
 	"id" : "libgit2package::@443a78629b8dc43e67db",

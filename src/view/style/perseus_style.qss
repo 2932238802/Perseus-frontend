@@ -251,6 +251,23 @@ QInputDialog {
     image: url(:/icons/chajian_white.png);
 }
 
+#act_auth_btn {
+    image: url(:/icons/auth_black.png);
+}
+
+#act_auth_btn:hover {
+    image: url(:/icons/auth_white.png);
+}
+
+/* 已登录态: 切换为 loginsuc 图标 */
+#act_auth_btn[logged="true"] {
+    image: url(:/icons/loginsuc_black.png);
+}
+
+#act_auth_btn[logged="true"]:hover {
+    image: url(:/icons/loginsuc_white.png);
+}
+
 
 /* ============================================================
  *  5. 主体分割器 (QSplitter)

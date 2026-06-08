@@ -104,10 +104,38 @@ CMakeFiles/PerseusCore.dir/src/Perseus.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PerseusCore.dir/src/Perseus.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/Perseus.cpp -o CMakeFiles/PerseusCore.dir/src/Perseus.cpp.s
 
+CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
+CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp
+CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp
+
+CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp > CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.i
+
+CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp -o CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.s
+
+CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
+CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp
+CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp
+
+CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp > CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.i
+
+CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp -o CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.s
+
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfig/LosConfig.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfig/LosConfig.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosConfig/LosConfig/LosConfig.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfig/LosConfig.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfig/LosConfig.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfig/LosConfig.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfig/LosConfig.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfig/LosConfig.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfig/LosConfig.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosConfig/LosConfig/LosConfig.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfig/LosConfig.cpp.i: cmake_force
@@ -121,7 +149,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfig/LosConfig.cpp.s: cmake_f
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp.i: cmake_force
@@ -135,7 +163,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp.
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigFactory/LosConfigFactory.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigFactory/LosConfigFactory.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosConfig/LosConfigFactory/LosConfigFactory.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigFactory/LosConfigFactory.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigFactory/LosConfigFactory.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigFactory/LosConfigFactory.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigFactory/LosConfigFactory.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigFactory/LosConfigFactory.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigFactory/LosConfigFactory.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosConfig/LosConfigFactory/LosConfigFactory.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigFactory/LosConfigFactory.cpp.i: cmake_force
@@ -149,7 +177,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigFactory/LosConfigFactory.
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigManager/LosConfigManager.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigManager/LosConfigManager.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosConfig/LosConfigManager/LosConfigManager.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigManager/LosConfigManager.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigManager/LosConfigManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigManager/LosConfigManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigManager/LosConfigManager.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigManager/LosConfigManager.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigManager/LosConfigManager.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosConfig/LosConfigManager/LosConfigManager.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigManager/LosConfigManager.cpp.i: cmake_force
@@ -163,7 +191,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigManager/LosConfigManager.
 CMakeFiles/PerseusCore.dir/src/core/LosEncodingDetector/LosEncodingDetector.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosEncodingDetector/LosEncodingDetector.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosEncodingDetector/LosEncodingDetector.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosEncodingDetector/LosEncodingDetector.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosEncodingDetector/LosEncodingDetector.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosEncodingDetector/LosEncodingDetector.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosEncodingDetector/LosEncodingDetector.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosEncodingDetector/LosEncodingDetector.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosEncodingDetector/LosEncodingDetector.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosEncodingDetector/LosEncodingDetector.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosEncodingDetector/LosEncodingDetector.cpp.i: cmake_force
@@ -177,7 +205,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosEncodingDetector/LosEncodingDetector.cpp.
 CMakeFiles/PerseusCore.dir/src/core/LosFileSystem/LosFileSystem.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosFileSystem/LosFileSystem.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosFileSystem/LosFileSystem.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosFileSystem/LosFileSystem.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosFileSystem/LosFileSystem.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosFileSystem/LosFileSystem.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosFileSystem/LosFileSystem.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosFileSystem/LosFileSystem.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosFileSystem/LosFileSystem.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosFileSystem/LosFileSystem.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosFileSystem/LosFileSystem.cpp.i: cmake_force
@@ -191,7 +219,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosFileSystem/LosFileSystem.cpp.s: cmake_for
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFClangFormat/LosFClangFormat.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFClangFormat/LosFClangFormat.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosFormat/LosFClangFormat/LosFClangFormat.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFClangFormat/LosFClangFormat.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFClangFormat/LosFClangFormat.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFClangFormat/LosFClangFormat.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFClangFormat/LosFClangFormat.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFClangFormat/LosFClangFormat.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFClangFormat/LosFClangFormat.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosFormat/LosFClangFormat/LosFClangFormat.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFClangFormat/LosFClangFormat.cpp.i: cmake_force
@@ -205,7 +233,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFClangFormat/LosFClangFormat.cp
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.cpp.i: cmake_force
@@ -219,7 +247,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.cp
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatBase/LosFormatBase.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatBase/LosFormatBase.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosFormat/LosFormatBase/LosFormatBase.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatBase/LosFormatBase.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatBase/LosFormatBase.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatBase/LosFormatBase.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatBase/LosFormatBase.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatBase/LosFormatBase.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatBase/LosFormatBase.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosFormat/LosFormatBase/LosFormatBase.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatBase/LosFormatBase.cpp.i: cmake_force
@@ -233,7 +261,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatBase/LosFormatBase.cpp.s:
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatManager/LosFormatManager.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatManager/LosFormatManager.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosFormat/LosFormatManager/LosFormatManager.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatManager/LosFormatManager.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatManager/LosFormatManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatManager/LosFormatManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatManager/LosFormatManager.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatManager/LosFormatManager.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatManager/LosFormatManager.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosFormat/LosFormatManager/LosFormatManager.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatManager/LosFormatManager.cpp.i: cmake_force
@@ -247,7 +275,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosFormat/LosFormatManager/LosFormatManager.
 CMakeFiles/PerseusCore.dir/src/core/LosGitManager/LosGitManager.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosGitManager/LosGitManager.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosGitManager/LosGitManager.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosGitManager/LosGitManager.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosGitManager/LosGitManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosGitManager/LosGitManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosGitManager/LosGitManager.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosGitManager/LosGitManager.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosGitManager/LosGitManager.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosGitManager/LosGitManager.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosGitManager/LosGitManager.cpp.i: cmake_force
@@ -261,7 +289,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosGitManager/LosGitManager.cpp.s: cmake_for
 CMakeFiles/PerseusCore.dir/src/core/LosHighlighter/LosHighlighter.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosHighlighter/LosHighlighter.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosHighlighter/LosHighlighter.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosHighlighter/LosHighlighter.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosHighlighter/LosHighlighter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosHighlighter/LosHighlighter.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosHighlighter/LosHighlighter.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosHighlighter/LosHighlighter.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosHighlighter/LosHighlighter.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosHighlighter/LosHighlighter.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosHighlighter/LosHighlighter.cpp.i: cmake_force
@@ -275,7 +303,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosHighlighter/LosHighlighter.cpp.s: cmake_f
 CMakeFiles/PerseusCore.dir/src/core/LosLog/LosLog.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosLog/LosLog.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLog/LosLog.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosLog/LosLog.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLog/LosLog.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLog/LosLog.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosLog/LosLog.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosLog/LosLog.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosLog/LosLog.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLog/LosLog.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosLog/LosLog.cpp.i: cmake_force
@@ -289,7 +317,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosLog/LosLog.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspCMake/LosLspCMake.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspCMake/LosLspCMake.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLsp/LosLspCMake/LosLspCMake.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspCMake/LosLspCMake.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspCMake/LosLspCMake.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspCMake/LosLspCMake.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspCMake/LosLspCMake.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspCMake/LosLspCMake.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspCMake/LosLspCMake.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLsp/LosLspCMake/LosLspCMake.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspCMake/LosLspCMake.cpp.i: cmake_force
@@ -303,7 +331,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspCMake/LosLspCMake.cpp.s: cmake_
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClangd/LosLspClangd.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClangd/LosLspClangd.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLsp/LosLspClangd/LosLspClangd.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClangd/LosLspClangd.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClangd/LosLspClangd.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClangd/LosLspClangd.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClangd/LosLspClangd.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClangd/LosLspClangd.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClangd/LosLspClangd.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLsp/LosLspClangd/LosLspClangd.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClangd/LosLspClangd.cpp.i: cmake_force
@@ -317,7 +345,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClangd/LosLspClangd.cpp.s: cmak
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClient/LosLspClient.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClient/LosLspClient.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLsp/LosLspClient/LosLspClient.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClient/LosLspClient.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClient/LosLspClient.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClient/LosLspClient.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClient/LosLspClient.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClient/LosLspClient.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClient/LosLspClient.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLsp/LosLspClient/LosLspClient.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClient/LosLspClient.cpp.i: cmake_force
@@ -331,7 +359,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspClient/LosLspClient.cpp.s: cmak
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspManager/LosLspManager.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspManager/LosLspManager.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLsp/LosLspManager/LosLspManager.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspManager/LosLspManager.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspManager/LosLspManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspManager/LosLspManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspManager/LosLspManager.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspManager/LosLspManager.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspManager/LosLspManager.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLsp/LosLspManager/LosLspManager.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspManager/LosLspManager.cpp.i: cmake_force
@@ -345,7 +373,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspManager/LosLspManager.cpp.s: cm
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspPython/LosLspPython.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspPython/LosLspPython.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLsp/LosLspPython/LosLspPython.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspPython/LosLspPython.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspPython/LosLspPython.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspPython/LosLspPython.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspPython/LosLspPython.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspPython/LosLspPython.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspPython/LosLspPython.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLsp/LosLspPython/LosLspPython.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspPython/LosLspPython.cpp.i: cmake_force
@@ -359,7 +387,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspPython/LosLspPython.cpp.s: cmak
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspRust/LosLspRust.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspRust/LosLspRust.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLsp/LosLspRust/LosLspRust.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspRust/LosLspRust.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspRust/LosLspRust.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspRust/LosLspRust.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspRust/LosLspRust.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspRust/LosLspRust.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspRust/LosLspRust.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosLsp/LosLspRust/LosLspRust.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspRust/LosLspRust.cpp.i: cmake_force
@@ -373,7 +401,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosLsp/LosLspRust/LosLspRust.cpp.s: cmake_fo
 CMakeFiles/PerseusCore.dir/src/core/LosNet/LosNet.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosNet/LosNet.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosNet/LosNet.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosNet/LosNet.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosNet/LosNet.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosNet/LosNet.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosNet/LosNet.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosNet/LosNet.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosNet/LosNet.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosNet/LosNet.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosNet/LosNet.cpp.i: cmake_force
@@ -387,7 +415,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosNet/LosNet.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/core/LosPanelManager/LosPanelManager.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosPanelManager/LosPanelManager.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosPanelManager/LosPanelManager.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosPanelManager/LosPanelManager.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosPanelManager/LosPanelManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosPanelManager/LosPanelManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosPanelManager/LosPanelManager.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosPanelManager/LosPanelManager.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosPanelManager/LosPanelManager.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosPanelManager/LosPanelManager.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosPanelManager/LosPanelManager.cpp.i: cmake_force
@@ -401,7 +429,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosPanelManager/LosPanelManager.cpp.s: cmake
 CMakeFiles/PerseusCore.dir/src/core/LosPlatform/LosPlatform.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosPlatform/LosPlatform.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosPlatform/LosPlatform.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosPlatform/LosPlatform.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosPlatform/LosPlatform.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosPlatform/LosPlatform.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosPlatform/LosPlatform.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosPlatform/LosPlatform.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosPlatform/LosPlatform.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosPlatform/LosPlatform.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosPlatform/LosPlatform.cpp.i: cmake_force
@@ -415,7 +443,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosPlatform/LosPlatform.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/core/LosRouter/LosRouter.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosRouter/LosRouter.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRouter/LosRouter.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosRouter/LosRouter.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRouter/LosRouter.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRouter/LosRouter.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosRouter/LosRouter.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosRouter/LosRouter.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosRouter/LosRouter.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRouter/LosRouter.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosRouter/LosRouter.cpp.i: cmake_force
@@ -429,7 +457,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosRouter/LosRouter.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosAbstractRunner/LosAbstractRunner.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosAbstractRunner/LosAbstractRunner.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosAbstractRunner/LosAbstractRunner.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosAbstractRunner/LosAbstractRunner.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosAbstractRunner/LosAbstractRunner.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosAbstractRunner/LosAbstractRunner.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosAbstractRunner/LosAbstractRunner.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosAbstractRunner/LosAbstractRunner.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosAbstractRunner/LosAbstractRunner.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosAbstractRunner/LosAbstractRunner.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosAbstractRunner/LosAbstractRunner.cpp.i: cmake_force
@@ -443,7 +471,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosAbstractRunner/LosAbstractRunne
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosCmakeRunner/LosCmakeRunner.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosCmakeRunner/LosCmakeRunner.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosCmakeRunner/LosCmakeRunner.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosCmakeRunner/LosCmakeRunner.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosCmakeRunner/LosCmakeRunner.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosCmakeRunner/LosCmakeRunner.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosCmakeRunner/LosCmakeRunner.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosCmakeRunner/LosCmakeRunner.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosCmakeRunner/LosCmakeRunner.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosCmakeRunner/LosCmakeRunner.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosCmakeRunner/LosCmakeRunner.cpp.i: cmake_force
@@ -457,7 +485,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosCmakeRunner/LosCmakeRunner.cpp.
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosPythonRunner/LosPythonRunner.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosPythonRunner/LosPythonRunner.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosPythonRunner/LosPythonRunner.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosPythonRunner/LosPythonRunner.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosPythonRunner/LosPythonRunner.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosPythonRunner/LosPythonRunner.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosPythonRunner/LosPythonRunner.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosPythonRunner/LosPythonRunner.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosPythonRunner/LosPythonRunner.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosPythonRunner/LosPythonRunner.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosPythonRunner/LosPythonRunner.cpp.i: cmake_force
@@ -471,7 +499,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosPythonRunner/LosPythonRunner.cp
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRunManager/LosRunManager.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRunManager/LosRunManager.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosRunManager/LosRunManager.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRunManager/LosRunManager.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRunManager/LosRunManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRunManager/LosRunManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRunManager/LosRunManager.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRunManager/LosRunManager.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRunManager/LosRunManager.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosRunManager/LosRunManager.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRunManager/LosRunManager.cpp.i: cmake_force
@@ -485,7 +513,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRunManager/LosRunManager.cpp.s:
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRustcRunner/LosRustcRunner.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRustcRunner/LosRustcRunner.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosRustcRunner/LosRustcRunner.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRustcRunner/LosRustcRunner.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRustcRunner/LosRustcRunner.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRustcRunner/LosRustcRunner.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRustcRunner/LosRustcRunner.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRustcRunner/LosRustcRunner.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRustcRunner/LosRustcRunner.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosRustcRunner/LosRustcRunner.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRustcRunner/LosRustcRunner.cpp.i: cmake_force
@@ -499,7 +527,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosRustcRunner/LosRustcRunner.cpp.
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosScriptRunner/LosScriptRunner.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosScriptRunner/LosScriptRunner.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosScriptRunner/LosScriptRunner.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosScriptRunner/LosScriptRunner.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosScriptRunner/LosScriptRunner.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosScriptRunner/LosScriptRunner.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosScriptRunner/LosScriptRunner.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosScriptRunner/LosScriptRunner.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosScriptRunner/LosScriptRunner.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosScriptRunner/LosScriptRunner.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosScriptRunner/LosScriptRunner.cpp.i: cmake_force
@@ -513,7 +541,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosScriptRunner/LosScriptRunner.cp
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.cpp.i: cmake_force
@@ -527,7 +555,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosRunner/LosSingleCppRunner/LosSingleCppRun
 CMakeFiles/PerseusCore.dir/src/core/LosSesssion/LosSesssion.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosSesssion/LosSesssion.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosSesssion/LosSesssion.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosSesssion/LosSesssion.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosSesssion/LosSesssion.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosSesssion/LosSesssion.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosSesssion/LosSesssion.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosSesssion/LosSesssion.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosSesssion/LosSesssion.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosSesssion/LosSesssion.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosSesssion/LosSesssion.cpp.i: cmake_force
@@ -541,7 +569,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosSesssion/LosSesssion.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/core/LosShortcutManager/LosShortcutManager.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosShortcutManager/LosShortcutManager.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosShortcutManager/LosShortcutManager.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosShortcutManager/LosShortcutManager.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosShortcutManager/LosShortcutManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosShortcutManager/LosShortcutManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosShortcutManager/LosShortcutManager.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosShortcutManager/LosShortcutManager.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosShortcutManager/LosShortcutManager.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosShortcutManager/LosShortcutManager.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosShortcutManager/LosShortcutManager.cpp.i: cmake_force
@@ -555,7 +583,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosShortcutManager/LosShortcutManager.cpp.s:
 CMakeFiles/PerseusCore.dir/src/core/LosState/LosState.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosState/LosState.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosState/LosState.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosState/LosState.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosState/LosState.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosState/LosState.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosState/LosState.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosState/LosState.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosState/LosState.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosState/LosState.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosState/LosState.cpp.i: cmake_force
@@ -569,7 +597,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosState/LosState.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/core/LosTerminal/LosTerminal.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosTerminal/LosTerminal.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosTerminal/LosTerminal.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosTerminal/LosTerminal.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosTerminal/LosTerminal.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosTerminal/LosTerminal.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosTerminal/LosTerminal.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosTerminal/LosTerminal.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosTerminal/LosTerminal.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosTerminal/LosTerminal.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosTerminal/LosTerminal.cpp.i: cmake_force
@@ -583,7 +611,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosTerminal/LosTerminal.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/core/LosTheme/LosThemeManager.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosTheme/LosThemeManager.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosTheme/LosThemeManager.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosTheme/LosThemeManager.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosTheme/LosThemeManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosTheme/LosThemeManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosTheme/LosThemeManager.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosTheme/LosThemeManager.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosTheme/LosThemeManager.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosTheme/LosThemeManager.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosTheme/LosThemeManager.cpp.i: cmake_force
@@ -597,7 +625,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosTheme/LosThemeManager.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/core/LosToolChainManager/LosToolChainManager.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/core/LosToolChainManager/LosToolChainManager.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosToolChainManager/LosToolChainManager.cpp
 CMakeFiles/PerseusCore.dir/src/core/LosToolChainManager/LosToolChainManager.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosToolChainManager/LosToolChainManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/PerseusCore.dir/src/core/LosToolChainManager/LosToolChainManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/core/LosToolChainManager/LosToolChainManager.cpp.o -MF CMakeFiles/PerseusCore.dir/src/core/LosToolChainManager/LosToolChainManager.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/core/LosToolChainManager/LosToolChainManager.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/core/LosToolChainManager/LosToolChainManager.cpp
 
 CMakeFiles/PerseusCore.dir/src/core/LosToolChainManager/LosToolChainManager.cpp.i: cmake_force
@@ -611,7 +639,7 @@ CMakeFiles/PerseusCore.dir/src/core/LosToolChainManager/LosToolChainManager.cpp.
 CMakeFiles/PerseusCore.dir/src/main.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/main.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/main.cpp
 CMakeFiles/PerseusCore.dir/src/main.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object CMakeFiles/PerseusCore.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/PerseusCore.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/main.cpp.o -MF CMakeFiles/PerseusCore.dir/src/main.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/main.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/main.cpp
 
 CMakeFiles/PerseusCore.dir/src/main.cpp.i: cmake_force
@@ -625,7 +653,7 @@ CMakeFiles/PerseusCore.dir/src/main.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/models/LosFileContext/LosFileContext.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/models/LosFileContext/LosFileContext.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/models/LosFileContext/LosFileContext.cpp
 CMakeFiles/PerseusCore.dir/src/models/LosFileContext/LosFileContext.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object CMakeFiles/PerseusCore.dir/src/models/LosFileContext/LosFileContext.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/PerseusCore.dir/src/models/LosFileContext/LosFileContext.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/models/LosFileContext/LosFileContext.cpp.o -MF CMakeFiles/PerseusCore.dir/src/models/LosFileContext/LosFileContext.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/models/LosFileContext/LosFileContext.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/models/LosFileContext/LosFileContext.cpp
 
 CMakeFiles/PerseusCore.dir/src/models/LosFileContext/LosFileContext.cpp.i: cmake_force
@@ -639,7 +667,7 @@ CMakeFiles/PerseusCore.dir/src/models/LosFileContext/LosFileContext.cpp.s: cmake
 CMakeFiles/PerseusCore.dir/src/models/LosFileNode/LosFileNode.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/models/LosFileNode/LosFileNode.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/models/LosFileNode/LosFileNode.cpp
 CMakeFiles/PerseusCore.dir/src/models/LosFileNode/LosFileNode.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object CMakeFiles/PerseusCore.dir/src/models/LosFileNode/LosFileNode.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/PerseusCore.dir/src/models/LosFileNode/LosFileNode.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/models/LosFileNode/LosFileNode.cpp.o -MF CMakeFiles/PerseusCore.dir/src/models/LosFileNode/LosFileNode.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/models/LosFileNode/LosFileNode.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/models/LosFileNode/LosFileNode.cpp
 
 CMakeFiles/PerseusCore.dir/src/models/LosFileNode/LosFileNode.cpp.i: cmake_force
@@ -653,7 +681,7 @@ CMakeFiles/PerseusCore.dir/src/models/LosFileNode/LosFileNode.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/models/LosFilePath/LosFilePath.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/models/LosFilePath/LosFilePath.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/models/LosFilePath/LosFilePath.cpp
 CMakeFiles/PerseusCore.dir/src/models/LosFilePath/LosFilePath.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object CMakeFiles/PerseusCore.dir/src/models/LosFilePath/LosFilePath.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/PerseusCore.dir/src/models/LosFilePath/LosFilePath.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/models/LosFilePath/LosFilePath.cpp.o -MF CMakeFiles/PerseusCore.dir/src/models/LosFilePath/LosFilePath.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/models/LosFilePath/LosFilePath.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/models/LosFilePath/LosFilePath.cpp
 
 CMakeFiles/PerseusCore.dir/src/models/LosFilePath/LosFilePath.cpp.i: cmake_force
@@ -667,7 +695,7 @@ CMakeFiles/PerseusCore.dir/src/models/LosFilePath/LosFilePath.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/models/LosFileTreeModel/LosFileTreeModel.cpp
 CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o -MF CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/models/LosFileTreeModel/LosFileTreeModel.cpp
 
 CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.i: cmake_force
@@ -678,10 +706,24 @@ CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.s: c
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/models/LosFileTreeModel/LosFileTreeModel.cpp -o CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.s
 
+CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
+CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosAuthUi/LosAuthUi.cpp
+CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosAuthUi/LosAuthUi.cpp
+
+CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosAuthUi/LosAuthUi.cpp > CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.i
+
+CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosAuthUi/LosAuthUi.cpp -o CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.s
+
 CMakeFiles/PerseusCore.dir/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp.i: cmake_force
@@ -695,7 +737,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp.s: cma
 CMakeFiles/PerseusCore.dir/src/view/LosCommandUi/LosCommandUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosCommandUi/LosCommandUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosCommandUi/LosCommandUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosCommandUi/LosCommandUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosCommandUi/LosCommandUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosCommandUi/LosCommandUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosCommandUi/LosCommandUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosCommandUi/LosCommandUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosCommandUi/LosCommandUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosCommandUi/LosCommandUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosCommandUi/LosCommandUi.cpp.i: cmake_force
@@ -709,7 +751,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosCommandUi/LosCommandUi.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosCompleterUi/LosCompleterUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosCompleterUi/LosCompleterUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.i: cmake_force
@@ -723,7 +765,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.s: cmake_f
 CMakeFiles/PerseusCore.dir/src/view/LosDropdownButtonUi/LosDropdownButtonUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosDropdownButtonUi/LosDropdownButtonUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosDropdownButtonUi/LosDropdownButtonUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosDropdownButtonUi/LosDropdownButtonUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosDropdownButtonUi/LosDropdownButtonUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosDropdownButtonUi/LosDropdownButtonUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosDropdownButtonUi/LosDropdownButtonUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosDropdownButtonUi/LosDropdownButtonUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosDropdownButtonUi/LosDropdownButtonUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosDropdownButtonUi/LosDropdownButtonUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosDropdownButtonUi/LosDropdownButtonUi.cpp.i: cmake_force
@@ -737,7 +779,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosDropdownButtonUi/LosDropdownButtonUi.cpp.
 CMakeFiles/PerseusCore.dir/src/view/LosEditorTabUi/LosEditorTabUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosEditorTabUi/LosEditorTabUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosEditorTabUi/LosEditorTabUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosEditorTabUi/LosEditorTabUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosEditorTabUi/LosEditorTabUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosEditorTabUi/LosEditorTabUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosEditorTabUi/LosEditorTabUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosEditorTabUi/LosEditorTabUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosEditorTabUi/LosEditorTabUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosEditorTabUi/LosEditorTabUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosEditorTabUi/LosEditorTabUi.cpp.i: cmake_force
@@ -751,7 +793,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosEditorTabUi/LosEditorTabUi.cpp.s: cmake_f
 CMakeFiles/PerseusCore.dir/src/view/LosEditorUi/LosEditorUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosEditorUi/LosEditorUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosEditorUi/LosEditorUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosEditorUi/LosEditorUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosEditorUi/LosEditorUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosEditorUi/LosEditorUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosEditorUi/LosEditorUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosEditorUi/LosEditorUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosEditorUi/LosEditorUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosEditorUi/LosEditorUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosEditorUi/LosEditorUi.cpp.i: cmake_force
@@ -765,7 +807,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosEditorUi/LosEditorUi.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/view/LosFileTreeDelegate/LosFileTreeDelegate.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosFileTreeDelegate/LosFileTreeDelegate.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosFileTreeDelegate/LosFileTreeDelegate.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosFileTreeDelegate/LosFileTreeDelegate.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosFileTreeDelegate/LosFileTreeDelegate.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosFileTreeDelegate/LosFileTreeDelegate.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosFileTreeDelegate/LosFileTreeDelegate.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosFileTreeDelegate/LosFileTreeDelegate.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosFileTreeDelegate/LosFileTreeDelegate.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosFileTreeDelegate/LosFileTreeDelegate.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosFileTreeDelegate/LosFileTreeDelegate.cpp.i: cmake_force
@@ -779,7 +821,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosFileTreeDelegate/LosFileTreeDelegate.cpp.
 CMakeFiles/PerseusCore.dir/src/view/LosFileTreeUi/LosFileTreeUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosFileTreeUi/LosFileTreeUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosFileTreeUi/LosFileTreeUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosFileTreeUi/LosFileTreeUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosFileTreeUi/LosFileTreeUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosFileTreeUi/LosFileTreeUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosFileTreeUi/LosFileTreeUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosFileTreeUi/LosFileTreeUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosFileTreeUi/LosFileTreeUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosFileTreeUi/LosFileTreeUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosFileTreeUi/LosFileTreeUi.cpp.i: cmake_force
@@ -793,7 +835,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosFileTreeUi/LosFileTreeUi.cpp.s: cmake_for
 CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.cpp.i: cmake_force
@@ -807,7 +849,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFindPopupUi/LosFindPop
 CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFloatingPanelUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFloatingPanelUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosFloatingPanelUi/LosFloatingPanelUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFloatingPanelUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFloatingPanelUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFloatingPanelUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFloatingPanelUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFloatingPanelUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFloatingPanelUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosFloatingPanelUi/LosFloatingPanelUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFloatingPanelUi.cpp.i: cmake_force
@@ -821,7 +863,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosFloatingPanelUi.cpp.s:
 CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.cpp.i: cmake_force
@@ -835,7 +877,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGot
 CMakeFiles/PerseusCore.dir/src/view/LosIssuesUi/LosIssuesUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosIssuesUi/LosIssuesUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosIssuesUi/LosIssuesUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosIssuesUi/LosIssuesUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosIssuesUi/LosIssuesUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosIssuesUi/LosIssuesUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosIssuesUi/LosIssuesUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosIssuesUi/LosIssuesUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosIssuesUi/LosIssuesUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosIssuesUi/LosIssuesUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosIssuesUi/LosIssuesUi.cpp.i: cmake_force
@@ -849,7 +891,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosIssuesUi/LosIssuesUi.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/view/LosLineNumberUi/LosLineNumberUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosLineNumberUi/LosLineNumberUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosLineNumberUi/LosLineNumberUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosLineNumberUi/LosLineNumberUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_57) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosLineNumberUi/LosLineNumberUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosLineNumberUi/LosLineNumberUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosLineNumberUi/LosLineNumberUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosLineNumberUi/LosLineNumberUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosLineNumberUi/LosLineNumberUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosLineNumberUi/LosLineNumberUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosLineNumberUi/LosLineNumberUi.cpp.i: cmake_force
@@ -863,7 +905,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosLineNumberUi/LosLineNumberUi.cpp.s: cmake
 CMakeFiles/PerseusCore.dir/src/view/LosPlugUi/LosPlugUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosPlugUi/LosPlugUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosPlugUi/LosPlugUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosPlugUi/LosPlugUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_58) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosPlugUi/LosPlugUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_61) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosPlugUi/LosPlugUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosPlugUi/LosPlugUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosPlugUi/LosPlugUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosPlugUi/LosPlugUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosPlugUi/LosPlugUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosPlugUi/LosPlugUi.cpp.i: cmake_force
@@ -877,7 +919,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosPlugUi/LosPlugUi.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/view/LosPluginDetailUi/LosPluginDetailUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosPluginDetailUi/LosPluginDetailUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosPluginDetailUi/LosPluginDetailUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosPluginDetailUi/LosPluginDetailUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_59) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosPluginDetailUi/LosPluginDetailUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_62) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosPluginDetailUi/LosPluginDetailUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosPluginDetailUi/LosPluginDetailUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosPluginDetailUi/LosPluginDetailUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosPluginDetailUi/LosPluginDetailUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosPluginDetailUi/LosPluginDetailUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosPluginDetailUi/LosPluginDetailUi.cpp.i: cmake_force
@@ -891,7 +933,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosPluginDetailUi/LosPluginDetailUi.cpp.s: c
 CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosMDPreview/LosMDPreview.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosMDPreview/LosMDPreview.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosPreview/LosMDPreview/LosMDPreview.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosMDPreview/LosMDPreview.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_60) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosMDPreview/LosMDPreview.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_63) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosMDPreview/LosMDPreview.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosMDPreview/LosMDPreview.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosMDPreview/LosMDPreview.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosMDPreview/LosMDPreview.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosPreview/LosMDPreview/LosMDPreview.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosMDPreview/LosMDPreview.cpp.i: cmake_force
@@ -905,7 +947,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosMDPreview/LosMDPreview.cpp.s: 
 CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosPreview.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosPreview.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosPreview/LosPreview.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosPreview.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_61) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosPreview.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_64) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosPreview.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosPreview.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosPreview.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosPreview.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosPreview/LosPreview.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosPreview.cpp.i: cmake_force
@@ -919,7 +961,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosPreview/LosPreview.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/view/LosSettingsUi/LosSettingsUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosSettingsUi/LosSettingsUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosSettingsUi/LosSettingsUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosSettingsUi/LosSettingsUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_62) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosSettingsUi/LosSettingsUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_65) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosSettingsUi/LosSettingsUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosSettingsUi/LosSettingsUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosSettingsUi/LosSettingsUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosSettingsUi/LosSettingsUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosSettingsUi/LosSettingsUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosSettingsUi/LosSettingsUi.cpp.i: cmake_force
@@ -933,7 +975,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosSettingsUi/LosSettingsUi.cpp.s: cmake_for
 CMakeFiles/PerseusCore.dir/src/view/LosStateBarUi/LosStateBarUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosStateBarUi/LosStateBarUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosStateBarUi/LosStateBarUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosStateBarUi/LosStateBarUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_63) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosStateBarUi/LosStateBarUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_66) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosStateBarUi/LosStateBarUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosStateBarUi/LosStateBarUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosStateBarUi/LosStateBarUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosStateBarUi/LosStateBarUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosStateBarUi/LosStateBarUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosStateBarUi/LosStateBarUi.cpp.i: cmake_force
@@ -947,7 +989,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosStateBarUi/LosStateBarUi.cpp.s: cmake_for
 CMakeFiles/PerseusCore.dir/src/view/LosTerminalTabsUi/LosTerminalTabsUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosTerminalTabsUi/LosTerminalTabsUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosTerminalTabsUi/LosTerminalTabsUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosTerminalTabsUi/LosTerminalTabsUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_64) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosTerminalTabsUi/LosTerminalTabsUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_67) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosTerminalTabsUi/LosTerminalTabsUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosTerminalTabsUi/LosTerminalTabsUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosTerminalTabsUi/LosTerminalTabsUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosTerminalTabsUi/LosTerminalTabsUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosTerminalTabsUi/LosTerminalTabsUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosTerminalTabsUi/LosTerminalTabsUi.cpp.i: cmake_force
@@ -961,7 +1003,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosTerminalTabsUi/LosTerminalTabsUi.cpp.s: c
 CMakeFiles/PerseusCore.dir/src/view/LosTerminalUi/LosTerminalUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosTerminalUi/LosTerminalUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosTerminalUi/LosTerminalUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosTerminalUi/LosTerminalUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_65) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosTerminalUi/LosTerminalUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_68) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosTerminalUi/LosTerminalUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosTerminalUi/LosTerminalUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosTerminalUi/LosTerminalUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosTerminalUi/LosTerminalUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosTerminalUi/LosTerminalUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosTerminalUi/LosTerminalUi.cpp.i: cmake_force
@@ -975,7 +1017,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosTerminalUi/LosTerminalUi.cpp.s: cmake_for
 CMakeFiles/PerseusCore.dir/src/view/LosToolBarUi/LosToolBarUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosToolBarUi/LosToolBarUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosToolBarUi/LosToolBarUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosToolBarUi/LosToolBarUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_66) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosToolBarUi/LosToolBarUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_69) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosToolBarUi/LosToolBarUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosToolBarUi/LosToolBarUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosToolBarUi/LosToolBarUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosToolBarUi/LosToolBarUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosToolBarUi/LosToolBarUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosToolBarUi/LosToolBarUi.cpp.i: cmake_force
@@ -989,7 +1031,7 @@ CMakeFiles/PerseusCore.dir/src/view/LosToolBarUi/LosToolBarUi.cpp.s: cmake_force
 CMakeFiles/PerseusCore.dir/src/view/LosToolMissUi/LosToolMissUi.cpp.o: CMakeFiles/PerseusCore.dir/flags.make
 CMakeFiles/PerseusCore.dir/src/view/LosToolMissUi/LosToolMissUi.cpp.o: /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosToolMissUi/LosToolMissUi.cpp
 CMakeFiles/PerseusCore.dir/src/view/LosToolMissUi/LosToolMissUi.cpp.o: CMakeFiles/PerseusCore.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_67) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosToolMissUi/LosToolMissUi.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_70) "Building CXX object CMakeFiles/PerseusCore.dir/src/view/LosToolMissUi/LosToolMissUi.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/PerseusCore.dir/src/view/LosToolMissUi/LosToolMissUi.cpp.o -MF CMakeFiles/PerseusCore.dir/src/view/LosToolMissUi/LosToolMissUi.cpp.o.d -o CMakeFiles/PerseusCore.dir/src/view/LosToolMissUi/LosToolMissUi.cpp.o -c /home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosToolMissUi/LosToolMissUi.cpp
 
 CMakeFiles/PerseusCore.dir/src/view/LosToolMissUi/LosToolMissUi.cpp.i: cmake_force
@@ -1004,6 +1046,8 @@ CMakeFiles/PerseusCore.dir/src/view/LosToolMissUi/LosToolMissUi.cpp.s: cmake_for
 PerseusCore_OBJECTS = \
 "CMakeFiles/PerseusCore.dir/PerseusCore_autogen/mocs_compilation.cpp.o" \
 "CMakeFiles/PerseusCore.dir/src/Perseus.cpp.o" \
+"CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.o" \
+"CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.o" \
 "CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfig/LosConfig.cpp.o" \
 "CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp.o" \
 "CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigFactory/LosConfigFactory.cpp.o" \
@@ -1045,6 +1089,7 @@ PerseusCore_OBJECTS = \
 "CMakeFiles/PerseusCore.dir/src/models/LosFileNode/LosFileNode.cpp.o" \
 "CMakeFiles/PerseusCore.dir/src/models/LosFilePath/LosFilePath.cpp.o" \
 "CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o" \
+"CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.o" \
 "CMakeFiles/PerseusCore.dir/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp.o" \
 "CMakeFiles/PerseusCore.dir/src/view/LosCommandUi/LosCommandUi.cpp.o" \
 "CMakeFiles/PerseusCore.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.o" \
@@ -1074,6 +1119,8 @@ PerseusCore_EXTERNAL_OBJECTS =
 
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/PerseusCore_autogen/mocs_compilation.cpp.o
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/Perseus.cpp.o
+libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentClient/LosAgentClient.cpp.o
+libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/core/LosAgent/LosAgentManager/LosAgentManager.cpp.o
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfig/LosConfig.cpp.o
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigCMake/LosConfigCMake.cpp.o
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/core/LosConfig/LosConfigFactory/LosConfigFactory.cpp.o
@@ -1115,6 +1162,7 @@ libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/models/LosFileContext/LosFileCo
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/models/LosFileNode/LosFileNode.cpp.o
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/models/LosFilePath/LosFilePath.cpp.o
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o
+libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.o
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp.o
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/view/LosCommandUi/LosCommandUi.cpp.o
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/view/LosCompleterUi/LosCompleterUi.cpp.o
@@ -1140,7 +1188,7 @@ libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/view/LosToolBarUi/LosToolBarUi.
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/src/view/LosToolMissUi/LosToolMissUi.cpp.o
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/build.make
 libPerseusCore.a: CMakeFiles/PerseusCore.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_68) "Linking CXX static library libPerseusCore.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_71) "Linking CXX static library libPerseusCore.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/PerseusCore.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/PerseusCore.dir/link.txt --verbose=$(VERBOSE)
 
