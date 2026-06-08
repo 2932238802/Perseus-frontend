@@ -602,6 +602,10 @@ void Perseus::initSession()
     LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, file);
     LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN, conf.LOS_authConfig.L_token);
     LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_USERNAME, conf.LOS_authConfig.L_username);
+    if (!conf.LOS_authConfig.L_token.isEmpty())
+    {
+        LosCore::LosNet::instance().requestAuthLogin(conf.LOS_authConfig.L_token);
+    }
     if (!LOS_tabUi || !isSuc)
         return;
     connect(
@@ -613,7 +617,7 @@ void Perseus::initSession()
                 LOS_tabUi->blockSignals(true);
                 LOS_tabUi->openFile(file);
                 LOS_tabUi->blockSignals(false);
-            }
+            }   
             if (!conf.L_curActiveFile.isEmpty())
             {
                 LOS_tabUi->openFile(conf.L_curActiveFile);
