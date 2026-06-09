@@ -42,7 +42,8 @@
 
 _build
 _build/
-
+build
+build/
 .cache
 .cache/*
 

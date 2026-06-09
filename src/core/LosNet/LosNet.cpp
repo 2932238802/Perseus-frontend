@@ -103,7 +103,7 @@ namespace LosCore
         body["message"]    = msg;
         body["agent_name"] = state.get<QString>(LosCommon::LosState_Constants::SG_STR::AGENT_CUR_NAME);
         QByteArray data    = QJsonDocument(body).toJson(QJsonDocument::Compact);
-        QUrl url(LosCommon::LosNet_Constants::BASE_URL + QString(LosCommon::LosNet_Constants::API::AGENT_CHAT));
+        QUrl url(LosCommon::LosNet_Constants::BASE_URL + QString(LosCommon::LosNet_Constants::API::AGENT_CHAT_API));
         QNetworkRequest req(url);
         req.setHeader(QNetworkRequest::ContentTypeHeader, LosCommon::LosNet_Constants::HEADER_TYPE::JSON_TYPE);
         req.setRawHeader("Authorization", ("Bearer " + token).toUtf8());

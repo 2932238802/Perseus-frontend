@@ -9,8 +9,13 @@
 
 namespace LosCore
 {
+    /**
+     * @brief Construct a new Los Panel Manager:: Los Panel Manager object
+     * 
+     * @param tab 
+     * @param parent 
+     */
     LosPanelManager::LosPanelManager(QTabWidget *tab, QObject *parent) : QObject(parent), L_tab(tab) {}
-
 
     /**
      * @brief registerPanel
