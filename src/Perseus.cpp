@@ -420,8 +420,8 @@ void Perseus::initConnect()
     LOS_setting      = new LosView::LosSettingsUi(this);
     LOS_auth         = new LosView::LosAuthUi(this);
     {
-        LosCore::LosGitManager::instance();  // 这边单独调用一下 初始化一下
-        LosCore::LosNet::instance();         // 初始化网络层 (注册/登录信号监听)
+        LosCore::LosGitManager::instance();   // 这边单独调用一下 初始化一下
+        LosCore::LosNet::instance();          // 初始化网络层 (注册/登录信号监听)
         LosCore::LosAgentManager::instance(); // 初始化 Agent 业务层 (监听 _cmd_agent_sendMessage)
     }
     L_timer->setSingleShot(true);
