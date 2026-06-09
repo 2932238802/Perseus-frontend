@@ -1023,6 +1023,12 @@
 			null
 		],
 		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosAgentUi/LosAgentUi.h",
+			"MU",
+			"F3ZCSTMM3N/moc_LosAgentUi.cpp",
+			null
+		],
+		[
 			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosAuthUi/LosAuthUi.h",
 			"MU",
 			"EWXA7ZUASR/moc_LosAuthUi.cpp",
@@ -1164,6 +1170,12 @@
 			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosToolMissUi/LosToolMissUi.h",
 			"MU",
 			"QWWXYFXHC2/moc_LosToolMissUi.cpp",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/style/LosAgent_style.h",
+			"MU",
+			"EJ4VAXFKT7/moc_LosAgent_style.cpp",
 			null
 		],
 		[
@@ -1527,6 +1539,11 @@
 		],
 		[
 			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/models/LosFileTreeModel/LosFileTreeModel.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view/LosAgentUi/LosAgentUi.cpp",
 			"MU",
 			null
 		],

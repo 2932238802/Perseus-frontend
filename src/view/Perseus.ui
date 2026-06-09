@@ -346,6 +346,14 @@
           </widget>
          </widget>
         </widget>
+        <widget class="LosView::LosAgentUi" name="agent_panel" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>280</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
        </widget>
       </item>
      </layout>
@@ -403,6 +411,12 @@
    <class>LosView::LosStateBarUi</class>
    <extends>QWidget</extends>
    <header>view/LosStateBarUi/LosStateBarUi.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LosView::LosAgentUi</class>
+   <extends>QWidget</extends>
+   <header>view/LosAgentUi/LosAgentUi.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

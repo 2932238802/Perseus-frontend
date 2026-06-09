@@ -261,7 +261,8 @@ namespace LosView
         {
             clearInputs();
             emit LosCore::LosRouter::instance()._cmd_auth_loginStateChanged(true);
-            accept(); // 关闭对话框 (QDialog::accept)
+            accept();
+            // 关闭对话框 (QDialog::accept)
         }
     }
 

@@ -67,10 +67,10 @@ include CMakeFiles/PerseusCore_autogen_timestamp_deps.dir/compiler_depend.make
 include CMakeFiles/PerseusCore_autogen_timestamp_deps.dir/progress.make
 
 CMakeFiles/PerseusCore_autogen_timestamp_deps: /usr/lib/qt6/libexec/uic
+CMakeFiles/PerseusCore_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6WebEngineWidgets.so.6.4.2
 CMakeFiles/PerseusCore_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Concurrent.so.6.4.2
 CMakeFiles/PerseusCore_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Network.so.6.4.2
 CMakeFiles/PerseusCore_autogen_timestamp_deps: /usr/lib/qt6/libexec/moc
-CMakeFiles/PerseusCore_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6WebEngineWidgets.so.6.4.2
 CMakeFiles/PerseusCore_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Widgets.so.6.4.2
 CMakeFiles/PerseusCore_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6Test.so.6.4.2
 CMakeFiles/PerseusCore_autogen_timestamp_deps: /usr/lib/x86_64-linux-gnu/libQt6WebChannel.so.6.4.2

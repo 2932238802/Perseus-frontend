@@ -14,7 +14,7 @@ namespace LosCore
 
     /**
      * @brief registerPanel
-     *
+     * 存在ui里面的 然后 登记在 管理器里面
      * @param id
      * @param widget
      * @param displayName

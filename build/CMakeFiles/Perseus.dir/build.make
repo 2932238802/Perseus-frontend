@@ -106,6 +106,7 @@ Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/h_black.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/python_black.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/rust_black.png
+Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/loginsuc_white.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/exe_black.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/cpp_black.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/html_white.png
@@ -115,6 +116,7 @@ Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/chajian_white.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/html_black.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/cmake_white.png
+Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/loginsuc_black.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/md_white.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/files_black.png
 Perseus_autogen/EWIEGA46WW/qrc_resources.cpp: /home/losangelous/LosAngelous/Pro/Perseus-frontend/resources/icons/exe_white.png

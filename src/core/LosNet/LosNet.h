@@ -3,6 +3,8 @@
 #pragma once
 #include <QNetworkReply>
 #include <QObject>
+#include <qglobal.h>
+#include <qurl.h>
 
 
 namespace LosCore
@@ -23,10 +25,13 @@ namespace LosCore
         void requestPlugin();
         void requestRegister(const QString &username, const QString &password);
         void requestLogin(const QString &username, const QString &password);
-        void requestAuthLogin(const QString &token);
+        void requestAutoLogin(const QString &token);
+        void requestAgentChat(const QString &msg);
         void dealPluginReply(const QByteArray &data);
         void dealRegisterReply(const QByteArray &data);
         void dealLoginReply(const QByteArray &data);
+        void dealAutoLoginReply(const QByteArray &data);
+        void dealAgentChatReply(const QByteArray &);
 
       public: // tool hello
         void requestInit();

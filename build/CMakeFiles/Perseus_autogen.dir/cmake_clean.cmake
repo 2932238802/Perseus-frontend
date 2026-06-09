@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Perseus_autogen"
+  "Perseus_autogen/include/src/view/LosAgentUi/ui_LosAgentUi.h"
   "Perseus_autogen/include/src/view/LosCommandArgsUi/ui_LosCommandArgsUi.h"
   "Perseus_autogen/include/src/view/LosPlugUi/ui_LosPlugUi.h"
   "Perseus_autogen/include/src/view/LosPluginDetailUi/ui_LosPluginDetailUi.h"

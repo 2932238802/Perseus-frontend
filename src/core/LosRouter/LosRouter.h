@@ -170,11 +170,11 @@ namespace LosCore
         void _cmd_authBtnClick();
         void _cmd_auth_login_request(const QString &username, const QString &password);
         void _cmd_auth_register_request(const QString &username, const QString &password);
+        void _cmd_auth_autoLogin_request(const QString &token);
+        void _cmd_auth_autoLogin_response(bool suc, const QString &message, const QString &username, const QString &user_id);
         void _cmd_auth_response(bool success, const QString &message);
-        // 登录状态变化: true=已登录, false=已登出. 主窗据此切换 act_auth_btn 图标(auth <-> loginsuc)
         void _cmd_auth_loginStateChanged(bool loggedIn);
-
-
+        void _cmd_needAuth(); // 打开登录的窗口 提示 需要登录 在部分 需要登录和注册的逻辑
 
         // ----------------------------------------------------------------------------
         // 主题切换部分

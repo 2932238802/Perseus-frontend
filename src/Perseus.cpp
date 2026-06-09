@@ -4,7 +4,9 @@
 #include "./ui_Perseus.h"
 #include "common/constants/ConstantsClass/LosSessionClass.h"
 #include "common/constants/ConstantsStr/LosStateStr.h"
+#include "core/LosAgent/LosAgentManager/LosAgentManager.h"
 #include "core/LosGitManager/LosGitManager.h"
+#include "core/LosNet/LosNet.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosShortcutManager/LosShortcutManager.h"
 #include "core/LosState/LosState.h"
@@ -418,12 +420,15 @@ void Perseus::initConnect()
     LOS_setting      = new LosView::LosSettingsUi(this);
     LOS_auth         = new LosView::LosAuthUi(this);
     {
-        LosCore::LosGitManager::instance(); // 这边单独调用一下 初始化一下
+        LosCore::LosGitManager::instance();  // 这边单独调用一下 初始化一下
+        LosCore::LosNet::instance();         // 初始化网络层 (注册/登录信号监听)
+        LosCore::LosAgentManager::instance(); // 初始化 Agent 业务层 (监听 _cmd_agent_sendMessage)
     }
     L_timer->setSingleShot(true);
     L_timer->setInterval(300);
     L_filesWatcher = new QFileSystemWatcher(this);
     auto &router   = LosCore::LosRouter::instance();
+    auto &net      = LosCore::LosNet::instance();
     connect(L_timer, &QTimer::timeout, this, &Perseus::onDebounceTimeOut);
     connect(L_filesWatcher, &QFileSystemWatcher::directoryChanged, this, &Perseus::onDirectoryChanged);
     connect(ui->explorer_treeview, &QTreeView::activated, this, &Perseus::onExplorerFileDoubleClicked);
@@ -484,8 +489,11 @@ void Perseus::initStyle()
     QApplication::setFont(defaultFont);
     ui->editor_tabwidget->setTabsClosable(false);
     ui->right_splitter->setSizes({8, 1});
-    ui->main_splitter->setStretchFactor(0, 1);
-    ui->main_splitter->setStretchFactor(1, 4);
+    ui->main_splitter->setStretchFactor(0, 1); // left_panel_stack
+    ui->main_splitter->setStretchFactor(1, 4); // right_splitter (编辑器+底部)
+    ui->main_splitter->setStretchFactor(2, 1); // agent_panel (右侧 Agent 侧边栏)
+    ui->main_splitter->setSizes({200, 760, 280});
+    ui->main_splitter->setChildrenCollapsible(false);
     ui->right_splitter->setStretchFactor(0, 4);
     ui->right_splitter->setStretchFactor(1, 1);
     ui->bottom_tabwidget->setTabText(0, QString::fromUtf8(u8"Output"));
@@ -604,7 +612,7 @@ void Perseus::initSession()
     LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_USERNAME, conf.LOS_authConfig.L_username);
     if (!conf.LOS_authConfig.L_token.isEmpty())
     {
-        LosCore::LosNet::instance().requestAuthLogin(conf.LOS_authConfig.L_token);
+        emit LosCore::LosRouter::instance()._cmd_auth_autoLogin_request(conf.LOS_authConfig.L_token);
     }
     if (!LOS_tabUi || !isSuc)
         return;
@@ -617,7 +625,7 @@ void Perseus::initSession()
                 LOS_tabUi->blockSignals(true);
                 LOS_tabUi->openFile(file);
                 LOS_tabUi->blockSignals(false);
-            }   
+            }
             if (!conf.L_curActiveFile.isEmpty())
             {
                 LOS_tabUi->openFile(conf.L_curActiveFile);

@@ -261,7 +261,7 @@ QInputDialog {
 
 /* 已登录态: 切换为 loginsuc 图标 */
 #act_auth_btn[logged="true"] {
-    image: url(:/icons/loginsuc_black.png);
+    image: url(:/icons/loginsuc_white.png);
 }
 
 #act_auth_btn[logged="true"]:hover {

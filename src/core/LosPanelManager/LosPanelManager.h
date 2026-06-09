@@ -19,7 +19,7 @@ namespace LosCore
 
       public: // tool
         void registerPanel(const QString &id, QWidget *widget, const QString &displayName,
-                           int order); // 存在ui里面的 然后 登记在 管理器里面
+                           int order); 
         void addCloseBtn();
         void hidePanel(const QString& panel_id);
 

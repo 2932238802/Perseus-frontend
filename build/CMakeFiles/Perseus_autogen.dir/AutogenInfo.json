@@ -519,6 +519,7 @@
 	"MOC_RELAXED_MODE" : false,
 	"MOC_SKIP" : 
 	[
+		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/PerseusCore_autogen/include/src/view/LosAgentUi/ui_LosAgentUi.h",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/PerseusCore_autogen/include/src/view/LosCommandArgsUi/ui_LosCommandArgsUi.h",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/PerseusCore_autogen/include/src/view/LosPlugUi/ui_LosPlugUi.h",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/PerseusCore_autogen/include/src/view/LosPluginDetailUi/ui_LosPluginDetailUi.h",
@@ -546,6 +547,7 @@
 	"UIC_SEARCH_PATHS" : [ "/home/losangelous/LosAngelous/Pro/Perseus-frontend/src/view" ],
 	"UIC_SKIP" : 
 	[
+		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/PerseusCore_autogen/include/src/view/LosAgentUi/ui_LosAgentUi.h",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/PerseusCore_autogen/include/src/view/LosCommandArgsUi/ui_LosCommandArgsUi.h",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/PerseusCore_autogen/include/src/view/LosPlugUi/ui_LosPlugUi.h",
 		"/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/PerseusCore_autogen/include/src/view/LosPluginDetailUi/ui_LosPluginDetailUi.h",

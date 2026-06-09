@@ -787,7 +787,7 @@
 			[
 				0,
 				1,
-				9
+				10
 			]
 		}
 	],
@@ -983,7 +983,7 @@
 			[
 				0,
 				1,
-				9
+				10
 			]
 		},
 		{
@@ -991,7 +991,7 @@
 			"sourceIndexes" : 
 			[
 				2,
-				8
+				9
 			]
 		},
 		{
@@ -1002,15 +1002,16 @@
 				4,
 				5,
 				6,
-				7
+				7,
+				8
 			]
 		},
 		{
 			"name" : "CMake Rules",
 			"sourceIndexes" : 
 			[
-				10,
-				11
+				11,
+				12
 			]
 		}
 	],
@@ -1033,6 +1034,12 @@
 			"backtrace" : 4,
 			"path" : "resources.qrc",
 			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 0,
+			"isGenerated" : true,
+			"path" : "build/Perseus_autogen/include/src/view/LosAgentUi/ui_LosAgentUi.h",
+			"sourceGroupIndex" : 2
 		},
 		{
 			"backtrace" : 0,

@@ -30,6 +30,8 @@ namespace LosCommon
 
             AUTH_USERNAME, // 用户名
             AUTH_TOKEN,    // token
+
+            AGENT_CUR_NAME,
         };
     } /* namespace LosState_Constants */
 } // namespace LosCommon

@@ -2069,6 +2069,30 @@ src/models/LosFileTreeModel/LosFileTreeModel.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PerseusCore.dir/build.make CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.s
 .PHONY : src/models/LosFileTreeModel/LosFileTreeModel.cpp.s
 
+src/view/LosAgentUi/LosAgentUi.o: src/view/LosAgentUi/LosAgentUi.cpp.o
+.PHONY : src/view/LosAgentUi/LosAgentUi.o
+
+# target to build an object file
+src/view/LosAgentUi/LosAgentUi.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PerseusCore.dir/build.make CMakeFiles/PerseusCore.dir/src/view/LosAgentUi/LosAgentUi.cpp.o
+.PHONY : src/view/LosAgentUi/LosAgentUi.cpp.o
+
+src/view/LosAgentUi/LosAgentUi.i: src/view/LosAgentUi/LosAgentUi.cpp.i
+.PHONY : src/view/LosAgentUi/LosAgentUi.i
+
+# target to preprocess a source file
+src/view/LosAgentUi/LosAgentUi.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PerseusCore.dir/build.make CMakeFiles/PerseusCore.dir/src/view/LosAgentUi/LosAgentUi.cpp.i
+.PHONY : src/view/LosAgentUi/LosAgentUi.cpp.i
+
+src/view/LosAgentUi/LosAgentUi.s: src/view/LosAgentUi/LosAgentUi.cpp.s
+.PHONY : src/view/LosAgentUi/LosAgentUi.s
+
+# target to generate assembly for a file
+src/view/LosAgentUi/LosAgentUi.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PerseusCore.dir/build.make CMakeFiles/PerseusCore.dir/src/view/LosAgentUi/LosAgentUi.cpp.s
+.PHONY : src/view/LosAgentUi/LosAgentUi.cpp.s
+
 src/view/LosAuthUi/LosAuthUi.o: src/view/LosAuthUi/LosAuthUi.cpp.o
 .PHONY : src/view/LosAuthUi/LosAuthUi.o
 
@@ -2858,6 +2882,9 @@ help:
 	@echo "... src/models/LosFileTreeModel/LosFileTreeModel.o"
 	@echo "... src/models/LosFileTreeModel/LosFileTreeModel.i"
 	@echo "... src/models/LosFileTreeModel/LosFileTreeModel.s"
+	@echo "... src/view/LosAgentUi/LosAgentUi.o"
+	@echo "... src/view/LosAgentUi/LosAgentUi.i"
+	@echo "... src/view/LosAgentUi/LosAgentUi.s"
 	@echo "... src/view/LosAuthUi/LosAuthUi.o"
 	@echo "... src/view/LosAuthUi/LosAuthUi.i"
 	@echo "... src/view/LosAuthUi/LosAuthUi.s"

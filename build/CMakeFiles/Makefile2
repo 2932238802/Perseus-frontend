@@ -296,7 +296,7 @@ CMakeFiles/PerseusCore.dir/all: CMakeFiles/PerseusCore_autogen.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/PerseusCore.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 96
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 97
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/PerseusCore.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 0
 .PHONY : CMakeFiles/PerseusCore.dir/rule
@@ -399,12 +399,12 @@ CMakeFiles/PerseusCore_autogen_timestamp_deps.dir/clean:
 CMakeFiles/PerseusCore_autogen.dir/all: CMakeFiles/PerseusCore_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PerseusCore_autogen.dir/build.make CMakeFiles/PerseusCore_autogen.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PerseusCore_autogen.dir/build.make CMakeFiles/PerseusCore_autogen.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num= "Built target PerseusCore_autogen"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=27 "Built target PerseusCore_autogen"
 .PHONY : CMakeFiles/PerseusCore_autogen.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/PerseusCore_autogen.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 73
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 74
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/PerseusCore_autogen.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 0
 .PHONY : CMakeFiles/PerseusCore_autogen.dir/rule
@@ -431,7 +431,7 @@ CMakeFiles/Perseus_autogen_timestamp_deps.dir/all: CMakeFiles/Perseus_qmlimports
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Perseus_autogen_timestamp_deps.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 96
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 97
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Perseus_autogen_timestamp_deps.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 0
 .PHONY : CMakeFiles/Perseus_autogen_timestamp_deps.dir/rule
@@ -453,7 +453,7 @@ CMakeFiles/Perseus_autogen.dir/all: CMakeFiles/Perseus_qmlimportscan.dir/all
 CMakeFiles/Perseus_autogen.dir/all: CMakeFiles/Perseus_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Perseus_autogen.dir/build.make CMakeFiles/Perseus_autogen.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Perseus_autogen.dir/build.make CMakeFiles/Perseus_autogen.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=27 "Built target Perseus_autogen"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num= "Built target Perseus_autogen"
 .PHONY : CMakeFiles/Perseus_autogen.dir/all
 
 # Build rule for subdir invocation for target.
@@ -480,12 +480,12 @@ third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/all: third_party/libgit2/d
 third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/all: third_party/libgit2/deps/llhttp/CMakeFiles/llhttp_autogen.dir/all
 	$(MAKE) $(MAKESILENT) -f third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/build.make third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/depend
 	$(MAKE) $(MAKESILENT) -f third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/build.make third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=72,73 "Built target llhttp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=73 "Built target llhttp"
 .PHONY : third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/all
 
 # Build rule for subdir invocation for target.
 third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 0
 .PHONY : third_party/libgit2/deps/llhttp/CMakeFiles/llhttp.dir/rule
@@ -933,12 +933,12 @@ third_party/libgit2/src/libgit2/CMakeFiles/libgit2package_autogen_timestamp_deps
 third_party/libgit2/src/libgit2/CMakeFiles/libgit2package_autogen.dir/all: third_party/libgit2/src/libgit2/CMakeFiles/libgit2package_autogen_timestamp_deps.dir/all
 	$(MAKE) $(MAKESILENT) -f third_party/libgit2/src/libgit2/CMakeFiles/libgit2package_autogen.dir/build.make third_party/libgit2/src/libgit2/CMakeFiles/libgit2package_autogen.dir/depend
 	$(MAKE) $(MAKESILENT) -f third_party/libgit2/src/libgit2/CMakeFiles/libgit2package_autogen.dir/build.make third_party/libgit2/src/libgit2/CMakeFiles/libgit2package_autogen.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num= "Built target libgit2package_autogen"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles --progress-num=72 "Built target libgit2package_autogen"
 .PHONY : third_party/libgit2/src/libgit2/CMakeFiles/libgit2package_autogen.dir/all
 
 # Build rule for subdir invocation for target.
 third_party/libgit2/src/libgit2/CMakeFiles/libgit2package_autogen.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 third_party/libgit2/src/libgit2/CMakeFiles/libgit2package_autogen.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 0
 .PHONY : third_party/libgit2/src/libgit2/CMakeFiles/libgit2package_autogen.dir/rule
@@ -1774,7 +1774,7 @@ test/CMakeFiles/LosTest.dir/all: test/CMakeFiles/LosTest_autogen.dir/all
 
 # Build rule for subdir invocation for target.
 test/CMakeFiles/LosTest.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 97
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 98
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/LosTest.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 0
 .PHONY : test/CMakeFiles/LosTest.dir/rule
@@ -1800,7 +1800,7 @@ test/CMakeFiles/LosTest_autogen_timestamp_deps.dir/all: CMakeFiles/PerseusCore.d
 
 # Build rule for subdir invocation for target.
 test/CMakeFiles/LosTest_autogen_timestamp_deps.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 96
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 97
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/LosTest_autogen_timestamp_deps.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 0
 .PHONY : test/CMakeFiles/LosTest_autogen_timestamp_deps.dir/rule
@@ -1826,7 +1826,7 @@ test/CMakeFiles/LosTest_autogen.dir/all: test/CMakeFiles/LosTest_autogen_timesta
 
 # Build rule for subdir invocation for target.
 test/CMakeFiles/LosTest_autogen.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 96
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 97
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/LosTest_autogen.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/losangelous/LosAngelous/Pro/Perseus-frontend/build/CMakeFiles 0
 .PHONY : test/CMakeFiles/LosTest_autogen.dir/rule

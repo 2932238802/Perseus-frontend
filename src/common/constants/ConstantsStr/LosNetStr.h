@@ -11,10 +11,12 @@ namespace LosCommon
 
         namespace API
         {
-            inline constexpr const char *PLUGIN_API = "LosAngelous/api/plugins";
-            inline constexpr const char *REGISTER_API = "LosAngelous/api/register";
-            inline constexpr const char *LOGIN_API = "LosAngelous/api/login";
-            inline constexpr const char *ROOT_API   = "";
+            inline constexpr const char *PLUGIN_API    = "LosAngelous/api/plugins";
+            inline constexpr const char *REGISTER_API  = "LosAngelous/api/register";
+            inline constexpr const char *LOGIN_API     = "LosAngelous/api/login";
+            inline constexpr const char *AUTOLOGIN_API = "LosAngelous/api/me";
+            inline constexpr const char *AI_CHAT       = "LosAngelous/api/agent/chat";
+            inline constexpr const char *ROOT_API      = "";
         } /* namespace API */
 
         namespace HEADER_TYPE

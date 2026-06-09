@@ -76,16 +76,45 @@ namespace LosCore
 
     /**
      * @brief
-     *
      * @param token
      */
-    void LosNet::requestAuthLogin(const QString &token) {}
+    void LosNet::requestAutoLogin(const QString &token)
+    {
+        QString authHeader = "Bearer " + token;
+        QUrl url(LosCommon::LosNet_Constants::BASE_URL + QString(LosCommon::LosNet_Constants::API::AUTOLOGIN_API));
+        QNetworkRequest req(url);
+        req.setRawHeader("Authorization", authHeader.toUtf8());
+        QNetworkReply *rep = L_net->post(req, QByteArray());
+        conn(rep, [this](const QByteArray &doc) { this->dealAutoLoginReply(doc); });
+    }
+
+
+
+    /**
+     * @brief Agent 发送信息
+     *
+     * @param msg
+     */
+    void LosNet::requestAgentChat(const QString &msg)
+    {
+        auto &state   = LosState::instance();
+        QString token = state.get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN);
+        QJsonObject body;
+        body["message"]    = msg;
+        body["agent_name"] = state.get<QString>(LosCommon::LosState_Constants::SG_STR::AGENT_CUR_NAME);
+        QByteArray data    = QJsonDocument(body).toJson(QJsonDocument::Compact);
+        QUrl url(LosCommon::LosNet_Constants::BASE_URL + QString(LosCommon::LosNet_Constants::API::AGENT_CHAT));
+        QNetworkRequest req(url);
+        req.setHeader(QNetworkRequest::ContentTypeHeader, LosCommon::LosNet_Constants::HEADER_TYPE::JSON_TYPE);
+        req.setRawHeader("Authorization", ("Bearer " + token).toUtf8());
+        QNetworkReply *rep = L_net->post(req, data);
+        conn(rep, [this](const QByteArray &doc) { this->dealAgentChatReply(doc); });
+    }
 
 
 
     /**
      * @brief dealPluginReply
-     *
      * @param data
      */
     void LosNet::dealPluginReply(const QByteArray &data)
@@ -171,6 +200,47 @@ namespace LosCore
             LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN, token);
         }
         emit LosRouter::instance()._cmd_auth_response(suc, msgMsg);
+    }
+
+
+
+    /**
+     * @brief dealAutoLoginReply 处理自动登录的逻辑
+     * @param data
+     */
+    void LosNet::dealAutoLoginReply(const QByteArray &data)
+    {
+        QJsonParseError err;
+        QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+        if (err.error != QJsonParseError::NoError)
+        {
+            ERR("解析失败", "LosNet");
+            emit LosRouter::instance()._cmd_auth_response(false, QStringLiteral("响应解析失败"));
+            return;
+        }
+        QJsonObject obj(doc.object());
+        bool suc       = obj["success"].toBool();
+        QString msgMsg = obj["message"].toString();
+        if (!suc)
+        {
+            emit LosRouter::instance()._cmd_auth_autoLogin_response(suc, msgMsg, "", "");
+            return;
+        }
+        QString username = obj["username"].toString();
+        QString user_id  = obj["user_id"].toString();
+        emit LosRouter::instance()._cmd_auth_autoLogin_response(suc, msgMsg, username, user_id);
+        emit LosRouter::instance()._cmd_auth_loginStateChanged(true);
+    }
+
+
+
+    /**
+     * @brief 
+     * 
+     * @param data 
+     */
+    void LosNet::dealAgentChatReply(const QByteArray &data) {
+        // 处理 Agent 的答复
     }
 
 
@@ -301,17 +371,24 @@ namespace LosCore
                 [=]()
                 {
                     reply->deleteLater();
+
+                    QByteArray resData = reply->readAll();
+
                     if (reply->error() != QNetworkReply::NoError)
                     {
                         ERR(reply->errorString(), "conn");
+                        if (!resData.isEmpty())
+                        {
+                            func(resData);
+                            return;
+                        }
+                        emit LosRouter::instance()._cmd_auth_response(false, QStringLiteral("网络请求失败"));
                         return;
                     }
-                    QByteArray resData = reply->readAll();
+
                     func(resData);
                 });
     }
-
-
 
     /**
      * @brief initConnect
@@ -323,8 +400,7 @@ namespace LosCore
                 [this](const QString &username, const QString &password) { this->requestLogin(username, password); });
         connect(&router, &LosRouter::_cmd_auth_register_request, this,
                 [this](const QString &username, const QString &password) { this->requestRegister(username, password); });
+        connect(&router, &LosRouter::_cmd_auth_autoLogin_request, this, [this](const QString &token) { this->requestAutoLogin(token); });
     }
 
-
-
-} /* namespace LosCore */
+} // namespace LosCore

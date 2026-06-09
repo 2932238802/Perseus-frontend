@@ -92,6 +92,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/PerseusCore.dir/src/models/LosFilePath/LosFilePath.cpp.o.d"
   "CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o"
   "CMakeFiles/PerseusCore.dir/src/models/LosFileTreeModel/LosFileTreeModel.cpp.o.d"
+  "CMakeFiles/PerseusCore.dir/src/view/LosAgentUi/LosAgentUi.cpp.o"
+  "CMakeFiles/PerseusCore.dir/src/view/LosAgentUi/LosAgentUi.cpp.o.d"
   "CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.o"
   "CMakeFiles/PerseusCore.dir/src/view/LosAuthUi/LosAuthUi.cpp.o.d"
   "CMakeFiles/PerseusCore.dir/src/view/LosCommandArgsUi/LosCommandArgsUi.cpp.o"
