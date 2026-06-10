@@ -33,13 +33,32 @@ namespace LosStyle
             background-color: @background@;
             border-left: 1px solid @borderStrong@;
         }
+        #agentHeaderBar {
+            background-color: @panelBg@;
+            border-bottom: 1px solid @borderStrong@;
+        }
         #agentHeader {
             color: @foreground@;
-            background-color: @panelBg@;
-            padding: 0 12px;
+            background-color: transparent;
             font-size: 13px;
             font-weight: bold;
-            border-bottom: 1px solid @borderStrong@;
+        }
+        #agentAddBtn {
+            color: @foreground@;
+            background-color: transparent;
+            border: 1px solid @borderStrong@;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 0;
+        }
+        #agentAddBtn:hover {
+            background-color: @primary@;
+            color: @highlightFg@;
+            border: 1px solid @primary@;
+        }
+        #agentAddBtn:pressed {
+            background-color: @primaryPressed@;
         }
         #agentChatView {
             background-color: @background@;
@@ -49,9 +68,33 @@ namespace LosStyle
             border: none;
             background: transparent;
         }
-        #agentInputBar {
+        #agentComposer {
             background-color: @panelBg@;
             border-top: 1px solid @borderStrong@;
+        }
+        #agentProviderCombo, #agentModelCombo {
+            background-color: @background@;
+            color: @foreground@;
+            border: 1px solid @borderStrong@;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 12px;
+            min-height: 20px;
+        }
+        #agentProviderCombo:hover, #agentModelCombo:hover {
+            border: 1px solid @primary@;
+        }
+        #agentProviderCombo::drop-down, #agentModelCombo::drop-down {
+            border: none;
+            width: 18px;
+        }
+        #agentProviderCombo QAbstractItemView, #agentModelCombo QAbstractItemView {
+            background-color: @panelBg@;
+            color: @foreground@;
+            border: 1px solid @borderStrong@;
+            selection-background-color: @selection@;
+            selection-color: @primary@;
+            outline: none;
         }
         #agentBubbleUser {
             background-color: @primary@;

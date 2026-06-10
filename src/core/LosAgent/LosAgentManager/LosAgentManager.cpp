@@ -36,8 +36,6 @@ namespace LosCore
      * - 后续: 改为调用 LosAgentClient 请求后端 (拿 user_id 对应的 ai-key, 组织上下文)
      * @param message 用户发来的消息
      */
-    void LosAgentManager::handleMessage(const QString &message)
-    {
-    }
+    void LosAgentManager::handleMessage(const QString &message) {}
 
 } /* namespace LosCore */

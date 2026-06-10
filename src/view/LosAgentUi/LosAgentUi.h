@@ -32,6 +32,8 @@ namespace LosView
 
       private slots: // chs
         void onSendClicked();
+        void onAddClicked();
+        void onProviderChanged(int index);
         void onAgentReply(const QString &message);
         void onAgentError(const QString &message);
         void applyTheme(const QString &themeName);
@@ -43,6 +45,7 @@ namespace LosView
 
       private: // tool
         void addBubble(Role role, const QString &content);
+        void loadProviders();
 
       private: // widgets
         Ui::LosAgentUi *ui;

@@ -4,6 +4,7 @@
 #include "./ui_LosAgentUi.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosTheme/LosThemeManager.h"
+#include "view/LosAgentKeyUi/LosAgentKeyUi.h"
 #include "view/style/LosAgent_style.h"
 
 #include <QHBoxLayout>
@@ -35,6 +36,65 @@ namespace LosView
     void LosAgentUi::initUi()
     {
         ui->setupUi(this);
+        loadProviders();
+    }
+
+
+
+    /**
+     * @brief loadProviders
+     * - 填充厂商下拉 (第一版: 示例预设, 后续改为从后端 / 本地配置读取)
+     * - 选中厂商后联动刷新模型下拉
+     */
+    void LosAgentUi::loadProviders()
+    {
+        ui->provider_combo->clear();
+        ui->provider_combo->addItem(QStringLiteral("deepseek"));
+        ui->provider_combo->addItem(QStringLiteral("openai"));
+        ui->provider_combo->addItem(QStringLiteral("moonshot"));
+        // 初始化模型下拉
+        onProviderChanged(ui->provider_combo->currentIndex());
+    }
+
+
+
+    /**
+     * @brief onProviderChanged
+     * - 厂商切换 -> 刷新模型下拉 (第一版: 示例预设)
+     */
+    void LosAgentUi::onProviderChanged(int index)
+    {
+        Q_UNUSED(index);
+        const QString provider = ui->provider_combo->currentText();
+        ui->model_combo->clear();
+        if (provider == QStringLiteral("deepseek"))
+        {
+            ui->model_combo->addItem(QStringLiteral("deepseek-chat"));
+            ui->model_combo->addItem(QStringLiteral("deepseek-reasoner"));
+        }
+        else if (provider == QStringLiteral("openai"))
+        {
+            ui->model_combo->addItem(QStringLiteral("gpt-4o"));
+            ui->model_combo->addItem(QStringLiteral("gpt-4o-mini"));
+        }
+        else if (provider == QStringLiteral("moonshot"))
+        {
+            ui->model_combo->addItem(QStringLiteral("moonshot-v1-8k"));
+            ui->model_combo->addItem(QStringLiteral("moonshot-v1-32k"));
+        }
+    }
+
+
+
+    /**
+     * @brief onAddClicked
+     * - 弹出添加 AI 配置对话框
+     */
+    void LosAgentUi::onAddClicked()
+    {
+        LosAgentKeyUi dialog(this);
+        dialog.exec();
+        // 保存成功后可在此刷新厂商下拉 (后续接入)
     }
 
 
@@ -72,8 +132,8 @@ namespace LosView
         auto &router = LosCore::LosRouter::instance();
         connect(ui->send_btn, &QPushButton::clicked, this, &LosAgentUi::onSendClicked);
         connect(ui->input_edit, &QLineEdit::returnPressed, this, &LosAgentUi::onSendClicked);
-        connect(&router, &LosCore::LosRouter::_cmd_agent_reply, this, &LosAgentUi::onAgentReply);
-        connect(&router, &LosCore::LosRouter::_cmd_agent_error, this, &LosAgentUi::onAgentError);
+        connect(ui->add_btn, &QPushButton::clicked, this, &LosAgentUi::onAddClicked);
+        connect(ui->provider_combo, &QComboBox::currentIndexChanged, this, &LosAgentUi::onProviderChanged);
         connect(&router, &LosCore::LosRouter::_cmd_themeChanged, this, [this](const QString &name) { applyTheme(name); });
     }
 
@@ -106,8 +166,8 @@ namespace LosView
 
 
     /**
-     * @brief 
-     * 
+     * @brief
+     *
      */
     void LosAgentUi::onAgentError(const QString &message)
     {
@@ -129,9 +189,9 @@ namespace LosView
         const bool isUser    = (role == Role::User);
         const int viewW      = ui->chat_view->viewport()->width();
         const int maxBubbleW = qMax(120, static_cast<int>(viewW * 0.75));
-        const int padH = 6; 
-        const int padV = 4; 
-        QLabel *bubble = new QLabel(content);
+        const int padH       = 6;
+        const int padV       = 4;
+        QLabel *bubble       = new QLabel(content);
         bubble->setObjectName(isUser ? QStringLiteral("agentBubbleUser") : QStringLiteral("agentBubbleAgent"));
         bubble->setWordWrap(true);
         bubble->setTextInteractionFlags(Qt::TextSelectableByMouse);
@@ -143,8 +203,8 @@ namespace LosView
         if (textH <= 0)
             textH = bubble->fontMetrics().height();
         const int bubbleH = textH + padV * 2;
-        QWidget *holder  = new QWidget();
-        QHBoxLayout *lay = new QHBoxLayout(holder);
+        QWidget *holder   = new QWidget();
+        QHBoxLayout *lay  = new QHBoxLayout(holder);
         lay->setContentsMargins(8, 4, 8, 4);
         if (isUser)
         {

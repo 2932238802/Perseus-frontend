@@ -239,9 +239,7 @@ namespace LosView
     /**
      * @brief
      */
-    void LosSettingsUi::onCMakeInstallBtnClicked() {
-        
-    }
+    void LosSettingsUi::onCMakeInstallBtnClicked() {}
 
 
 
