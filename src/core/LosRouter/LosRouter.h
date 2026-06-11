@@ -174,8 +174,8 @@ namespace LosCore
         void _cmd_auth_autoLogin_response(bool suc, const QString &message, const QString &username, const QString &user_id);
         void _cmd_auth_response(bool success, const QString &message);
         void _cmd_auth_loginStateChanged(bool loggedIn);
-        void _cmd_needAuth();                         // 打开登录的窗口 提示 需要登录 在部分 需要登录和注册的逻辑
-        void _cmd_agent_sendMessage(const QString &); // 发送请求
+        void _cmd_needAuth(); // 打开登录的窗口 提示 需要登录 在部分 需要登录和注册的逻辑
+        void _cmd_agent_sendMessage(const QString &);
 
         // ----------------------------------------------------------------------------
         // 主题切换部分

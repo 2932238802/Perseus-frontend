@@ -48,7 +48,7 @@ namespace LosStyle
             background-color: transparent;
             border: 1px solid @borderStrong@;
             border-radius: 6px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             padding: 0;
         }
@@ -56,9 +56,6 @@ namespace LosStyle
             background-color: @primary@;
             color: @highlightFg@;
             border: 1px solid @primary@;
-        }
-        #agentAddBtn:pressed {
-            background-color: @primaryPressed@;
         }
         #agentChatView {
             background-color: @background@;
