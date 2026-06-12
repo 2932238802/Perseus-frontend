@@ -1,59 +1,59 @@
 <RCC>
     <qresource prefix="/icons">
-        <file alias="close.png">resources/icons/close.png</file>
-        <file alias="cpp_black.png">resources/icons/cpp_black.png</file>
-        <file alias="cpp_white.png">resources/icons/cpp_white.png</file>
-        <file alias="h_black.png">resources/icons/h_black.png</file>
-        <file alias="h_white.png">resources/icons/h_white.png</file>
-        <file alias="md_black.png">resources/icons/md_black.png</file>
-        <file alias="md_white.png">resources/icons/md_white.png</file>
-        <file alias="txt_black.png">resources/icons/txt_black.png</file>
-        <file alias="txt_white.png">resources/icons/txt_white.png</file>
-        <file alias="cmake_black.png">resources/icons/cmake_black.png</file>
-        <file alias="cmake_white.png">resources/icons/cmake_white.png</file>
-        <file alias="folder_black.png">resources/icons/folder_black.png</file>
-        <file alias="folder_white.png">resources/icons/folder_white.png</file>
-        <file alias="exe_black.png">resources/icons/exe_black.png</file>
-        <file alias="exe_white.png">resources/icons/exe_white.png</file>
-        <file alias="json_black.png">resources/icons/json_black.png</file>
-        <file alias="json_white.png">resources/icons/json_white.png</file>
-        <file alias="rust_black.png">resources/icons/rust_black.png</file>
-        <file alias="rust_white.png">resources/icons/rust_white.png</file>
-        <file alias="chajian_white.png">resources/icons/chajian_white.png</file>
-        <file alias="chajian_black.png">resources/icons/chajian_black.png</file>
-        <file alias="files_black.png">resources/icons/files_black.png</file>
-        <file alias="files_white.png">resources/icons/files_white.png</file>
-        <file alias="theme.png">resources/icons/theme.png</file>
-        <file alias="python_black.png">resources/icons/python_black.png</file>
-        <file alias="python_white.png">resources/icons/python_white.png</file>
-        <file alias="html_black.png">resources/icons/html_black.png</file>
-        <file alias="html_white.png">resources/icons/html_white.png</file>
-        <file alias="auth_black.png">resources/icons/auth_black.png</file>
-        <file alias="auth_white.png">resources/icons/auth_white.png</file>
-        <file alias="loginsuc_black.png">resources/icons/loginsuc_black.png</file>
-        <file alias="loginsuc_white.png">resources/icons/loginsuc_white.png</file>
+        <file alias="close.png">icons/close.png</file>
+        <file alias="cpp_black.png">icons/cpp_black.png</file>
+        <file alias="cpp_white.png">icons/cpp_white.png</file>
+        <file alias="h_black.png">icons/h_black.png</file>
+        <file alias="h_white.png">icons/h_white.png</file>
+        <file alias="md_black.png">icons/md_black.png</file>
+        <file alias="md_white.png">icons/md_white.png</file>
+        <file alias="txt_black.png">icons/txt_black.png</file>
+        <file alias="txt_white.png">icons/txt_white.png</file>
+        <file alias="cmake_black.png">icons/cmake_black.png</file>
+        <file alias="cmake_white.png">icons/cmake_white.png</file>
+        <file alias="folder_black.png">icons/folder_black.png</file>
+        <file alias="folder_white.png">icons/folder_white.png</file>
+        <file alias="exe_black.png">icons/exe_black.png</file>
+        <file alias="exe_white.png">icons/exe_white.png</file>
+        <file alias="json_black.png">icons/json_black.png</file>
+        <file alias="json_white.png">icons/json_white.png</file>
+        <file alias="rust_black.png">icons/rust_black.png</file>
+        <file alias="rust_white.png">icons/rust_white.png</file>
+        <file alias="chajian_white.png">icons/chajian_white.png</file>
+        <file alias="chajian_black.png">icons/chajian_black.png</file>
+        <file alias="files_black.png">icons/files_black.png</file>
+        <file alias="files_white.png">icons/files_white.png</file>
+        <file alias="theme.png">icons/theme.png</file>
+        <file alias="python_black.png">icons/python_black.png</file>
+        <file alias="python_white.png">icons/python_white.png</file>
+        <file alias="html_black.png">icons/html_black.png</file>
+        <file alias="html_white.png">icons/html_white.png</file>
+        <file alias="auth_black.png">icons/auth_black.png</file>
+        <file alias="auth_white.png">icons/auth_white.png</file>
+        <file alias="loginsuc_black.png">icons/loginsuc_black.png</file>
+        <file alias="loginsuc_white.png">icons/loginsuc_white.png</file>
     </qresource>
     <qresource prefix="/highlight">
-        <file alias="languages/cpp.json">resources/highlight/languages/cpp.json</file>
-        <file alias="languages/python.json">resources/highlight/languages/python.json</file>
-        <file alias="themes/dracula.json">resources/highlight/themes/dracula.json</file>
-        <file alias="themes/light.json">resources/highlight/themes/light.json</file>
-        <file alias="themes/nord.json">resources/highlight/themes/nord.json</file>
-        <file alias="themes/monokai.json">resources/highlight/themes/monokai.json</file>
-        <file alias="themes/cyberpunk2077.json">resources/highlight/themes/cyberpunk2077.json</file>
-        <file alias="themes/winter_is_coming.json">resources/highlight/themes/winter_is_coming.json</file>
-        <file alias="themes/github.json">resources/highlight/themes/github.json</file>
-        <file alias="themes/abyss.json">resources/highlight/themes/abyss.json</file>
-        <file alias="themes/darcula.json">resources/highlight/themes/darcula.json</file>
-        <file alias="themes/ubuntu.json">resources/highlight/themes/ubuntu.json</file>
+        <file alias="languages/cpp.json">highlight/languages/cpp.json</file>
+        <file alias="languages/python.json">highlight/languages/python.json</file>
+        <file alias="themes/dracula.json">highlight/themes/dracula.json</file>
+        <file alias="themes/light.json">highlight/themes/light.json</file>
+        <file alias="themes/nord.json">highlight/themes/nord.json</file>
+        <file alias="themes/monokai.json">highlight/themes/monokai.json</file>
+        <file alias="themes/cyberpunk2077.json">highlight/themes/cyberpunk2077.json</file>
+        <file alias="themes/winter_is_coming.json">highlight/themes/winter_is_coming.json</file>
+        <file alias="themes/github.json">highlight/themes/github.json</file>
+        <file alias="themes/abyss.json">highlight/themes/abyss.json</file>
+        <file alias="themes/darcula.json">highlight/themes/darcula.json</file>
+        <file alias="themes/ubuntu.json">highlight/themes/ubuntu.json</file>
     </qresource>
     <qresource prefix="/web">
-        <file>resources/web/xterm/addon-fit.min.js</file>
-        <file>resources/web/xterm/xterm.css</file>
-        <file>resources/web/xterm/xterm.js</file>
-        <file>resources/web/terminal.html</file>
+        <file>web/xterm/addon-fit.min.js</file>
+        <file>web/xterm/xterm.css</file>
+        <file>web/xterm/xterm.js</file>
+        <file>web/terminal.html</file>
     </qresource>
     <qresource prefix="/style">
-        <file alias="perseus_style.qss">src/view/style/perseus_style.qss</file>
+        <file alias="perseus_style.qss">../src/view/style/perseus_style.qss</file>
     </qresource>
 </RCC>

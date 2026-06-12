@@ -27,6 +27,7 @@ namespace LosCore
         void requestLogin(const QString &username, const QString &password);
         void requestAutoLogin(const QString &token);
         void requestAgentChat(const QString &msg, const QString &provider_name, const QString &model);
+        void requestAgentChatStream(const QString &msg, const QString &provider_name, const QString &model);
         void requestAgentFetchModels(const QString &base_url, const QString &api_key);
         void requestAgentAddProvider(const QString &provider, const QString &baseUrl, const QString &apiKey, const QStringList &models);
         void requestListProviders();

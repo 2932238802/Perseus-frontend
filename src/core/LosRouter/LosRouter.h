@@ -153,7 +153,6 @@ namespace LosCore
         // ----------------------------------------------------------------------------
         /**
          * @brief 工具栏 信号
-         *
          */
         void _cmd_chooseFileBtnClick();
         void _cmd_chooseDirBtnClick();
@@ -183,9 +182,10 @@ namespace LosCore
         void _cmd_agent_listProviders_request();                                                                               // 厂商 - 模型
         void _cmd_agent_listProviders_response(bool ok, const QMap<QString, QStringList> &providerModels, const QString &msg); // 服务器的答复
         void _cmd_agent_reply(bool suc, const QString &reply);
+        void _cmd_agent_replyDone();
+        void _cmd_agent_replyChunk(const QString &data);
 
 
-        
         // ----------------------------------------------------------------------------
         // 主题切换部分
         void _cmd_themeChanged(const QString &themeName);

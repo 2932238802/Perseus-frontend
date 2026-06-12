@@ -32,14 +32,13 @@ namespace LosCore
 
     /**
      * @brief handleMessage
-     * - 处理用户消息: 转交网络层请求后端 /agent/chat
      * @param message  用户发来的消息
      * @param provider 当前选中厂商
      * @param model    当前选中模型
      */
     void LosAgentManager::handleMessage(const QString &message, const QString &provider, const QString &model)
     {
-        LosNet::instance().requestAgentChat(message, provider, model);
+        LosNet::instance().requestAgentChatStream(message, provider, model);
     }
 
 } /* namespace LosCore */

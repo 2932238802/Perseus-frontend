@@ -117,6 +117,67 @@ namespace LosCore
     /**
      * @brief
      *
+     * @param msg
+     * @param provider_name
+     * @param model
+     */
+    void LosNet::requestAgentChatStream(const QString &msg, const QString &provider_name, const QString &model)
+    {
+        auto &state   = LosState::instance();
+        QString token = state.get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN);
+        QJsonObject body;
+        body["message"]       = msg;
+        body["provider_name"] = provider_name;
+        body["model"]         = model;
+        QByteArray data       = QJsonDocument(body).toJson(QJsonDocument::Compact);
+        QUrl url(LosCommon::LosNet_Constants::BASE_URL + QString(LosCommon::LosNet_Constants::API::AGENT_CHAT_API));
+        QNetworkRequest req(url);
+        req.setHeader(QNetworkRequest::ContentTypeHeader, LosCommon::LosNet_Constants::HEADER_TYPE::JSON_TYPE);
+        req.setRawHeader("Authorization", ("Bearer " + token).toUtf8());
+        QNetworkReply *rep = L_net->post(req, data);
+        connect(rep, &QNetworkReply::readyRead, this,
+                [this, rep]()
+                {
+                    while (rep->canReadLine())
+                    {
+                        QByteArray line = rep->readLine();
+                        // 去掉行尾换行, 但保留内容里的空格 (不要对整行 trimmed)
+                        while (line.endsWith('\n') || line.endsWith('\r'))
+                            line.chop(1);
+                        if (!line.startsWith("data:"))
+                            continue;
+                        // 砍掉 "data:" 前缀; SSE 协议会在 data: 后加一个空格, 只去掉这一个
+                        QByteArray payload = line.mid(5);
+                        if (payload.startsWith(' '))
+                            payload.remove(0, 1);
+                        if (payload == "[DONE]")
+                        {
+                            emit LosRouter::instance()._cmd_agent_replyDone();
+                            return;
+                        }
+                        // payload 形如 {"d":" much"} —— 解析 JSON 取 d 字段, 空格完整保留
+                        QJsonParseError perr;
+                        QJsonDocument pdoc = QJsonDocument::fromJson(payload, &perr);
+                        if (perr.error != QJsonParseError::NoError || !pdoc.isObject())
+                            continue;
+                        const QString piece = pdoc.object().value("d").toString();
+                        if (!piece.isEmpty())
+                            emit LosRouter::instance()._cmd_agent_replyChunk(piece);
+                    }
+                });
+        connect(rep, &QNetworkReply::finished, this,
+                [rep]()
+                {
+                    emit LosRouter::instance()._cmd_agent_replyDone();
+                    rep->deleteLater();
+                });
+    }
+
+
+
+    /**
+     * @brief
+     *
      * @param base_url
      * @param api_key
      */
