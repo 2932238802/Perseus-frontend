@@ -1,10 +1,10 @@
 # 🚀 Perseus IDE
 
-![C++17](https://img.shields.io/badge/C++-17-blue.svg)
+![C++23](https://img.shields.io/badge/C++-23-blue.svg)
 ![Qt](https://img.shields.io/badge/Qt-6.x-brightgreen.svg)
 ![Platform](https://img.shields.io/badge/Platform-Ubuntu%20%7C%20WSL2-lightgrey.svg)
 
-**Perseus** 是一款基于 C++17 和 Qt 6 构建的轻量级桌面 IDE，参考 VSCode 设计，专为现代 C++ 开发者打造。
+**Perseus** 是一款基于 C++23 和 Qt 6 构建的轻量级桌面 IDE，参考 VSCode 设计，专为现代 C++ 开发者打造。
 
 ---
 
@@ -53,12 +53,28 @@
 - LSP 工具配置
 - 设置面板 UI
 
+### AI 助手
+- 内置 AI 对话面板
+- 支持多服务商 / 多模型配置
+- API Key 管理与模型列表拉取
+- 回复支持 Markdown 渲染
+
+### Git 集成
+- 基于 libgit2 的本地仓库追踪
+- 文件树 Git 状态着色（新增 / 修改 / 未跟踪）
+- 状态栏显示当前分支名
+
+### 账户与主题
+- 登录 / 注册 / 自动登录（Token）
+- 多主题切换（默认 Dracula），QSS Token 注入
+
 ### 其他特性
 - 多标签编辑器
 - 命令参数输入对话框
 - 跳转到行 (`Ctrl+G`)
 - 问题面板 (Lint 诊断结果)
 - 会话历史恢复 (上次打开的文件、目录)
+- 文件编码自动检测
 - 快捷键支持
 
 ---
@@ -70,16 +86,19 @@
 | 类别 | 要求 |
 |------|------|
 | 操作系统 | Ubuntu 24.04 / WSL2 (推荐) |
-| 编译器 | Clang-18 / GCC |
-| Qt | Qt 6.x |
+| 编译器 | Clang-18 (推荐) / GCC（需支持 C++23） |
+| Qt | Qt 6.x（含 WebEngine / WebChannel / Core5Compat） |
 | 构建工具 | CMake ≥ 3.18, Ninja |
 
 ### 安装依赖
 
 ```bash
-# 克隆项目
-git clone https://github.com/2932238802/Perseus.git
+# 克隆项目（含 libgit2 子模块）
+git clone --recurse-submodules https://github.com/2932238802/Perseus.git
 cd Perseus
+
+# 若已 clone 但未拉取子模块：
+git submodule update --init --recursive
 
 # 一键安装依赖
 chmod +x env.sh
@@ -89,25 +108,39 @@ chmod +x env.sh
 ### 构建与运行
 
 ```bash
-# 完整重建（首次）
+# 完整重建（首次，Release）
 ./re-build.sh
 
-# 增量编译（日常开发）
-./build.sh
+# 增量编译并运行（Release）
+./rbuild.sh
+
+# 增量编译并运行（Debug）
+./bbuild.sh
+
+# Debug 完整重建（配合 GDB）
+./gdb-build.sh
+
+# 清理构建产物
+./clean.sh
 ```
 
 ### 快捷键一览
 
 | 快捷键 | 功能 |
 |--------|------|
-| `Ctrl+O` | 打开文件 |
+| `Ctrl+O` | 打开文件 / 文件夹 |
+| `Ctrl+N` | 新建文件 |
 | `Ctrl+S` | 保存文件 |
 | `Ctrl+G` | 跳转到行 |
 | `Ctrl+Shift+P` | 命令面板 |
-| `Ctrl+B` | 构建项目 |
-| `Ctrl+Shift+B` | 运行项目 |
-| `Ctrl+` | 放大界面 |
-| `Ctrl-` | 缩小界面 |
+| `Ctrl+B` | 构建项目（亦可 F7） |
+| `Ctrl+F5` | 运行当前单文件 |
+| `F12` | 跳转到定义 |
+| `Ctrl+J` | 切换底部面板 |
+| `Ctrl+\`` | 聚焦终端 |
+| `Ctrl+>` / `Ctrl+<` | 放大 / 缩小界面 |
+
+> 完整快捷键见 [`docs/4_ui_ux/shortcuts.md`](docs/4_ui_ux/shortcuts.md)。
 
 ---
 
@@ -115,10 +148,11 @@ chmod +x env.sh
 
 | 目录 | 内容 |
 |------|------|
-| [`docs/1_architecture/`](docs/1_architecture/) | 架构设计 — 模块划分、设计模式 |
+| [`docs/1_architecture/`](docs/1_architecture/) | 架构设计 — 模块划分、信号总线、设计模式 |
 | [`docs/2_extensions/`](docs/2_extensions/) | 插件系统 — 协议、开发指南 |
-| [`docs/3_development/`](docs/3_development/) | 开发指南 — 构建流程、环境配置 |
+| [`docs/3_development/`](docs/3_development/) | 开发指南 — 构建流程、环境配置、Git 工作流、libgit2 集成 |
 | [`docs/4_ui_ux/`](docs/4_ui_ux/) | 界面与交互 — 组件、主题、快捷键 |
+| [`docs/AGENTS.md`](docs/AGENTS.md) | AI 编码代理协作说明与编码规范 |
 
 ---
 

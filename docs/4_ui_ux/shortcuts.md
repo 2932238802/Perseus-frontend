@@ -1,133 +1,113 @@
 # 快捷键映射
 
-> 本文档列出 Perseus 的所有快捷键映射。
+> 本文档列出 Perseus 的快捷键映射。**全局快捷键的权威来源是
+> `src/common/constants/ConstantsStr/ShortCut.h`**（`LosCommon::ShortCut` 命名空间），
+> 由 `LosShortcutManager` 在 `Perseus::initShotcut()` 中注册。
 
 ---
 
-## 1. 全局快捷键
+## 1. 文件操作
 
-| 快捷键 | 功能 | 说明 |
+| 快捷键 | 常量 | 功能 |
 |--------|------|------|
-| `Ctrl+O` | 打开文件 | 打开文件对话框 |
-| `Ctrl+S` | 保存文件 | 保存当前文件 |
-| `Ctrl+Shift+S` | 另存为 | 另存为对话框 |
-| `Ctrl+G` | 跳转到行 | 打开跳转到行弹窗 |
-| `Ctrl+Shift+P` | 命令面板 | 打开命令搜索面板 |
-| `Ctrl+W` | 关闭标签 | 关闭当前编辑器标签 |
-| `Ctrl+Tab` | 切换标签 | 切换到下一个标签 |
-| `Ctrl+Shift+Tab` | 反向切换标签 | 切换到上一个标签 |
+| `Ctrl+O` | `FILE_OPEN` | 打开文件 / 文件夹 |
+| `Ctrl+N` | `FILE_NEW` | 新建文件 |
+| `Ctrl+S` | `FILE_SAVE` | 保存当前文件 |
+| `Ctrl+Shift+S` | `FILE_SAVE_ALL` | 保存所有文件 |
 
 ---
 
-## 2. 编辑快捷键
+## 2. 标签页
 
-| 快捷键 | 功能 |
-|--------|------|
-| `Ctrl+C` | 复制 |
-| `Ctrl+V` | 粘贴 |
-| `Ctrl+X` | 剪切 |
-| `Ctrl+Z` | 撤销 |
-| `Ctrl+Shift+Z` | 重做 |
-| `Ctrl+A` | 全选 |
-| `Ctrl+F` | 查找 |
-| `Ctrl+H` | 替换 |
-| `Ctrl+D` | 删除行 |
-
----
-
-## 3. 构建运行快捷键
-
-| 快捷键 | 功能 | 说明 |
+| 快捷键 | 常量 | 功能 |
 |--------|------|------|
-| `Ctrl+B` | 构建项目 | 编译当前项目 |
-| `Ctrl+Shift+B` | 运行项目 | 运行当前项目 |
-| `Ctrl+Shift+R` | 停止运行 | 停止正在运行的程序 |
+| `Ctrl+W` | `TAB_CLOSE` | 关闭当前标签页 |
+| `Ctrl+Tab` | `TAB_NEXT` | 切换到下一个标签页 |
 
 ---
 
-## 4. 视图快捷键
+## 3. 编辑
 
-| 快捷键 | 功能 |
-|--------|------|
-| `Ctrl++` | 放大界面 |
-| `Ctrl+-` | 缩小界面 |
-| `Ctrl+0` | 重置缩放 |
-| `Ctrl+\` | 切换侧边栏 |
-
----
-
-## 5. 文件树快捷键
-
-| 快捷键 | 功能 |
-|--------|------|
-| `Enter` | 打开文件 |
-| `F2` | 重命名 |
-| `Delete` | 删除 |
-| `Space` | 展开/折叠 |
+| 快捷键 | 常量 | 功能 |
+|--------|------|------|
+| `Ctrl+Z` | `EDIT_UNDO` | 撤销 |
+| `Ctrl+Shift+Z` | `EDIT_REDO` | 重做 |
+| `Ctrl+Y` | `EDIT_REDO_ALT` | 重做（备用） |
+| `Ctrl+X` | `LINE_DELETE` | 删除当前行 |
+| `Ctrl+Shift+D` | `LINE_DUPLICATE` | 向下复制当前行 |
+| `Alt+↑` | `LINE_MOVE_UP` | 当前行上移 |
+| `Alt+↓` | `LINE_MOVE_DOWN` | 当前行下移 |
+| `Ctrl+/` | `LINE_COMMENT` | 单行注释 / 取消注释 |
+| `Shift+Alt+A` | `BLOCK_COMMENT` | 块注释 `/* ... */` |
 
 ---
 
-## 6. 终端快捷键
+## 4. 查找与跳转
 
-| 快捷键 | 功能 |
-|--------|------|
-| `Ctrl+`` | 显示/隐藏终端 |
-| `Ctrl+C` | 终止当前进程 (在终端中) |
-| `Ctrl+L` | 清屏 |
-| `Up/Down` | 命令历史 |
-
----
-
-## 7. 代码编辑快捷键
-
-| 快捷键 | 功能 |
-|--------|------|
-| `Ctrl+/` | 注释/取消注释 |
-| `Tab` | 增加缩进 |
-| `Shift+Tab` | 减少缩进 |
-| `Ctrl+Shift+F` | 格式化代码 |
-| `Ctrl+Space` | 触发自动补全 |
+| 快捷键 | 常量 | 功能 |
+|--------|------|------|
+| `Ctrl+F` | `SEARCH_FIND` | 页内查找 |
+| `Ctrl+H` | `SEARCH_REPLACE` | 页内替换 |
+| `Ctrl+G` | `GOTO_LINE` | 跳转到指定行 |
+| `F12` | `GOTO_DEFINITION` | 跳转到定义 |
+| `Ctrl+鼠标左键` | — | 跳转到定义（编辑器内 Hover + 点击） |
 
 ---
 
-## 8. LSP 相关快捷键
+## 5. 构建与运行
 
-| 快捷键 | 功能 |
-|--------|------|
-| `F12` | 跳转到定义 |
-| `Shift+F12` | 查找所有引用 |
-| `Alt+F12` | 查看定义 |
-| `Ctrl+鼠标左键` | 跳转到定义 |
+| 快捷键 | 常量 | 功能 |
+|--------|------|------|
+| `Ctrl+F5` | `RUN_SINGLE_FILE` | 运行当前单文件 |
+| `Ctrl+B` | `BUILD_PROJECT` | 编译整个工程（亦可 F7） |
+| `F5` | `DEBUG_START` | 启动调试 |
 
 ---
 
-## 9. 快捷键配置文件
+## 6. 命令与格式化
 
-快捷键配置位于 `src/core/LosShortcutManager/`
+| 快捷键 | 常量 | 功能 |
+|--------|------|------|
+| `Ctrl+Shift+P` | `COMMANDS` | 打开命令面板 |
+| `Ctrl+K, Ctrl+O` | `CODE_FORMAT` | 格式化当前文档（clang-format） |
 
-**注册方式**:
+---
+
+## 7. 视图与面板
+
+| 快捷键 | 常量 | 功能 |
+|--------|------|------|
+| `Ctrl+Shift+E` | `TOGGLE_EXPLORER` | 显示 / 隐藏左侧文件树 |
+| `Ctrl+J` | `TOGGLE_BOTTOM_PANEL` | 显示 / 隐藏底部面板 |
+| `Ctrl+\`` | `FOCUS_TERMINAL` | 聚焦底部终端 |
+| `Ctrl+Shift+/` | `TOGGLE_PREVIEW` | 切换标签页预览状态（Markdown 预览） |
+| `Ctrl+>` | `FONT_ZOOM_IN` | 放大字体 / 全局缩放增大 |
+| `Ctrl+<` | `FONT_ZOOM_OUT` | 缩小字体 / 全局缩放减小 |
+
+---
+
+## 8. 注册方式
+
+快捷键在 `Perseus::initShotcut()` 中通过 `LosShortcutManager` 单例注册：
 
 ```cpp
-LosShortcutManager::instance()->reg(
-    "Ctrl+G",           // 快捷键
-    this,              // 父窗口
-    [this]() {         // 回调
-        showGotoLinePopup();
+LosCore::LosShortcutManager::instance().reg(
+    LosCommon::ShortCut::GOTO_LINE,   // 快捷键字符串（来自 ShortCut.h）
+    this,                             // 父窗口
+    [this]() {                        // 回调
+        // 显示跳转到行弹窗
     },
-    "跳转到行"         // 描述
+    "跳转到行"                        // 描述（可选）
 );
 ```
 
----
-
-## 10. 自定义快捷键
-
-用户可以在设置面板中自定义部分快捷键。
+> 新增快捷键时：**先在 `ShortCut.h` 中定义常量**，再在 `initShotcut()` 注册，
+> 避免散落的硬编码字符串。
 
 ---
 
-## 11. 快捷键冲突处理
+## 9. 快捷键冲突处理
 
-当快捷键冲突时，系统会：
-1. 优先使用当前焦点组件的快捷键
-2. 全局快捷键始终优先
+当快捷键冲突时：
+1. 优先使用当前焦点组件（如终端 / 编辑器）内部的快捷键；
+2. 其余由全局 `LosShortcutManager` 注册的快捷键生效。

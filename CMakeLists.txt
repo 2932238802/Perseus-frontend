@@ -72,7 +72,7 @@ target_link_libraries(PerseusCore PUBLIC
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(Perseus MANUAL_FINALIZATION "src/main.cpp" "resources.qrc")
+    qt_add_executable(Perseus MANUAL_FINALIZATION "src/main.cpp" "resources/resources.qrc")
 else()
     if(ANDROID)
         add_library(Perseus SHARED "src/main.cpp")
@@ -81,7 +81,6 @@ else()
     endif()
 endif()
 target_link_libraries(Perseus PRIVATE PerseusCore)
-
 
 
 
