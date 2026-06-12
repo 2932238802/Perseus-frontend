@@ -7,6 +7,7 @@
 
 #include <QFormLayout>
 #include <QHBoxLayout>
+#include <QTimer>
 #include <QVBoxLayout>
 
 namespace LosView
@@ -31,7 +32,7 @@ namespace LosView
     void LosAgentKeyUi::initUi()
     {
         setObjectName(QStringLiteral("LosAgentKeyUi"));
-        setWindowTitle(QStringLiteral("添加 AI 配置"));
+        setWindowTitle(QStringLiteral("Add Agent"));
         setModal(true);
         setFixedWidth(380);
 
@@ -39,8 +40,7 @@ namespace LosView
         root->setContentsMargins(20, 20, 20, 20);
         root->setSpacing(14);
 
-        // 标题
-        auto *title = new QLabel(QStringLiteral("添加 AI 配置"), this);
+        auto *title = new QLabel(QStringLiteral("Add Agent"), this);
         title->setObjectName(QStringLiteral("agentKeyTitle"));
         title->setAlignment(Qt::AlignCenter);
         root->addWidget(title);
@@ -51,22 +51,33 @@ namespace LosView
         form->setLabelAlignment(Qt::AlignRight | Qt::AlignVCenter);
 
         L_providerEdit = new QLineEdit(this);
-        L_providerEdit->setPlaceholderText(QStringLiteral("例如 deepseek"));
+        L_providerEdit->setPlaceholderText(QStringLiteral("for example deepseek"));
 
         L_baseUrlEdit = new QLineEdit(this);
-        L_baseUrlEdit->setPlaceholderText(QStringLiteral("https://api.deepseek.com/v1"));
+        L_baseUrlEdit->setPlaceholderText(QStringLiteral("such https://api.deepseek.com/v1 ?"));
 
         L_apiKeyEdit = new QLineEdit(this);
-        L_apiKeyEdit->setPlaceholderText(QStringLiteral("sk-xxxxxx"));
+        L_apiKeyEdit->setPlaceholderText(QStringLiteral("sk-xxxxxx ?"));
         L_apiKeyEdit->setEchoMode(QLineEdit::Password);
 
-        L_modelsEdit = new QLineEdit(this);
-        L_modelsEdit->setPlaceholderText(QStringLiteral("多个模型用逗号分隔"));
+        L_modelsCombo = new QComboBox(this);
+        L_modelsCombo->setEditable(false);
+        L_modelsCombo->setInsertPolicy(QComboBox::NoInsert);
+        L_modelsCombo->addItem(QStringLiteral("点击右侧获取"));
+
+        L_fetchBtn = new QPushButton(QStringLiteral("get models"), this);
+        L_fetchBtn->setObjectName(QStringLiteral("agentKeyGhostBtn"));
+        L_fetchBtn->setCursor(Qt::PointingHandCursor);
+
+        auto *modelRow = new QHBoxLayout();
+        modelRow->setSpacing(8);
+        modelRow->addWidget(L_modelsCombo, 1);
+        modelRow->addWidget(L_fetchBtn, 0);
 
         form->addRow(QStringLiteral("厂商名称"), L_providerEdit);
         form->addRow(QStringLiteral("接口地址"), L_baseUrlEdit);
         form->addRow(QStringLiteral("密钥"), L_apiKeyEdit);
-        form->addRow(QStringLiteral("模型"), L_modelsEdit);
+        form->addRow(QStringLiteral("模型"), modelRow);
         root->addLayout(form);
 
         // 提示行
@@ -125,47 +136,115 @@ namespace LosView
     {
         auto &router = LosCore::LosRouter::instance();
         connect(L_saveBtn, &QPushButton::clicked, this, &LosAgentKeyUi::onSaveClicked);
+        connect(L_fetchBtn, &QPushButton::clicked, this, &LosAgentKeyUi::onFetchModelsClicked);
         connect(L_cancelBtn, &QPushButton::clicked, this, &LosAgentKeyUi::reject);
+        connect(&router, &LosCore::LosRouter::_cmd_agent_listModels_response, this, &LosAgentKeyUi::onModelsReceived);
+        connect(&router, &LosCore::LosRouter::_cmd_agent_addProvider_response, this, &LosAgentKeyUi::onProviderAdded);
+        // 未登录 / token 失效: 关闭本弹窗 (登录窗由别处接 _cmd_needAuth 弹出)
+        connect(&router, &LosCore::LosRouter::_cmd_needAuth, this, &LosAgentKeyUi::reject);
         connect(&router, &LosCore::LosRouter::_cmd_themeChanged, this, [this](const QString &name) { applyTheme(name); });
     }
 
 
 
     /**
+     * @brief onFetchModelsClicked
+     * - 校验地址/密钥非空 -> 经 LosRouter 抛给网络层拉取模型列表
+     */
+    void LosAgentKeyUi::onFetchModelsClicked()
+    {
+        const QString baseUrl = L_baseUrlEdit->text().trimmed();
+        const QString apiKey  = L_apiKeyEdit->text().trimmed();
+        if (baseUrl.isEmpty() || apiKey.isEmpty())
+        {
+            showTip(QStringLiteral("请先填写接口地址与密钥"), true);
+            return;
+        }
+        L_fetchBtn->setEnabled(false);
+        showTip(QStringLiteral("拉取模型中..."), false);
+        emit LosCore::LosRouter::instance()._cmd_agent_listModels_request(baseUrl, apiKey);
+    }
+
+
+
+    /**
+     * @brief onModelsReceived
+     * - 网络层返回模型列表后回填下拉框
+     */
+    void LosAgentKeyUi::onModelsReceived(bool ok, const QStringList &models, const QString &msg)
+    {
+        L_fetchBtn->setEnabled(true);
+        if (!ok)
+        {
+            showTip(msg.isEmpty() ? QStringLiteral("拉取模型失败") : msg, true);
+            return;
+        }
+        if (models.isEmpty())
+        {
+            showTip(QStringLiteral("该厂商未返回任何模型"), true);
+            return;
+        }
+        L_modelsCombo->clear();
+        L_modelsCombo->addItems(models);
+        L_modelsCombo->setCurrentIndex(0);
+        showTip(QStringLiteral("已获取 %1 个模型").arg(models.size()), false);
+    }
+
+
+
+    /**
      * @brief onSaveClicked
-     * - 校验非空 -> 拆分模型 -> 经 LosRouter 抛给网络层
+     * - 校验非空 -> 收集下拉框全部模型 -> 经 LosRouter 抛给网络层
      */
     void LosAgentKeyUi::onSaveClicked()
     {
         const QString provider = L_providerEdit->text().trimmed();
         const QString baseUrl  = L_baseUrlEdit->text().trimmed();
         const QString apiKey   = L_apiKeyEdit->text().trimmed();
-        const QString modelsTx = L_modelsEdit->text().trimmed();
-
-        if (provider.isEmpty() || baseUrl.isEmpty() || apiKey.isEmpty() || modelsTx.isEmpty())
+        if (provider.isEmpty() || baseUrl.isEmpty() || apiKey.isEmpty())
         {
             showTip(QStringLiteral("请填写完整信息"), true);
             return;
         }
-
-        // 模型: 逗号分隔 -> 去空白 -> 过滤空项
         QStringList models;
-        for (const QString &m : modelsTx.split(',', Qt::SkipEmptyParts))
+        for (int i = 0; i < L_modelsCombo->count(); ++i)
         {
-            const QString t = m.trimmed();
-            if (!t.isEmpty())
+            const QString t = L_modelsCombo->itemText(i).trimmed();
+            if (!t.isEmpty() && !models.contains(t))
                 models.append(t);
         }
         if (models.isEmpty())
         {
-            showTip(QStringLiteral("请至少填写一个模型"), true);
+            const QString cur = L_modelsCombo->currentText().trimmed();
+            if (!cur.isEmpty())
+                models.append(cur);
+        }
+        if (models.isEmpty())
+        {
+            showTip(QStringLiteral("请先获取或手动填写模型"), true);
             return;
         }
-
-        // TODO: 待 LosRouter 增加 _cmd_agent_addProvider_request 信号后放开
-        // emit LosCore::LosRouter::instance()._cmd_agent_addProvider_request(provider, baseUrl, apiKey, models);
-
+        emit LosCore::LosRouter::instance()._cmd_agent_addProvider_request(provider, baseUrl, apiKey, models);
+        L_saveBtn->setEnabled(false);
         showTip(QStringLiteral("提交中..."), false);
+    }
+
+
+
+    /**
+     * @brief onProviderAdded
+     * - 网络层返回添加结果: 成功则提示并延时关闭弹窗, 失败则恢复按钮并红字提示
+     */
+    void LosAgentKeyUi::onProviderAdded(bool success, const QString &message)
+    {
+        L_saveBtn->setEnabled(true);
+        if (!success)
+        {
+            showTip(message.isEmpty() ? QStringLiteral("添加失败") : message, true);
+            return;
+        }
+        showTip(QStringLiteral("添加成功"), false);
+        QTimer::singleShot(600, this, &QDialog::accept);
     }
 
 

@@ -26,12 +26,18 @@ namespace LosCore
         void requestRegister(const QString &username, const QString &password);
         void requestLogin(const QString &username, const QString &password);
         void requestAutoLogin(const QString &token);
-        void requestAgentChat(const QString &msg);
+        void requestAgentChat(const QString &msg, const QString &provider_name, const QString &model);
+        void requestAgentFetchModels(const QString &base_url, const QString &api_key);
+        void requestAgentAddProvider(const QString &provider, const QString &baseUrl, const QString &apiKey, const QStringList &models);
+        void requestListProviders();
         void dealPluginReply(const QByteArray &data);
         void dealRegisterReply(const QByteArray &data);
         void dealLoginReply(const QByteArray &data);
         void dealAutoLoginReply(const QByteArray &data);
-        void dealAgentChatReply(const QByteArray &);
+        void dealAgentChatReply(const QByteArray &data);
+        void dealAgentFetchModelsReply(const QByteArray &data);
+        void dealAgentAddProviderReply(const QByteArray &data);
+        void dealListProvidersReply(const QByteArray &data);
 
       public: // tool hello
         void requestInit();

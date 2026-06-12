@@ -146,7 +146,7 @@ namespace LosCore
     {
         if (obj.contains("id"))
         {
-            int id = obj["id"].toInt();
+            int id                   = obj["id"].toInt();
             QString absoluteFilePath = L_idToAbsoluteFilePath.take(id);
             if (!L_idToType.contains(id))
             {
@@ -157,8 +157,27 @@ namespace LosCore
             {
             case LosCore::LosLspType::REQ_INITIALIZE:
             {
-                SUC("handshake successful", "LosLspCMake");
+                SUC("handshake successful", "LosLspRust");
                 L_isinit = true;
+                if (obj.contains("result"))
+                {
+                    QJsonObject result       = obj["result"].toObject();
+                    QJsonObject capabilities = result["capabilities"].toObject();
+                    if (capabilities.contains("semanticTokensProvider"))
+                    {
+                        QJsonObject provider = capabilities["semanticTokensProvider"].toObject();
+                        QJsonObject legend   = provider["legend"].toObject();
+
+                        QStringList tokenTypes;
+                        for (const QJsonValue &val : legend["tokenTypes"].toArray())
+                            tokenTypes.append(val.toString());
+
+                        QStringList tokenModifiers;
+                        for (const QJsonValue &val : legend["tokenModifiers"].toArray())
+                            tokenModifiers.append(val.toString());
+                        emit LosRouter::instance()._cmd_lsp_result_semanticLegend(tokenTypes, tokenModifiers);
+                    }
+                }
                 sendInitializedMsg();
                 for (const auto &con : L_pendings)
                 {
@@ -212,7 +231,7 @@ namespace LosCore
                 QJsonObject rst      = obj["result"].toObject();
                 QJsonObject contents = rst["contents"].toObject();
                 QString hoverText    = contents["value"].toString();
-                emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath,hoverText);
+                emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath, hoverText);
                 break;
             }
             case LosCore::LosLspType::REQ_DEFINE:
@@ -242,6 +261,19 @@ namespace LosCore
                 emit LosRouter::instance()._cmd_lsp_result_definition(fileName, line);
                 break;
             }
+            case LosCore::LosLspType::REQ_SEMANTIC_HIGHLIGHT:
+            {
+                if (obj.contains("result") && !obj["result"].isNull())
+                {
+                    QJsonObject result = obj["result"].toObject();
+                    if (result.contains("data"))
+                    {
+                        QJsonArray data = result["data"].toArray();
+                        emit LosRouter::instance()._cmd_lsp_result_semanticTokens(absoluteFilePath, data);
+                    }
+                }
+                break;
+            }
             default:
                 break;
             }
@@ -251,6 +283,7 @@ namespace LosCore
             QString method = obj["method"].toString();
             if (method == "textDocument/publishDiagnostics")
             {
+
                 QJsonObject params     = obj["params"].toObject();
                 QString filePath       = QUrl(params["uri"].toString()).toLocalFile();
                 QJsonArray diagnostics = params["diagnostics"].toArray();
@@ -268,6 +301,11 @@ namespace LosCore
                     d.endLine         = end["line"].toInt();
                     d.endChar         = end["character"].toInt();
                     diagList.append(d);
+                }
+                if (!L_openedFiles.contains(filePath))
+                {
+                    L_openedFiles.insert(filePath);
+                    emit LosRouter::instance()._cmd_openFile_suc(filePath);
                 }
                 emit LosRouter::instance()._cmd_lsp_result_diagnostics(filePath, diagList);
             }
@@ -293,6 +331,17 @@ namespace LosCore
         completion["completionItem"]     = completionItem;
         QJsonObject textDocument;
         textDocument["completion"] = completion;
+        QJsonObject semanticTokens;
+        semanticTokens["dynamicRegistration"] = false;
+        semanticTokens["requests"]            = QJsonObject{{"full", true}};
+        semanticTokens["tokenTypes"] =
+            QJsonArray{"namespace", "type",     "class",      "enum",   "interface", "struct",   "typeParameter", "parameter",
+                       "variable",  "property", "enumMember", "event",  "function",  "method",   "macro",         "keyword",
+                       "modifier",  "comment",  "string",     "number", "regexp",    "operator", "decorator"};
+        semanticTokens["tokenModifiers"] = QJsonArray{"declaration", "definition", "readonly",     "static",        "deprecated",
+                                                      "abstract",    "async",      "modification", "documentation", "defaultLibrary"};
+        semanticTokens["formats"]        = QJsonArray{"relative"};
+        textDocument["semanticTokens"]   = semanticTokens;
         QJsonObject capabilities;
         capabilities["textDocument"] = textDocument;
         capabilities["workspace"]    = QJsonObject();

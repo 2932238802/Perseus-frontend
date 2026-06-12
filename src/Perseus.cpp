@@ -473,6 +473,7 @@ void Perseus::initConnect()
                 ui->act_auth_btn->style()->unpolish(ui->act_auth_btn);
                 ui->act_auth_btn->style()->polish(ui->act_auth_btn);
             });
+    connect(&router, &LosCore::LosRouter::_cmd_needAuth, this, [this]() { LOS_auth->exec(); });
 }
 
 

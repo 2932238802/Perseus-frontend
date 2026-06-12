@@ -4,6 +4,9 @@
 
 #include "core/LosRouter/LosRouter.h"
 
+#include <QMap>
+#include <QString>
+#include <QStringList>
 #include <QWidget>
 #include <qtmetamacros.h>
 
@@ -29,11 +32,12 @@ namespace LosView
             User,
             Agent
         };
-
       private slots: // chs
         void onSendClicked();
         void onAddClicked();
         void onProviderChanged(int index);
+        void onProvidersReceived(bool ok, const QMap<QString, QStringList> &providerModels, const QString &msg);
+        void onProviderAdded(bool success, const QString &message);
         void onAgentReply(const QString &message);
         void onAgentError(const QString &message);
         void applyTheme(const QString &themeName);
@@ -49,6 +53,9 @@ namespace LosView
 
       private: // widgets
         Ui::LosAgentUi *ui;
+
+      private: // data
+        QMap<QString, QStringList> L_providerModels; // 厂商名 -> 模型列表 (来自后端 list_providers)
     };
 
 } /* namespace LosView */

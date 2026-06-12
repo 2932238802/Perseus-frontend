@@ -4,21 +4,16 @@
 
 #include "core/LosRouter/LosRouter.h"
 
+#include <QComboBox>
 #include <QDialog>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QStringList>
 #include <qtmetamacros.h>
 
 namespace LosView
 {
-    /*
-     * LosAgentKeyUi
-     * - 添加 AI 配置对话框 (由 LosAgentUi 顶部 "+" 按钮弹出)
-     * - 纯代码构建 UI (参照 LosAuthUi)
-     * - 表单: 厂商名 / 接口地址 / 密钥 / 模型(逗号分隔)
-     * - 提交 -> 经 LosRouter 抛给网络层, 由后端 /agent/add 落库
-     */
     class LosAgentKeyUi : public QDialog
     {
         Q_OBJECT
@@ -28,6 +23,9 @@ namespace LosView
 
       private slots: // chs
         void onSaveClicked();
+        void onFetchModelsClicked();
+        void onModelsReceived(bool ok, const QStringList &models, const QString &msg);
+        void onProviderAdded(bool success, const QString &message);
         void applyTheme(const QString &themeName);
 
       private: // init
@@ -39,13 +37,14 @@ namespace LosView
         void showTip(const QString &text, bool isError);
 
       private: // widgets
-        QLabel *L_tip            = nullptr;
+        QLabel *L_tip             = nullptr;
         QLineEdit *L_providerEdit = nullptr;
         QLineEdit *L_baseUrlEdit  = nullptr;
         QLineEdit *L_apiKeyEdit   = nullptr;
-        QLineEdit *L_modelsEdit   = nullptr;
-        QPushButton *L_saveBtn   = nullptr;
-        QPushButton *L_cancelBtn = nullptr;
+        QComboBox *L_modelsCombo  = nullptr;
+        QPushButton *L_fetchBtn   = nullptr;
+        QPushButton *L_saveBtn    = nullptr;
+        QPushButton *L_cancelBtn  = nullptr;
     };
 
 } /* namespace LosView */

@@ -653,6 +653,37 @@ namespace LosView
 
 
     /**
+     * @brief onHover_Rust
+     * - 处理 rust-analyzer 返回的 hover Markdown
+     * - 与 Clangd 版本基本一致, 区别在代码块语言标记是 ```rust
+     *
+     * @param markdownContent
+     */
+    void LosEditorUi::onHover_Rust(const QString &markdownContent)
+    {
+        if (markdownContent.isEmpty())
+        {
+            hideHoverPopup();
+            return;
+        }
+        QString html = markdownContent;
+        html.replace("&", "&amp;");
+        html.replace("<", "&lt;");
+        html.replace(">", "&gt;");
+        html.replace("```rust\n", "<pre style='color:#8be9fd; font-family:Consolas; margin: 5px 0;'>");
+        html.replace("```", "</pre>");
+        QRegularExpression boldRegex("\\*\\*(.*?)\\*\\*");
+        html.replace(boldRegex, "<b>\\1</b>");
+        QRegularExpression inlineCodeRegex("`([^`]+)`");
+        html.replace(inlineCodeRegex, "<code style='color:#f1fa8c; background-color:#44475a; padding:2px 4px; "
+                                      "border-radius:3px;'>\\1</code>");
+        html.replace("\n", "<br>");
+        showHoverPopup(html);
+    }
+
+
+
+    /**
      * @brief hideCompletionPopup
      */
     void LosEditorUi::hideCompletionPopup()
@@ -791,6 +822,11 @@ namespace LosView
         case LosCommon::LosToolChain_Constants::LosLanguage::CXX:
         {
             onHover_Clangd(markdownContent);
+            break;
+        }
+        case LosCommon::LosToolChain_Constants::LosLanguage::RUST:
+        {
+            onHover_Rust(markdownContent);
             break;
         }
         default:

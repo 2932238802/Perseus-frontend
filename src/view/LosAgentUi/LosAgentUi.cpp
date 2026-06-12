@@ -2,6 +2,7 @@
 
 #include "LosAgentUi.h"
 #include "./ui_LosAgentUi.h"
+#include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosTheme/LosThemeManager.h"
 #include "view/LosAgentKeyUi/LosAgentKeyUi.h"
@@ -10,6 +11,8 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QListWidgetItem>
+#include <QTextBrowser>
+#include <QTextDocument>
 
 namespace LosView
 {
@@ -36,23 +39,37 @@ namespace LosView
     void LosAgentUi::initUi()
     {
         ui->setupUi(this);
-        loadProviders();
     }
 
 
 
     /**
      * @brief loadProviders
-     * - 填充厂商下拉 (第一版: 示例预设, 后续改为从后端 / 本地配置读取)
-     * - 选中厂商后联动刷新模型下拉
+     * - 向后端请求当前用户的厂商/模型配置 (list_providers)
+     * - 真正的填充在 onProvidersReceived 中完成
      */
     void LosAgentUi::loadProviders()
     {
+        emit LosCore::LosRouter::instance()._cmd_agent_listProviders_request();
+    }
+
+
+
+    /**
+     * @brief onProvidersReceived
+     * - 收到后端配置 -> 缓存映射 -> 填充厂商下拉 -> 联动模型下拉
+     */
+    void LosAgentUi::onProvidersReceived(bool ok, const QMap<QString, QStringList> &providerModels, const QString &msg)
+    {
+        Q_UNUSED(msg);
+        if (!ok)
+            return;
+        L_providerModels = providerModels;
+        ui->provider_combo->blockSignals(true);
         ui->provider_combo->clear();
-        ui->provider_combo->addItem(QStringLiteral("deepseek"));
-        ui->provider_combo->addItem(QStringLiteral("openai"));
-        ui->provider_combo->addItem(QStringLiteral("moonshot"));
-        // 初始化模型下拉
+        for (auto it = L_providerModels.constBegin(); it != L_providerModels.constEnd(); ++it)
+            ui->provider_combo->addItem(it.key());
+        ui->provider_combo->blockSignals(false);
         onProviderChanged(ui->provider_combo->currentIndex());
     }
 
@@ -60,28 +77,18 @@ namespace LosView
 
     /**
      * @brief onProviderChanged
-     * - 厂商切换 -> 刷新模型下拉 (第一版: 示例预设)
+     * - 厂商切换 -> 从缓存映射取出该厂商模型, 刷新模型下拉
      */
     void LosAgentUi::onProviderChanged(int index)
     {
         Q_UNUSED(index);
         const QString provider = ui->provider_combo->currentText();
         ui->model_combo->clear();
-        if (provider == QStringLiteral("deepseek"))
-        {
-            ui->model_combo->addItem(QStringLiteral("deepseek-chat"));
-            ui->model_combo->addItem(QStringLiteral("deepseek-reasoner"));
-        }
-        else if (provider == QStringLiteral("openai"))
-        {
-            ui->model_combo->addItem(QStringLiteral("gpt-4o"));
-            ui->model_combo->addItem(QStringLiteral("gpt-4o-mini"));
-        }
-        else if (provider == QStringLiteral("moonshot"))
-        {
-            ui->model_combo->addItem(QStringLiteral("moonshot-v1-8k"));
-            ui->model_combo->addItem(QStringLiteral("moonshot-v1-32k"));
-        }
+        if (provider.isEmpty())
+            return;
+        const QStringList models = L_providerModels.value(provider);
+        for (const QString &m : models)
+            ui->model_combo->addItem(m);
     }
 
 
@@ -94,7 +101,19 @@ namespace LosView
     {
         LosAgentKeyUi dialog(this);
         dialog.exec();
-        // 保存成功后可在此刷新厂商下拉 (后续接入)
+    }
+
+
+
+    /**
+     * @brief onProviderAdded
+     * - 新增厂商配置成功后 -> 重新拉取一次, 刷新下拉
+     */
+    void LosAgentUi::onProviderAdded(bool success, const QString &message)
+    {
+        Q_UNUSED(message);
+        if (success)
+            loadProviders();
     }
 
 
@@ -133,8 +152,31 @@ namespace LosView
         connect(ui->send_btn, &QPushButton::clicked, this, &LosAgentUi::onSendClicked);
         connect(ui->input_edit, &QLineEdit::returnPressed, this, &LosAgentUi::onSendClicked);
         connect(ui->add_btn, &QPushButton::clicked, this, &LosAgentUi::onAddClicked);
+        connect(ui->refresh_btn, &QPushButton::clicked, this, &LosAgentUi::loadProviders);
         connect(ui->provider_combo, &QComboBox::currentIndexChanged, this, &LosAgentUi::onProviderChanged);
+        connect(&router, &LosCore::LosRouter::_cmd_agent_listProviders_response, this, &LosAgentUi::onProvidersReceived);
+        connect(&router, &LosCore::LosRouter::_cmd_agent_addProvider_response, this, &LosAgentUi::onProviderAdded);
+        // 重新登录成功后自动刷新配置
+        connect(&router, &LosCore::LosRouter::_cmd_auth_loginStateChanged, this,
+                [this](bool loggedIn)
+                {
+                    if (loggedIn)
+                        loadProviders();
+                });
         connect(&router, &LosCore::LosRouter::_cmd_themeChanged, this, [this](const QString &name) { applyTheme(name); });
+        connect(&router, &LosCore::LosRouter::_cmd_agent_reply, this,
+                [this](bool ok, const QString &msg)
+                {
+                    if (ok)
+                    {
+                        onAgentReply(msg);
+                    }
+                    else
+                    {
+                        onAgentError(msg);
+                    }
+                });
+        loadProviders();
     }
 
 
@@ -149,7 +191,7 @@ namespace LosView
         if (text.isEmpty())
             return;
         addBubble(Role::User, text);
-        emit LosCore::LosRouter::instance()._cmd_agent_sendMessage(text);
+        emit LosCore::LosRouter::instance()._cmd_agent_sendMessage(text, ui -> provider_combo->currentText(), ui->model_combo->currentText());
         ui->input_edit->clear();
     }
 
@@ -160,6 +202,7 @@ namespace LosView
      */
     void LosAgentUi::onAgentReply(const QString &message)
     {
+        INF("LosAgentUi", message);
         addBubble(Role::Agent, message);
     }
 
@@ -171,6 +214,7 @@ namespace LosView
      */
     void LosAgentUi::onAgentError(const QString &message)
     {
+        ERR("onAgentError", message);
         addBubble(Role::Agent, message);
     }
 
@@ -191,20 +235,50 @@ namespace LosView
         const int maxBubbleW = qMax(120, static_cast<int>(viewW * 0.75));
         const int padH       = 6;
         const int padV       = 4;
-        QLabel *bubble       = new QLabel(content);
-        bubble->setObjectName(isUser ? QStringLiteral("agentBubbleUser") : QStringLiteral("agentBubbleAgent"));
-        bubble->setWordWrap(true);
-        bubble->setTextInteractionFlags(Qt::TextSelectableByMouse);
-        bubble->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
-        bubble->setContentsMargins(padH, padV, padH, padV);
-        bubble->setMaximumWidth(maxBubbleW);
-        const int textW = maxBubbleW - padH * 2;
-        int textH       = bubble->heightForWidth(textW);
-        if (textH <= 0)
-            textH = bubble->fontMetrics().height();
-        const int bubbleH = textH + padV * 2;
-        QWidget *holder   = new QWidget();
-        QHBoxLayout *lay  = new QHBoxLayout(holder);
+        const int textW      = maxBubbleW - padH * 2;
+
+        QWidget *bubble = nullptr; // 统一用基类指针, 便于后面放进布局
+        int bubbleH     = 0;
+
+        if (isUser)
+        {
+            // 用户气泡: 纯文本 QLabel (无需 Markdown)
+            QLabel *label = new QLabel(content);
+            label->setObjectName(QStringLiteral("agentBubbleUser"));
+            label->setWordWrap(true);
+            label->setTextInteractionFlags(Qt::TextSelectableByMouse);
+            label->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
+            label->setContentsMargins(padH, padV, padH, padV);
+            label->setMaximumWidth(maxBubbleW);
+            int textH = label->heightForWidth(textW);
+            if (textH <= 0)
+                textH = label->fontMetrics().height();
+            bubbleH = textH + padV * 2;
+            bubble  = label;
+        }
+        else
+        {
+            // Agent 气泡: QTextBrowser 渲染 Markdown
+            QTextBrowser *browser = new QTextBrowser();
+            browser->setObjectName(QStringLiteral("agentBubbleAgent"));
+            browser->setFrameShape(QFrame::NoFrame);
+            browser->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+            browser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+            browser->setOpenExternalLinks(true);
+            browser->setTextInteractionFlags(Qt::TextBrowserInteraction);
+            browser->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
+            browser->setMaximumWidth(maxBubbleW);
+            browser->document()->setDocumentMargin(padV);
+            browser->document()->setMarkdown(content); // Qt6 原生 Markdown 渲染
+            browser->document()->setTextWidth(textW);   // 固定排版宽度后才能算准高度
+            const qreal docH = browser->document()->size().height();
+            bubbleH          = static_cast<int>(docH) + padV * 2;
+            browser->setFixedHeight(bubbleH);
+            bubble = browser;
+        }
+
+        QWidget *holder  = new QWidget();
+        QHBoxLayout *lay = new QHBoxLayout(holder);
         lay->setContentsMargins(8, 4, 8, 4);
         if (isUser)
         {

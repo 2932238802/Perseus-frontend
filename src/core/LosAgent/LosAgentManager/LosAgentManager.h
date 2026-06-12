@@ -25,7 +25,7 @@ namespace LosCore
         void initConnect();
 
       private: // tool
-        void handleMessage(const QString &message);
+        void handleMessage(const QString &message, const QString &provider, const QString &model);
     };
 
 } /* namespace LosCore */

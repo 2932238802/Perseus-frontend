@@ -66,22 +66,22 @@ namespace LosView
     class LosEditorUi : public QPlainTextEdit
     {
         Q_OBJECT
-      public: /* construct */
+      public: // construct
         ~LosEditorUi() override;
         explicit LosEditorUi(QWidget *parent = nullptr);
 
-      public: /* tool */
+      public: // tool
         void showCompletion(const QStringList &list);
         void showDiagnostic(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &);
         void gotoLine(int line);
         void format();
 
-      public: /* get */
+      public: // get
         QString getWordUnderCursor() const;
         bool isDirty() const;
         int getLineNumberWidth() const;
 
-      public: /* set */
+      public: // set
         void loadContextAndPath(QSharedPointer<LosModel::LosFileContext> context, QSharedPointer<LosModel::LosFilePath> file_path);
         bool save();
         void insertCompletion(const QString &completion);
@@ -104,6 +104,7 @@ namespace LosView
         void hideCompletionPopup();
         void clearHoverUnderline();
         void onHover_Clangd(const QString &markdownContent);
+        void onHover_Rust(const QString &markdownContent);
 
       private slots: // chs
         void onContentsChange(int from, int charsRemoved, int charsAdded);
@@ -128,7 +129,7 @@ namespace LosView
         void resizeEvent(QResizeEvent *e) override;
         void focusOutEvent(QFocusEvent *event) override;
 
-      private: /* param */
+      private: // param
         std::atomic<bool> L_showComplete                        = false;
         bool L_dirty                                            = false;
         bool L_ctrlBtnPresses                                   = false;

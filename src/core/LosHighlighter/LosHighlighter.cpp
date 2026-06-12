@@ -71,17 +71,6 @@ namespace LosCore
      */
     void LosHighlighter::mergeFormat(int start, int length, const QTextCharFormat &format)
     {
-        /*
-         * 必须用 QSyntaxHighlighter::setFormat / format, 而不是
-         * QTextCursor::setCharFormat:
-         * - setFormat 受 highlighter 管理, 每次 rehighlight 自动清空重来,
-         *   不会累积;
-         * - QTextCursor::setCharFormat 直接写进文档字符格式, 绕过清空机制,
-         *   导致斜体等样式在反复重绘中残留并向相邻字符扩散(整行变斜体).
-         *
-         * 这里基于"当前块"做边界钳制(currentBlock 当前正在 highlightBlock):
-         * start/length 是相对块首的列偏移, 上限为块内字符数(不含末尾分隔符).
-         */
         const QString blockText = currentBlock().text();
         const int textLen       = blockText.length();
         if (start < 0)
@@ -93,11 +82,6 @@ namespace LosCore
             end = textLen;
         if (end <= start)
             return;
-
-        /*
-         * 逐字符合并: 取该位置已有格式(正则高亮结果), 仅覆盖语义提供的属性,
-         * 保留其余(如正则设的前景色)
-         */
         for (int i = start; i < end; ++i)
         {
             QTextCharFormat mergedFormat = this->format(i);
@@ -346,14 +330,12 @@ namespace LosCore
         {
             return false;
         }
-
         QJsonParseError error;
         const QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &error);
         if (error.error != QJsonParseError::NoError || !doc.isObject())
         {
             return false;
         }
-
         const QJsonObject root = doc.object();
         const QJsonArray rules = root.value(QStringLiteral("rules")).toArray();
 

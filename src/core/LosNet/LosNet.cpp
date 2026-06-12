@@ -95,20 +95,102 @@ namespace LosCore
      *
      * @param msg
      */
-    void LosNet::requestAgentChat(const QString &msg)
+    void LosNet::requestAgentChat(const QString &msg, const QString &provider_name, const QString &model)
     {
         auto &state   = LosState::instance();
         QString token = state.get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN);
         QJsonObject body;
-        body["message"]    = msg;
-        body["agent_name"] = state.get<QString>(LosCommon::LosState_Constants::SG_STR::AGENT_CUR_NAME);
-        QByteArray data    = QJsonDocument(body).toJson(QJsonDocument::Compact);
+        body["message"]       = msg;
+        body["provider_name"] = provider_name;
+        body["model"]         = model;
+        QByteArray data       = QJsonDocument(body).toJson(QJsonDocument::Compact);
         QUrl url(LosCommon::LosNet_Constants::BASE_URL + QString(LosCommon::LosNet_Constants::API::AGENT_CHAT_API));
         QNetworkRequest req(url);
         req.setHeader(QNetworkRequest::ContentTypeHeader, LosCommon::LosNet_Constants::HEADER_TYPE::JSON_TYPE);
         req.setRawHeader("Authorization", ("Bearer " + token).toUtf8());
         QNetworkReply *rep = L_net->post(req, data);
         conn(rep, [this](const QByteArray &doc) { this->dealAgentChatReply(doc); });
+    }
+
+
+
+    /**
+     * @brief
+     *
+     * @param base_url
+     * @param api_key
+     */
+    void LosNet::requestAgentFetchModels(const QString &base_url, const QString &api_key)
+    {
+        auto &state   = LosState::instance();
+        QString token = state.get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN);
+        QJsonObject body;
+        body["base_url"] = base_url;
+        body["api_key"]  = api_key;
+        QByteArray data  = QJsonDocument(body).toJson(QJsonDocument::Compact);
+        QUrl url(LosCommon::LosNet_Constants::BASE_URL + QString(LosCommon::LosNet_Constants::API::AGENT_LIST_MODELS));
+        QNetworkRequest req(url);
+        req.setHeader(QNetworkRequest::ContentTypeHeader, LosCommon::LosNet_Constants::HEADER_TYPE::JSON_TYPE);
+        req.setRawHeader("Authorization", ("Bearer " + token).toUtf8());
+        QNetworkReply *rep = L_net->post(req, data);
+        conn(rep, [this](const QByteArray &doc) { this->dealAgentFetchModelsReply(doc); });
+    }
+
+
+
+    /**
+     * @brief 新增厂商
+     * json
+        pub struct AddAgentRequest {
+            pub provider_name: String,
+            pub base_url: String,
+            pub models: Vec<String>,
+            pub api_key: String,
+        }
+     * @param provider
+     * @param baseUrl
+     * @param apiKey
+     * @param models
+     */
+    void LosNet::requestAgentAddProvider(const QString &provider, const QString &base_url, const QString &api_key, const QStringList &models)
+    {
+        auto &state   = LosState::instance();
+        QString token = state.get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN);
+        QJsonObject body;
+        body["provider_name"] = provider;
+        body["base_url"]      = base_url;
+        QJsonArray modelArr;
+        for (const auto &str : models)
+        {
+            modelArr.append(str);
+        }
+        body["models"]  = modelArr;
+        body["api_key"] = api_key;
+        QByteArray data = QJsonDocument(body).toJson(QJsonDocument::Compact);
+        QUrl url(LosCommon::LosNet_Constants::BASE_URL + QString(LosCommon::LosNet_Constants::API::AGENT_ADD_API));
+        QNetworkRequest req(url);
+        req.setHeader(QNetworkRequest::ContentTypeHeader, LosCommon::LosNet_Constants::HEADER_TYPE::JSON_TYPE);
+        req.setRawHeader("Authorization", ("Bearer " + token).toUtf8());
+        QNetworkReply *rep = L_net->post(req, data);
+        conn(rep, [this](const QByteArray &doc) { this->dealAgentFetchModelsReply(doc); });
+    }
+
+
+
+    /**
+     * @brief requestListProviders
+     * 申请 provider list
+     */
+    void LosNet::requestListProviders()
+    {
+        auto &state   = LosState::instance();
+        QString token = state.get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN);
+        QUrl url(LosCommon::LosNet_Constants::BASE_URL + QString(LosCommon::LosNet_Constants::API::AGENT_LIST_PROVIDERS));
+        QNetworkRequest req(url);
+        req.setHeader(QNetworkRequest::ContentTypeHeader, LosCommon::LosNet_Constants::HEADER_TYPE::JSON_TYPE);
+        req.setRawHeader("Authorization", ("Bearer " + token).toUtf8());
+        QNetworkReply *rep = L_net->post(req, QByteArray());
+        conn(rep, [this](const QByteArray &doc) { this->dealListProvidersReply(doc); });
     }
 
 
@@ -235,14 +317,135 @@ namespace LosCore
 
 
     /**
-     * @brief 
-     * 
-     * @param data 
+     * @brief
+     *
+     * @param data
      */
-    void LosNet::dealAgentChatReply(const QByteArray &data) {
+    void LosNet::dealAgentChatReply(const QByteArray &data)
+    {
         // 处理 Agent 的答复
+        QJsonParseError err;
+        QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+        if (err.error != QJsonParseError::NoError)
+        {
+            ERR("解析失败", "LosNet");
+            emit LosRouter::instance()._cmd_agent_reply(false, QStringLiteral("响应解析失败"));
+            return;
+        }
+        QJsonObject obj(doc.object());
+        const bool suc = obj["success"].toBool();
+        if (!suc)
+        {
+            // 失败时后端返回 message
+            emit LosRouter::instance()._cmd_agent_reply(false, obj["message"].toString());
+            return;
+        }
+        // 成功时回复内容在 reply 字段
+        emit LosRouter::instance()._cmd_agent_reply(true, obj["reply"].toString());
     }
 
+
+
+    /**
+     * @brief dealAgentFetchModels 处理 返回的模型的答复
+     *
+     * @param data
+     */
+    void LosNet::dealAgentFetchModelsReply(const QByteArray &data)
+    {
+        QJsonParseError err;
+        QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+        if (err.error != QJsonParseError::NoError)
+        {
+            ERR("解析失败", "LosNet");
+            emit LosRouter::instance()._cmd_agent_listModels_response(false, {}, QStringLiteral("响应解析失败"));
+            return;
+        }
+        QJsonObject obj(doc.object());
+        const bool ok     = obj["success"].toBool();
+        const QString msg = obj["message"].toString();
+        if (!ok)
+        {
+            emit LosRouter::instance()._cmd_agent_listModels_response(false, {}, msg);
+            return;
+        }
+        QStringList models;
+        const QJsonArray arr = obj["models"].toArray();
+        for (const QJsonValue &v : arr)
+        {
+            const QString m = v.toString().trimmed();
+            if (!m.isEmpty())
+                models.append(m);
+        }
+        emit LosRouter::instance()._cmd_agent_listModels_response(true, models, msg);
+    }
+
+
+
+    /**
+     * @brief
+     *
+     * @param data
+     */
+    void LosNet::dealAgentAddProviderReply(const QByteArray &data)
+    {
+        QJsonParseError err;
+        QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+        if (err.error != QJsonParseError::NoError)
+        {
+            ERR("解析失败", "LosNet");
+            emit LosRouter::instance()._cmd_agent_addProvider_response(false, QStringLiteral("响应解析失败"));
+            return;
+        }
+        QJsonObject obj(doc.object());
+        const bool ok     = obj["success"].toBool();
+        const QString msg = obj["message"].toString();
+        emit LosRouter::instance()._cmd_agent_addProvider_response(ok, msg);
+    }
+
+
+
+    /**
+     * @brief
+     *
+     * @param data
+     */
+    void LosNet::dealListProvidersReply(const QByteArray &data)
+    {
+        QJsonParseError err;
+        QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+        if (err.error != QJsonParseError::NoError)
+        {
+            ERR("解析失败", "LosNet");
+            emit LosRouter::instance()._cmd_agent_listProviders_response(false, {}, QStringLiteral("响应解析失败"));
+            return;
+        }
+        QJsonObject obj(doc.object());
+        const bool ok     = obj["success"].toBool();
+        const QString msg = obj["message"].toString();
+        if (!ok)
+        {
+            emit LosRouter::instance()._cmd_agent_listProviders_response(false, {}, msg);
+            return;
+        }
+        QMap<QString, QStringList> providerModels;
+        const QJsonArray providers = obj["providers"].toArray();
+        for (const QJsonValue &pv : providers)
+        {
+            const QJsonObject p = pv.toObject();
+            const QString name  = p["provider_name"].toString();
+            QStringList models;
+            for (const QJsonValue &mv : p["models"].toArray())
+            {
+                const QString m = mv.toString().trimmed();
+                if (!m.isEmpty())
+                    models.append(m);
+            }
+            if (!name.isEmpty())
+                providerModels.insert(name, models);
+        }
+        emit LosRouter::instance()._cmd_agent_listProviders_response(true, providerModels, msg);
+    }
 
 
     /**
@@ -371,9 +574,13 @@ namespace LosCore
                 [=]()
                 {
                     reply->deleteLater();
-
-                    QByteArray resData = reply->readAll();
-
+                    const int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+                    QByteArray resData   = reply->readAll();
+                    if (httpStatus == 401)
+                    {
+                        emit LosRouter::instance()._cmd_needAuth();
+                        return;
+                    }
                     if (reply->error() != QNetworkReply::NoError)
                     {
                         ERR(reply->errorString(), "conn");
@@ -385,10 +592,11 @@ namespace LosCore
                         emit LosRouter::instance()._cmd_auth_response(false, QStringLiteral("网络请求失败"));
                         return;
                     }
-
                     func(resData);
                 });
     }
+
+
 
     /**
      * @brief initConnect
@@ -401,6 +609,11 @@ namespace LosCore
         connect(&router, &LosRouter::_cmd_auth_register_request, this,
                 [this](const QString &username, const QString &password) { this->requestRegister(username, password); });
         connect(&router, &LosRouter::_cmd_auth_autoLogin_request, this, [this](const QString &token) { this->requestAutoLogin(token); });
+        connect(&router, &LosRouter::_cmd_agent_listModels_request, this,
+                [this](const QString &baseUrl, const QString &apiKey) { this->requestAgentFetchModels(baseUrl, apiKey); });
+        connect(&router, &LosRouter::_cmd_agent_addProvider_request, this,
+                [this](const QString &p, const QString &b, const QString &k, const QStringList &m) { this->requestAgentAddProvider(p, b, k, m); });
+        connect(&router, &LosRouter::_cmd_agent_listProviders_request, this, [this]() { this->requestListProviders(); });
     }
 
 } // namespace LosCore

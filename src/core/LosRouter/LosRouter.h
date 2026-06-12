@@ -175,11 +175,22 @@ namespace LosCore
         void _cmd_auth_response(bool success, const QString &message);
         void _cmd_auth_loginStateChanged(bool loggedIn);
         void _cmd_needAuth(); // 打开登录的窗口 提示 需要登录 在部分 需要登录和注册的逻辑
-        void _cmd_agent_sendMessage(const QString &);
+        void _cmd_agent_sendMessage(const QString &, const QString &provider_name, const QString &model_name);
+        void _cmd_agent_addProvider_request(const QString &provider, const QString &baseUrl, const QString &apiKey, const QStringList &models);
+        void _cmd_agent_addProvider_response(bool success, const QString &message);
+        void _cmd_agent_listModels_request(const QString &baseUrl, const QString &apiKey);
+        void _cmd_agent_listModels_response(bool ok, const QStringList &models, const QString &msg);
+        void _cmd_agent_listProviders_request();                                                                               // 厂商 - 模型
+        void _cmd_agent_listProviders_response(bool ok, const QMap<QString, QStringList> &providerModels, const QString &msg); // 服务器的答复
+        void _cmd_agent_reply(bool suc, const QString &reply);
 
+
+        
         // ----------------------------------------------------------------------------
         // 主题切换部分
         void _cmd_themeChanged(const QString &themeName);
+
+
 
         // ----------------------------------------------------------------------------
     };

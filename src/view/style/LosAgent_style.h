@@ -23,6 +23,10 @@
  *   #agentBubbleAgent   Agent 气泡 (靠左)
  *   #agentInput         输入框
  *   #agentSendBtn       发送按钮
+ *   #agentAddBtn        添加配置按钮
+ *   #agentRefreshBtn    刷新配置按钮
+ *   #agentProviderCombo 厂商下拉
+ *   #agentModelCombo    模型下拉
  */
 namespace LosStyle
 {
@@ -40,15 +44,17 @@ namespace LosStyle
         #agentHeader {
             color: @foreground@;
             background-color: transparent;
-            font-size: 13px;
-            font-weight: bold;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding-left: 2px;
         }
         #agentAddBtn {
             color: @foreground@;
             background-color: transparent;
             border: 1px solid @borderStrong@;
-            border-radius: 6px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 18px;
             font-weight: bold;
             padding: 0;
         }
@@ -57,9 +63,32 @@ namespace LosStyle
             color: @highlightFg@;
             border: 1px solid @primary@;
         }
+        #agentAddBtn:pressed {
+            background-color: @primaryPressed@;
+            border: 1px solid @primaryPressed@;
+        }
+        #agentRefreshBtn {
+            color: @foreground@;
+            background-color: transparent;
+            border: 1px solid @borderStrong@;
+            border-radius: 8px;
+            font-size: 16px;
+            padding: 0;
+        }
+        #agentRefreshBtn:hover {
+            background-color: @primary@;
+            color: @highlightFg@;
+            border: 1px solid @primary@;
+        }
+        #agentRefreshBtn:pressed {
+            background-color: @primaryPressed@;
+            color: @highlightFg@;
+            border: 1px solid @primaryPressed@;
+        }
         #agentChatView {
             background-color: @background@;
             border: none;
+            padding: 4px 2px;
         }
         #agentChatView::item {
             border: none;
@@ -73,22 +102,27 @@ namespace LosStyle
             background-color: @background@;
             color: @foreground@;
             border: 1px solid @borderStrong@;
-            border-radius: 6px;
-            padding: 4px 8px;
+            border-radius: 8px;
+            padding: 5px 10px;
             font-size: 12px;
-            min-height: 20px;
+            min-height: 22px;
         }
         #agentProviderCombo:hover, #agentModelCombo:hover {
             border: 1px solid @primary@;
         }
+        #agentProviderCombo:focus, #agentModelCombo:focus {
+            border: 1px solid @primary@;
+        }
         #agentProviderCombo::drop-down, #agentModelCombo::drop-down {
             border: none;
-            width: 18px;
+            width: 20px;
         }
         #agentProviderCombo QAbstractItemView, #agentModelCombo QAbstractItemView {
             background-color: @panelBg@;
             color: @foreground@;
             border: 1px solid @borderStrong@;
+            border-radius: 8px;
+            padding: 4px;
             selection-background-color: @selection@;
             selection-color: @primary@;
             outline: none;
@@ -96,22 +130,34 @@ namespace LosStyle
         #agentBubbleUser {
             background-color: @primary@;
             color: @highlightFg@;
-            border-radius: 10px;
+            border-radius: 14px;
             font-size: 13px;
+            line-height: 150%;
+            padding: 8px 12px;
         }
         #agentBubbleAgent {
             background-color: @panelBg@;
             color: @foreground@;
             border: 1px solid @borderStrong@;
-            border-radius: 10px;
+            border-radius: 14px;
             font-size: 13px;
+            line-height: 160%;
+            padding: 4px 10px;
+        }
+        #agentBubbleAgent QWidget {
+            background-color: transparent;
+        }
+        #agentBubbleAgent a {
+            color: @primary@;
+            text-decoration: none;
         }
         #agentInput {
-            background-color: @panelBg@;
+            background-color: @background@;
             color: @foreground@;
             border: 1px solid @borderStrong@;
-            border-radius: 6px;
-            padding: 7px 10px;
+            border-radius: 10px;
+            padding: 9px 12px;
+            font-size: 13px;
             selection-background-color: @selection@;
         }
         #agentInput:focus {
@@ -121,8 +167,9 @@ namespace LosStyle
             background-color: @primary@;
             color: @highlightFg@;
             border: none;
-            border-radius: 6px;
-            padding: 7px 16px;
+            border-radius: 10px;
+            padding: 9px 20px;
+            font-size: 13px;
             font-weight: bold;
         }
         #agentSendBtn:hover {
@@ -133,15 +180,14 @@ namespace LosStyle
         }
         #LosAgentUi QScrollBar:vertical {
             background-color: transparent;
-            width: 12px;
+            width: 8px;
             border: none;
-            margin: 0px;
+            margin: 2px 1px;
         }
         #LosAgentUi QScrollBar::handle:vertical {
             background-color: @borderStrong@;
-            border-radius: 6px;
-            min-height: 30px;
-            margin: 2px;
+            border-radius: 4px;
+            min-height: 36px;
         }
         #LosAgentUi QScrollBar::handle:vertical:hover {
             background-color: @primary@;

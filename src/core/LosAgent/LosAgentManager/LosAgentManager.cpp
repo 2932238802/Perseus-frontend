@@ -24,18 +24,22 @@ namespace LosCore
     void LosAgentManager::initConnect()
     {
         auto &router = LosRouter::instance();
-        connect(&router, &LosRouter::_cmd_agent_sendMessage, this, [this](const QString &message) { this->handleMessage(message); });
+        connect(&router, &LosRouter::_cmd_agent_sendMessage, this,
+                [this](const QString &message, const QString &provider, const QString &model) { this->handleMessage(message, provider, model); });
     }
 
 
 
     /**
      * @brief handleMessage
-     * - 处理用户消息
-     * - 第一阶段: 本地假回复
-     * - 后续: 改为调用 LosAgentClient 请求后端 (拿 user_id 对应的 ai-key, 组织上下文)
-     * @param message 用户发来的消息
+     * - 处理用户消息: 转交网络层请求后端 /agent/chat
+     * @param message  用户发来的消息
+     * @param provider 当前选中厂商
+     * @param model    当前选中模型
      */
-    void LosAgentManager::handleMessage(const QString &message) {}
+    void LosAgentManager::handleMessage(const QString &message, const QString &provider, const QString &model)
+    {
+        LosNet::instance().requestAgentChat(message, provider, model);
+    }
 
 } /* namespace LosCore */
