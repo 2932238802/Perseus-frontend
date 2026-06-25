@@ -36,7 +36,7 @@ namespace LosView
         L_webView->page()->setWebChannel(L_channel);
 
         L_webView->page()->setBackgroundColor(QColor("#282a36"));
-        L_webView->setUrl(QUrl("qrc:/web/resources/web/terminal.html"));
+        L_webView->setUrl(QUrl("qrc:/web/web/terminal.html"));
         layout->addWidget(L_webView);
     }
 

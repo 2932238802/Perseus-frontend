@@ -11,9 +11,9 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QListWidgetItem>
-#include <QtMath>
 #include <QTextBrowser>
 #include <QTextDocument>
+#include <QtMath>
 
 namespace LosView
 {
@@ -194,7 +194,7 @@ namespace LosView
         if (text.isEmpty())
             return;
         addBubble(Role::User, text);
-        emit LosCore::LosRouter::instance()._cmd_agent_sendMessage(text, ui->provider_combo->currentText(), ui->model_combo->currentText());
+        emit LosCore::LosRouter::instance()._cmd_agent_sendMessage(text, ui -> provider_combo->currentText(), ui->model_combo->currentText());
         ui->input_edit->clear();
         L_streamingBuffer.clear();
         addBubble(Role::Agent, QString()); // 内部会把 L_streamingBubble / L_streamingItem 指向它
@@ -236,8 +236,8 @@ namespace LosView
         if (L_streamingBubble == nullptr) // 没有正在接收的气泡, 忽略 (防御)
             return;
         L_streamingBuffer += data;
-        L_streamingBubble->document()->setMarkdown(L_streamingBuffer); 
-        relayoutStreamingBubble();                                     
+        L_streamingBubble->document()->setMarkdown(L_streamingBuffer);
+        relayoutStreamingBubble();
     }
 
 
@@ -284,14 +284,14 @@ namespace LosView
         //   padding: 4px 10px  -> 左右各 10px;  border: 1px -> 左右各 1px
         // 否则 document 的 textWidth 会比 QTextBrowser viewport 实际可视宽度大,
         // 导致内容横向溢出被裁切 (即"内容被遮挡, 需右移光标框选才看得全")。
-        const int cssPadH    = 10; // QSS 左右内边距
-        const int cssBorder  = 1;  // QSS 左右边框
-        const int chromeH    = (cssPadH + cssBorder) * 2; // 单侧之和 *2 = 横向总占用
-        const int textW      = maxBubbleW - chromeH;
+        const int cssPadH   = 10;                        // QSS 左右内边距
+        const int cssBorder = 1;                         // QSS 左右边框
+        const int chromeH   = (cssPadH + cssBorder) * 2; // 单侧之和 *2 = 横向总占用
+        const int textW     = maxBubbleW - chromeH;
 
-        QWidget *bubble        = nullptr; // 统一用基类指针, 便于后面放进布局
-        QTextBrowser *browser  = nullptr; // 仅 Agent 气泡使用, 用于返回
-        int bubbleH            = 0;
+        QWidget *bubble       = nullptr; // 统一用基类指针, 便于后面放进布局
+        QTextBrowser *browser = nullptr; // 仅 Agent 气泡使用, 用于返回
+        int bubbleH           = 0;
 
         if (isUser)
         {
@@ -321,17 +321,17 @@ namespace LosView
             browser->setOpenExternalLinks(true);
             browser->setTextInteractionFlags(Qt::TextBrowserInteraction);
             browser->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
-            browser->document()->setDocumentMargin(0);  // 内边距统一交给 QSS, 文档自身不再留白
-            browser->document()->setMarkdown(content);   // Qt6 原生 Markdown 渲染
-            browser->document()->setTextWidth(textW);     // 先按最大可用宽度排版
+            browser->document()->setDocumentMargin(0); // 内边距统一交给 QSS, 文档自身不再留白
+            browser->document()->setMarkdown(content); // Qt6 原生 Markdown 渲染
+            browser->document()->setTextWidth(textW);  // 先按最大可用宽度排版
 
             // 让气泡贴合内容: 取文档真正需要的宽度 (idealWidth), 但不超过 textW。
             // 之后必须把 widget 的固定宽度设为 "排版宽 + QSS横向余量", 使
             // document textWidth == viewport 可视宽度, 内容才不会横向溢出被裁切。
-            const int idealW   = qCeil(browser->document()->idealWidth());
+            const int idealW    = qCeil(browser->document()->idealWidth());
             const int finalTxtW = qBound(1, idealW, textW);
             browser->document()->setTextWidth(finalTxtW); // 用贴合后的宽度重新排版
-            const int bubbleW   = finalTxtW + chromeH;
+            const int bubbleW = finalTxtW + chromeH;
             browser->setFixedWidth(bubbleW);
 
             const qreal docH = browser->document()->size().height();
@@ -358,14 +358,12 @@ namespace LosView
         item->setSizeHint(QSize(viewW, itemH));
         ui->chat_view->setItemWidget(item, holder);
         ui->chat_view->scrollToBottom();
-
-        // Agent 气泡: 记录浏览器与列表项, 供流式逐片追加时重算行高
         if (!isUser)
         {
             L_streamingBubble = browser;
             L_streamingItem   = item;
         }
-        return browser; // User 气泡返回 nullptr
+        return browser; 
     }
 
 
@@ -382,23 +380,17 @@ namespace LosView
         const int viewW      = ui->chat_view->viewport()->width();
         const int maxBubbleW = qMax(120, static_cast<int>(viewW * 0.75));
         const int padV       = 4;
-        // 与 addBubble 中保持一致的横向余量 (QSS padding 10px + border 1px)
         const int cssPadH    = 10;
         const int cssBorder  = 1;
         const int chromeH    = (cssPadH + cssBorder) * 2;
         const int textW      = maxBubbleW - chromeH;
-
-        // 先按最大宽排版, 取内容真正需要的宽度, 再据此固定 widget 宽度,
-        // 保证 document textWidth == viewport 可视宽度, 流式追加的内容不会被横向裁切。
         L_streamingBubble->document()->setTextWidth(textW);
         const int idealW    = qCeil(L_streamingBubble->document()->idealWidth());
         const int finalTxtW = qBound(1, idealW, textW);
         L_streamingBubble->document()->setTextWidth(finalTxtW);
         L_streamingBubble->setFixedWidth(finalTxtW + chromeH);
-
-        const qreal docH = L_streamingBubble->document()->size().height();
-        const int bubbleH =
-            qMax(static_cast<int>(docH) + padV * 2, L_streamingBubble->fontMetrics().height() + padV * 2);
+        const qreal docH  = L_streamingBubble->document()->size().height();
+        const int bubbleH = qMax(static_cast<int>(docH) + padV * 2, L_streamingBubble->fontMetrics().height() + padV * 2);
         L_streamingBubble->setFixedHeight(bubbleH);
         const int itemH = bubbleH + 8 + 6;
         L_streamingItem->setSizeHint(QSize(viewW, itemH));
