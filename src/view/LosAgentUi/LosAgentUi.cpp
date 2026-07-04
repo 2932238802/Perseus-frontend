@@ -312,7 +312,6 @@ namespace LosView
         }
         else
         {
-            // Agent 气泡: QTextBrowser 渲染 Markdown
             browser = new QTextBrowser();
             browser->setObjectName(QStringLiteral("agentBubbleAgent"));
             browser->setFrameShape(QFrame::NoFrame);
@@ -324,16 +323,11 @@ namespace LosView
             browser->document()->setDocumentMargin(0); // 内边距统一交给 QSS, 文档自身不再留白
             browser->document()->setMarkdown(content); // Qt6 原生 Markdown 渲染
             browser->document()->setTextWidth(textW);  // 先按最大可用宽度排版
-
-            // 让气泡贴合内容: 取文档真正需要的宽度 (idealWidth), 但不超过 textW。
-            // 之后必须把 widget 的固定宽度设为 "排版宽 + QSS横向余量", 使
-            // document textWidth == viewport 可视宽度, 内容才不会横向溢出被裁切。
             const int idealW    = qCeil(browser->document()->idealWidth());
             const int finalTxtW = qBound(1, idealW, textW);
             browser->document()->setTextWidth(finalTxtW); // 用贴合后的宽度重新排版
             const int bubbleW = finalTxtW + chromeH;
             browser->setFixedWidth(bubbleW);
-
             const qreal docH = browser->document()->size().height();
             bubbleH          = qMax(static_cast<int>(docH) + padV * 2, browser->fontMetrics().height() + padV * 2);
             browser->setFixedHeight(bubbleH);

@@ -34,8 +34,9 @@ namespace LosView
 
 
 
-    /*
-     * 设置弹窗的内容
+    /**
+     * onExeScript
+     * - 运行脚本
      */
     void LosCommandArgsUi::onExeScript(const QString &script_path, const QStringList &params)
     {
@@ -71,7 +72,6 @@ namespace LosView
             }
         }
         ui->L_dynamicParamsLayout->addStretch();
-
         if (parentWidget())
         {
             int x = parentWidget()->geometry().x() + (parentWidget()->width() - width()) / 2;
@@ -83,8 +83,9 @@ namespace LosView
 
 
 
-    /*
-     * 点击 运行按钮
+    /**
+     * @brief onRunBtnClicked
+     * 运行按钮
      */
     void LosCommandArgsUi::onRunBtnClicked()
     {
@@ -94,14 +95,12 @@ namespace LosView
             QMessageBox::warning(this, "Err", "working dir is empty!");
             return;
         }
-
         QDir dirE(dir);
         if (!dirE.exists())
         {
             QMessageBox::critical(this, "Path Error", QString("The directory does not exist:\n%1\n\nPlease select a valid directory.").arg(dir));
             return;
         }
-
         QStringList args;
         for (auto *lineEdit : L_paramsInputs)
         {
@@ -113,9 +112,7 @@ namespace LosView
             }
             args.append(input);
         }
-
         SUC(L_scriptPath, "LosCommandArgsUi");
-
         this->accept();
         emit LosCore::LosRouter::instance()._cmd_runScript(L_scriptPath, dir, args);
     }
@@ -137,8 +134,10 @@ namespace LosView
 
 
 
-    /*
-     * init 初始化 样式
+   
+    /**
+     * @brief initStyle
+     * 初始化样式
      */
     void LosCommandArgsUi::initStyle()
     {
@@ -148,8 +147,9 @@ namespace LosView
     }
 
 
-    /*
-     *
+    
+    /**
+     * @brief 初始化连接
      */
     void LosCommandArgsUi::initConnect()
     {
@@ -157,7 +157,7 @@ namespace LosView
         connect(&router, &LosCore::LosRouter::_cmd_command_exeScript, this, &LosCommandArgsUi::onExeScript);
         connect(ui->btn_browse, &QPushButton::clicked, this, &LosCommandArgsUi::onBrowseBtnClicked);
         connect(ui->btn_run, &QPushButton::clicked, this, &LosCommandArgsUi::onRunBtnClicked);
-        connect(ui->btn_cancel, &QPushButton::clicked, this, &QDialog::reject); /* Cancel直接关闭 */
+        connect(ui->btn_cancel, &QPushButton::clicked, this, &QDialog::reject);
         connect(&router, &LosCore::LosRouter::_cmd_themeChanged, this,
                 [this](const QString &name)
                 {

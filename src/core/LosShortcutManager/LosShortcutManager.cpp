@@ -5,7 +5,11 @@
 
 namespace LosCore
 {
-
+    /**
+     * @brief Construct a new Los Shortcut Manager:: Los Shortcut Manager object
+     * 
+     * @param parent 
+     */
     LosShortcutManager::LosShortcutManager(QObject *parent) : QObject(parent) {}
     LosShortcutManager &LosShortcutManager::instance()
     {

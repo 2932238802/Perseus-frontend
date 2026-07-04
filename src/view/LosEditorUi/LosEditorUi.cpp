@@ -751,7 +751,7 @@ namespace LosView
     void LosEditorUi::onContentsChange(int from, int charsRemoved, int charsAdded)
     {
         Q_UNUSED(from);
-        if (charsRemoved == 0 && charsAdded == 0) // 修改格式 而不是内容
+        if (charsRemoved == 0 && charsAdded == 0)
             return;
         if (!LOS_context)
             return;

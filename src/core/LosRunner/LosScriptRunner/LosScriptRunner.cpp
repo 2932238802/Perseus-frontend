@@ -1,6 +1,8 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosScriptRunner.h"
+#include <qmetaobject.h>
+#include <qprocess.h>
 
 namespace LosCore
 {
@@ -96,11 +98,21 @@ namespace LosCore
         connect(L_runner, &QProcess::readyReadStandardError, this,
                 [this]() { INF(QString::fromLocal8Bit(L_runner->readAllStandardError()), "LosScriptRunner"); });
 
-        connect(L_runner, &QProcess::finished, this, [=](int exitCode, QProcess::ExitStatus exitStatus)
+        connect(L_runner, &QProcess::finished, this, [this](int exitCode, QProcess::ExitStatus exitStatus)
                 { INF("process terminated (exit code: " + QString::number(exitCode) + ")", "LosScriptRunner"); });
 
         connect(L_runner, &QProcess::errorOccurred, this,
-                [=](QProcess::ProcessError error) { ERR("The compiled program failed to start", "LosScriptRunner"); });
+                [this](QProcess::ProcessError error)
+                {
+                    QString errDesc = QMetaEnum::fromType<QProcess::ProcessError>().valueToKey(error);
+                    ERR("The compiled program failed to start : " + errDesc, "LosScriptRunner");
+                    for (const auto &str : L_runner->arguments())
+                    {
+                        INF("args: " + str, "LosScriptRunner");
+                    }
+                    INF("workdir: " + L_runner->workingDirectory(), "LosScriptRunner");
+                    INF("errorString: " + L_runner->errorString(), "LosScriptRunner");
+                });
         connect(L_runner, &QProcess::errorOccurred, this,
                 [this](QProcess::ProcessError err) { INF("LosScriptRunner error: " + QString::number(err), "LosScriptRunner"); });
     }
