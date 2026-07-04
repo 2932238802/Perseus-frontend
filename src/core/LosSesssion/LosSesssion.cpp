@@ -97,8 +97,13 @@ namespace LosCore
 
 
 
-    /*
-     * - 保存文件
+    /**
+     * @brief saveConfig 
+     * 保存信息
+     * 
+     * @param conf 
+     * @return true 
+     * @return false 
      */
     bool LosSession::saveConfig(const LosCommon::LosSession_Constants::Config &conf)
     {

@@ -9,6 +9,10 @@
 
 namespace LosCore
 {
+    /**
+     * @brief Perseus 的网络层
+     *
+     */
     class LosNet : public QObject
     {
         Q_OBJECT

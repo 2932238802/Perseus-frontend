@@ -2,6 +2,7 @@
 
 #include "LosEditorUi.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
+#include "common/constants/ConstantsNum/LosEditorUiNum.h"
 #include "common/constants/ConstantsStr/LosEditorUiStr.h"
 #include "common/util/CheckLang.h"
 #include "common/util/FindMatchBracket.h"
@@ -73,27 +74,27 @@ namespace LosView
             {
             case LosCommon::LosLsp_Constants::DiagnosticSeverity::Information:
             {
-                format.setUnderlineColor(QColor("#8be9fd"));
+                format.setUnderlineColor(QColor(LosCommon::LosEditorUi_Constants::DIAG_INFO_COLOR));
                 break;
             }
             case LosCommon::LosLsp_Constants::DiagnosticSeverity::Error:
             {
-                format.setUnderlineColor(QColor("#ff5555"));
+                format.setUnderlineColor(QColor(LosCommon::LosEditorUi_Constants::DIAG_ERROR_COLOR));
                 break;
             }
             case LosCommon::LosLsp_Constants::DiagnosticSeverity::Hint:
             {
-                format.setUnderlineColor(QColor("#6272a4"));
+                format.setUnderlineColor(QColor(LosCommon::LosEditorUi_Constants::DIAG_HINT_COLOR));
                 break;
             }
             case LosCommon::LosLsp_Constants::DiagnosticSeverity::Warning:
             {
-                format.setUnderlineColor(QColor("#ffb86c"));
+                format.setUnderlineColor(QColor(LosCommon::LosEditorUi_Constants::DIAG_WARN_COLOR));
                 break;
             }
             default:
             {
-                format.setUnderlineColor(QColor("#ff5555"));
+                format.setUnderlineColor(QColor(LosCommon::LosEditorUi_Constants::DIAG_ERROR_COLOR));
                 break;
             }
             }
@@ -260,7 +261,7 @@ namespace LosView
     void LosEditorUi::lineNumberAreaPaintEvent(QPaintEvent *event)
     {
         QPainter painter(LOS_lineNumber);
-        painter.fillRect(event->rect(), QColor("#21222c"));
+        painter.fillRect(event->rect(), QColor(LosCommon::LosEditorUi_Constants::LINENUMBER_BG_COLOR));
         QTextBlock block = firstVisibleBlock();
         int blockNumber  = block.blockNumber();
 
@@ -304,7 +305,8 @@ namespace LosView
                  * x坐标, y坐标, 宽度, 高度,
                  * 对齐方式, 要写的字
                  */
-                painter.drawText(0, top, LOS_lineNumber->width() - 5, fontMetrics().height(), Qt::AlignRight | Qt::AlignVCenter, number);
+                painter.drawText(0, top, LOS_lineNumber->width() - LosCommon::LosEditorUi_Constants::LINENUMBER_RIGHT_PADDING, fontMetrics().height(),
+                                 Qt::AlignRight | Qt::AlignVCenter, number);
             }
             block  = block.next();
             top    = bottom;
@@ -461,7 +463,7 @@ namespace LosView
     void LosEditorUi::initStyle()
     {
         QFontMetrics met(this->font());
-        int tab = 4 * met.horizontalAdvance(" ");
+        int tab = LosCommon::LosEditorUi_Constants::TAB_WIDTH_SPACES * met.horizontalAdvance(" ");
         this->setTabStopDistance(tab);
         updateLineNumberAreaWidth();
         viewport()->setMouseTracking(true);
@@ -517,7 +519,7 @@ namespace LosView
         if (!isReadOnly())
         {
             QTextEdit::ExtraSelection selection;
-            QColor lineColor = QColor("#44475a");
+            QColor lineColor = QColor(LosCommon::LosEditorUi_Constants::CURLINE_HL_COLOR);
             selection.format.setBackground(lineColor);
             selection.format.setProperty(QTextFormat::FullWidthSelection, true);
             selection.cursor = textCursor();
@@ -557,7 +559,7 @@ namespace LosView
         sel.cursor = cursor;
         sel.format.setFontUnderline(true);
         sel.format.setUnderlineStyle(QTextCharFormat::SingleUnderline);
-        sel.format.setForeground(QColor("#8be9fd"));
+        sel.format.setForeground(QColor(LosCommon::LosEditorUi_Constants::HOVER_UNDERLINE_COLOR));
         L_hoverSelections = {sel};
         highlightCurrentLine();
         viewport()->setCursor(Qt::PointingHandCursor);
@@ -638,15 +640,14 @@ namespace LosView
         html.replace("&", "&amp;");
         html.replace("<", "&lt;");
         html.replace(">", "&gt;");
-        html.replace("```cpp\n", "<pre style='color:#8be9fd; font-family:Consolas; margin: 5px 0;'>");
-        html.replace("```c\n", "<pre style='color:#8be9fd; font-family:Consolas; margin: 5px 0;'>");
-        html.replace("```", "</pre>");
-        QRegularExpression boldRegex("\\*\\*(.*?)\\*\\*");
-        html.replace(boldRegex, "<b>\\1</b>");
-        QRegularExpression inlineCodeRegex("`([^`]+)`");
-        html.replace(inlineCodeRegex, "<code style='color:#f1fa8c; background-color:#44475a; padding:2px 4px; "
-                                      "border-radius:3px;'>\\1</code>");
-        html.replace("\n", "<br>");
+        html.replace(LosCommon::LosEditorUi_Constants::MD_FENCE_CPP, LosCommon::LosEditorUi_Constants::HOVER_CODE_BLOCK_OPEN);
+        html.replace(LosCommon::LosEditorUi_Constants::MD_FENCE_C, LosCommon::LosEditorUi_Constants::HOVER_CODE_BLOCK_OPEN);
+        html.replace(LosCommon::LosEditorUi_Constants::MD_FENCE_PLAIN, LosCommon::LosEditorUi_Constants::HOVER_CODE_BLOCK_CLOSE);
+        QRegularExpression boldRegex(LosCommon::LosEditorUi_Constants::HOVER_BOLD_REGEX);
+        html.replace(boldRegex, LosCommon::LosEditorUi_Constants::HOVER_BOLD_REPLACE);
+        QRegularExpression inlineCodeRegex(LosCommon::LosEditorUi_Constants::HOVER_INLINE_CODE_REGEX);
+        html.replace(inlineCodeRegex, LosCommon::LosEditorUi_Constants::HOVER_INLINE_CODE_REPLACE);
+        html.replace("\n", LosCommon::LosEditorUi_Constants::HOVER_LINE_BREAK);
         showHoverPopup(html);
     }
 
@@ -670,14 +671,13 @@ namespace LosView
         html.replace("&", "&amp;");
         html.replace("<", "&lt;");
         html.replace(">", "&gt;");
-        html.replace("```rust\n", "<pre style='color:#8be9fd; font-family:Consolas; margin: 5px 0;'>");
-        html.replace("```", "</pre>");
-        QRegularExpression boldRegex("\\*\\*(.*?)\\*\\*");
-        html.replace(boldRegex, "<b>\\1</b>");
-        QRegularExpression inlineCodeRegex("`([^`]+)`");
-        html.replace(inlineCodeRegex, "<code style='color:#f1fa8c; background-color:#44475a; padding:2px 4px; "
-                                      "border-radius:3px;'>\\1</code>");
-        html.replace("\n", "<br>");
+        html.replace(LosCommon::LosEditorUi_Constants::MD_FENCE_RUST, LosCommon::LosEditorUi_Constants::HOVER_CODE_BLOCK_OPEN);
+        html.replace(LosCommon::LosEditorUi_Constants::MD_FENCE_PLAIN, LosCommon::LosEditorUi_Constants::HOVER_CODE_BLOCK_CLOSE);
+        QRegularExpression boldRegex(LosCommon::LosEditorUi_Constants::HOVER_BOLD_REGEX);
+        html.replace(boldRegex, LosCommon::LosEditorUi_Constants::HOVER_BOLD_REPLACE);
+        QRegularExpression inlineCodeRegex(LosCommon::LosEditorUi_Constants::HOVER_INLINE_CODE_REGEX);
+        html.replace(inlineCodeRegex, LosCommon::LosEditorUi_Constants::HOVER_INLINE_CODE_REPLACE);
+        html.replace("\n", LosCommon::LosEditorUi_Constants::HOVER_LINE_BREAK);
         showHoverPopup(html);
     }
 
@@ -729,10 +729,9 @@ namespace LosView
             r.translate(-prefixPixelWidth, 0);
         }
 
-        int idealWidth          = LOS_completer->popup()->sizeHintForColumn(0);
-        constexpr int PADDING   = 25;
-        constexpr int MAX_WIDTH = 500;
-        r.setWidth(qMin(idealWidth + PADDING, MAX_WIDTH));
+        int idealWidth = LOS_completer->popup()->sizeHintForColumn(0);
+        r.setWidth(qMin(idealWidth + LosCommon::LosEditorUi_Constants::COMPLETION_POPUP_PADDING,
+                        LosCommon::LosEditorUi_Constants::COMPLETION_POPUP_MAX_WIDTH));
 
         LOS_completer->complete(r);
         L_showComplete = true;
@@ -755,7 +754,7 @@ namespace LosView
             return;
         if (!LOS_context)
             return;
-        L_timer->start(200);
+        L_timer->start(LosCommon::LosEditorUi_Constants::DEBOUNCE_INTERVAL_MS);
     }
 
 
@@ -850,29 +849,33 @@ namespace LosView
             L_hoverPopup->setTextFormat(Qt::RichText);
             L_hoverPopup->setTextInteractionFlags(Qt::NoTextInteraction);
             L_hoverPopup->setWordWrap(true);
-            L_hoverPopup->setMargin(8);
-            L_hoverPopup->setMaximumWidth(600);
+            L_hoverPopup->setMargin(LosCommon::LosEditorUi_Constants::HOVER_POPUP_MARGIN);
+            L_hoverPopup->setMaximumWidth(LosCommon::LosEditorUi_Constants::HOVER_POPUP_MAX_WIDTH);
             L_hoverPopup->setAttribute(Qt::WA_ShowWithoutActivating, true);
             L_hoverPopup->setFocusPolicy(Qt::NoFocus);
             L_hoverPopup->setStyleSheet(LosCommon::LosEditorUi_Constants::HOVER_POP_STYLE);
         }
         L_hoverPopup->setText(html);
         L_hoverPopup->adjustSize();
-        QPoint anchor = L_lastHoverWordRectGlobal.isValid() ? L_lastHoverWordRectGlobal.bottomLeft() : L_lastHoverGlobal + QPoint(0, 20);
-        anchor += QPoint(0, 4);
+        QPoint anchor = L_lastHoverWordRectGlobal.isValid()
+                            ? L_lastHoverWordRectGlobal.bottomLeft()
+                            : L_lastHoverGlobal + QPoint(0, LosCommon::LosEditorUi_Constants::HOVER_ANCHOR_FALLBACK_Y);
+        anchor += QPoint(0, LosCommon::LosEditorUi_Constants::HOVER_SCREEN_MARGIN);
         QScreen *screen = QGuiApplication::screenAt(anchor);
         if (!screen)
             screen = QGuiApplication::primaryScreen();
-        QRect available = screen ? screen->availableGeometry() : QRect(0, 0, 1920, 1080);
+        QRect available = screen ? screen->availableGeometry()
+                                 : QRect(0, 0, LosCommon::LosEditorUi_Constants::FALLBACK_SCREEN_W,
+                                         LosCommon::LosEditorUi_Constants::FALLBACK_SCREEN_H);
         QSize popupSize = L_hoverPopup->sizeHint();
         if (anchor.x() + popupSize.width() > available.right())
-            anchor.setX(available.right() - popupSize.width() - 4);
-        if (anchor.x() < available.left() + 4)
-            anchor.setX(available.left() + 4);
+            anchor.setX(available.right() - popupSize.width() - LosCommon::LosEditorUi_Constants::HOVER_SCREEN_MARGIN);
+        if (anchor.x() < available.left() + LosCommon::LosEditorUi_Constants::HOVER_SCREEN_MARGIN)
+            anchor.setX(available.left() + LosCommon::LosEditorUi_Constants::HOVER_SCREEN_MARGIN);
         if (anchor.y() + popupSize.height() > available.bottom())
         {
-            int above = L_lastHoverWordRectGlobal.top() - popupSize.height() - 4;
-            anchor.setY(qMax(above, available.top() + 4));
+            int above = L_lastHoverWordRectGlobal.top() - popupSize.height() - LosCommon::LosEditorUi_Constants::HOVER_SCREEN_MARGIN;
+            anchor.setY(qMax(above, available.top() + LosCommon::LosEditorUi_Constants::HOVER_SCREEN_MARGIN));
         }
         L_hoverPopup->move(anchor);
         L_hoverPopup->show();
@@ -934,7 +937,7 @@ namespace LosView
             return;
         }
         QTextCharFormat format;
-        format.setBackground(QColor("#50fa7b"));
+        format.setBackground(QColor(LosCommon::LosEditorUi_Constants::BRACKET_MATCH_BG_COLOR));
         format.setForeground(Qt::black);
         format.setFontWeight(QFont::Bold);
         QTextEdit::ExtraSelection sel1;
@@ -1240,7 +1243,7 @@ namespace LosView
         if (e->type() == QEvent::FontChange)
         {
             QFontMetrics met(this->font());
-            int tab = 4 * met.horizontalAdvance(" ");
+            int tab = LosCommon::LosEditorUi_Constants::TAB_WIDTH_SPACES * met.horizontalAdvance(" ");
             this->setTabStopDistance(tab);
         }
         QPlainTextEdit::changeEvent(e);

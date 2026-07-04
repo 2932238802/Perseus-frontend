@@ -184,6 +184,9 @@ namespace LosCore
         void _cmd_agent_reply(bool suc, const QString &reply);
         void _cmd_agent_replyDone();
         void _cmd_agent_replyChunk(const QString &data);
+        void _cmd_agent_completion_request(const QString &file_path, const QString &prefix, const QString &suffix,
+                                           LosCommon::LosToolChain_Constants::LosLanguage language);
+        void _cmd_agent_completion_response(const QString &file_path, const QString &completion_text);
 
 
         // ----------------------------------------------------------------------------
