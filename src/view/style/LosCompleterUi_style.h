@@ -14,7 +14,6 @@ namespace LosStyle
             border: 1px solid @primary@;
             border-radius: 6px;
             font-family: "JetBrains Mono", "Consolas", "Menlo", monospace;
-            font-size: 13px;
             padding: 4px;
             outline: none;
             show-decoration-selected: 1;

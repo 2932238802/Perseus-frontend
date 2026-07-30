@@ -4,13 +4,14 @@
 #include "view/LosFileTreeDelegate/LosFileTreeDelegate.h"
 #include "common/constants/ConstantsClass/LosFileTreeModelClass.h" 
 #include "common/constants/ConstantsStr/LosFileTreeModelStr.h"   
+#include <QFontMetrics>
 #include <QPainter>
 
 namespace LosView
 {
     LosFileTreeDelegate::LosFileTreeDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
- 
- 
+  
+  
 
     /**
      * @brief 重写左侧文件树的 git 状态书写
@@ -41,5 +42,14 @@ namespace LosView
         r.setRight(r.right() - 8);
         painter->drawText(r, Qt::AlignRight | Qt::AlignVCenter, letter);
         painter->restore();
+    }
+
+    void LosFileTreeDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const
+    {
+        QRect rect = option.rect;
+        QFontMetrics fm(editor->font());
+        int textHeight = fm.height() + 6;
+        rect.setHeight(qMax(rect.height(), textHeight));
+        editor->setGeometry(rect);
     }
 } // namespace LosView

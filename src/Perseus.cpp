@@ -12,6 +12,7 @@
 #include "core/LosState/LosState.h"
 #include "view/LosSettingsUi/LosSettingsUi.h"
 #include <QStyle>
+#include <qfontmetrics.h>
 
 
 /**
@@ -265,6 +266,43 @@ void Perseus::onZoomUi(int delta)
     font.setPointSize(newSize);
     QApplication::setFont(font);
     this->setStyleSheet(this->styleSheet());
+
+    const int fontHeight       = QFontMetrics(font).height();
+    const int buttonSize       = qMax(48, fontHeight + 20);
+    const int activityBarWidth = buttonSize + 4;
+
+    ui->act_explorer_btn->setFixedSize(buttonSize, buttonSize);
+    ui->act_extensions_btn->setFixedSize(buttonSize, buttonSize);
+    ui->act_auth_btn->setFixedSize(buttonSize, buttonSize);
+
+    ui->activity_bar_widget->setFixedWidth(activityBarWidth);
+
+    // 局部更新布局
+    auto refreshWidget = [](QWidget *widget)
+    {
+        if (widget == nullptr)
+        {
+            return;
+        }
+        widget->updateGeometry();
+        if (QLayout *layout = widget->layout())
+        {
+            layout->invalidate();
+            layout->activate();
+        }
+        widget->update();
+    };
+    refreshWidget(this);
+    refreshWidget(centralWidget());
+    refreshWidget(ui->toolbar_widget);
+    refreshWidget(ui->activity_bar_widget);
+    refreshWidget(ui->left_panel_stack);
+    refreshWidget(ui->explorer_treeview);
+    refreshWidget(ui->right_splitter);
+    refreshWidget(ui->agent_panel);
+    refreshWidget(ui->statusbar_widget);
+    ui->explorer_treeview->doItemsLayout();
+    QApplication::processEvents();
 }
 
 
@@ -535,7 +573,7 @@ void Perseus::initShotcut()
         [=, this]()
         {
             INF("larger...", "Perseus");
-            this->onZoomUi(2);
+            this->onZoomUi(LosCommon::Perseus_Constants::ZOOM_DELTA);
         },
         "zoom in");
     LosCore::LosShortcutManager::instance().reg(
@@ -543,7 +581,7 @@ void Perseus::initShotcut()
         [=, this]()
         {
             INF("smaller...", "Perseus");
-            this->onZoomUi(-2);
+            this->onZoomUi(-1 * LosCommon::Perseus_Constants::ZOOM_DELTA);
         },
         "zoom out");
     LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::COMMANDS, this, [this]() { LOS_cmdPalette->showPalette(); });
@@ -610,6 +648,15 @@ void Perseus::initSession()
     LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, file);
     LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN, conf.LOS_authConfig.L_token);
     LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_USERNAME, conf.LOS_authConfig.L_username);
+
+    // 设置字体
+    // 定义
+    const int fontSize = qBound(LosCommon::Perseus_Constants::ZOOM_MIN, conf.LOS_sizeConfig.L_fontSize, LosCommon::Perseus_Constants::ZOOM_MAX);
+    QFont font         = QApplication::font();
+    font.setPointSize(fontSize);
+    QApplication::setFont(font);
+    onZoomUi(0);
+
     if (!conf.LOS_authConfig.L_token.isEmpty())
     {
         emit LosCore::LosRouter::instance()._cmd_auth_autoLogin_request(conf.LOS_authConfig.L_token);
@@ -663,6 +710,9 @@ LosCommon::LosSession_Constants::Config Perseus::collectConfig()
     LosCommon::LosSession_Constants::AuthConfig authConfig;
     authConfig.L_username = LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_USERNAME);
     authConfig.L_token    = LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN);
+    LosCommon::LosSession_Constants::SizeConfig sizeConfig;
+    sizeConfig.L_fontSize = QApplication::font().pointSize();
+    conf.LOS_sizeConfig   = sizeConfig;
     conf.LOS_authConfig   = authConfig;
     return conf;
 }

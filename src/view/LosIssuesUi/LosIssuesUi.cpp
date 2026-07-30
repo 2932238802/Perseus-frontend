@@ -117,7 +117,11 @@ namespace LosView
         L_table->setSelectionBehavior(QAbstractItemView::SelectRows);
         L_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
         L_table->setShowGrid(false);
-        L_table->horizontalHeader()->setStretchLastSection(true);
+        auto *header = L_table->horizontalHeader();
+        header->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+        header->setSectionResizeMode(1, QHeaderView::Stretch);
+        header->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+        header->setSectionResizeMode(3, QHeaderView::Stretch);
         L_table->verticalHeader()->setVisible(false);
     }
 

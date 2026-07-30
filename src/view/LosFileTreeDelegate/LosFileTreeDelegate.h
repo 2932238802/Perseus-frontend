@@ -1,6 +1,7 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
+#include <QFontMetrics>
 #include <QStyledItemDelegate>
 #include <qtmetamacros.h>
 namespace LosView
@@ -14,5 +15,6 @@ namespace LosView
 
       protected: // override
         void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+        void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
     };
 } // namespace LosView

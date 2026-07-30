@@ -14,7 +14,6 @@ namespace LosStyle
             color: @foreground@;
             border: none;
             gridline-color: @selection@;
-            font-size: 13px;
             outline: none;
         }
         QTableWidget::item {
@@ -39,7 +38,6 @@ namespace LosStyle
             border-right: 1px solid @selection@;
             border-bottom: 1px solid @selection@;
             font-weight: bold;
-            font-size: 12px;
             text-transform: uppercase;
         }
         QHeaderView::section:last {

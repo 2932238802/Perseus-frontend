@@ -44,7 +44,6 @@ namespace LosStyle
         #agentHeader {
             color: @foreground@;
             background-color: transparent;
-            font-size: 15px;
             font-weight: 700;
             letter-spacing: 0.5px;
             padding-left: 2px;
@@ -54,7 +53,6 @@ namespace LosStyle
             background-color: transparent;
             border: 1px solid @borderStrong@;
             border-radius: 8px;
-            font-size: 18px;
             font-weight: bold;
             padding: 0;
         }
@@ -72,7 +70,6 @@ namespace LosStyle
             background-color: transparent;
             border: 1px solid @borderStrong@;
             border-radius: 8px;
-            font-size: 16px;
             padding: 0;
         }
         #agentRefreshBtn:hover {
@@ -104,7 +101,6 @@ namespace LosStyle
             border: 1px solid @borderStrong@;
             border-radius: 8px;
             padding: 5px 10px;
-            font-size: 12px;
             min-height: 22px;
         }
         #agentProviderCombo:hover, #agentModelCombo:hover {
@@ -131,7 +127,6 @@ namespace LosStyle
             background-color: @primary@;
             color: @highlightFg@;
             border-radius: 14px;
-            font-size: 13px;
             line-height: 150%;
             padding: 8px 12px;
         }
@@ -140,7 +135,6 @@ namespace LosStyle
             color: @foreground@;
             border: 1px solid @borderStrong@;
             border-radius: 14px;
-            font-size: 13px;
             line-height: 160%;
             padding: 4px 10px;
         }
@@ -157,7 +151,6 @@ namespace LosStyle
             border: 1px solid @borderStrong@;
             border-radius: 10px;
             padding: 9px 12px;
-            font-size: 13px;
             selection-background-color: @selection@;
         }
         #agentInput:focus {
@@ -169,7 +162,6 @@ namespace LosStyle
             border: none;
             border-radius: 10px;
             padding: 9px 20px;
-            font-size: 13px;
             font-weight: bold;
         }
         #agentSendBtn:hover {

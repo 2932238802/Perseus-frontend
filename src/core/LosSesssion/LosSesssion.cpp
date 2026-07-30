@@ -92,6 +92,8 @@ namespace LosCore
             conf->LOS_authConfig.L_token = authConfig["token"].toString();
             conf->LOS_authConfig.L_username = authConfig["username"].toString();
         }
+        QJsonObject sizeConfig = root["sizeConfig"].toObject();
+        conf->LOS_sizeConfig.L_fontSize = sizeConfig["fontSize"].toInt(12);
         return true;
     }
 
@@ -122,6 +124,9 @@ namespace LosCore
         authConfig["username"] = conf.LOS_authConfig.L_username;
         authConfig["token"]    = conf.LOS_authConfig.L_token;
         obj["authConfig"] = authConfig;
+        QJsonObject sizeConfig;
+        sizeConfig["fontSize"] = conf.LOS_sizeConfig.L_fontSize;
+        obj["sizeConfig"] = sizeConfig;
         QJsonDocument doc(obj);
         QFile file(getDefaultConfigAbsoluteFilePath());
         if (!file.open(QIODevice::WriteOnly | QIODevice::Text))

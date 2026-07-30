@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <qtmetamacros.h>
 
+class QHBoxLayout;
 namespace LosView
 {
     class LosStateBarUi : public QWidget
@@ -27,5 +28,6 @@ namespace LosView
         QLabel *L_codingLabel  = nullptr;
         QLabel *L_messageLabel = nullptr;
         QLabel *L_langLabel    = nullptr;
+        QHBoxLayout *L_layout  = nullptr;
     };
 } // namespace LosView

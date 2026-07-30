@@ -5,7 +5,9 @@
 #include "common/util/GetLangId.h"
 #include "core/LosEncodingDetector/LosEncodingDetector.h"
 #include "core/LosRouter/LosRouter.h"
+
 #include <QHBoxLayout>
+#include <QApplication>
 #include <QSpacerItem>
 #include <qlabel.h>
 
@@ -62,22 +64,22 @@ namespace LosView
      */
     void LosStateBarUi::initStyle()
     {
-        auto *layout = new QHBoxLayout(this);
-        layout->setContentsMargins(0, 0, 0, 0);
-        layout->setSpacing(0);
-        L_messageLabel = new QLabel("Ready", this);
-        L_messageLabel->setObjectName("statusbar_label");
-        layout->addWidget(L_messageLabel);
-        layout->addStretch();
-        L_gitPath = new QLabel("none git", this);
-        L_gitPath->setObjectName("statusbar_git_label");
-        layout->addWidget(L_gitPath);
-        L_codingLabel = new QLabel("UTF-8", this);
-        L_codingLabel->setObjectName("statusbar_coding_label");
-        layout->addWidget(L_codingLabel);
-        L_langLabel = new QLabel("Unknown File", this);
-        L_langLabel->setObjectName("statusbar_lang_label");
-        layout->addWidget(L_langLabel);
+        L_layout = new QHBoxLayout(this);
+        L_layout->setContentsMargins(4, 2, 4, 2);
+        L_layout->setSpacing(6);
+        L_messageLabel = new QLabel(QStringLiteral("Ready"), this);
+        L_messageLabel->setObjectName(QStringLiteral("statusbar_label"));
+        L_layout->addWidget(L_messageLabel);
+        L_layout->addStretch();
+        L_gitPath = new QLabel(QStringLiteral("none git"), this);
+        L_gitPath->setObjectName(QStringLiteral("statusbar_git_label"));
+        L_layout->addWidget(L_gitPath);
+        L_codingLabel = new QLabel(QStringLiteral("UTF-8"), this);
+        L_codingLabel->setObjectName(QStringLiteral("statusbar_coding_label"));
+        L_layout->addWidget(L_codingLabel);
+        L_langLabel = new QLabel(QStringLiteral("Unknown File"), this);
+        L_langLabel->setObjectName(QStringLiteral("statusbar_lang_label"));
+        L_layout->addWidget(L_langLabel);
     }
 
 

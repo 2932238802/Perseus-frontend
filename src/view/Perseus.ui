@@ -41,7 +41,7 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>40</height>
+        <height>0</height>
        </size>
       </property>
      </widget>
@@ -61,7 +61,7 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>48</width>
+          <width>16777215</width>
           <height>16777215</height>
          </size>
         </property>
@@ -84,7 +84,7 @@
          <item>
           <widget class="QPushButton" name="act_explorer_btn">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -92,13 +92,7 @@
            <property name="minimumSize">
             <size>
              <width>48</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>48</width>
-             <height>48</height>
+             <height>36</height>
             </size>
            </property>
            <property name="text">
@@ -121,7 +115,7 @@
          <item>
           <widget class="QPushButton" name="act_extensions_btn">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -129,13 +123,7 @@
            <property name="minimumSize">
             <size>
              <width>48</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>48</width>
-             <height>48</height>
+             <height>36</height>
             </size>
            </property>
            <property name="text">
@@ -171,7 +159,7 @@
          <item>
           <widget class="QPushButton" name="act_auth_btn">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -179,13 +167,7 @@
            <property name="minimumSize">
             <size>
              <width>48</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>48</width>
-             <height>48</height>
+             <height>36</height>
             </size>
            </property>
            <property name="text">
@@ -369,7 +351,7 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>26</height>
+        <height>0</height>
        </size>
       </property>
      </widget>

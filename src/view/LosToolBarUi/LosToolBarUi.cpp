@@ -42,7 +42,7 @@ namespace LosView
 
         LOS_iconBtn = new QPushButton("P", this);
         LOS_iconBtn->setObjectName("icon_btn");
-        LOS_iconBtn->setMinimumSize(30, 30);
+        LOS_iconBtn->setMinimumSize(36, 36);
         LOS_iconBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         layout->addWidget(LOS_iconBtn);
         LOS_filesBtn = new LosView::LosDropdownButtonUi(this);
@@ -53,18 +53,18 @@ namespace LosView
         layout->addWidget(LOS_filesBtn);
         LOS_viewBtn = new LosView::LosDropdownButtonUi(this);
         LOS_viewBtn->setObjectName("view_btn");
-        LOS_filesBtn->setMinimumWidth(80);
+        LOS_viewBtn->setMinimumWidth(80);
         LOS_viewBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         LOS_viewBtn->setText("View");
         layout->addWidget(LOS_viewBtn);
         LOS_settingBtn = new QPushButton("Set", this);
         LOS_settingBtn->setObjectName("setting_btn");
-        LOS_filesBtn->setMinimumWidth(80);
+        LOS_settingBtn->setMinimumWidth(80);
         LOS_settingBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         layout->addWidget(LOS_settingBtn);
         LOS_runBtn = new QPushButton("Run", this);
         LOS_runBtn->setObjectName("run_singleFile_btn");
-        LOS_filesBtn->setMinimumWidth(80);
+        LOS_runBtn->setMinimumWidth(80);
         LOS_runBtn->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         layout->addWidget(LOS_runBtn);
         LOS_projectBtn = new QRadioButton("CMake Pro?", this);

@@ -20,6 +20,11 @@ namespace LosCommon
             QString L_token    = "";
         };
 
+        struct SizeConfig
+        {
+            int L_fontSize = 12;
+        };
+
         struct Config
         {
             QStringList L_curFilePaths{};
@@ -27,6 +32,7 @@ namespace LosCommon
             QString L_curActiveFile   = "";
             QString L_themeName       = "dracula";
             AuthConfig LOS_authConfig = {};
+            SizeConfig LOS_sizeConfig = {};
         };
 
     } /* namespace LosSession_Constants */
