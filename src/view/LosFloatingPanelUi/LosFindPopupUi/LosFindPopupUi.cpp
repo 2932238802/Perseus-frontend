@@ -2,6 +2,11 @@
 
 
 #include "view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.h"
+#include "common/constants/ConstantsStr/LosFloatingPanelUiStr.h"
+
+#include <QHBoxLayout>
+#include <QIntValidator>
+#include <QLabel>
 
 
 namespace LosView

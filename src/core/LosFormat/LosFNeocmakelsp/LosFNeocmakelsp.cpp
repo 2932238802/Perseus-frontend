@@ -1,6 +1,11 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosFNeocmakelsp.h"
+#include "common/constants/ConstantsNum/LosFormatManagerNum.h"
+#include "common/util/FindExePath.h"
+#include "core/LosLog/LosLog.h"
+#include <QProcess>
+#include <QTemporaryFile>
 
 namespace LosCore
 {

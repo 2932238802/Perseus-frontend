@@ -2,55 +2,49 @@
 
 #pragma once
 #include "common/constants/ConstantsClass/LosSessionClass.h"
-#include "common/constants/ConstantsNum/PerseusNum.h"
-#include "common/constants/ConstantsStr/ShortCut.h"
-#include "core/LosConfig/LosConfigManager/LosConfigManager.h"
-#include "core/LosEncodingDetector/LosEncodingDetector.h"
-#include "core/LosLsp/LosLspClient/LosLspClient.h"
-#include "core/LosLsp/LosLspManager/LosLspManager.h"
-#include "core/LosNet/LosNet.h"
-#include "core/LosRouter/LosRouter.h"
-#include "core/LosRunner/LosRunManager/LosRunManager.h"
-#include "core/LosRunner/LosScriptRunner/LosScriptRunner.h"
-#include "core/LosSesssion/LosSesssion.h"
-#include "core/LosShortcutManager/LosShortcutManager.h"
-#include "core/LosState/LosState.h"
-#include "core/LosTheme/LosThemeManager.h"
-#include "core/LosToolChainManager/LosToolChainManager.h"
-#include "models/LosFileNode/LosFileNode.h"
-#include "models/LosFilePath/LosFilePath.h"
-#include "models/LosFileTreeModel/LosFileTreeModel.h"
-#include "view/LosCommandArgsUi/LosCommandArgsUi.h"
-#include "view/LosCommandUi/LosCommandUi.h"
-#include "view/LosAuthUi/LosAuthUi.h"
-#include "view/LosEditorTabUi/LosEditorTabUi.h"
-#include "view/LosEditorUi/LosEditorUi.h"
-#include "view/LosFloatingPanelUi/LosFloatingPanelUi.h"
-#include "view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.h"
-#include "view/LosSettingsUi/LosSettingsUi.h"
-#include "view/LosToolMissUi/LosToolMissUi.h"
-#include "view/style/perseus_style.h"
-
-#include <QApplication>
-#include <QDesktopServices>
-#include <QDir>
-#include <QEvent>
-#include <QFileDialog>
-#include <QKeyEvent>
-#include <QKeySequence>
 #include <QList>
 #include <QMainWindow>
-#include <QMessageBox>
-#include <QPointer>
-#include <QShortcut>
-#include <QTimer>
-#include <cstdio>
-#include <qfiledialog.h>
-#include <qfilesystemwatcher.h>
-#include <qpushbutton.h>
-#include <qstackedwidget.h>
-#include <qtimer.h>
-#include <qtmetamacros.h>
+
+class QFileSystemWatcher;
+class QKeyEvent;
+class QModelIndex;
+class QTimer;
+
+namespace LosCore
+{
+class LosConfigManager;
+class LosLspManager;
+class LosRunManager;
+class LosScriptRunner;
+class LosToolChainManager;
+}
+
+namespace LosModel
+{
+class LosFileNode;
+class LosFileTreeModel;
+}
+
+namespace LosView
+{
+class LosAuthUi;
+class LosCommandArgsUi;
+class LosCommandUi;
+class LosEditorTabUi;
+class LosSettingsUi;
+}
+
+namespace LosCommon
+{
+namespace LosSession_Constants
+{
+struct Config;
+}
+namespace LosToolChain_Constants
+{
+struct ToolChainConfig;
+}
+}
 
 QT_BEGIN_NAMESPACE
 namespace Ui

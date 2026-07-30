@@ -4,11 +4,8 @@
 #include "common/constants/ConstantsClass/LosFloatingPanelUiClass.h"
 
 #include <QDialog>
-#include <qboxlayout.h>
-#include <qdialog.h>
-#include <qevent.h>
-#include <qnamespace.h>
-#include <qwidget.h>
+
+class QKeyEvent;
 
 namespace LosView
 {

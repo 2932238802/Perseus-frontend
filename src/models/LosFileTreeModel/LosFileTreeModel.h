@@ -2,16 +2,12 @@
 
 
 #pragma once
-#include "models/LosFileNode/LosFileNode.h"
 #include <QAbstractItemModel>
-#include <QFileIconProvider>
-#include <QObject>
-#include <qabstractitemmodel.h>
-#include <qtmetamacros.h>
-#include <qvariant.h>
+#include <QVariant>
 
 namespace LosModel
 {
+    class LosFileNode;
     class LosFileTreeModel : public QAbstractItemModel
     {
         Q_OBJECT

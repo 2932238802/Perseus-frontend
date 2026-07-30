@@ -1,15 +1,10 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
-#include "models/LosFileContext/LosFileContext.h"
 #include "models/LosFilePath/LosFilePath.h"
-#include <QDir>
-#include <QFuture>
-#include <QFutureWatcher>
 #include <QList>
 #include <QString>
-#include <QtConcurrent>
-#include <memory>
+#include <functional>
 
 namespace LosModel
 {

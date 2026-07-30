@@ -3,8 +3,12 @@
 
 
 #include "LosFClangFormat.h"
+#include "common/constants/ConstantsNum/LosFormatManagerNum.h"
+#include "common/constants/ConstantsStr/LLVM_formatStyle.h"
+#include "common/constants/ConstantsStr/LosFormatManagerStr.h"
 #include "common/util/FindExePath.h"
-#include <qprocess.h>
+#include "core/LosLog/LosLog.h"
+#include <QProcess>
 namespace LosCore
 {
 

@@ -8,7 +8,6 @@
 #include "git2/status.h"
 #include "git2/types.h"
 #include <cstddef>
-#include <git2.h>
 #include <qfileinfo.h>
 
 namespace LosCore

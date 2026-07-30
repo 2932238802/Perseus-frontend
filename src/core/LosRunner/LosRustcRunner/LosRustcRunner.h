@@ -2,15 +2,11 @@
 
 
 #pragma once
-// #include "common/constants/ConstantsStr.h"
 
-#include "common/constants/ConstantsStr/LosRunnerStr.h"
-#include "core/LosRouter/LosRouter.h"
 #include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
-#include "core/LosState/LosState.h"
 #include "models/LosFilePath/LosFilePath.h"
-#include <qobject.h>
-#include <qprocess.h>
+#include <QObject>
+#include <QProcess>
 
 namespace LosCore
 {

@@ -2,6 +2,17 @@
 
 
 #include "LosRunManager.h"
+#include "common/constants/ConstantsStr/LosConfigStr.h"
+#include "common/util/CheckLang.h"
+#include "core/LosLog/LosLog.h"
+#include "core/LosRouter/LosRouter.h"
+#include "core/LosRunner/LosCmakeRunner/LosCmakeRunner.h"
+#include "core/LosRunner/LosPythonRunner/LosPythonRunner.h"
+#include "core/LosRunner/LosRustcRunner/LosRustcRunner.h"
+#include "core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.h"
+#include "core/LosState/LosState.h"
+#include "models/LosFilePath/LosFilePath.h"
+#include <QDir>
 
 namespace LosCore
 {
@@ -190,7 +201,7 @@ namespace LosCore
         case LosCommon::LosToolChain_Constants::LosTool::CARGO:
         {
             // cargo
-            
+
             break;
         }
         default:

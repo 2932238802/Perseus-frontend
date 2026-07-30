@@ -1,7 +1,11 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosFileNode.h"
-#include "models/LosFilePath/LosFilePath.h"
+#include <QDir>
+#include <QFileInfo>
+#include <QFuture>
+#include <QFutureWatcher>
+#include <QtConcurrent>
 
 namespace LosModel
 {

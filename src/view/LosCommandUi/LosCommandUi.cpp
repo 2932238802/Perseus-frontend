@@ -2,8 +2,23 @@
 
 
 #include "LosCommandUi.h"
-
+#include "common/constants/ConstantsNum/LosCommandUiNum.h"
+#include "common/util/NumberToCommandsKind.h"
+#include "core/LosLog/LosLog.h"
+#include "core/LosRouter/LosRouter.h"
 #include "core/LosTheme/LosThemeManager.h"
+#include "view/style/LosCommandUi_style.h"
+
+#include <QDebug>
+#include <QDir>
+#include <QFileInfo>
+#include <QFrame>
+#include <QGraphicsDropShadowEffect>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QStandardPaths>
+#include <QVBoxLayout>
 
 namespace LosView
 {

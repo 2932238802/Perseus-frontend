@@ -1,8 +1,15 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosScriptRunner.h"
+#include "common/constants/ConstantsStr/LosStateStr.h"
+#include "common/util/GetFilePath.h"
+#include "core/LosLog/LosLog.h"
+#include "core/LosPlatform/LosPlatform.h"
+#include "core/LosRouter/LosRouter.h"
+#include "core/LosState/LosState.h"
+#include <QFileInfo>
+#include <QProcessEnvironment>
 #include <qmetaobject.h>
-#include <qprocess.h>
 
 namespace LosCore
 {

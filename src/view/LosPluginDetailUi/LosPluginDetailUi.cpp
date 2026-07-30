@@ -1,7 +1,19 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosPluginDetailUi.h"
+#include "common/constants/ConstantsStr/LosPluginDetailUiStr.h"
+#include "core/LosLog/LosLog.h"
+#include "core/LosNet/LosNet.h"
+#include "core/LosRouter/LosRouter.h"
+
 #include "ui_LosPluginDetailUi.h"
+
+#include <QDir>
+#include <QFileInfo>
+#include <QPointer>
+#include <QProcess>
+#include <QPushButton>
+#include <QStandardPaths>
 
 
 namespace LosView

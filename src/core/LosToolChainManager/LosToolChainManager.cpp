@@ -2,10 +2,17 @@
 
 #include "LosToolChainManager.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
+#include "common/util/FindExePath.h"
+#include "common/util/GetFilePath.h"
 #include "common/util/StrToCategory.h"
 #include "common/util/StrToLanguage.h"
 #include "common/util/StrToTool.h"
 #include "core/LosRouter/LosRouter.h"
+#include <QFile>
+#include <QFileInfo>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonParseError>
 
 namespace LosCore
 {

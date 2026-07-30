@@ -11,6 +11,10 @@
 #include "core/LosRouter/LosRouter.h"
 #include "git2.h"
 #include "models/LosFileNode/LosFileNode.h"
+#include <QDir>
+#include <QFile>
+#include <QFileIconProvider>
+#include <QFileInfo>
 #include <qbrush.h>
 #include <qicon.h>
 #include <qnamespace.h>

@@ -1,20 +1,11 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
-#include "common/constants/ConstantsNum/LosFormatManagerNum.h"
-#include "common/util/CheckLang.h"
-#include "core/LosFormat/LosFClangFormat/LosFClangFormat.h"
-#include "core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.h"
+#include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "core/LosFormat/LosFormatBase/LosFormatBase.h"
-#include "core/LosLog/LosLog.h"
-#include "models/LosFileContext/LosFileContext.h"
-#include "models/LosFilePath/LosFilePath.h"
 
+#include <QMap>
 #include <QObject>
-#include <QProcess>
-#include <qfileinfo.h>
-#include <qmap.h>
-#include <qstringview.h>
 
 namespace LosCore
 {
@@ -24,9 +15,11 @@ namespace LosCore
       private:
         explicit LosFormatManager(QObject *parent = nullptr);
         ~LosFormatManager() = default;
+
       public:
         static LosFormatManager &instance();
         bool format(QString *out, const QString &file_path, const QString &raw_content);
+
       private:
         QMap<LosCommon::LosToolChain_Constants::LosLanguage, LosFormatBase *> L_formats;
     };

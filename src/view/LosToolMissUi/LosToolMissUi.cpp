@@ -1,8 +1,16 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosToolMissUi.h"
+#include "view/style/LosToolMissUI_style.h"
 
 #include "core/LosTheme/LosThemeManager.h"
+
+#include <QDesktopServices>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QUrl>
+#include <QVBoxLayout>
 
 
 namespace LosView

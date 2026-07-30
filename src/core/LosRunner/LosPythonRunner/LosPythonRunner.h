@@ -2,14 +2,11 @@
 
 
 #pragma once
-#include "core/LosLog/LosLog.h"
 #include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
-#include "core/LosState/LosState.h"
 #include "models/LosFilePath/LosFilePath.h"
 
 #include <QObject>
 #include <QProcess>
-#include <qprocess.h>
 namespace LosCore
 {
 

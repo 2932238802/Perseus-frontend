@@ -3,10 +3,7 @@
 #pragma once
 
 #include "core/LosConfig/LosConfig/LosConfig.h"
-#include "core/LosConfig/LosConfigFactory/LosConfigFactory.h"
-#include "core/LosLog/LosLog.h"
-#include <qobject.h>
-#include <qstringliteral.h>
+#include <QObject>
 
 namespace LosCore
 {

@@ -3,10 +3,11 @@
 
 
 #include "LosTerminal.h"
-#include "core/LosState/LosState.h"
 #include "core/LosLog/LosLog.h"
+#include "core/LosState/LosState.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include <QDir>
+#include <QTimer>
 
 namespace LosCore
 {

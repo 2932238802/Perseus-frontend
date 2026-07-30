@@ -2,25 +2,11 @@
 
 #pragma once
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
-#include "common/util/DebugPJson.h"
-#include "common/util/FindExePath.h"
-#include "common/util/GetFilePath.h"
-#include "common/util/GetSettingKey.h"
-#include "core/LosRouter/LosRouter.h"
-#include "models/LosFilePath/LosFilePath.h"
 
-#include <QDir>
-#include <QFileInfo>
 #include <QHash>
-#include <QJsonArray>
-#include <QJsonParseError>
+#include <QJsonObject>
 #include <QList>
 #include <QObject>
-#include <qcoreapplication.h>
-#include <qglobal.h>
-#include <qjsonobject.h>
-#include <qsettings.h>
-#include <qstandardpaths.h>
 #include <qtmetamacros.h>
 
 namespace LosCore

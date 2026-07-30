@@ -3,15 +3,43 @@
 #include "Perseus.h"
 #include "./ui_Perseus.h"
 #include "common/constants/ConstantsClass/LosSessionClass.h"
+#include "common/constants/ConstantsNum/PerseusNum.h"
+#include "common/constants/ConstantsStr/LosConfigStr.h"
 #include "common/constants/ConstantsStr/LosStateStr.h"
+#include "common/constants/ConstantsStr/ShortCut.h"
 #include "core/LosAgent/LosAgentManager/LosAgentManager.h"
+#include "core/LosConfig/LosConfigManager/LosConfigManager.h"
 #include "core/LosGitManager/LosGitManager.h"
+#include "core/LosLog/LosLog.h"
+#include "core/LosLsp/LosLspManager/LosLspManager.h"
 #include "core/LosNet/LosNet.h"
 #include "core/LosRouter/LosRouter.h"
+#include "core/LosRunner/LosRunManager/LosRunManager.h"
+#include "core/LosRunner/LosScriptRunner/LosScriptRunner.h"
+#include "core/LosSesssion/LosSesssion.h"
 #include "core/LosShortcutManager/LosShortcutManager.h"
 #include "core/LosState/LosState.h"
+#include "core/LosTheme/LosThemeManager.h"
+#include "core/LosToolChainManager/LosToolChainManager.h"
+#include "models/LosFileNode/LosFileNode.h"
+#include "models/LosFilePath/LosFilePath.h"
+#include "models/LosFileTreeModel/LosFileTreeModel.h"
+#include "view/LosAuthUi/LosAuthUi.h"
+#include "view/LosCommandArgsUi/LosCommandArgsUi.h"
+#include "view/LosCommandUi/LosCommandUi.h"
+#include "view/LosEditorTabUi/LosEditorTabUi.h"
+#include "view/LosEditorUi/LosEditorUi.h"
 #include "view/LosSettingsUi/LosSettingsUi.h"
+#include "view/LosToolMissUi/LosToolMissUi.h"
+#include <QApplication>
+#include <QDir>
+#include <QDirIterator>
+#include <QFileDialog>
+#include <QFileSystemWatcher>
+#include <QKeyEvent>
+#include <QMessageBox>
 #include <QStyle>
+#include <QTimer>
 #include <qfontmetrics.h>
 
 
@@ -204,7 +232,7 @@ void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
 
 /**
  * @brief onRunSingleFileBtnClicked
- *
+ * 单 文件选择
  */
 void Perseus::onRunSingleFileBtnClicked()
 {
@@ -216,6 +244,7 @@ void Perseus::onRunSingleFileBtnClicked()
     }
     auto curPath = LOS_tabUi->getCurFilePath();
     LOS_tabUi->saveTab();
+    // 选择 一个 文件
     ui->bottom_tabwidget->setCurrentIndex(LosCommon::Perseus_Constants::BottomTabWidget::OUTPUT);
     ui->output_plaintextedit->clear();
     INF("starting compilation ...", "Perseus");
@@ -239,7 +268,6 @@ void Perseus::onProjectBtnClicked(bool checked)
 /**
  * @brief onLog
  * 打印日志
- *
  * @param log
  */
 void Perseus::onLog(const QString &log)
@@ -252,7 +280,6 @@ void Perseus::onLog(const QString &log)
 /**
  * @brief onZoomUi
  * 字体缩放实现
- *
  * @param delta
  */
 void Perseus::onZoomUi(int delta)

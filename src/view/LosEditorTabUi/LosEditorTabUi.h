@@ -3,40 +3,17 @@
 #pragma once
 
 #include "common/constants/ConstantsClass/LosEditorTabUiClass.h"
-#include "common/constants/ConstantsStr/LosEditorTableUiStr.h"
-#include "common/constants/ConstantsStr/ShortCut.h"
-#include "common/util/CheckLang.h"
-#include "core/LosLog/LosLog.h"
-#include "core/LosRouter/LosRouter.h"
-#include "core/LosShortcutManager/LosShortcutManager.h"
-#include "models/LosFileContext/LosFileContext.h"
+#include "common/constants/ConstantsClass/LosNetClass.h"
+#include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include "view/LosEditorUi/LosEditorUi.h"
-#include "view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.h"
-#include "view/LosFloatingPanelUi/LosFloatingPanelUi.h"
-#include "view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.h"
-#include "view/LosPluginDetailUi/LosPluginDetailUi.h"
 #include "view/LosPreview/LosPreview.h"
 
-#include <QDebug>
+#include <QMap>
 #include <QObject>
-#include <QSharedPointer>
-#include <QToolButton>
+#include <QSet>
+#include <QTabWidget>
 #include <QWidget>
-#include <qaction.h>
-#include <qapplication.h>
-#include <qclipboard.h>
-#include <qglobal.h>
-#include <qmenu.h>
-#include <qmessagebox.h>
-#include <qset.h>
-#include <qsharedpointer.h>
-#include <qstringliteral.h>
-#include <qtabbar.h>
-#include <qtablewidget.h>
-#include <qtabwidget.h>
-#include <qtextcursor.h>
-#include <qwidget.h>
 
 namespace LosView
 {

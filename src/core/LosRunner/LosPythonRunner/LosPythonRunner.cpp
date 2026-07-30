@@ -2,7 +2,10 @@
 
 
 #include "LosPythonRunner.h"
-#include <qstringview.h>
+#include "common/constants/ConstantsStr/LosStateStr.h"
+#include "core/LosLog/LosLog.h"
+#include "core/LosState/LosState.h"
+#include <utility>
 
 
 namespace LosCore

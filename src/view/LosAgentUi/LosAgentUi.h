@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include "core/LosRouter/LosRouter.h"
-
 #include <QMap>
 #include <QString>
 #include <QStringList>

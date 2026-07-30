@@ -2,10 +2,6 @@
 
 #pragma once
 
-#include "common/constants/ConstantsNum/LosFormatManagerNum.h"
-#include "common/constants/ConstantsStr/LLVM_formatStyle.h"
-#include "common/constants/ConstantsStr/LosFormatManagerStr.h"
-#include "common/util/CheckLang.h"
 #include "core/LosFormat/LosFormatBase/LosFormatBase.h"
 
 namespace LosCore

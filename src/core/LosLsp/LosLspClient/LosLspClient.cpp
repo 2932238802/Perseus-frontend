@@ -1,7 +1,18 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosLspClient.h"
+#include "common/constants/ConstantsStr/LosLspStr.h"
+#include "common/util/CheckLang.h"
+#include "common/util/GetLangId.h"
+#include "core/LosLog/LosLog.h"
+
+#include <QFile>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QRegularExpression>
+#include <QUrl>
 #include <qprocess.h>
+#include <utility>
 
 namespace LosCore
 {

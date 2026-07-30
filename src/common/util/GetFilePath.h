@@ -4,12 +4,10 @@
 #include "common/constants/ConstantsClass/LosUtilClass.h"
 #include "core/LosLog/LosLog.h"
 #include <QDir>
-#include <QFile>
 #include <QString>
 #include <optional>
 #include <qcoreapplication.h>
 #include <qfileinfo.h>
-#include <typeindex>
 
 namespace LosCommon
 {

@@ -4,6 +4,7 @@
 #include "common/constants/ConstantsStr/LosPanelManagerStr.h"
 #include "common/util/GetBtn.h"
 #include <QTabBar>
+#include <QToolButton>
 #include <qobject.h>
 
 

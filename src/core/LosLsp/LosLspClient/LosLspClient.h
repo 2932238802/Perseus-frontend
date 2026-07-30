@@ -2,26 +2,15 @@
 
 #pragma once
 #include "common/constants/ConstantsClass/LosLspClass.h"
-#include "common/constants/ConstantsStr/LosLspStr.h"
-#include "common/util/CheckLang.h"
-#include "common/util/DebugPJson.h"
-#include "common/util/GetLangId.h"
-#include "core/LosLog/LosLog.h"
 
 #include <QByteArray>
-#include <QDebug>
-#include <QFile>
-#include <QJsonArray>
-#include <QJsonDocument>
 #include <QJsonObject>
 #include <QMap>
 #include <QObject>
-#include <QProcess>
-#include <QRegularExpression>
-#include <QUrl>
 #include <atomic>
 #include <qset.h>
-#include <utility>
+
+class QProcess;
 
 namespace LosCore
 {

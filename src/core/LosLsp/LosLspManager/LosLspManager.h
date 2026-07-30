@@ -1,25 +1,14 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
-#include "common/util/CheckLang.h"
-#include "common/util/GetLangId.h"
-#include "core/LosLsp/LosLspCMake/LosLspCMake.h"
-#include "core/LosLsp/LosLspClangd/LosLspClangd.h"
-#include "core/LosLsp/LosLspClient/LosLspClient.h"
-#include "core/LosLsp/LosLspPython/LosLspPython.h"
-#include "core/LosLsp/LosLspRust/LosLspRust.h"
-#include "core/LosRouter/LosRouter.h"
-#include "core/LosRunner/LosCmakeRunner/LosCmakeRunner.h"
-#include "core/LosToolChainManager/LosToolChainManager.h"
-#include "models/LosFilePath/LosFilePath.h"
+#include "common/constants/ConstantsClass/LosToolChainClass.h"
 
-#include <QFileInfo>
+#include <QMap>
 #include <QObject>
-#include <qlist.h>
-#include <qtmetamacros.h>
 
 namespace LosCore
 {
+    class LosLspClient;
     class LosLspManager : public QObject
     {
         Q_OBJECT

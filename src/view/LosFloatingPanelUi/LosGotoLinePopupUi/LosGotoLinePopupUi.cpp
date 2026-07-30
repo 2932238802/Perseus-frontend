@@ -1,6 +1,12 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosGotoLinePopupUi.h"
+#include "common/constants/ConstantsStr/LosFloatingPanelUiStr.h"
+
+#include <QHBoxLayout>
+#include <QIntValidator>
+#include <QLabel>
+#include <QLineEdit>
 
 
 namespace LosView

@@ -3,6 +3,9 @@
 
 #include "LosFloatingPanelUi.h"
 
+#include <QKeyEvent>
+#include <QVBoxLayout>
+
 namespace LosView
 {
     LosFloatingPanelUi::LosFloatingPanelUi(QWidget *contentWidget, bool auto_close, QWidget *parent) : QDialog(parent)

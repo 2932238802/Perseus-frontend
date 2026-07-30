@@ -2,15 +2,8 @@
 
 #pragma once
 
-#include "common/constants/ConstantsStr/LosTerminalStr.h"
-#include "core/LosLog/LosLog.h"
-#include "view/LosTerminalUi/LosTerminalUi.h"
-#include <QTabBar>
-#include <QTimer>
-#include <QToolButton>
-#include <qobject.h>
-#include <qtabwidget.h>
-#include <qwidget.h>
+#include <QSet>
+#include <QTabWidget>
 
 namespace LosView
 {

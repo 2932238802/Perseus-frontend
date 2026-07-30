@@ -4,7 +4,6 @@
 #include "common/constants/ConstantsClass/LosHighligherClass.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
 
-#include <QFont>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QMap>
@@ -13,9 +12,7 @@
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 #include <QVector>
-#include <qnamespace.h>
 #include <qtextdocument.h>
-#include <qtextformat.h>
 
 
 namespace LosCore

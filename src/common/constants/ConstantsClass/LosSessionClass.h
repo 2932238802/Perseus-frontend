@@ -2,6 +2,7 @@
 
 
 #pragma once
+#include "common/constants/ConstantsNum/LosSessionNum.h"
 #include <QString>
 #include <QStringList>
 
@@ -22,7 +23,7 @@ namespace LosCommon
 
         struct SizeConfig
         {
-            int L_fontSize = 12;
+            int L_fontSize = DEFAULT_FONT_SIZE;
         };
 
         struct Config

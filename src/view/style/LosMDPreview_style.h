@@ -23,7 +23,7 @@ namespace LosStyle
             color: @foreground@;
             border: none;
             padding: 12px;
-            font-family: "JetBrains Mono", "Consolas", "Menlo", monospace;
+            font-family: "JetBrains Mono", "Consolas", "Noto Sans Mono CJK SC", "Menlo", monospace;
             font-size: 14px;
         }
         QScrollBar:vertical {

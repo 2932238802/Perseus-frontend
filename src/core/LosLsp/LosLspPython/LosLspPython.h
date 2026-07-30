@@ -4,12 +4,6 @@
 #pragma once
 
 #include "core/LosLsp/LosLspClient/LosLspClient.h"
-#include "core/LosRouter/LosRouter.h"
-#include "core/LosState/LosState.h"
-
-#include <qcoreapplication.h>
-#include <qjsondocument.h>
-#include <qjsonobject.h>
 
 namespace LosCore
 {

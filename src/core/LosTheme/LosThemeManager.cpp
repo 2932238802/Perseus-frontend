@@ -10,7 +10,6 @@
 #include <QFileInfo>
 #include <QJsonDocument>
 #include <QJsonParseError>
-#include <QResource>
 #include <QStringList>
 #include <QTextStream>
 

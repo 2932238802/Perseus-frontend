@@ -3,17 +3,14 @@
 #pragma once
 
 #include "core/LosTerminal/LosTerminal.h"
-#include <QUrl>
-#include <QVBoxLayout>
+
 #include <QWebChannel>
 #include <QWebEngineView>
-#include <qcolor.h>
+#include <QWidget>
 #include <qtmetamacros.h>
-#include <qwidget.h>
 
 namespace LosView
 {
-
     class LosTerminalUi : public QWidget
     {
         Q_OBJECT

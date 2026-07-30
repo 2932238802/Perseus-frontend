@@ -2,13 +2,7 @@
 
 #pragma once
 
-#include "core/LosLog/LosLog.h"
-#include "core/LosRouter/LosRouter.h"
-#include <QDir>
 #include <QObject>
-#include <qfileinfo.h>
-#include <qglobal.h>
-#include <qobject.h>
 #include <qtmetamacros.h>
 namespace LosCore
 {

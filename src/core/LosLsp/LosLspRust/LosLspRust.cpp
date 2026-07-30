@@ -2,6 +2,18 @@
 
 
 #include "LosLspRust.h"
+#include "common/util/DebugPJson.h"
+#include "core/LosLog/LosLog.h"
+#include "core/LosRouter/LosRouter.h"
+#include "core/LosState/LosState.h"
+#include "models/LosFilePath/LosFilePath.h"
+
+#include <QCoreApplication>
+#include <QDir>
+#include <QJsonArray>
+#include <QJsonValue>
+#include <QProcess>
+#include <QUrl>
 
 namespace LosCore
 {

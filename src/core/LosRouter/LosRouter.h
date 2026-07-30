@@ -5,10 +5,7 @@
 #include "common/constants/ConstantsClass/LosNetClass.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include <QObject>
-#include <qglobal.h>
 #include <qjsonarray.h>
-#include <qobject.h>
-#include <qtmetamacros.h>
 
 namespace LosCore
 {

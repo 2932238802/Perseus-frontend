@@ -2,12 +2,9 @@
 
 #pragma once
 
-#include "core/LosRouter/LosRouter.h"
 #include "view/LosDropdownButtonUi/LosDropdownButtonUi.h"
 
-#include <QFileDialog>
 #include <QLabel>
-#include <QMessageBox>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QWidget>

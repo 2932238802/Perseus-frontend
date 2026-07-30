@@ -2,14 +2,7 @@
 
 #pragma once
 #include "common/constants/ConstantsClass/LosSessionClass.h"
-#include "core/LosLog/LosLog.h"
-#include <QDir>
-#include <QStandardPaths>
 #include <QString>
-#include <qdebug.h>
-#include <qjsonarray.h>
-#include <qjsondocument.h>
-#include <qjsonobject.h>
 
 namespace LosCore
 {

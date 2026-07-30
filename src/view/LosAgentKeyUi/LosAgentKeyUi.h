@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include "core/LosRouter/LosRouter.h"
-
 #include <QComboBox>
 #include <QDialog>
 #include <QLabel>

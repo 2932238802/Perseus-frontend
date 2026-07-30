@@ -3,12 +3,12 @@
 #include "LosFileContext.h"
 #include "common/constants/ConstantsStr/LosEncodingDetectorStr.h"
 #include "core/LosEncodingDetector/LosEncodingDetector.h"
+#include "core/LosLog/LosLog.h"
 
+#include <QByteArray>
+#include <QFile>
 #include <QStringDecoder>
-#include <QtCore>
-#include <cstddef>
-#include <qglobal.h>
-#include <qstringconverter_base.h>
+#include <QTextStream>
 #include <qtextcodec.h>
 
 namespace LosModel

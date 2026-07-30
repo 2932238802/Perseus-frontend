@@ -1,15 +1,18 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosSettingsUi.h"
-#include "common/constants/ConstantsClass/LosToolChainClass.h"
+#include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosTheme/LosThemeManager.h"
 
 #include "ui_LosSettingsUi.h"
 
+#include <QComboBox>
+#include <QDialogButtonBox>
 #include <QDir>
 #include <QFile>
 #include <QJsonObject>
+#include <QPushButton>
 #include <QStringList>
 
 

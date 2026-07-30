@@ -13,7 +13,7 @@ namespace LosStyle
             color: @foreground@;
             border: 1px solid @primary@;
             border-radius: 6px;
-            font-family: "JetBrains Mono", "Consolas", "Menlo", monospace;
+            font-family: "JetBrains Mono", "Consolas", "Noto Sans Mono CJK SC", "Menlo", monospace;
             padding: 4px;
             outline: none;
             show-decoration-selected: 1;

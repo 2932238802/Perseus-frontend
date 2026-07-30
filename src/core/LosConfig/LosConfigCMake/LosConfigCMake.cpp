@@ -2,6 +2,8 @@
 
 
 #include "LosConfigCMake.h"
+#include <QDir>
+#include <QFile>
 
 namespace LosCore
 {

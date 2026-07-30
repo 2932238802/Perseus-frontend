@@ -1,16 +1,30 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosEditorTabUi.h"
-#include "common/constants/ConstantsClass/LosEditorTabUiClass.h"
-#include "common/constants/ConstantsClass/LosToolChainClass.h"
+#include "common/constants/ConstantsStr/LosEditorTableUiStr.h"
+#include "common/constants/ConstantsStr/ShortCut.h"
 #include "common/util/CheckLang.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
+#include "core/LosShortcutManager/LosShortcutManager.h"
+#include "models/LosFileContext/LosFileContext.h"
 #include "view/LosEditorUi/LosEditorUi.h"
+#include "view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.h"
+#include "view/LosFloatingPanelUi/LosFloatingPanelUi.h"
+#include "view/LosFloatingPanelUi/LosGotoLinePopupUi/LosGotoLinePopupUi.h"
+#include "view/LosPluginDetailUi/LosPluginDetailUi.h"
 #include "view/LosPreview/LosMDPreview/LosMDPreview.h"
 #include "view/LosPreview/LosPreview.h"
+#include <QAction>
+#include <QApplication>
+#include <QClipboard>
+#include <QMenu>
+#include <QMessageBox>
+#include <QSharedPointer>
+#include <QStringLiteral>
+#include <QTabBar>
+#include <QToolButton>
 #include <qfileinfo.h>
-#include <qobject.h>
 
 namespace LosView
 {

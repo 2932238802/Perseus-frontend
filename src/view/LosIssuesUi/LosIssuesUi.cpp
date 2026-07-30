@@ -4,7 +4,16 @@
 
 #include "view/LosIssuesUi/LosIssuesUi.h"
 #include "common/constants/ConstantsStr/LosIssuesUiStr.h"
+#include "core/LosRouter/LosRouter.h"
 #include "core/LosTheme/LosThemeManager.h"
+#include "models/LosFilePath/LosFilePath.h"
+#include "view/style/LosIssuesUi_style.h"
+
+#include <QAbstractItemView>
+#include <QHeaderView>
+#include <QVBoxLayout>
+#include <qcolor.h>
+#include <qnamespace.h>
 
 
 

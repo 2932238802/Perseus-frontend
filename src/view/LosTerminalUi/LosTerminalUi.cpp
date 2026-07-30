@@ -3,6 +3,10 @@
 
 #include "LosTerminalUi.h"
 
+#include <QColor>
+#include <QUrl>
+#include <QVBoxLayout>
+
 namespace LosView
 {
     /**

@@ -31,7 +31,7 @@ namespace LosStyle
                 border: 1px solid @selection@;
                 border-radius: 3px;
                 padding: 6px 10px;
-                font-family: "Consolas", monospace;
+                font-family: "Consolas", "Noto Sans Mono CJK SC", monospace;
                 font-size: 13px;
                 selection-background-color: @primary@;
                 selection-color: @background@;

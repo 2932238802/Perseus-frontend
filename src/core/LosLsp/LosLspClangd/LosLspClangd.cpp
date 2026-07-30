@@ -1,7 +1,13 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosLspClangd.h"
+#include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
+
+#include <QCoreApplication>
+#include <QDir>
+#include <QJsonArray>
+#include <QProcess>
 
 namespace LosCore
 {

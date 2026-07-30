@@ -1,13 +1,10 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
-#include "core/LosLog/LosLog.h"
-#include "view/style/LosCommandArgsUi_style.h"
 #include <QDialog>
 #include <QLineEdit>
 #include <QList>
 #include <QStringList>
-#include <qlineedit.h>
 
 namespace Ui
 {

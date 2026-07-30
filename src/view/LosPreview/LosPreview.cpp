@@ -1,7 +1,4 @@
 #include "LosPreview.h"
-#include <QObject>
-#include <qtmetamacros.h>
-#include <qwidget.h>
 
 namespace LosView
 {

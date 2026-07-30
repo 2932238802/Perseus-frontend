@@ -2,7 +2,6 @@
 
 
 #include "core/LosRouter/LosRouter.h"
-#include <qobject.h>
 
 
 namespace LosCore

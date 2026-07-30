@@ -3,16 +3,20 @@
 
 
 #include "LosCommandArgsUi.h"
+#include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosTheme/LosThemeManager.h"
 #include "models/LosFilePath/LosFilePath.h"
+#include "view/style/LosCommandArgsUi_style.h"
+
 #include "ui_LosCommandArgsUi.h"
-#include <qfiledialog.h>
-#include <qglobal.h>
-#include <qlabel.h>
-#include <qlayoutitem.h>
-#include <qlineedit.h>
-#include <qmessagebox.h>
+
+#include <QDir>
+#include <QFileDialog>
+#include <QLabel>
+#include <QLayoutItem>
+#include <QLineEdit>
+#include <QMessageBox>
 
 namespace LosView
 {

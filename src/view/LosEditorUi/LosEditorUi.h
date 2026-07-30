@@ -1,63 +1,35 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
-#include "common/constants/ConstantsNum/LosCompleterUiNum.h"
-#include "common/constants/ConstantsNum/LosLineNumberUiNum.h"
-#include "common/util/FindMatchBracket.h"
-#include "common/util/GetLeadingWhiteSpace.h"
-#include "core/LosFormat/LosFormatManager/LosFormatManager.h"
-#include "core/LosHighlighter/LosHighlighter.h"
-#include "core/LosRouter/LosRouter.h"
-#include "models/LosFileContext/LosFileContext.h"
-#include "models/LosFilePath/LosFilePath.h"
-#include "view/LosCompleterUi/LosCompleterUi.h"
-#include "view/LosLineNumberUi/LosLineNumberUi.h"
 
-#include <QApplication>
-#include <QCompleter>
-#include <QDebug>
+#include "common/constants/ConstantsClass/LosLspClass.h"
+
 #include <QEvent>
-#include <QFileInfo>
-#include <QGuiApplication>
+#include <QJsonArray>
 #include <QLabel>
-#include <QObject>
-#include <QPainter>
-#include <QScreen>
-#include <QScrollBar>
 #include <QSharedPointer>
-#include <QTextBlock>
 #include <QTextCursor>
 #include <QTimer>
-#include <QToolTip>
 #include <QWidget>
-#include <algorithm>
-#include <atomic>
-#include <cfloat>
-#include <qcoreevent.h>
-#include <qcursor.h>
-#include <qevent.h>
-#include <qfontmetrics.h>
-#include <qglobal.h>
-#include <qicon.h>
-#include <qkeysequence.h>
-#include <qnamespace.h>
-#include <qobject.h>
+
 #include <qplaintextedit.h>
-#include <qtextcursor.h>
-#include <qtextdocument.h>
-#include <qtextedit.h>
-#include <qtextformat.h>
-#include <qtextobject.h>
-#include <qtooltip.h>
-#include <qvariant.h>
+
+#include <atomic>
 
 namespace LosModel
 {
     class LosFileContext;
+    class LosFilePath;
+}
+
+namespace LosCore
+{
+    class LosHighlighter;
 }
 
 namespace LosView
 {
+    class LosCompleterUi;
     class LosLineNumberUi;
 
     /**

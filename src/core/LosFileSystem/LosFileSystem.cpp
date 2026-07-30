@@ -2,7 +2,11 @@
 
 
 #include "LosFileSystem.h"
+#include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
 namespace LosCore
 {
 

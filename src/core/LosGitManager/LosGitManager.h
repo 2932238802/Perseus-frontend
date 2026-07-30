@@ -1,10 +1,8 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
-#include "common/constants/ConstantsClass/LosGitManagerClass.h"
 #include <QObject>
 #include <git2.h>
-#include <qglobal.h>
 #include <qmap.h>
 #include <qset.h>
 #include <qtmetamacros.h>

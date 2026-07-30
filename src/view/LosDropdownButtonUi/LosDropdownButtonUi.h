@@ -1,13 +1,11 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
-#include <QObject>
 #include <functional>
 #include <qaction.h>
 #include <qmenu.h>
 #include <qpushbutton.h>
 #include <qtmetamacros.h>
-#include <qwidget.h>
 
 namespace LosView
 {

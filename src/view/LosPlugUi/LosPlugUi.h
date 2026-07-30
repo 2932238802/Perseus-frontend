@@ -4,7 +4,6 @@
 #include "core/LosRouter/LosRouter.h"
 
 #include <QWidget>
-#include <qlistwidget.h>
 #include <qtmetamacros.h>
 
 namespace Ui

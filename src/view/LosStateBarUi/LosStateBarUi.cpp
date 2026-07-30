@@ -7,9 +7,6 @@
 #include "core/LosRouter/LosRouter.h"
 
 #include <QHBoxLayout>
-#include <QApplication>
-#include <QSpacerItem>
-#include <qlabel.h>
 
 namespace LosView
 {

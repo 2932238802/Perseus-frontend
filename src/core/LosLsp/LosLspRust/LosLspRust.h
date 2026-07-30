@@ -1,19 +1,7 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
-#include "common/util/DebugPJson.h"
 #include "core/LosLsp/LosLspClient/LosLspClient.h"
-#include "core/LosRouter/LosRouter.h"
-#include "core/LosState/LosState.h"
-#include "models/LosFileNode/LosFileNode.h"
-#include <QCoreApplication>
-#include <QDir>
-#include <QObject>
-#include <qjsonarray.h>
-#include <qjsonobject.h>
-#include <qjsonvalue.h>
-#include <qprocess.h>
-#include <qtmetamacros.h>
 
 namespace LosCore
 {

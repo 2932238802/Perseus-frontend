@@ -189,7 +189,7 @@ QInputDialog {
 
 #project_dir_label {
     color: @foreground@;
-    font-family: "JetBrains Mono", "Consolas", monospace;
+    font-family: "JetBrains Mono", "Consolas", "Noto Sans Mono CJK SC", monospace;
     background-color: @selection@;
     border: 1px solid @muted@;
     border-radius: 4px;
@@ -415,7 +415,7 @@ QPlainTextEdit {
     background-color: @background@;
     color: @foreground@;
     border: none;
-    font-family: "JetBrains Mono", "Consolas", monospace;
+    font-family: "JetBrains Mono", "Consolas", "Noto Sans Mono CJK SC", monospace;
     selection-background-color: @selection@;
     selection-color: @foreground@;
     padding: 6px;
@@ -549,7 +549,7 @@ QPlainTextEdit {
 
 #LosPluginDetailUi #label_version {
     color: @muted@;
-    font-family: "JetBrains Mono", "Consolas", monospace;
+    font-family: "JetBrains Mono", "Consolas", "Noto Sans Mono CJK SC", monospace;
 }
 
 #LosPluginDetailUi #btn_install {
@@ -728,7 +728,7 @@ QDialog#LosSettingsUi QWidget {
     border-radius: 4px;
     padding: 8px 12px;
     min-height: 22px;
-    font-family: "JetBrains Mono", "Consolas", monospace;
+    font-family: "JetBrains Mono", "Consolas", "Noto Sans Mono CJK SC", monospace;
     selection-background-color: @primary@;
     selection-color: @background@;
 }
@@ -1038,10 +1038,10 @@ LosView--LosStateBarUi QLabel:hover {
 
 #statusbar_coding_label {
     color: @primary@;
-    font-family: "JetBrains Mono", "Consolas", monospace;
+    font-family: "JetBrains Mono", "Consolas", "Noto Sans Mono CJK SC", monospace;
 }
 
 #statusbar_lang_label {
     color: @foreground@;
-    font-family: "JetBrains Mono", "Consolas", monospace;
+    font-family: "JetBrains Mono", "Consolas", "Noto Sans Mono CJK SC", monospace;
 }

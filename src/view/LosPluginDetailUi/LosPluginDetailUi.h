@@ -1,17 +1,9 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
-#include "common/constants/ConstantsStr/LosPluginDetailUiStr.h"
-#include "core/LosNet/LosNet.h"
-#include "core/LosRouter/LosRouter.h"
-#include "core/LosLog/LosLog.h"
+#include "common/constants/ConstantsClass/LosNetClass.h"
 
-#include <QDir>
-#include <QPointer>
-#include <QProcess>
 #include <QWidget>
-#include <qpushbutton.h>
-#include <qstandardpaths.h>
 #include <qtmetamacros.h>
 
 QT_BEGIN_NAMESPACE

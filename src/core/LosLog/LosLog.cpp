@@ -2,6 +2,7 @@
 
 
 #include "core/LosLog/LosLog.h"
+#include <QDateTime>
 namespace LosCore
 {
 

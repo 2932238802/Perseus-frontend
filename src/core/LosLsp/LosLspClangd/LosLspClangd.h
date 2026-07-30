@@ -2,11 +2,7 @@
 
 #pragma once
 #include "core/LosLsp/LosLspClient/LosLspClient.h"
-#include "core/LosRouter/LosRouter.h"
-#include <QCoreApplication>
-#include <QDir>
-#include <qjsonarray.h>
-#include <qjsonobject.h>
+#include <QJsonObject>
 
 namespace LosCore
 {

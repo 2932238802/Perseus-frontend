@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include "common/constants/ConstantsClass/LosToolChainClass.h"
-#include "common/constants/ConstantsClass/LosUtilClass.h"
 #include <QChar>
 #include <QTextDocument>
 

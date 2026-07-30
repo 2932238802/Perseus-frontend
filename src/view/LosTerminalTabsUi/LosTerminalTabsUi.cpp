@@ -1,9 +1,13 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosTerminalTabsUi.h"
+#include "common/constants/ConstantsStr/LosTerminalStr.h"
 #include "common/util/GetBtn.h"
-#include <qpushbutton.h>
-#include <qtabbar.h>
+#include "view/LosTerminalUi/LosTerminalUi.h"
+
+#include <QPushButton>
+#include <QTabBar>
+#include <QToolButton>
 
 
 namespace LosView

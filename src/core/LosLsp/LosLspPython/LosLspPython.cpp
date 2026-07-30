@@ -2,6 +2,16 @@
 
 
 #include "LosLspPython.h"
+#include "core/LosLog/LosLog.h"
+#include "core/LosRouter/LosRouter.h"
+#include "core/LosState/LosState.h"
+
+#include <QCoreApplication>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QProcess>
+#include <QUrl>
 #include <qobject.h>
 
 namespace LosCore

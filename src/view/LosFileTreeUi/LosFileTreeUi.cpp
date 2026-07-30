@@ -1,8 +1,28 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosFileTreeUi.h"
+#include "core/LosFileSystem/LosFileSystem.h"
+#include "core/LosLog/LosLog.h"
+#include "core/LosPlatform/LosPlatform.h"
 #include "core/LosRouter/LosRouter.h"
+#include "models/LosFilePath/LosFilePath.h"
 #include "view/LosFileTreeDelegate/LosFileTreeDelegate.h"
+
+#include <QAction>
+#include <QClipboard>
+#include <QDesktopServices>
+#include <QDir>
+#include <QFileInfo>
+#include <QGuiApplication>
+#include <QInputDialog>
+#include <QItemSelectionModel>
+#include <QKeyEvent>
+#include <QLineEdit>
+#include <QMenu>
+#include <QMessageBox>
+#include <QMimeData>
+#include <QProcess>
+#include <QUrl>
 
 
 namespace LosView

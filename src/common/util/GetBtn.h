@@ -3,9 +3,6 @@
 #pragma once
 #include <concepts>
 #include <qabstractbutton.h>
-#include <qpushbutton.h>
-#include <qstringliteral.h>
-#include <qtoolbutton.h>
 #include <qwidget.h>
 
 namespace LosCommon

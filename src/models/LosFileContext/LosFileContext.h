@@ -2,9 +2,8 @@
 
 #pragma once
 #include "models/LosFilePath/LosFilePath.h"
-#include <QFile>
-#include <QFileInfo>
 #include <QString>
+#include <optional>
 
 namespace LosModel
 {

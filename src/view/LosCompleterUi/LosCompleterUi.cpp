@@ -1,6 +1,11 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "view/LosCompleterUi/LosCompleterUi.h"
+#include "common/constants/ConstantsNum/LosCompleterUiNum.h"
+#include "view/style/LosCompleterUi_style.h"
+
+#include <QAbstractItemView>
+#include <QFrame>
 
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosTheme/LosThemeManager.h"

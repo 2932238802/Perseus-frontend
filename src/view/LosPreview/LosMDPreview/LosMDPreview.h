@@ -3,11 +3,9 @@
 
 #pragma once
 #include "view/LosPreview/LosPreview.h"
-#include <QObject>
+
+#include <QTextBrowser>
 #include <QUrl>
-#include <QWidget>
-#include <qtextbrowser.h>
-#include <qwidget.h>
 namespace LosView
 {
     class LosMDPreview : public LosPreview

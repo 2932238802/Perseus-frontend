@@ -3,6 +3,8 @@
 #include "view/LosPlugUi/LosPlugUi.h"
 #include "ui_LosPlugUi.h"
 
+#include <QListWidget>
+
 namespace LosView
 {
     LosPlugUi::LosPlugUi(QWidget *parent) : QWidget(parent), ui(new Ui::LosPlugUi)

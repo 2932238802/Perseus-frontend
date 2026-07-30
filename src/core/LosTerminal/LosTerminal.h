@@ -5,15 +5,9 @@
 #pragma once
 #include "common/constants/ConstantsStr/LosTerminalStr.h"
 #include "core/LosRouter/LosRouter.h"
-#include <QTimer>
-#include <QToolButton>
-#include <qglobal.h>
-#include <qnamespace.h>
-#include <qobject.h>
-#include <qprocess.h>
+#include <QObject>
+#include <QProcess>
 #include <qtmetamacros.h>
-#include <qtoolbutton.h>
-#include <qwidget.h>
 
 namespace LosCore
 {

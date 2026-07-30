@@ -1,6 +1,8 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
+#pragma once
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
+#include <QString>
 
 namespace LosCommon
 {

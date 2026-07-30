@@ -2,15 +2,9 @@
 
 #pragma once
 #include "common/constants/ConstantsClass/LosFileType.h"
-#include "core/LosLog/LosLog.h"
 #include <QDebug>
-#include <QDir>
-#include <QMimeDatabase>
-#include <QObject>
 #include <QString>
 #include <QStringList>
-#include <qglobal.h>
-#include <qtmetamacros.h>
 
 namespace LosModel
 {

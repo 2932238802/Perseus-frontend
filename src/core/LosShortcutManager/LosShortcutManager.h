@@ -1,12 +1,9 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
-#include "core/LosLog/LosLog.h"
 #include <QObject>
 #include <QString>
 #include <functional>
-#include <qnamespace.h>
-#include <qobject.h>
 #include <qshortcut.h>
 #include <qwidget.h>
 

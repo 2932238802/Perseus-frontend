@@ -2,14 +2,17 @@
 
 
 #include "LosFormatManager.h"
+#include "common/util/CheckLang.h"
+#include "core/LosFormat/LosFClangFormat/LosFClangFormat.h"
+#include "core/LosFormat/LosFNeocmakelsp/LosFNeocmakelsp.h"
 
 
 namespace LosCore
 {
     /**
      * @brief Construct a new Los Format Manager:: Los Format Manager object
-     * 
-     * @param parent 
+     *
+     * @param parent
      */
     LosFormatManager::LosFormatManager(QObject *parent) : QObject(parent) {}
     LosFormatManager &LosFormatManager::instance()

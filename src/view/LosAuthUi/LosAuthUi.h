@@ -2,9 +2,6 @@
 
 #pragma once
 
-#include "common/constants/ConstantsClass/LosAuthUiClass.h"
-#include "core/LosRouter/LosRouter.h"
-
 #include <QDialog>
 #include <QLabel>
 #include <QLineEdit>

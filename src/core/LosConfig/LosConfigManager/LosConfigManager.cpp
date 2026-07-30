@@ -1,6 +1,7 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosConfigManager.h"
+#include "core/LosConfig/LosConfigFactory/LosConfigFactory.h"
 
 namespace LosCore
 {

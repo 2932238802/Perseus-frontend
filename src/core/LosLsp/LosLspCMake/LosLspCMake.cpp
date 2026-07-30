@@ -1,6 +1,16 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosLspCMake.h"
+#include "common/util/DebugPJson.h"
+#include "core/LosLog/LosLog.h"
+#include "core/LosRouter/LosRouter.h"
+#include "core/LosState/LosState.h"
+#include "models/LosFilePath/LosFilePath.h"
+
+#include <QCoreApplication>
+#include <QJsonArray>
+#include <QProcess>
+#include <QUrl>
 
 namespace LosCore
 {

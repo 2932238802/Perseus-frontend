@@ -1,6 +1,17 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosLspManager.h"
+#include "common/util/CheckLang.h"
+#include "common/util/GetLangId.h"
+#include "core/LosLsp/LosLspCMake/LosLspCMake.h"
+#include "core/LosLsp/LosLspClangd/LosLspClangd.h"
+#include "core/LosLsp/LosLspPython/LosLspPython.h"
+#include "core/LosLsp/LosLspRust/LosLspRust.h"
+#include "core/LosLog/LosLog.h"
+#include "core/LosRouter/LosRouter.h"
+#include "models/LosFilePath/LosFilePath.h"
+
+#include <QFile>
 
 
 

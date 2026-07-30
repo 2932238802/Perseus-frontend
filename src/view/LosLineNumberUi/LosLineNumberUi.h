@@ -2,9 +2,6 @@
 
 #pragma once
 #include <qevent.h>
-#include <qnamespace.h>
-#include <qpoint.h>
-#include <qtextcursor.h>
 #include <qwidget.h>
 
 namespace LosView

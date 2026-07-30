@@ -1,6 +1,7 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "Perseus.h"
+#include "core/LosLog/LosLog.h"
 #include <QApplication>
 #include <qcoreapplication.h>
 #include <qglobal.h>

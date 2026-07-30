@@ -3,17 +3,9 @@
 #pragma once
 
 #include "core/LosRouter/LosRouter.h"
-#include "view/style/LosToolMissUI_style.h"
 
-#include <QDesktopServices>
-#include <QLabel>
-#include <QPushButton>
-#include <QString>
-#include <QUrl>
-#include <qboxlayout.h>
-#include <qdialog.h>
+#include <QDialog>
 #include <qtmetamacros.h>
-#include <qwidget.h>
 
 namespace LosView
 {

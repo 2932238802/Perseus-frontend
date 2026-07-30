@@ -7,10 +7,12 @@
 #include <QColor>
 #include <QDebug>
 #include <QFile>
+#include <QFont>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QTextBlock>
 #include <QTextCursor>
+#include <QTextFormat>
 
 namespace LosCore
 {

@@ -1,20 +1,11 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
-#include "common/constants/ConstantsStr/LosConfigStr.h"
-#include "common/util/CheckLang.h"
-#include "core/LosLog/LosLog.h"
-#include "core/LosRouter/LosRouter.h"
+#include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "core/LosRunner/LosAbstractRunner/LosAbstractRunner.h"
-#include "core/LosRunner/LosCmakeRunner/LosCmakeRunner.h"
-#include "core/LosRunner/LosPythonRunner/LosPythonRunner.h"
-#include "core/LosRunner/LosRustcRunner/LosRustcRunner.h"
-#include "core/LosRunner/LosSingleCppRunner/LosSingleCppRunner.h"
-#include "core/LosState/LosState.h"
-#include "models/LosFilePath/LosFilePath.h"
 
+#include <QMap>
 #include <QObject>
-#include <qsharedpointer.h>
 #include <qtmetamacros.h>
 
 namespace LosCore
@@ -33,10 +24,8 @@ namespace LosCore
         void stop();
 
       private slots:
-        void onToolChainReady(LosCommon::LosToolChain_Constants::LosLanguage,
-                              LosCommon::LosToolChain_Constants::LosTool tool, const QString &);
-        void onBuildToolReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath,
-                              const QStringList &args);
+        void onToolChainReady(LosCommon::LosToolChain_Constants::LosLanguage, LosCommon::LosToolChain_Constants::LosTool tool, const QString &);
+        void onBuildToolReady(LosCommon::LosToolChain_Constants::LosTool tool, const QString &exePath, const QStringList &args);
 
       private: /* init */
         void initConnect();

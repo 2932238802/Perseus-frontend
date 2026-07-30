@@ -1,11 +1,15 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
-
-
 #include "LosSesssion.h"
-#include "core/LosRouter/LosRouter.h"
-#include <qjsonobject.h>
-
+#include "common/constants/ConstantsNum/LosSessionNum.h"
+#include "core/LosLog/LosLog.h"
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QStandardPaths>
 
 namespace LosCore
 {
@@ -93,7 +97,7 @@ namespace LosCore
             conf->LOS_authConfig.L_username = authConfig["username"].toString();
         }
         QJsonObject sizeConfig = root["sizeConfig"].toObject();
-        conf->LOS_sizeConfig.L_fontSize = sizeConfig["fontSize"].toInt(12);
+        conf->LOS_sizeConfig.L_fontSize = sizeConfig["fontSize"].toInt(LosCommon::LosSession_Constants::DEFAULT_FONT_SIZE);
         return true;
     }
 

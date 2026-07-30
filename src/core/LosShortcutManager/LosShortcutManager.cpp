@@ -1,7 +1,8 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "core/LosShortcutManager/LosShortcutManager.h"
-
+#include "core/LosLog/LosLog.h"
+#include <qnamespace.h>
 
 namespace LosCore
 {

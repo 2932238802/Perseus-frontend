@@ -2,29 +2,15 @@
 
 #pragma once
 #include "common/constants/ConstantsClass/LosCommandUiClass.h"
-#include "common/constants/ConstantsNum/LosCommandUiNum.h"
-#include "common/util/NumberToCommandsKind.h"
-#include "core/LosLog/LosLog.h"
-#include "core/LosRouter/LosRouter.h"
-#include "view/style/LosCommandUi_style.h"
 
-#include <QDir>
-#include <QFileInfo>
-#include <QGraphicsDropShadowEffect>
+#include <QDialog>
 #include <QKeyEvent>
-#include <QStandardPaths>
+#include <QLineEdit>
+#include <QListWidget>
+#include <QMap>
 #include <QString>
-#include <qboxlayout.h>
-#include <qdebug.h>
-#include <qdialog.h>
-#include <qjsonarray.h>
-#include <qjsondocument.h>
-#include <qjsonobject.h>
-#include <qlineedit.h>
-#include <qlistwidget.h>
-#include <qnamespace.h>
 #include <qtmetamacros.h>
-#include <qwidget.h>
+#include <QWidget>
 
 namespace LosView
 {
