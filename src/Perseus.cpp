@@ -319,7 +319,6 @@ void Perseus::OnTogglePanelBtnClicked()
 
     const auto currentSizes  = splitter->sizes();
     const bool visuallyShown = widget->isVisible() && currentSizes.value(idx) > 0;
-
     if (visuallyShown)
     {
         L_rightSplitterSizes = currentSizes;

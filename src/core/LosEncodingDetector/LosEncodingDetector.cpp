@@ -1,6 +1,7 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosEncodingDetector.h"
+#include "common/constants/ConstantsStr/LosEncodingDetectorStr.h"
 #include <QByteArray>
 #include <QFile>
 #include <QString>
@@ -13,77 +14,66 @@
 
 namespace LosCore
 {
-    /**
-     * @brief
-     *
-     * @param file_path
-     * @return QString
-     */
     QString LosEncodingDetector::detectFromFile(const QString &file_path)
     {
-        constexpr qint64 SAMPLE_BYTES = 8 * 1024;
         QFile file(file_path);
         if (!file.open(QIODevice::ReadOnly))
         {
-            return QStringLiteral("Unknown");
+            return LosCommon::LosEncodingDetector_Constants::ENC_UNKNOWN;
         }
-        return detectFromBytes(file.read(SAMPLE_BYTES));
+        return detectFromBytes(file.read(LosCommon::LosEncodingDetector_Constants::SAMPLE_BYTES));
     }
 
 
 
-    /**
-     * @brief
-     *
-     * @param file_data
-     * @return QString
-     */
     QString LosEncodingDetector::detectFromBytes(const QByteArray &bytes)
     {
-        static const QByteArray BOM_UTF32_LE = QByteArray::fromHex("FFFE0000");
-        static const QByteArray BOM_UTF32_BE = QByteArray::fromHex("0000FEFF");
-        static const QByteArray BOM_UTF16_LE = QByteArray::fromHex("FFFE");
-        static const QByteArray BOM_UTF16_BE = QByteArray::fromHex("FEFF");
-        static const QByteArray BOM_UTF8     = QByteArray::fromHex("EFBBBF");
+        using namespace LosCommon::LosEncodingDetector_Constants;
+
+        static const QByteArray BOM_UTF32_LE = QByteArray::fromHex(BOM_HEX_UTF32_LE);
+        static const QByteArray BOM_UTF32_BE = QByteArray::fromHex(BOM_HEX_UTF32_BE);
+        static const QByteArray BOM_UTF16_LE = QByteArray::fromHex(BOM_HEX_UTF16_LE);
+        static const QByteArray BOM_UTF16_BE = QByteArray::fromHex(BOM_HEX_UTF16_BE);
+        static const QByteArray BOM_UTF8     = QByteArray::fromHex(BOM_HEX_UTF8);
         if (bytes.startsWith(BOM_UTF32_LE))
         {
-            return QStringLiteral("UTF-32 LE");
+            return ENC_UTF32_LE;
         }
         if (bytes.startsWith(BOM_UTF32_BE))
         {
-            return QStringLiteral("UTF-32 BE");
+            return ENC_UTF32_BE;
         }
         if (bytes.startsWith(BOM_UTF16_LE))
         {
-            return QStringLiteral("UTF-16 LE");
+            return ENC_UTF16_LE;
         }
         if (bytes.startsWith(BOM_UTF16_BE))
         {
-            return QStringLiteral("UTF-16 BE");
+            return ENC_UTF16_BE;
         }
         if (bytes.startsWith(BOM_UTF8))
         {
-            return QStringLiteral("UTF-8 with BOM");
+            return ENC_UTF8_BOM;
         }
         if (isPureAscii(bytes))
         {
-            return QStringLiteral("UTF-8");
+            return ENC_UTF8;
         }
         QStringDecoder dec(QStringConverter::Utf8);
         (void)dec.decode(bytes);
         if (!dec.hasError())
         {
-            return QStringLiteral("UTF-8");
+            return ENC_UTF8;
         }
-        if (tryCodec(bytes, "GBK", 0.30))
+        if (tryCodec(bytes, ENC_GBK, CJK_MIN_RATIO))
         {
-            return QStringLiteral("GBK");
+            return ENC_GBK;
         }
-        if (tryCodec(bytes, "GB18030", 0.30))
+        if (tryCodec(bytes, ENC_GB18030, CJK_MIN_RATIO))
         {
-            return QStringLiteral("GB18030");
+            return ENC_GB18030;
         }
-        return QStringLiteral("Unknown");
+        return ENC_UNKNOWN;
     }
 
 
@@ -99,6 +89,7 @@ namespace LosCore
      */
     bool LosEncodingDetector::tryCodec(const QByteArray &bytes, const char *codecName, double minCjkRatio)
     {
+        using namespace LosCommon::LosEncodingDetector_Constants;
         QTextCodec *codec = QTextCodec::codecForName(codecName);
         if (!codec)
         {
@@ -116,11 +107,10 @@ namespace LosCore
             return false;
         }
         int cjkCount = 0;
-        for (QChar c : rst) 
+        for (QChar c : rst)
         {
             ushort u = c.unicode();
-            // 0x4E00 9FFF 常见中文字符
-            if (u >= 0x4E00 && u <= 0x9FFF)
+            if (u >= CJK_RANGE_MIN && u <= CJK_RANGE_MAX)
             {
                 cjkCount++;
             }

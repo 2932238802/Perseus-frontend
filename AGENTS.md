@@ -16,7 +16,7 @@ is no separate "just build" script.
 - `./rbuild.sh` — incremental Release build + run (assumes `_build/` exists).
 - `./bbuild.sh` — incremental Debug build + run.
 - `./gdb-build.sh` — clean Debug rebuild + run (for GDB).
-- `./clean.sh` — remove build artifacts.
+- `./clean.sh` — remove build artifacts (`sudo rm -rf _build`).
 - `./env.sh` — one-shot apt install of the whole toolchain on Ubuntu/WSL2.
 
 Do not invent your own `cmake -B build` invocation: the CI workflow uses
@@ -81,14 +81,20 @@ Perseus uses its own member-variable prefix scheme; do **not** default to `m_`.
   `LosGitManager`, `LosRunManager`, `LosTheme`, `LosNet`, `LosAgent`).
 - Singletons are Meyers style: `LosXxx::instance().method()`.
 
-## Architecture rules that constrain edits
+## Architecture notes
 
-- Cross-layer communication goes through the `LosRouter` signal bus. UI code
-  in `src/view/` must not `#include` core services directly; wire via signals.
-- Long-running work must be async / on a worker thread. The main thread is
-  UI-only.
 - `src/Perseus.{h,cpp}` is the `QMainWindow` that assembles all modules —
   start here when tracing wiring, not `main.cpp`.
+- Cross-layer communication goes through the `LosRouter` signal bus (Meyers
+  singleton with 45+ signals). **Prefer** wiring UI to core via signal/slot
+  through the router, though the existing codebase does directly `#include`
+  core services from `src/view/` in many places.
+- **Async pattern**: long-running work uses `QProcess` (spawning child OS
+  processes) + Qt signal-slot for results. There are no `QThread` or
+  `QtConcurrent` usages; the main thread is UI-only.
+- Runners live under `src/core/LosRunner/` in subdirectories:
+  `LosScriptRunner`, `LosPythonRunner`, `LosRustcRunner`, `LosCmakeRunner`,
+  `LosSingleCppRunner`, `LosAbstractRunner`, `LosRunManager`.
 
 ## Instruction files
 
@@ -98,8 +104,7 @@ Perseus uses its own member-variable prefix scheme; do **not** default to `m_`.
 - [`docs/1_architecture/`](docs/1_architecture/) — module map, signal bus,
   design patterns.
 - [`docs/3_development/setup.md`](docs/3_development/setup.md) — setup detail.
-- `.opencode/` contains only an `@opencode-ai/plugin` dependency; there is no
-  `opencode.json` and no repo-local plugin config to honor.
+- There is no `opencode.json` or repo-local OpenCode plugin config.
 
 ## Commit / branch conventions
 

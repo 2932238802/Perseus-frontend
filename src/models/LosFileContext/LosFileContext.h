@@ -1,9 +1,6 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
-
-
 #pragma once
-
 #include "models/LosFilePath/LosFilePath.h"
 #include <QFile>
 #include <QFileInfo>
@@ -13,7 +10,7 @@ namespace LosModel
 {
     class LosFileContext
     {
-      public:
+      public: // tool open api
         std::optional<QString> load(const QString &file_path);
         bool save(const QString &content, const QString &file_path);
         bool isLoaded() const;
