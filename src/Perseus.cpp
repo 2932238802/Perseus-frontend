@@ -27,7 +27,6 @@
 #include "models/LosFileTreeModel/LosFileTreeModel.h"
 #include "view/LosAuthUi/LosAuthUi.h"
 #include "view/LosCommandArgsUi/LosCommandArgsUi.h"
-#include "view/LosCommandUi/LosCommandUi.h"
 #include "view/LosEditorTabUi/LosEditorTabUi.h"
 #include "view/LosEditorUi/LosEditorUi.h"
 #include "view/LosSettingsUi/LosSettingsUi.h"
@@ -478,7 +477,6 @@ void Perseus::initConnect()
 {
     connect(&LosCore::LosLog::instance(), &LosCore::LosLog::_sendLog, this, &Perseus::onLog);
     LOS_tabUi        = new LosView::LosEditorTabUi(ui->editor_tabwidget, this);
-    LOS_cmdPalette   = new LosView::LosCommandUi(this);
     LOS_cmdArg       = new LosView::LosCommandArgsUi(this);
     LOS_runMgr       = new LosCore::LosRunManager(this);
     LOS_lspMgr       = new LosCore::LosLspManager(this);
@@ -618,7 +616,6 @@ void Perseus::initShotcut()
             this->onZoomUi(-1 * LosCommon::Perseus_Constants::ZOOM_DELTA);
         },
         "zoom out");
-    LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::COMMANDS, this, [this]() { LOS_cmdPalette->showPalette(); });
     LosCore::LosShortcutManager::instance().reg(
         LosCommon::ShortCut::EDIT_UNDO, this,
         [this]()

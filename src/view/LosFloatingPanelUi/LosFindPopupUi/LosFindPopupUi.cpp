@@ -196,15 +196,22 @@ namespace LosView
 
     /**
      * @brief keyPressEvent
-     * 弹窗打开期间捕获 Ctrl+F / Ctrl+H / Ctrl+G：
+     * 弹窗打开期间捕获 Ctrl+F / Ctrl+H / Ctrl+G / Ctrl+Shift+P：
      * - Ctrl+F / Ctrl+H 在当前弹窗上切换查找 / 替换模式
      * - Ctrl+G 切换到跳转行弹窗
+     * - Ctrl+Shift+P 切换到指令面板
      * （LosShortcutManager 的快捷键为 WindowShortcut，弹窗激活时不会触发）
      */
     void LosFindPopupUi::keyPressEvent(QKeyEvent *event)
     {
         if (event->modifiers() & Qt::ControlModifier)
         {
+            if (event->key() == Qt::Key_P && (event->modifiers() & Qt::ShiftModifier))
+            {
+                emit LosCore::LosRouter::instance()._cmd_commandPaletteOpenRequested();
+                event->accept();
+                return;
+            }
             if (event->key() == Qt::Key_H)
             {
                 setReplaceVisible(true);
@@ -264,6 +271,12 @@ namespace LosView
                     emit LosCore::LosRouter::instance()._cmd_findReplaceRequested();
                     return true;
                 }
+            }
+            // 输入框焦点下也捕获 Ctrl+Shift+P（keyPressEvent 可能收不到）
+            if (keyEvent->key() == Qt::Key_P && (keyEvent->modifiers() & Qt::ControlModifier) && (keyEvent->modifiers() & Qt::ShiftModifier))
+            {
+                emit LosCore::LosRouter::instance()._cmd_commandPaletteOpenRequested();
+                return true;
             }
         }
         return QWidget::eventFilter(obj, event);

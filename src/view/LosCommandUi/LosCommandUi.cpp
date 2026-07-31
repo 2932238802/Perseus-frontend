@@ -2,13 +2,16 @@
 
 
 #include "LosCommandUi.h"
+#include "common/constants/ConstantsClass/LosEditorTabUiClass.h"
 #include "common/constants/ConstantsNum/LosCommandUiNum.h"
+#include "common/constants/ConstantsNum/LosSessionNum.h"
 #include "common/util/NumberToCommandsKind.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosTheme/LosThemeManager.h"
 #include "view/style/LosCommandUi_style.h"
 
+#include <QApplication>
 #include <QDebug>
 #include <QDir>
 #include <QFileInfo>
@@ -40,8 +43,9 @@ namespace LosView
 
     /*
      * - 显示搜索的 框
+     * @param anchor 定位锚点（当前编辑器），面板居中于锚点；空则不做定位
      */
-    void LosCommandUi::showPalette()
+    void LosCommandUi::showPalette(QWidget *anchor)
     {
         L_searchBox->clear();
         onSearchTextChanged("");
@@ -50,12 +54,12 @@ namespace LosView
             L_lists->setCurrentRow(0);
         }
 
-        if (parentWidget())
+        applyZoomScale(); // 打开前同步全局缩放（尺寸 + 字体）
+        if (anchor)
         {
-            QPoint globalPos = parentWidget()->mapToGlobal(QPoint(0, 0));
-            int x            = globalPos.x() + (parentWidget()->width() - width()) / 2;
-            int y            = globalPos.y() + 100;
-            move(x, y);
+            const QRect targetRect = anchor->rect();
+            QPoint globalTopLeft   = anchor->mapToGlobal(targetRect.topLeft());
+            move(globalTopLeft + QPoint((targetRect.width() - width()) / 2, (targetRect.height() - height()) / 2 - 40));
         }
         show();
         L_searchBox->setFocus();
@@ -90,12 +94,10 @@ namespace LosView
         containerLayout->addWidget(L_searchBox);
         containerLayout->addWidget(L_lists);
         mainLayout->addWidget(container);
-        setFixedSize(630, 380);
-        // 注: 这里继续用 setFixedSize 是为了让 Popup 居中行为可预测;
-        // 若日后字体过大导致内容溢出, 需改为 setMinimumSize 并配合 sizeHint 自适应.
         const QString qss = LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosCommandUi_styleTemplate(),
                                                                                LosCore::LosThemeManager::instance().currentTheme());
         this->setStyleSheet(qss);
+        applyZoomScale();
     }
 
 
@@ -114,7 +116,42 @@ namespace LosView
                 {
                     const QString qss = LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosCommandUi_styleTemplate(), name);
                     this->setStyleSheet(qss);
+                    applyZoomScale();
                 });
+        // Popup 窗口可能收不到 FontChange，显式跟随应用字体变化
+        connect(qApp, &QApplication::fontChanged, this, [this](const QFont &) { applyZoomScale(); });
+    }
+
+
+
+    /**
+     * @brief applyZoomScale
+     * 按全局应用字体相对设计基准（DEFAULT_FONT_SIZE）等比缩放：
+     * - 面板固定尺寸
+     * - 搜索框 / 列表字体（样式表不再写死 font-size，此处强制同步）
+     */
+    void LosCommandUi::applyZoomScale()
+    {
+        const int baseSize = LosCommon::LosSession_Constants::DEFAULT_FONT_SIZE;
+        const int curSize  = QApplication::font().pointSize();
+        if (baseSize <= 0 || curSize <= 0)
+        {
+            return;
+        }
+        const double scale = static_cast<double>(curSize) / static_cast<double>(baseSize);
+        setFixedSize(qRound(LosCommon::LosCommandUi_Constants::PALETTE_WIDTH * scale),
+                     qRound(LosCommon::LosCommandUi_Constants::PALETTE_HEIGHT * scale));
+
+        const QFont appFont = QApplication::font();
+        setFont(appFont);
+        if (L_searchBox)
+        {
+            L_searchBox->setFont(appFont);
+        }
+        if (L_lists)
+        {
+            L_lists->setFont(appFont);
+        }
     }
 
 
@@ -370,6 +407,27 @@ namespace LosView
                 hide();
                 return true;
             }
+            else if ((keyEvent->key() == Qt::Key_F || keyEvent->key() == Qt::Key_H || keyEvent->key() == Qt::Key_G) &&
+                     keyEvent->modifiers().testFlag(Qt::ControlModifier) && !keyEvent->modifiers().testFlag(Qt::ShiftModifier))
+            {
+                // 指令面板打开期间按 Ctrl+F / Ctrl+H / Ctrl+G：关闭面板并切换到对应弹窗
+                LosCommon::LosEditorTableUi_Constants::PopupKind kind;
+                if (keyEvent->key() == Qt::Key_F)
+                {
+                    kind = LosCommon::LosEditorTableUi_Constants::PopupKind::Find;
+                }
+                else if (keyEvent->key() == Qt::Key_H)
+                {
+                    kind = LosCommon::LosEditorTableUi_Constants::PopupKind::Replace;
+                }
+                else
+                {
+                    kind = LosCommon::LosEditorTableUi_Constants::PopupKind::GotoLine;
+                }
+                hide();
+                emit LosCore::LosRouter::instance()._cmd_commandPaletteSwitchRequested(kind);
+                return true;
+            }
         }
         return QDialog::eventFilter(watched, event);
     }
@@ -384,6 +442,24 @@ namespace LosView
 
 
 
+    void LosCommandUi::changeEvent(QEvent *event)
+    {
+        if (event->type() == QEvent::FontChange || event->type() == QEvent::ApplicationFontChange)
+        {
+            applyZoomScale();
+        }
+        QDialog::changeEvent(event);
+    }
+
+
+
+    /**
+     * @brief event
+     *
+     * @param event
+     * @return true
+     * @return false
+     */
     bool LosCommandUi::event(QEvent *event)
     {
         if (event->type() == QEvent::WindowDeactivate)

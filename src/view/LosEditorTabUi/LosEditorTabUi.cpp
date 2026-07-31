@@ -637,8 +637,8 @@ namespace LosView
             [this]() { LOS_findPopupManager->showFindPopup(LosCommon::LosEditorTableUi_Constants::PopupKind::Replace); });
         LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::SEARCH_NEXT, this, [this]() { LOS_findPopupManager->findNext(); });
         LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::SEARCH_PREVIOUS, this, [this]() { LOS_findPopupManager->findPrevious(); });
+        LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::COMMANDS, this, [this]() { LOS_findPopupManager->showCommandPalette(); });
     }
-
 
 
     /**

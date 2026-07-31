@@ -1,6 +1,7 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
+#include "common/constants/ConstantsClass/LosEditorTabUiClass.h"
 #include "common/constants/ConstantsClass/LosLspClass.h"
 #include "common/constants/ConstantsClass/LosNetClass.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
@@ -68,6 +69,10 @@ namespace LosCore
         // 查找 / 跳转行 弹窗之间互相切换的请求
         void _cmd_findPopupSwitchRequested(bool with_replace); // goto-line 弹窗发出，切到查找(false)/替换(true)
         void _cmd_gotoLinePopupSwitchRequested();              // 查找弹窗发出，切到跳转行
+        // 指令面板发出，切到查找/替换/跳转行弹窗
+        void _cmd_commandPaletteSwitchRequested(LosCommon::LosEditorTableUi_Constants::PopupKind kind);
+        // 查找/替换/跳转行弹窗发出，切到指令面板
+        void _cmd_commandPaletteOpenRequested();
 
         // 对左侧 文件树的各种操作 复制 删除 粘贴 等等
         void _cmd_fileSystemChanged();

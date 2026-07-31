@@ -24,6 +24,7 @@ namespace LosView
 
       protected:
         void keyPressEvent(QKeyEvent *event) override;
+        bool eventFilter(QObject *obj, QEvent *event) override;
 
       private:
         QLineEdit *L_lineEdit;

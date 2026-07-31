@@ -4,6 +4,7 @@
 #include "common/constants/ConstantsStr/LosFloatingPanelUiStr.h"
 #include "core/LosRouter/LosRouter.h"
 
+#include <QEvent>
 #include <QHBoxLayout>
 #include <QIntValidator>
 #include <QKeyEvent>
@@ -22,6 +23,7 @@ namespace LosView
         L_lineEdit = new QLineEdit();
         L_lineEdit->setValidator(new QIntValidator(1, INT_MAX, L_lineEdit));
         L_lineEdit->setStyleSheet(LosCommon::LosFloatingPanelUi_Constants::LosGotoLinePopupUi_Constants::GOTOLINE_LINEEDIT_STYLESHEET);
+        L_lineEdit->installEventFilter(this);
         layout->addWidget(label);
         layout->addWidget(L_lineEdit);
     }
@@ -50,12 +52,20 @@ namespace LosView
 
     /**
      * @brief keyPressEvent
-     * 弹窗打开期间捕获 Ctrl+F / Ctrl+H，切换到查找 / 替换弹窗
+     * 弹窗打开期间捕获 Ctrl+F / Ctrl+H / Ctrl+Shift+P：
+     * - Ctrl+F / Ctrl+H 切换到查找 / 替换弹窗
+     * - Ctrl+Shift+P 切换到指令面板
      */
     void LosGotoLinePopupUi::keyPressEvent(QKeyEvent *event)
     {
         if (event->modifiers() & Qt::ControlModifier)
         {
+            if (event->key() == Qt::Key_P && (event->modifiers() & Qt::ShiftModifier))
+            {
+                emit LosCore::LosRouter::instance()._cmd_commandPaletteOpenRequested();
+                event->accept();
+                return;
+            }
             if (event->key() == Qt::Key_F)
             {
                 emit LosCore::LosRouter::instance()._cmd_findPopupSwitchRequested(false);
@@ -70,6 +80,35 @@ namespace LosView
             }
         }
         QWidget::keyPressEvent(event);
+    }
+
+
+
+    bool LosGotoLinePopupUi::eventFilter(QObject *obj, QEvent *event)
+    {
+        if (obj == L_lineEdit && event->type() == QEvent::KeyPress)
+        {
+            auto *keyEvent = static_cast<QKeyEvent *>(event);
+            if (keyEvent->key() == Qt::Key_P && (keyEvent->modifiers() & Qt::ControlModifier) && (keyEvent->modifiers() & Qt::ShiftModifier))
+            {
+                emit LosCore::LosRouter::instance()._cmd_commandPaletteOpenRequested();
+                return true;
+            }
+            if ((keyEvent->modifiers() & Qt::ControlModifier) && !(keyEvent->modifiers() & Qt::ShiftModifier))
+            {
+                if (keyEvent->key() == Qt::Key_F)
+                {
+                    emit LosCore::LosRouter::instance()._cmd_findPopupSwitchRequested(false);
+                    return true;
+                }
+                if (keyEvent->key() == Qt::Key_H)
+                {
+                    emit LosCore::LosRouter::instance()._cmd_findPopupSwitchRequested(true);
+                    return true;
+                }
+            }
+        }
+        return QWidget::eventFilter(obj, event);
     }
 
 } /* namespace LosView */

@@ -2,6 +2,7 @@
 
 #include "view/LosFindPopupManager/LosFindPopupManager.h"
 #include "core/LosRouter/LosRouter.h"
+#include "view/LosCommandUi/LosCommandUi.h"
 #include "view/LosEditorTabUi/LosEditorTabUi.h"
 #include "view/LosEditorUi/LosEditorUi.h"
 #include "view/LosFloatingPanelUi/LosFindPopupUi/LosFindPopupUi.h"
@@ -21,7 +22,12 @@ namespace LosView
      * @param tab 所属编辑器标签页，用于获取当前编辑器
      * @param parent
      */
-    LosFindPopupManager::LosFindPopupManager(LosEditorTabUi *tab, QObject *parent) : L_tab{tab}, QObject{parent} {}
+    LosFindPopupManager::LosFindPopupManager(LosEditorTabUi *tab, QObject *parent) : L_tab{tab}, QObject{parent}
+    {
+        // 指令面板打开期间按 Ctrl+F / Ctrl+H / Ctrl+G：切换到对应弹窗
+        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_commandPaletteSwitchRequested, this,
+                [this](LosCommon::LosEditorTableUi_Constants::PopupKind kind) { showFindPopup(kind); });
+    }
 
 
 
@@ -58,10 +64,26 @@ namespace LosView
 
 
     /**
+     * @brief showCommandPalette
+     * Ctrl+Shift+P 打开指令面板（懒创建，居中于编辑器区域）
+     */
+    void LosFindPopupManager::showCommandPalette()
+    {
+        if (LOS_cmdPalette == nullptr)
+        {
+            LOS_cmdPalette = new LosCommandUi(L_tab);
+        }
+        auto *editor = qobject_cast<LosEditorUi *>(L_tab->getCurEditor());
+        LOS_cmdPalette->showPalette(editor != nullptr ? static_cast<QWidget *>(editor) : L_tab->parentWidget());
+    }
+
+
+
+    /**
      * @brief showFindPopup
-     * 打开查找 / 替换 / 跳转行弹窗
-     * 弹窗打开期间按 Ctrl+F / Ctrl+H / Ctrl+G 会在三种弹窗之间互相切换
-     * 切换以循环方式完成（关闭当前弹窗后继续打开目标弹窗）
+     * 打开查找 / 替换 / 跳转行弹窗。
+     * 弹窗打开期间按 Ctrl+F / Ctrl+H / Ctrl+G 会在三种弹窗之间互相切换，
+     * 切换以循环方式完成（关闭当前弹窗后继续打开目标弹窗）。
      *
      * @param kind 初始弹窗类型
      */
@@ -69,6 +91,11 @@ namespace LosView
     {
         while (true)
         {
+            if (kind == LosCommon::LosEditorTableUi_Constants::PopupKind::CommandPalette)
+            {
+                showCommandPalette();
+                return;
+            }
             if (kind == LosCommon::LosEditorTableUi_Constants::PopupKind::GotoLine)
             {
                 auto widget = L_tab->getCurEditor();
@@ -86,6 +113,12 @@ namespace LosView
                         {
                             L_pendingPopupKind = with_replace ? LosCommon::LosEditorTableUi_Constants::PopupKind::Replace
                                                               : LosCommon::LosEditorTableUi_Constants::PopupKind::Find;
+                            dialog->reject();
+                        });
+                connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_commandPaletteOpenRequested, contentWidget,
+                        [this, dialog]()
+                        {
+                            L_pendingPopupKind = LosCommon::LosEditorTableUi_Constants::PopupKind::CommandPalette;
                             dialog->reject();
                         });
                 dialog->showAtPosition(editor, LosCommon::LosFloatingPanelUi_Constants::PositionMode::TopRight);
@@ -170,6 +203,12 @@ namespace LosView
                         [this, dialog]()
                         {
                             L_pendingPopupKind = LosCommon::LosEditorTableUi_Constants::PopupKind::GotoLine;
+                            dialog->reject();
+                        });
+                connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_commandPaletteOpenRequested, contentWidget,
+                        [this, dialog]()
+                        {
+                            L_pendingPopupKind = LosCommon::LosEditorTableUi_Constants::PopupKind::CommandPalette;
                             dialog->reject();
                         });
 

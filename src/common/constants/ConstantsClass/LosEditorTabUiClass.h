@@ -13,10 +13,11 @@ namespace LosCommon
 
         enum class PopupKind
         {
-            None,     // 无待切换目标
-            Find,     // 查找弹窗 (Ctrl+F)
-            Replace,  // 替换弹窗 (Ctrl+H)
-            GotoLine, // 跳转行弹窗 (Ctrl+G)
+            None,           // 无待切换目标
+            Find,           // 查找弹窗 (Ctrl+F)
+            Replace,        // 替换弹窗 (Ctrl+H)
+            GotoLine,       // 跳转行弹窗 (Ctrl+G)
+            CommandPalette, // 指令面板 (Ctrl+Shift+P)
         };
     } // namespace LosEditorTableUi_Constants
 } // namespace LosCommon

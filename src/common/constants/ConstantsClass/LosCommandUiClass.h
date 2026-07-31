@@ -20,8 +20,7 @@ namespace LosCommon
 
         struct CommandsInfo
         {
-            LosCommon::LosCommandUi_Constants::CommandsKind kind =
-                LosCommon::LosCommandUi_Constants::CommandsKind::UNKOWN;
+            LosCommon::LosCommandUi_Constants::CommandsKind kind = LosCommon::LosCommandUi_Constants::CommandsKind::UNKOWN;
             QString L_scriptPath;
             QStringList L_params;
         };

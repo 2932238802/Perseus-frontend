@@ -12,39 +12,38 @@ class QTimer;
 
 namespace LosCore
 {
-class LosConfigManager;
-class LosLspManager;
-class LosRunManager;
-class LosScriptRunner;
-class LosToolChainManager;
-}
+    class LosConfigManager;
+    class LosLspManager;
+    class LosRunManager;
+    class LosScriptRunner;
+    class LosToolChainManager;
+} // namespace LosCore
 
 namespace LosModel
 {
-class LosFileNode;
-class LosFileTreeModel;
-}
+    class LosFileNode;
+    class LosFileTreeModel;
+} // namespace LosModel
 
 namespace LosView
 {
-class LosAuthUi;
-class LosCommandArgsUi;
-class LosCommandUi;
-class LosEditorTabUi;
-class LosSettingsUi;
-}
+    class LosAuthUi;
+    class LosCommandArgsUi;
+    class LosEditorTabUi;
+    class LosSettingsUi;
+} // namespace LosView
 
 namespace LosCommon
 {
-namespace LosSession_Constants
-{
-struct Config;
-}
-namespace LosToolChain_Constants
-{
-struct ToolChainConfig;
-}
-}
+    namespace LosSession_Constants
+    {
+        struct Config;
+    }
+    namespace LosToolChain_Constants
+    {
+        struct ToolChainConfig;
+    }
+} // namespace LosCommon
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -136,7 +135,6 @@ class Perseus : public QMainWindow
     LosCore::LosLspManager *LOS_lspMgr             = nullptr;
     LosCore::LosConfigManager *LOS_configMgr       = nullptr;
     LosCore::LosToolChainManager *LOS_toolChainMgr = nullptr;
-    LosView::LosCommandUi *LOS_cmdPalette          = nullptr;
     LosView::LosCommandArgsUi *LOS_cmdArg          = nullptr;
     LosCore::LosScriptRunner *LOS_scriptRunner     = nullptr;
 };

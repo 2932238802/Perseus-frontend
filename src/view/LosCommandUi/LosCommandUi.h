@@ -9,8 +9,8 @@
 #include <QListWidget>
 #include <QMap>
 #include <QString>
-#include <qtmetamacros.h>
 #include <QWidget>
+#include <qtmetamacros.h>
 
 namespace LosView
 {
@@ -22,12 +22,13 @@ namespace LosView
         ~LosCommandUi() = default;
 
       public:
-        void showPalette();
+        void showPalette(QWidget *anchor = nullptr);
 
       private: /* init */
         void initStyle();
         void initConnect();
         void initScanLocalPlugins();
+        void applyZoomScale(); // 按 QApplication 字体等比缩放面板尺寸与内部字体
 
       private slots:
         void onSearchTextChanged(const QString &text);
@@ -41,6 +42,9 @@ namespace LosView
         bool eventFilter(QObject *watched, QEvent *event) override;
         void focusOutEvent(QFocusEvent *event) override;
         bool event(QEvent *event) override;
+
+      protected:
+        void changeEvent(QEvent *event) override;
 
       private:
         QLineEdit *L_searchBox;

@@ -24,8 +24,6 @@ namespace LosStyle
                 border: none;
                 border-bottom: 1px solid @selection@;
                 padding: 12px 15px;
-                font-family: "Microsoft YaHei", sans-serif;
-                font-size: 14px;
                 selection-background-color: @primary@;
                 selection-color: @background@;
             }
@@ -40,8 +38,6 @@ namespace LosStyle
                 border: none;
                 outline: none;
                 padding: 6px;
-                font-family: "Microsoft YaHei", sans-serif;
-                font-size: 13px;
             }
 
             QListWidget::item {
