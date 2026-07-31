@@ -9,6 +9,9 @@
 #include <QWidget>
 #include <qtmetamacros.h>
 
+class QColor;
+class QString;
+
 namespace LosView
 {
     class LosTerminalUi : public QWidget
@@ -21,6 +24,10 @@ namespace LosView
       private: // init
         void initStyle();
         void initConnect();
+
+      private: // theme
+        QColor themeBackground() const;
+        QString themeForeground() const;
 
       private: // param
         QWebEngineView *L_webView;

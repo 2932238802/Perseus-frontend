@@ -31,9 +31,24 @@
     <div id="terminal-container"></div>
 
     <script>
+        function readThemeFromUrl() {
+            const p = new URLSearchParams(location.search);
+            return {
+                bg: p.get('bg') || '#1e1e1e',
+                fg: p.get('fg') || '#cccccc'
+            };
+        }
+
+        function applyTheme(bg, fg) {
+            document.body.style.backgroundColor = bg;
+            term.options.theme = Object.assign({}, term.options.theme, { background: bg, foreground: fg });
+            term.refresh(0, term.rows - 1);
+        }
+
+        const urlTheme = readThemeFromUrl();
         const term = new Terminal({
             cursorBlink: true,
-            theme: { background: '#1e1e1e', foreground: '#cccccc' },
+            theme: { background: urlTheme.bg, foreground: urlTheme.fg },
             fontFamily: 'Consolas, "Courier New", monospace',
             fontSize: 14,
             fontFamily: '"MesloLGS NF", "FiraCode Nerd Font", Consolas, "Courier New", monospace',
