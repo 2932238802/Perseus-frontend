@@ -458,8 +458,13 @@ namespace LosView
 
 
 
-    /*
-     * - 获取 展开的路径
+    /**
+     * @brief
+     * 获取 展开的路径
+     * 
+     * @param get_files 
+     * @return true 
+     * @return false 
      */
     bool LosFileTreeUi::getExpandedPaths(QSet<QString> *get_files)
     {
@@ -489,8 +494,13 @@ namespace LosView
 
 
 
-    /*
-     * - 找到 对应的 index
+    /**
+     * @brief 找到 对应的 index
+     * 
+     * @param node 
+     * @param path 
+     * @param parent_index 
+     * @return QModelIndex 
      */
     QModelIndex LosFileTreeUi::findAndExpand(LosModel::LosFileNode *node, const QString &path, const QModelIndex &parent_index)
     {
@@ -507,7 +517,6 @@ namespace LosView
             }
             return parent_index;
         };
-
         for (int i = 0; i < node->getChildCount(); i++)
         {
             LosModel::LosFileNode *child = node->getChild(i);
@@ -520,6 +529,4 @@ namespace LosView
         }
         return QModelIndex();
     }
-
-
 } /* namespace LosView */
