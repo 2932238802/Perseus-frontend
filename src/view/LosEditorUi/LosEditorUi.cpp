@@ -9,6 +9,7 @@
 #include "common/util/CheckLang.h"
 #include "common/util/FindMatchBracket.h"
 #include "common/util/GetLeadingWhiteSpace.h"
+#include "core/LosFinder/LosFinder.h"
 #include "core/LosFormat/LosFormatManager/LosFormatManager.h"
 #include "core/LosHighlighter/LosHighlighter.h"
 #include "core/LosRouter/LosRouter.h"
@@ -176,6 +177,135 @@ namespace LosView
             this->centerCursor();
             this->setFocus();
         }
+    }
+
+
+
+    /**
+     * @brief updateSearch 
+     * 更新搜索 高亮全部匹配并定位到第一个
+     *
+     * @param text 搜索词
+     * @param flags 搜索选项
+     */
+    void LosEditorUi::updateSearch(const QString &text, QTextDocument::FindFlags flags)
+    {
+        L_searchText    = text;
+        L_searchFlags   = flags;
+        L_searchMatches = LosCore::LosFinder::findAll(document(), text, flags);
+        L_searchSelections.clear();
+        if (!text.isEmpty())
+        {
+            QTextCharFormat format;
+            format.setBackground(QColor(LosCommon::LosEditorUi_Constants::SEARCH_HL_BG_COLOR));
+            for (const auto &match : L_searchMatches)
+            {
+                QTextEdit::ExtraSelection selection;
+                selection.cursor = match;
+                selection.format = format;
+                L_searchSelections.append(selection);
+            }
+            if (!L_searchMatches.isEmpty())
+            {
+                setTextCursor(L_searchMatches.first());
+                centerCursor();
+            }
+        }
+        highlightCurrentLine();
+    }
+
+
+
+    /**
+     * @brief searchNext 跳转到下一个匹配（循环）
+     *
+     * @return bool 是否跳转成功
+     */
+    bool LosEditorUi::searchNext()
+    {
+        if (L_searchText.isEmpty() || L_searchMatches.isEmpty())
+        {
+            return false;
+        }
+        const int current = searchCurrentIndex();
+        const int next    = (current % L_searchMatches.size()) + 1;
+        setTextCursor(L_searchMatches.at(next - 1));
+        centerCursor();
+        return true;
+    }
+
+
+
+    /**
+     * @brief searchPrevious 跳转到上一个匹配（循环）
+     *
+     * @return bool 是否跳转成功
+     */
+    bool LosEditorUi::searchPrevious()
+    {
+        if (L_searchText.isEmpty() || L_searchMatches.isEmpty())
+        {
+            return false;
+        }
+        const int current = searchCurrentIndex();
+        const int prev    = (current + L_searchMatches.size() - 2) % L_searchMatches.size() + 1;
+        setTextCursor(L_searchMatches.at(prev - 1));
+        centerCursor();
+        return true;
+    }
+
+
+
+    /**
+     * @brief clearSearch 清除搜索高亮与状态
+     */
+    void LosEditorUi::clearSearch()
+    {
+        L_searchText.clear();
+        L_searchMatches.clear();
+        L_searchSelections.clear();
+        highlightCurrentLine();
+    }
+
+
+
+    /**
+     * @brief searchMatchCount 获取匹配总数
+     *
+     * @return int
+     */
+    int LosEditorUi::searchMatchCount() const
+    {
+        return L_searchMatches.size();
+    }
+
+
+
+    /**
+     * @brief searchCurrentIndex 根据当前光标位置计算当前匹配序号（1 起，无匹配为 0）
+     *
+     * @return int
+     */
+    int LosEditorUi::searchCurrentIndex() const
+    {
+        if (L_searchMatches.isEmpty())
+        {
+            return 0;
+        }
+        const int cursorPos = textCursor().position();
+        int index           = 0;
+        for (int i = 0; i < L_searchMatches.size(); ++i)
+        {
+            if (L_searchMatches.at(i).selectionEnd() <= cursorPos)
+            {
+                index = i + 1;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return index;
     }
 
 
@@ -559,6 +689,7 @@ namespace LosView
         }
         extra.append(L_hoverSelections);
         extra.append(L_bracketSelections);
+        extra.append(L_searchSelections);
         setExtraSelections(extra);
     }
 
@@ -1197,7 +1328,7 @@ namespace LosView
                 return;
             }
         }
-        
+
         QPlainTextEdit::keyPressEvent(event);
         if (L_showComplete && LOS_completer && LOS_completer->popup()->isVisible())
         {

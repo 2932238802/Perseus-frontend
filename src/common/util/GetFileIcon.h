@@ -9,7 +9,9 @@ namespace LosCommon
 {
     const QHash<QString, QString> kIconByName = {
         {"CMakeLists.txt", ":/icons/cmake_white.png"},
+        {"makefile",":/icons/makefile_white.png"}
     };
+    
     const QHash<QString, QString> kIconWhiteThemeBySuffix = {
         {"cpp", ":/icons/cpp_white.png"}, {"cc", ":/icons/cpp_white.png"},    {"cxx", ":/icons/cpp_white.png"},   {"h", ":/icons/h_white.png"},
         {"hpp", ":/icons/h_white.png"},   {"md", ":/icons/md_white.png"},     {"txt", ":/icons/txt_white.png"},   {"json", ":/icons/json_white.png"},

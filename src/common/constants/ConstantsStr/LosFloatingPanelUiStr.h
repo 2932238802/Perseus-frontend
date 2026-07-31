@@ -36,10 +36,18 @@ namespace LosCommon
 
         namespace LosFindPopupUi_Constants
         {
-            inline constexpr const char *FIND_LABEL_CONTENT    = "Go to line:";
+            inline constexpr const char *FIND_LABEL_CONTENT    = "Find:";
             inline constexpr const char *FIND_LABEL_STYLESHEET = R"(
                                                                         color: #a6adc8; 
                                                                         font-size: 1em;
+                                                                    )";
+
+            inline constexpr const char *FIND_MATCH_LABEL_STYLESHEET = R"(
+                                                                        color: #a6adc8; 
+                                                                        font-size: 0.9em;
+                                                                        background-color: #313244;
+                                                                        border-radius: 3px;
+                                                                        padding: 2px 6px;
                                                                     )";
 
             inline constexpr const char *FIND_LINEEDIT_STYLESHEET = R"(

@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <QLabel>
 #include <QLineEdit>
 #include <QWidget>
 
@@ -11,7 +12,6 @@ namespace LosView
 
     class LosFindPopupUi : public QWidget
     {
-        Q_OBJECT
       public:
         explicit LosFindPopupUi(QWidget *parent = nullptr);
         ~LosFindPopupUi() = default;
@@ -20,7 +20,14 @@ namespace LosView
         QString getInput() const;
         QLineEdit *getEdit() const;
 
+      public: // set
+        void setMatchInfo(int current, int total);
+
+      protected:
+        bool eventFilter(QObject *obj, QEvent *event) override;
+
       private:
         QLineEdit *L_lineEdit;
+        QLabel *L_matchLabel;
     };
 } /* namespace LosView */

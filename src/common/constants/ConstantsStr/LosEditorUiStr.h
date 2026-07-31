@@ -28,6 +28,9 @@ namespace LosCommon
         inline constexpr const char *BRACKET_MATCH_BG_COLOR = "#50fa7b";
         inline constexpr const char *HOVER_UNDERLINE_COLOR  = "#8be9fd";
 
+        /* ---------------- 搜索高亮 ---------------- */
+        inline constexpr const char *SEARCH_HL_BG_COLOR = "#575b70";
+
         /* ---------------- Hover 浮窗样式 ---------------- */
         inline constexpr const char *HOVER_POP_STYLE = R"(
                 QLabel {

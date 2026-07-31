@@ -30,9 +30,9 @@ namespace LosView
 {
     /**
      * @brief Construct a new Los Editor Tab Ui:: Los Editor Tab Ui object
-     * 
-     * @param tab_widget 
-     * @param parent 
+     *
+     * @param tab_widget
+     * @param parent
      */
     LosEditorTabUi::LosEditorTabUi(QTabWidget *tab_widget, QWidget *parent) : L_tabWidget{tab_widget}, QWidget{parent}
     {
@@ -50,8 +50,8 @@ namespace LosView
 
     /**
      * @brief closeTab 关闭标签
-     * 
-     * @param index 
+     *
+     * @param index
      */
     void LosEditorTabUi::closeTab(int index)
     {
@@ -305,7 +305,7 @@ namespace LosView
                 LOS_pathToUi.remove(filePath);
             }
         }
-        
+
         L_tabWidget->removeTab(index);
         wi->deleteLater();
     }
@@ -313,10 +313,10 @@ namespace LosView
 
 
     /**
-     * @brief 
-     * 
-     * @param file_path 
-     * @param is_dirty 
+     * @brief
+     *
+     * @param file_path
+     * @param is_dirty
      */
     void LosEditorTabUi::onEditDirty(const QString &file_path, bool is_dirty)
     {
@@ -510,16 +510,55 @@ namespace LosView
      */
     void LosEditorTabUi::onFindShortcut()
     {
-        auto edit                              = getCurEditor();
+        auto widget = getCurEditor();
+        if (!widget)
+        {
+            return;
+        }
+        auto *edit                             = qobject_cast<LosEditorUi *>(widget);
         LosView::LosFindPopupUi *contentWidget = new LosView::LosFindPopupUi();
         LosView::LosFloatingPanelUi *dialog    = new LosView::LosFloatingPanelUi(contentWidget, true, this);
-        connect(contentWidget->getEdit(), &QLineEdit::returnPressed, dialog, &QDialog::accept);
         dialog->showAtPosition(edit, LosCommon::LosFloatingPanelUi_Constants::PositionMode::TopRight);
         contentWidget->getEdit()->setFocus();
-        if (dialog->exec() == QDialog::Accepted)
+
+        connect(contentWidget->getEdit(), &QLineEdit::textChanged, contentWidget,
+                [edit, contentWidget](const QString &text)
+                {
+                    if (text.isEmpty())
+                    {
+                        edit->clearSearch();
+                        contentWidget->setMatchInfo(0, 0);
+                        return;
+                    }
+                    edit->updateSearch(text);
+                    contentWidget->setMatchInfo(edit->searchCurrentIndex(), edit->searchMatchCount());
+                });
+        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_findNextRequested, contentWidget,
+                [edit, contentWidget]()
+                {
+                    if (edit->searchNext())
+                    {
+                        contentWidget->setMatchInfo(edit->searchCurrentIndex(), edit->searchMatchCount());
+                    }
+                });
+        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_findPreviousRequested, contentWidget,
+                [edit, contentWidget]()
+                {
+                    if (edit->searchPrevious())
+                    {
+                        contentWidget->setMatchInfo(edit->searchCurrentIndex(), edit->searchMatchCount());
+                    }
+                });
+
+        const QString curWord = edit->getWordUnderCursor();
+        if (!curWord.isEmpty())
         {
-            INF("1", "1");
+            contentWidget->getEdit()->setText(curWord);
+            contentWidget->getEdit()->selectAll();
         }
+
+        dialog->exec();
+        edit->clearSearch();
         dialog->deleteLater();
     }
 

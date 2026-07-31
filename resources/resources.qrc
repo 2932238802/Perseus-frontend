@@ -34,6 +34,8 @@
         <file alias="auth_white.png">icons/auth_white.png</file>
         <file alias="loginsuc_black.png">icons/loginsuc_black.png</file>
         <file alias="loginsuc_white.png">icons/loginsuc_white.png</file>
+        <file alias="makefile_black.png">icons/makefile_black.png</file>
+        <file alias="makefile_white.png">icons/makefile_white.png</file>
     </qresource>
     <qresource prefix="/highlight">
         <file alias="languages/cpp.json">highlight/languages/cpp.json</file>

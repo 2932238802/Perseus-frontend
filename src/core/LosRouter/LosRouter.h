@@ -59,6 +59,10 @@ namespace LosCore
         // 从诊断的结果 ctrl 点击 跳转到指定位置
         void _cmd_gotoFile(const QString &file_path, int line);
 
+        // 查找 (Ctrl+F) 下一个 / 上一个 的请求
+        void _cmd_findNextRequested();
+        void _cmd_findPreviousRequested();
+
         // 对左侧 文件树的各种操作 复制 删除 粘贴 等等
         void _cmd_fileSystemChanged();
 

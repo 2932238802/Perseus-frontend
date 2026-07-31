@@ -9,6 +9,7 @@
 #include <QLabel>
 #include <QSharedPointer>
 #include <QTextCursor>
+#include <QTextDocument>
 #include <QTimer>
 #include <QWidget>
 
@@ -20,7 +21,7 @@ namespace LosModel
 {
     class LosFileContext;
     class LosFilePath;
-}
+} // namespace LosModel
 
 namespace LosCore
 {
@@ -47,6 +48,12 @@ namespace LosView
         void showDiagnostic(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &);
         void gotoLine(int line);
         void format();
+        void updateSearch(const QString &text, QTextDocument::FindFlags flags = QTextDocument::FindFlags());
+        bool searchNext();
+        bool searchPrevious();
+        void clearSearch();
+        int searchMatchCount() const;
+        int searchCurrentIndex() const;
 
       public: // get
         QString getWordUnderCursor() const;
@@ -117,6 +124,10 @@ namespace LosView
         QList<QTextEdit::ExtraSelection> L_bracketSelections    = {};
         QList<QTextEdit::ExtraSelection> L_diagnosticSelections = {};
         QList<QTextEdit::ExtraSelection> L_hoverSelections      = {};
+        QList<QTextEdit::ExtraSelection> L_searchSelections     = {};
+        QString L_searchText                                    = "";
+        QTextDocument::FindFlags L_searchFlags                  = {};
+        QList<QTextCursor> L_searchMatches                      = {};
         LosView::LosCompleterUi *LOS_completer                  = nullptr;
         LosCore::LosHighlighter *LOS_highlighter                = nullptr;
         LosView::LosLineNumberUi *LOS_lineNumber                = nullptr;
