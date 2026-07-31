@@ -17,6 +17,8 @@
 
 namespace LosView
 {
+    class LosFindPopupManager;
+
     class LosEditorTabUi : public QWidget
     {
         Q_OBJECT
@@ -48,11 +50,6 @@ namespace LosView
         void onTabClicked(int index);
         void onOpenPlugin(const LosCommon::LosNet_Constants::PluginInfo &info);
         void onFileRenamed(const QString &old_path, const QString &new_path);
-        void onGotoLineShortcut();
-        void onFindShortcut();
-        void onReplaceShortcut();
-        void onFindNextShortcut();
-        void onFindPreviousShortcut();
         void onTogglePreview(const QString &absolute_file_path); // 切换当前标签页的预览状态
 
       private: // init
@@ -63,13 +60,12 @@ namespace LosView
       private: // tool
         void checkLspAnsFormat(const QString &file_path);
         void installCloseButton(int index);
-        void showFindPopup(LosCommon::LosEditorTableUi_Constants::PopupKind kind);
 
       private: // params
         QSet<LosCommon::LosToolChain_Constants::LosLanguage> L_checkedLanguage;
         QTabWidget *L_tabWidget;
-        QMap<QString, LosView::LosEditorUi *> LOS_pathToUi;     // 左侧是 absoluteFilePath 就是全路径
-        QMap<QString, LosView::LosPreview *> LOS_pathToPreview; // 预览的逻辑
-        LosCommon::LosEditorTableUi_Constants::PopupKind L_pendingPopupKind = LosCommon::LosEditorTableUi_Constants::PopupKind::None;
+        QMap<QString, LosView::LosEditorUi *> LOS_pathToUi;           // 左侧是 absoluteFilePath 就是全路径
+        QMap<QString, LosView::LosPreview *> LOS_pathToPreview;       // 预览的逻辑
+        LosView::LosFindPopupManager *LOS_findPopupManager = nullptr; // 查找/替换/跳转行弹窗控制器
     };
 } /* namespace LosView */
