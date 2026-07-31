@@ -211,7 +211,8 @@ namespace LosModel
             const QString suffix = file.getSuffix().toLower();
             if (auto it = LosCommon::kIconByName.constFind(name); it != LosCommon::kIconByName.cend())
                 return LosCommon::GetFileIcon(it.value());
-            if (auto it = LosCommon::kIconBySuffix.constFind(suffix); it != LosCommon::kIconBySuffix.cend())
+            // 设置 图标 
+            if (auto it = LosCommon::kIconWhiteThemeBySuffix.constFind(suffix); it != LosCommon::kIconWhiteThemeBySuffix.cend())
                 return LosCommon::GetFileIcon(it.value());
             static QFileIconProvider provider;
             return provider.icon(QFileIconProvider::File);

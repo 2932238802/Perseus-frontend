@@ -3,6 +3,8 @@
         <file alias="close.png">icons/close.png</file>
         <file alias="cpp_black.png">icons/cpp_black.png</file>
         <file alias="cpp_white.png">icons/cpp_white.png</file>
+        <file alias="c_white.png">icons/c_white.png</file>
+        <file alias="c_black.png">icons/c_black.png</file>
         <file alias="h_black.png">icons/h_black.png</file>
         <file alias="h_white.png">icons/h_white.png</file>
         <file alias="md_black.png">icons/md_black.png</file>

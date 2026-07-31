@@ -10,11 +10,11 @@ namespace LosCommon
     const QHash<QString, QString> kIconByName = {
         {"CMakeLists.txt", ":/icons/cmake_white.png"},
     };
-    const QHash<QString, QString> kIconBySuffix = {
+    const QHash<QString, QString> kIconWhiteThemeBySuffix = {
         {"cpp", ":/icons/cpp_white.png"}, {"cc", ":/icons/cpp_white.png"},    {"cxx", ":/icons/cpp_white.png"},   {"h", ":/icons/h_white.png"},
         {"hpp", ":/icons/h_white.png"},   {"md", ":/icons/md_white.png"},     {"txt", ":/icons/txt_white.png"},   {"json", ":/icons/json_white.png"},
         {"rs", ":/icons/rust_white.png"}, {"py", ":/icons/python_white.png"}, {"html", ":/icons/html_white.png"}, {"out", ":/icons/exe_white.png"},
-        {"exe", ":/icons/exe_white.png"},
+        {"exe", ":/icons/exe_white.png"}, {"c",":/icons/c_white.png"}
     };
 
     inline QIcon GetFileIcon(const QString &name_or_suffix)
