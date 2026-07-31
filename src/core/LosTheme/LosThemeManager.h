@@ -2,11 +2,13 @@
 
 #pragma once
 #include <QHash>
-#include <QJsonObject>
 #include <QObject>
 #include <QString>
 #include <QStringList>
+#include <memory>
 #include <qtmetamacros.h>
+
+class QJsonObject;
 
 namespace LosCore
 {
@@ -31,14 +33,10 @@ namespace LosCore
 
       private:
         explicit LosThemeManager(QObject *parent = nullptr);
-        ~LosThemeManager() override = default;
-        Q_DISABLE_COPY(LosThemeManager)
-
-      private: /* tool */
-        QString applyTokens(const QString &templateText, const QHash<QString, QString> &tokens) const;
-        QString readResourceText(const QString &qrcPath) const;
+        ~LosThemeManager() override;
 
       private:
-        QString L_curTheme = QStringLiteral("dracula");
+        class Impl;
+        std::unique_ptr<Impl> L_themeManagerImpl;
     };
 } /* namespace LosCore */

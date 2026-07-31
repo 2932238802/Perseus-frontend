@@ -10,13 +10,27 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QJsonDocument>
+#include <QJsonObject>
 #include <QJsonParseError>
 #include <QStringList>
 #include <QTextStream>
 
-
 namespace LosCore
 {
+    /**
+     * @brief 私有实现: 隐藏 json 解析细节与当前主题状态
+     */
+    class LosThemeManager::Impl
+    {
+      public: /* tool */
+        QString applyTokens(const QString &templateText, const QHash<QString, QString> &tokens) const;
+        QString readResourceText(const QString &qrcPath) const;
+
+      public:
+        QString L_curTheme = QStringLiteral("dracula");
+    };
+
+
 
     /**
      * @brief 单例模式
@@ -36,7 +50,13 @@ namespace LosCore
      *
      * @param parent
      */
-    LosThemeManager::LosThemeManager(QObject *parent) : QObject(parent) {}
+    LosThemeManager::LosThemeManager(QObject *parent) : QObject(parent), L_themeManagerImpl(std::make_unique<Impl>()) {}
+
+
+    /**
+     * @brief Destroy the Los Theme Manager:: Los Theme Manager object
+     */
+    LosThemeManager::~LosThemeManager() = default;
 
 
     /**
@@ -70,7 +90,7 @@ namespace LosCore
      */
     QString LosThemeManager::currentTheme() const
     {
-        return L_curTheme;
+        return L_themeManagerImpl->L_curTheme;
     }
 
 
@@ -82,9 +102,9 @@ namespace LosCore
      */
     QString LosThemeManager::currentDisplayName() const
     {
-        const QJsonObject obj = themeJson(L_curTheme);
+        const QJsonObject obj = themeJson(L_themeManagerImpl->L_curTheme);
         const QString display = obj.value(QStringLiteral("displayName")).toString();
-        return display.isEmpty() ? L_curTheme : display;
+        return display.isEmpty() ? L_themeManagerImpl->L_curTheme : display;
     }
 
 
@@ -105,7 +125,7 @@ namespace LosCore
             WAR("theme not found: " + themeName, "LosThemeManager");
             return false;
         }
-        L_curTheme = themeName;
+        L_themeManagerImpl->L_curTheme = themeName;
         emit LosCore::LosRouter::instance()._cmd_themeChanged(themeName);
         if (persist)
         {
@@ -114,6 +134,7 @@ namespace LosCore
         SUC("theme switched: " + themeName, "LosThemeManager");
         return true;
     }
+
 
 
     /**
@@ -171,13 +192,13 @@ namespace LosCore
      */
     QString LosThemeManager::buildMainQss(const QString &themeName) const
     {
-        const QString tmpl = readResourceText(QStringLiteral(":/style/perseus_style.qss"));
+        const QString tmpl = L_themeManagerImpl->readResourceText(QStringLiteral(":/style/perseus_style.qss"));
         if (tmpl.isEmpty())
         {
             ERR("perseus_style.qss empty", "LosThemeManager");
             return QString();
         }
-        QString qss = applyTokens(tmpl, uiTokens(themeName));
+        QString qss = L_themeManagerImpl->applyTokens(tmpl, uiTokens(themeName));
         qss.replace(QStringLiteral("@fontFamily@"), LosFontManager::instance().qssFontDeclaration());
         return qss;
     }
@@ -193,19 +214,19 @@ namespace LosCore
      */
     QString LosThemeManager::buildExtraQss(const QString &templateText, const QString &themeName) const
     {
-        return applyTokens(templateText, uiTokens(themeName));
+        return L_themeManagerImpl->applyTokens(templateText, uiTokens(themeName));
     }
 
 
 
     /**
-     * @brief templateText 中的 @key@ 全部替换为 tokens[key]
+     * @brief Impl: templateText 中的 @key@ 全部替换为 tokens[key]
      *
      * @param templateText
      * @param tokens
      * @return QString
      */
-    QString LosThemeManager::applyTokens(const QString &templateText, const QHash<QString, QString> &tokens) const
+    QString LosThemeManager::Impl::applyTokens(const QString &templateText, const QHash<QString, QString> &tokens) const
     {
         QString out = templateText;
         for (auto it = tokens.cbegin(); it != tokens.cend(); ++it)
@@ -219,12 +240,12 @@ namespace LosCore
 
 
     /**
-     * @brief readResourceText
+     * @brief Impl: readResourceText
      *
      * @param qrcPath
      * @return QString
      */
-    QString LosThemeManager::readResourceText(const QString &qrcPath) const
+    QString LosThemeManager::Impl::readResourceText(const QString &qrcPath) const
     {
         QFile file(qrcPath);
         if (!file.open(QFile::ReadOnly | QFile::Text))

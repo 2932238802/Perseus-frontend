@@ -3,15 +3,32 @@
 #include "core/LosGitManager/LosGitManager.h"
 #include "core/LosRouter/LosRouter.h"
 #include "git2/errors.h"
+#include "git2/global.h"
 #include "git2/refs.h"
 #include "git2/repository.h"
 #include "git2/status.h"
 #include "git2/types.h"
+#include <QMap>
+#include <QSet>
 #include <cstddef>
 #include <qfileinfo.h>
 
 namespace LosCore
 {
+    /**
+     * @brief 私有实现: 隐藏 libgit2 句柄与文件状态缓存
+     */
+    class LosGitManager::Impl
+    {
+      public:
+        git_repository *L_repo = nullptr;
+        QString L_lastErr;
+        QMap<QString, unsigned int> L_filesStatus; // 绝对路径 -> 文件状态
+        QSet<QString> L_dirtyFolders;
+    };
+
+
+
     /**
      * @brief 单例模式
      *
@@ -24,12 +41,13 @@ namespace LosCore
     }
 
 
+
     /**
      * @brief Construct a new LosGitManager object
      * - 构造时初始化 libgit2 全局状态 引用计数 +1
      * @param parent
      */
-    LosGitManager::LosGitManager(QObject *parent) : QObject(parent)
+    LosGitManager::LosGitManager(QObject *parent) : QObject(parent), L_gitManagerImpl(std::make_unique<Impl>())
     {
         int err = git_libgit2_init();
         initConnect();
@@ -40,11 +58,7 @@ namespace LosCore
      * @brief Destroy the LosGitManager object
      * - 析构时关闭 libgit2（引用计数 -1归零时真正释放全局资源
      */
-    LosGitManager::~LosGitManager()
-    {
-        git_repository_free(L_repo);
-        git_libgit2_shutdown();
-    }
+    LosGitManager::~LosGitManager() = default;
 
 
 
@@ -70,20 +84,20 @@ namespace LosCore
      */
     bool LosGitManager::open(const QString &path)
     {
-        if (L_repo != nullptr)
+        if (L_gitManagerImpl->L_repo != nullptr)
         {
-            git_repository_free(L_repo);
-            L_repo = nullptr;
+            git_repository_free(L_gitManagerImpl->L_repo);
+            L_gitManagerImpl->L_repo = nullptr;
         }
-        int err = git_repository_open(&L_repo, path.toUtf8().constData());
+        int err = git_repository_open(&L_gitManagerImpl->L_repo, path.toUtf8().constData());
         if (err != 0)
         {
-            L_lastErr = lastErr();
-            L_repo    = nullptr;
+            L_gitManagerImpl->L_lastErr = lastErr();
+            L_gitManagerImpl->L_repo    = nullptr;
             return false;
         }
         // 成功了
-        L_lastErr.clear();
+        L_gitManagerImpl->L_lastErr.clear();
         return true;
     }
 
@@ -95,12 +109,12 @@ namespace LosCore
      */
     QString LosGitManager::curBranch() const
     {
-        if (L_repo == nullptr)
+        if (L_gitManagerImpl->L_repo == nullptr)
         {
             return QString{};
         }
         git_reference *head = nullptr;
-        int err             = git_repository_head(&head, L_repo);
+        int err             = git_repository_head(&head, L_gitManagerImpl->L_repo);
         if (err != 0)
         {
             return QString{};
@@ -123,10 +137,10 @@ namespace LosCore
      */
     void LosGitManager::status()
     {
-        if (L_repo == nullptr)
+        if (L_gitManagerImpl->L_repo == nullptr)
             return;
-        const char *workDir = git_repository_workdir(L_repo);
-        L_filesStatus.clear();
+        const char *workDir = git_repository_workdir(L_gitManagerImpl->L_repo);
+        L_gitManagerImpl->L_filesStatus.clear();
         if (workDir == nullptr)
             return;
         QString baseDir         = QString::fromUtf8(workDir);
@@ -134,10 +148,10 @@ namespace LosCore
         opts.show               = GIT_STATUS_SHOW_INDEX_AND_WORKDIR;
         opts.flags              = GIT_STATUS_OPT_INCLUDE_UNTRACKED | GIT_STATUS_OPT_RECURSE_UNTRACKED_DIRS;
         git_status_list *list   = nullptr; // 隐藏结构体
-        int err                 = git_status_list_new(&list, L_repo, &opts);
+        int err                 = git_status_list_new(&list, L_gitManagerImpl->L_repo, &opts);
         if (err != 0)
         {
-            L_lastErr = lastErr();
+            L_gitManagerImpl->L_lastErr = lastErr();
             return;
         };
         size_t count = git_status_list_entrycount(list);
@@ -160,11 +174,11 @@ namespace LosCore
                 continue;
             }
             QString absPath = baseDir + relPath;
-            L_filesStatus.insert(absPath, e->status);
+            L_gitManagerImpl->L_filesStatus.insert(absPath, e->status);
             QString fatherfolder = QFileInfo(absPath).absolutePath(); // 文件夹的路径
             while (fatherfolder.startsWith(baseDir) && fatherfolder.size() >= baseDir.size())
             {
-                L_dirtyFolders.insert(fatherfolder);
+                L_gitManagerImpl->L_dirtyFolders.insert(fatherfolder);
                 QString up = QFileInfo(fatherfolder).absolutePath();
                 if (up == fatherfolder)
                     break;
@@ -185,7 +199,7 @@ namespace LosCore
      */
     unsigned int LosGitManager::statusOfFile(const QString &absolute_file_path)
     {
-        return L_filesStatus.value(absolute_file_path, GIT_STATUS_CURRENT);
+        return L_gitManagerImpl->L_filesStatus.value(absolute_file_path, GIT_STATUS_CURRENT);
     }
 
 
@@ -199,7 +213,7 @@ namespace LosCore
      */
     bool LosGitManager::folderHasBeenChanged(const QString &absolut_folder_path)
     {
-        return L_dirtyFolders.contains(absolut_folder_path);
+        return L_gitManagerImpl->L_dirtyFolders.contains(absolut_folder_path);
     }
 
 

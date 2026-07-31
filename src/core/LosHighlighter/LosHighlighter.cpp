@@ -1,6 +1,7 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "core/LosHighlighter/LosHighlighter.h"
+#include "common/constants/ConstantsClass/LosHighligherClass.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "core/LosTheme/LosThemeManager.h"
 
@@ -8,24 +9,67 @@
 #include <QDebug>
 #include <QFile>
 #include <QFont>
+#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QMap>
+#include <QRegularExpression>
+#include <QStringList>
 #include <QTextBlock>
 #include <QTextCursor>
 #include <QTextFormat>
+#include <QVector>
+#include <memory>
 
 namespace LosCore
 {
     /**
+     * @brief 隐藏 语言/主题 json 解析细节 与 高亮规则状态
+     */
+    class LosHighlighter::Impl
+    {
+      public: // json
+        bool loadThemeFromJson(const QString &themePath);
+        bool loadLanguageFromJson(const QString &languagePath);
+        QTextCharFormat parseFormat(const QJsonObject &obj) const;
+        QString languageConfigPath() const;
+        QString themeConfigPath() const;
+
+      public:
+        LosCommon::LosToolChain_Constants::LosLanguage L_curLang = LosCommon::LosToolChain_Constants::LosLanguage::CXX;
+        QString L_curThemeName                                   = QStringLiteral("dracula");
+        QList<LosCommon::LosHighligher_Constants::HighlightRule> L_rules;
+        QTextCharFormat L_multiComment;
+        QRegularExpression L_commentStartExpression;
+        QRegularExpression L_commentEndExpression;
+        QMap<int, QList<LosCommon::LosHighligher_Constants::SemanticToken>> L_semanticData;
+        QVector<QTextCharFormat> L_semanticFormats;
+        QMap<QString, QTextCharFormat> L_themeConfig;
+        QStringList L_legendTokenTypes;
+        QStringList L_legendTokenModifiers;
+        bool L_hasMultiLineComment  = false;
+        int L_readonlyModifierIndex = -1;
+        int L_staticModifierIndex   = -1;
+    };
+
+
+
+    /**
      * @brief Construct a new Los Highlighter:: Los Highlighter object
      * @param doc
      */
-    LosHighlighter::LosHighlighter(QTextDocument *doc) : QSyntaxHighlighter{doc}
+    LosHighlighter::LosHighlighter(QTextDocument *doc) : QSyntaxHighlighter{doc}, L_highlighterImpl(std::make_unique<Impl>())
     {
         // 同步当前应用的主题, 防止硬编码 dracula 与全局主题不一致
-        L_curThemeName = LosCore::LosThemeManager::instance().currentTheme();
+        L_highlighterImpl->L_curThemeName = LosCore::LosThemeManager::instance().currentTheme();
         initRule();
     }
+
+
+    /**
+     * @brief Destroy the Los Highlighter:: Los Highlighter object
+     */
+    LosHighlighter::~LosHighlighter() = default;
 
 
 
@@ -38,20 +82,22 @@ namespace LosCore
     {
         highlightByRegex(str);
         int currentLine = currentBlock().blockNumber();
-        if (L_semanticData.contains(currentLine))
+        if (L_highlighterImpl->L_semanticData.contains(currentLine))
         {
-            for (const LosCommon::LosHighligher_Constants::SemanticToken &token : L_semanticData[currentLine])
+            for (const LosCommon::LosHighligher_Constants::SemanticToken &token : L_highlighterImpl->L_semanticData[currentLine])
             {
-                if (token.L_tokenType < L_semanticFormats.size())
+                if (token.L_tokenType < L_highlighterImpl->L_semanticFormats.size())
                 {
-                    QTextCharFormat format = L_semanticFormats.at(token.L_tokenType);
+                    QTextCharFormat format = L_highlighterImpl->L_semanticFormats.at(token.L_tokenType);
                     if (format.isValid())
                     {
-                        if (L_readonlyModifierIndex != -1 && (token.L_tokenModifiers & (1 << L_readonlyModifierIndex)))
+                        if (L_highlighterImpl->L_readonlyModifierIndex != -1 &&
+                            (token.L_tokenModifiers & (1 << L_highlighterImpl->L_readonlyModifierIndex)))
                         {
                             format.setFontItalic(true);
                         }
-                        if (L_staticModifierIndex != -1 && (token.L_tokenModifiers & (1 << L_staticModifierIndex)))
+                        if (L_highlighterImpl->L_staticModifierIndex != -1 &&
+                            (token.L_tokenModifiers & (1 << L_highlighterImpl->L_staticModifierIndex)))
                         {
                             format.setFontItalic(true);
                         }
@@ -110,7 +156,7 @@ namespace LosCore
      */
     void LosHighlighter::highlightByRegex(const QString &str)
     {
-        for (const LosCommon::LosHighligher_Constants::HighlightRule &rule : L_rules)
+        for (const LosCommon::LosHighligher_Constants::HighlightRule &rule : L_highlighterImpl->L_rules)
         {
             QRegularExpressionMatchIterator matchIt = rule.L_regex.globalMatch(str);
             while (matchIt.hasNext())
@@ -119,7 +165,7 @@ namespace LosCore
                 setFormat(match.capturedStart(), match.capturedLength(), rule.L_format);
             }
         }
-        if (!L_hasMultiLineComment)
+        if (!L_highlighterImpl->L_hasMultiLineComment)
         {
             setCurrentBlockState(0);
             return;
@@ -129,11 +175,11 @@ namespace LosCore
         int startIndex = 0;
         if (previousBlockState() != 1)
         {
-            startIndex = str.indexOf(L_commentStartExpression);
+            startIndex = str.indexOf(L_highlighterImpl->L_commentStartExpression);
         }
         while (startIndex >= 0)
         {
-            QRegularExpressionMatch match = L_commentEndExpression.match(str, startIndex);
+            QRegularExpressionMatch match = L_highlighterImpl->L_commentEndExpression.match(str, startIndex);
             int endIndex                  = match.capturedStart();
             int commentLenth              = 0;
             if (endIndex == -1)
@@ -145,8 +191,8 @@ namespace LosCore
             {
                 commentLenth = endIndex - startIndex + match.capturedLength();
             }
-            setFormat(startIndex, commentLenth, L_multiComment);
-            startIndex = str.indexOf(L_commentStartExpression, startIndex + commentLenth);
+            setFormat(startIndex, commentLenth, L_highlighterImpl->L_multiComment);
+            startIndex = str.indexOf(L_highlighterImpl->L_commentStartExpression, startIndex + commentLenth);
         }
     }
 
@@ -161,7 +207,7 @@ namespace LosCore
      */
     void LosHighlighter::updateSemanticTokens(const QJsonArray &data)
     {
-        L_semanticData.clear();
+        L_highlighterImpl->L_semanticData.clear();
         int currentLine = 0;
         int currentChar = 0;
         for (int i = 0; i + 4 < data.size(); i += 5)
@@ -180,7 +226,7 @@ namespace LosCore
             {
                 currentChar += deltaChar;
             }
-            L_semanticData[currentLine].append({currentChar, length, tokenType, modifiers});
+            L_highlighterImpl->L_semanticData[currentLine].append({currentChar, length, tokenType, modifiers});
         }
         QTextDocument *doc = document();
         bool wasModified   = doc->isModified();
@@ -199,24 +245,24 @@ namespace LosCore
      */
     void LosHighlighter::initSemanticLegend(const QStringList &legendTokenTypes, const QStringList &legendTokenModifiers)
     {
-        L_legendTokenTypes     = legendTokenTypes;
-        L_legendTokenModifiers = legendTokenModifiers;
-        L_semanticFormats.clear();
-        L_semanticFormats.resize(legendTokenTypes.size());
+        L_highlighterImpl->L_legendTokenTypes     = legendTokenTypes;
+        L_highlighterImpl->L_legendTokenModifiers = legendTokenModifiers;
+        L_highlighterImpl->L_semanticFormats.clear();
+        L_highlighterImpl->L_semanticFormats.resize(legendTokenTypes.size());
         for (int i = 0; i < legendTokenTypes.size(); ++i)
         {
             QString tokenName = legendTokenTypes.at(i);
-            if (L_themeConfig.contains(tokenName))
+            if (L_highlighterImpl->L_themeConfig.contains(tokenName))
             {
-                L_semanticFormats[i] = L_themeConfig.value(tokenName);
+                L_highlighterImpl->L_semanticFormats[i] = L_highlighterImpl->L_themeConfig.value(tokenName);
             }
             else
             {
-                L_semanticFormats[i] = QTextCharFormat();
+                L_highlighterImpl->L_semanticFormats[i] = QTextCharFormat();
             }
         }
-        L_readonlyModifierIndex = legendTokenModifiers.indexOf("readonly");
-        L_staticModifierIndex   = legendTokenModifiers.indexOf("static");
+        L_highlighterImpl->L_readonlyModifierIndex = legendTokenModifiers.indexOf("readonly");
+        L_highlighterImpl->L_staticModifierIndex   = legendTokenModifiers.indexOf("static");
     }
 
 
@@ -227,11 +273,11 @@ namespace LosCore
      */
     void LosHighlighter::setLang(LosCommon::LosToolChain_Constants::LosLanguage lang)
     {
-        if (L_curLang == lang)
+        if (L_highlighterImpl->L_curLang == lang)
         {
             return;
         }
-        L_curLang = lang;
+        L_highlighterImpl->L_curLang = lang;
         initRule();
         rehighlight();
     }
@@ -244,11 +290,11 @@ namespace LosCore
      */
     void LosHighlighter::setTheme(const QString &themeName)
     {
-        if (L_curThemeName == themeName)
+        if (L_highlighterImpl->L_curThemeName == themeName)
         {
             return;
         }
-        L_curThemeName = themeName;
+        L_highlighterImpl->L_curThemeName = themeName;
         initRule();
         rehighlight();
     }
@@ -260,31 +306,32 @@ namespace LosCore
      */
     void LosHighlighter::initRule()
     {
-        L_rules.clear();
-        L_themeConfig.clear();
-        L_multiComment           = QTextCharFormat();
-        L_commentStartExpression = QRegularExpression();
-        L_commentEndExpression   = QRegularExpression();
-        L_hasMultiLineComment    = false;
-        if (!loadThemeFromJson(themeConfigPath()))
+        LosHighlighter::Impl *impl = L_highlighterImpl.get();
+        impl->L_rules.clear();
+        impl->L_themeConfig.clear();
+        impl->L_multiComment           = QTextCharFormat();
+        impl->L_commentStartExpression = QRegularExpression();
+        impl->L_commentEndExpression   = QRegularExpression();
+        impl->L_hasMultiLineComment    = false;
+        if (!impl->loadThemeFromJson(impl->themeConfigPath()))
         {
-            loadThemeFromJson(QStringLiteral(":/highlight/themes/dracula.json"));
+            impl->loadThemeFromJson(QStringLiteral(":/highlight/themes/dracula.json"));
         }
-        loadLanguageFromJson(languageConfigPath());
-        if (!L_legendTokenTypes.isEmpty())
+        impl->loadLanguageFromJson(impl->languageConfigPath());
+        if (!impl->L_legendTokenTypes.isEmpty())
         {
-            initSemanticLegend(L_legendTokenTypes, L_legendTokenModifiers);
+            initSemanticLegend(impl->L_legendTokenTypes, impl->L_legendTokenModifiers);
         }
     }
 
 
 
     /**
-     * @brief loadThemeFromJson 从 json 中读取主题样式
+     * @brief Impl: loadThemeFromJson 从 json 中读取主题样式
      * @param themePath 主题 json 路径
      * @return 是否读取成功
      */
-    bool LosHighlighter::loadThemeFromJson(const QString &themePath)
+    bool LosHighlighter::Impl::loadThemeFromJson(const QString &themePath)
     {
         QFile file(themePath);
         if (!file.open(QIODevice::ReadOnly))
@@ -321,11 +368,11 @@ namespace LosCore
 
 
     /**
-     * @brief loadLanguageFromJson 从 json 中读取语言正则规则
+     * @brief Impl: loadLanguageFromJson 从 json 中读取语言正则规则
      * @param languagePath 语言 json 路径
      * @return 是否读取成功
      */
-    bool LosHighlighter::loadLanguageFromJson(const QString &languagePath)
+    bool LosHighlighter::Impl::loadLanguageFromJson(const QString &languagePath)
     {
         QFile file(languagePath);
         if (!file.open(QIODevice::ReadOnly))
@@ -398,11 +445,11 @@ namespace LosCore
 
 
     /**
-     * @brief parseFormat 把 json 样式转换成 QTextCharFormat
+     * @brief Impl: parseFormat 把 json 样式转换成 QTextCharFormat
      * @param obj json 样式对象
      * @return QTextCharFormat
      */
-    QTextCharFormat LosHighlighter::parseFormat(const QJsonObject &obj) const
+    QTextCharFormat LosHighlighter::Impl::parseFormat(const QJsonObject &obj) const
     {
         QTextCharFormat format;
 
@@ -437,10 +484,10 @@ namespace LosCore
 
 
     /**
-     * @brief languageConfigPath 获取当前语言配置路径
+     * @brief Impl: languageConfigPath 获取当前语言配置路径
      * @return 语言 json 路径
      */
-    QString LosHighlighter::languageConfigPath() const
+    QString LosHighlighter::Impl::languageConfigPath() const
     {
         if (L_curLang == LosCommon::LosToolChain_Constants::LosLanguage::PYTHON)
         {
@@ -453,10 +500,10 @@ namespace LosCore
 
 
     /**
-     * @brief themeConfigPath 获取当前主题配置路径
+     * @brief Impl: themeConfigPath 获取当前主题配置路径
      * @return 主题 json 路径
      */
-    QString LosHighlighter::themeConfigPath() const
+    QString LosHighlighter::Impl::themeConfigPath() const
     {
         return QStringLiteral(":/highlight/themes/%1.json").arg(L_curThemeName);
     }

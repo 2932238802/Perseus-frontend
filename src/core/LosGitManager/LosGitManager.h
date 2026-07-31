@@ -2,9 +2,7 @@
 
 #pragma once
 #include <QObject>
-#include <git2.h>
-#include <qmap.h>
-#include <qset.h>
+#include <memory>
 #include <qtmetamacros.h>
 
 namespace LosCore
@@ -35,10 +33,8 @@ namespace LosCore
         explicit LosGitManager(QObject *parent = nullptr);
         ~LosGitManager();
 
-      private: // params
-        git_repository *L_repo = nullptr;
-        QString L_lastErr;
-        QMap<QString, unsigned int> L_filesStatus; // 绝对路径 -> 文件状态
-        QSet<QString> L_dirtyFolders;
+      private:
+        class Impl;
+        std::unique_ptr<Impl> L_gitManagerImpl;
     };
 } // namespace LosCore
