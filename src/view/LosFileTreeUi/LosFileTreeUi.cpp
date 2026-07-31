@@ -413,6 +413,8 @@ namespace LosView
      */
     bool LosFileTreeUi::restoreExpandedState(const QSet<QString> &expand_paths, const QString &selected_path)
     {
+        // model() 返回的是 QAbstractItemModel
+        // class LosFileTreeModel : public QAbstractItemModel
         auto *treeModel = qobject_cast<LosModel::LosFileTreeModel *>(model());
         if (!treeModel)
             return false;
@@ -423,11 +425,12 @@ namespace LosView
 
             for (int i = 0; i < sons; i++)
             {
+
+                // 逐个获取当前父节点的第 i 行 第 0 列的模型索引
+                // 文件树通常只有第 0 列用于显示名称，所以使用
                 QModelIndex son = treeModel->index(i, 0, parent);
 
-                /*
-                 * 获取 内部 filenode
-                 */
+                // 获取 内部 filenode
                 LosModel::LosFileNode *node = treeModel->nodeFromIndex(son);
                 if (!node)
                     return;
@@ -438,7 +441,6 @@ namespace LosView
                     expand(son);
                     traverse(son);
                 }
-
                 if (path == selected_path)
                 {
                     /*
@@ -481,7 +483,7 @@ namespace LosView
                 }
             }
         };
-        traverse(QModelIndex()); /* 空 就是 从根开始 */
+        traverse(QModelIndex());
         return true;
     }
 

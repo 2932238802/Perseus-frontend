@@ -18,6 +18,9 @@ namespace LosCommon
         // inline const int ZOOM_MIN                 = 8;
         inline constexpr int ZOOM_MIN   = 8;
         inline constexpr int ZOOM_DELTA = 2;
+        // 文件树语言图标 随字体缩放的范围
+        inline constexpr int TREE_ICON_MIN = 14;
+        inline constexpr int TREE_ICON_MAX = 32;
 
     } /* namespace Perseus_Constants */
 } // namespace LosCommon

@@ -305,6 +305,10 @@ void Perseus::onZoomUi(int delta)
 
     ui->activity_bar_widget->setFixedWidth(activityBarWidth);
 
+    // 文件树语言图标 随字体缩放
+    const int treeIconSize = qBound(LosCommon::Perseus_Constants::TREE_ICON_MIN, fontHeight, LosCommon::Perseus_Constants::TREE_ICON_MAX);
+    ui->explorer_treeview->setIconSize(QSize(treeIconSize, treeIconSize));
+
     // 局部更新布局
     auto refreshWidget = [](QWidget *widget)
     {
