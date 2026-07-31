@@ -268,7 +268,7 @@ namespace LosView
     void LosEditorUi::insertCompletion(const QString &completion)
     {
         if (!LOS_completer)
-            return;     
+            return;
         QTextCursor qtc     = textCursor();
         const int prefixLen = LOS_completer->completionPrefix().size();
         qtc.beginEditBlock();
@@ -895,9 +895,9 @@ namespace LosView
         QScreen *screen = QGuiApplication::screenAt(anchor);
         if (!screen)
             screen = QGuiApplication::primaryScreen();
-        QRect available = screen ? screen->availableGeometry()
-                                 : QRect(0, 0, LosCommon::LosEditorUi_Constants::FALLBACK_SCREEN_W,
-                                         LosCommon::LosEditorUi_Constants::FALLBACK_SCREEN_H);
+        QRect available = screen
+                              ? screen->availableGeometry()
+                              : QRect(0, 0, LosCommon::LosEditorUi_Constants::FALLBACK_SCREEN_W, LosCommon::LosEditorUi_Constants::FALLBACK_SCREEN_H);
         QSize popupSize = L_hoverPopup->sizeHint();
         if (anchor.x() + popupSize.width() > available.right())
             anchor.setX(available.right() - popupSize.width() - LosCommon::LosEditorUi_Constants::HOVER_SCREEN_MARGIN);
@@ -1153,23 +1153,51 @@ namespace LosView
         static const QHash<QChar, QChar> AUTO_CLOSE_MAP{{'{', '}'}, {'[', ']'}, {'(', ')'}};
         if (!event->text().isEmpty())
         {
-            QChar inputChar = event->text().at(0);
+            const QChar inputChar = event->text().at(0);
+
+            /*
+             * 输入右括号时
+             * 如果光标右侧已经是相同的右括号，则直接跳过
+             * 避免把 () 输入成 ())
+             * 有选区时不跳过，保留 Qt 默认的“输入替换选区”行为
+             */
+            const QChar openingChar = AUTO_CLOSE_MAP.key(inputChar, QChar());
+
+            if (!openingChar.isNull())
+            {
+                QTextCursor cursor = textCursor();
+                if (!cursor.hasSelection() && document()->characterAt(cursor.position()) == inputChar)
+                {
+                    cursor.movePosition(QTextCursor::NextCharacter);
+                    setTextCursor(cursor);
+                    return;
+                }
+            }
+
+            /*
+             * 输入左括号时 自动补全对应的右括号
+             * 光标位于两个括号之间
+             * beginEditBlock/endEditBlock 使左右括号作为一次
+             * 撤销操作处理
+             */
             if (AUTO_CLOSE_MAP.contains(inputChar))
             {
-                /*
-                 * 把左右括号合并到同一个 editBlock 中，使 Ctrl+Z 一次就能
-                 * 撤销整对括号，而不是先撤右再撤左
-                 */
                 QTextCursor cursor = textCursor();
+
                 cursor.beginEditBlock();
+
                 cursor.insertText(QString(inputChar));
-                cursor.insertText(QString(AUTO_CLOSE_MAP[inputChar]));
+                cursor.insertText(QString(AUTO_CLOSE_MAP.value(inputChar)));
+
                 cursor.movePosition(QTextCursor::PreviousCharacter);
+
                 cursor.endEditBlock();
+
                 setTextCursor(cursor);
                 return;
             }
         }
+        
         QPlainTextEdit::keyPressEvent(event);
         if (L_showComplete && LOS_completer && LOS_completer->popup()->isVisible())
         {

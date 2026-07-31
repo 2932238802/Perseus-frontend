@@ -98,7 +98,7 @@ namespace LosCore
      * @brief 注入 QSS @fontFamily@ 占位符的字体声明
      * - 未选择时返回默认回退列表
      * - 与 perseus_style.qss 原行为一致
-     * - 用户选择时返回带引号的单个字体族 (QSS 中带空格的字族名必须加引号)
+     * - 用户选择时返回带引号的单个字体族
      *
      * @return QString
      */
