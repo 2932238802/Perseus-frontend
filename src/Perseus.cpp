@@ -683,10 +683,10 @@ void Perseus::initSession()
     LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, file);
     LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN, conf.LOS_authConfig.L_token);
     LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_USERNAME, conf.LOS_authConfig.L_username);
-
+    LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::CLANG_FORMAT, conf.LOS_formatConfig.L_clangFormat);
     // 设置字体
     // 定义
-    const int fontSize = qBound(LosCommon::Perseus_Constants::ZOOM_MIN, conf.LOS_sizeConfig.L_fontSize, LosCommon::Perseus_Constants::ZOOM_MAX);
+    const int fontSize = qBound(LosCommon::Perseus_Constants::ZOOM_MIN, conf.LOS_formatConfig.L_fontSize, LosCommon::Perseus_Constants::ZOOM_MAX);
     QFont font         = QApplication::font();
     font.setPointSize(fontSize);
     QApplication::setFont(font);
@@ -698,6 +698,8 @@ void Perseus::initSession()
     }
     if (!LOS_tabUi || !isSuc)
         return;
+
+    // 文件树 创建
     connect(
         &LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_fileTreeDone, this,
         [conf, this]()
@@ -746,9 +748,10 @@ LosCommon::LosSession_Constants::Config Perseus::collectConfig()
     LosCommon::LosSession_Constants::AuthConfig authConfig;
     authConfig.L_username = LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_USERNAME);
     authConfig.L_token    = LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN);
-    LosCommon::LosSession_Constants::SizeConfig sizeConfig;
-    sizeConfig.L_fontSize = QApplication::font().pointSize();
-    conf.LOS_sizeConfig   = sizeConfig;
-    conf.LOS_authConfig   = authConfig;
+    LosCommon::LosSession_Constants::FormatConfig formatConfig;
+    formatConfig.L_fontSize = QApplication::font().pointSize();
+    formatConfig.L_clangFormat = LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::CLANG_FORMAT);
+    conf.LOS_formatConfig   = formatConfig;
+    conf.LOS_authConfig     = authConfig;
     return conf;
 }

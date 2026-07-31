@@ -1,9 +1,11 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosSettingsUi.h"
+#include "common/constants/ConstantsStr/LosStateStr.h"
 #include "core/LosFont/LosFontManager.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
+#include "core/LosState/LosState.h"
 #include "core/LosTheme/LosThemeManager.h"
 
 #include "ui_LosSettingsUi.h"
@@ -13,9 +15,16 @@
 #include <QDir>
 #include <QFile>
 #include <QFont>
+#include <QFontMetrics>
+#include <QGuiApplication>
 #include <QJsonObject>
+#include <QListWidgetItem>
 #include <QPushButton>
+#include <QScreen>
+#include <QShowEvent>
 #include <QStringList>
+#include <QStyle>
+#include <QWindow>
 
 
 
@@ -35,11 +44,24 @@ namespace LosView
         initFontPage();
         initFormatPage();
         initConnect();
+
+        ui->category_list->setCurrentRow(0);
+        ui->pages_stack->setCurrentIndex(0);
+        updateCategoryListWidth();
     }
     LosSettingsUi::~LosSettingsUi()
     {
         delete ui;
     }
+
+
+
+    /**
+     * @brief
+     *
+     * @param event
+     */
+    void LosSettingsUi::showEvent(QShowEvent *event) {}
 
 
 
@@ -81,6 +103,23 @@ namespace LosView
         connect(ui->combo_font, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LosSettingsUi::onFontComboChanged);
         connect(ui->btn_format_reload, &QPushButton::clicked, this, &LosSettingsUi::onFormatReload);
         connect(ui->btn_format_save, &QPushButton::clicked, this, &LosSettingsUi::onFormatSave);
+    }
+
+
+
+    /**
+     * @brief
+     */
+    void LosSettingsUi::updateCategoryListWidth() {}
+
+
+
+    /**
+     * @brief
+     *
+     */
+    void LosSettingsUi::centerOnParent() // 居中 界面
+    {
     }
 
 
@@ -252,7 +291,9 @@ namespace LosView
 
     /**
      * @brief initThemePage
-     * - 填充主题下拉, 选中当前主题, 渲染初始预览
+     * - 填充主题下拉
+     * 选中当前主题
+     * 渲染初始预览
      */
     void LosSettingsUi::initThemePage()
     {
@@ -302,7 +343,7 @@ namespace LosView
 
     /**
      * @brief initFontPage
-     * - 枚举本机字体填充下拉, 选中当前字体, 首项为 "System Default"
+     * - 枚举本机字体填充下拉  选中当前字体 首项为 "System Default"
      */
     void LosSettingsUi::initFontPage()
     {
@@ -348,17 +389,6 @@ namespace LosView
 
 
     /**
-     * @brief clangFormatPath
-     * - 项目根目录下的 .clang-format 路径
-     */
-    static QString clangFormatPath()
-    {
-        return QDir::currentPath() + QStringLiteral("/.clang-format");
-    }
-
-
-
-    /**
      * @brief initFormatPage
      * - 打开设置时加载 .clang-format 内容到编辑区
      */
@@ -371,7 +401,7 @@ namespace LosView
 
     /**
      * @brief onFormatReload
-     * - 从磁盘重新读取 .clang-format, 覆盖编辑区(放弃未保存修改)
+     * 从 用户设置里面 进行读取
      */
     void LosSettingsUi::onFormatReload()
     {
@@ -379,22 +409,13 @@ namespace LosView
         {
             return;
         }
-        QFile file(clangFormatPath());
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            ui->edit_clang_format->setPlainText(QStringLiteral("# .clang-format not found in project root.\n"
-                                                               "# Type your config here and click Save to create it.\n"));
-            return;
-        }
-        ui->edit_clang_format->setPlainText(QString::fromUtf8(file.readAll()));
-        file.close();
+        ui->edit_clang_format->setPlainText(LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::CLANG_FORMAT));
     }
 
 
 
     /**
      * @brief onFormatSave
-     * - 把编辑区内容写回 .clang-format
      */
     void LosSettingsUi::onFormatSave()
     {
@@ -402,15 +423,7 @@ namespace LosView
         {
             return;
         }
-        QFile file(clangFormatPath());
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate))
-        {
-            ERR("cannot write .clang-format: " + clangFormatPath(), "LosSettingsUi");
-            return;
-        }
-        file.write(ui->edit_clang_format->toPlainText().toUtf8());
-        file.close();
-        SUC("saved .clang-format", "LosSettingsUi");
+        LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::CLANG_FORMAT, ui->edit_clang_format->toPlainText());
     }
 
 } /* namespace LosView */

@@ -134,9 +134,9 @@ namespace LosView
         QString L_searchText                                    = "";
         QTextDocument::FindFlags L_searchFlags                  = {};
         bool L_searchRegex                                      = false;
-        QList<QTextCursor> L_searchMatches                      = {};
-        LosView::LosCompleterUi *LOS_completer                  = nullptr;
-        LosCore::LosHighlighter *LOS_highlighter                = nullptr;
-        LosView::LosLineNumberUi *LOS_lineNumber                = nullptr;
+        QList<QTextCursor> L_searchMatches                      = {};      // 搜索匹配
+        LosView::LosCompleterUi *LOS_completer                  = nullptr; // 语法 补全
+        LosCore::LosHighlighter *LOS_highlighter                = nullptr; // 语法 高亮
+        LosView::LosLineNumberUi *LOS_lineNumber                = nullptr; // 数字号
     };
 } /* namespace LosView */

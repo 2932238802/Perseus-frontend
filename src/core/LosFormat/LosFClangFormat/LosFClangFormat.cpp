@@ -6,14 +6,26 @@
 #include "common/constants/ConstantsNum/LosFormatManagerNum.h"
 #include "common/constants/ConstantsStr/LLVM_formatStyle.h"
 #include "common/constants/ConstantsStr/LosFormatManagerStr.h"
+#include "common/constants/ConstantsStr/LosStateStr.h"
 #include "common/util/FindExePath.h"
 #include "core/LosLog/LosLog.h"
+#include "core/LosState/LosState.h"
 #include <QProcess>
 namespace LosCore
 {
-
     LosFClangFormat::LosFClangFormat(QObject *parent) : LosFormatBase(parent) {}
 
+
+
+    /**
+     * @brief format
+     *
+     * @param out
+     * @param file_path
+     * @param raw_content
+     * @return true
+     * @return false
+     */
     bool LosFClangFormat::format(QString *out, const QString &file_path, const QString &raw_content)
     {
         QProcess L_process;
@@ -25,8 +37,10 @@ namespace LosCore
 
         QStringList args;
         args << LosCommon::LosFormatManager_Constants::ASSUME_FILENAME_ASRS + file_path;
-        args << LosCommon::LosFormatManager_Constants::STYLE_ASRS + QString(LosCommon::LLVM_formatStyle::FORMAT_STYLE);
-
+        args << LosCommon::LosFormatManager_Constants::STYLE_ASRS + QString{"{"} +
+                    LosCore::LosState::instance().get(LosCommon::LosState_Constants::SG_STR::CLANG_FORMAT,
+                                                      LosCommon::LLVM_formatStyle::FORMAT_STYLE) +
+                    QString{"}"};
         auto opt = LosCommon::FindExePath(LosCommon::LosFormatManager_Constants::CLANG_FORMAT);
         if (!opt)
             return false;

@@ -32,6 +32,8 @@ namespace LosCommon
             AUTH_TOKEN,    // token
 
             AGENT_CUR_NAME,
+
+            CLANG_FORMAT,
         };
     } /* namespace LosState_Constants */
 } // namespace LosCommon

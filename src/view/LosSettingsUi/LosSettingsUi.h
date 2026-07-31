@@ -14,6 +14,8 @@ namespace Ui
 }
 QT_END_NAMESPACE
 
+class QShowEvent;
+
 namespace LosView
 {
     class LosSettingsUi : public QDialog
@@ -23,9 +25,14 @@ namespace LosView
         explicit LosSettingsUi(QWidget *parent = nullptr);
         ~LosSettingsUi();
 
+      protected:
+        void showEvent(QShowEvent *event) override;
+
       private: // init
         void initStyle();
         void initConnect();
+        void updateCategoryListWidth(); // 更新宽度
+        void centerOnParent();          // 居中 界面
 
       private: // private tool
         void setInstalled(LosCommon::LosToolChain_Constants::LosTool tool);
@@ -45,6 +52,7 @@ namespace LosView
         void onCMakeInstallBtnClicked();
 
       private:
+        bool L_hasInitialPosition = false;
         Ui::LosSettingsUi *ui;
     };
 }; /* namespace LosView */

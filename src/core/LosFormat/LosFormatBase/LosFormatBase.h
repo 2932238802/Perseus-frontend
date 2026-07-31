@@ -7,8 +7,10 @@
 
 namespace LosCore
 {
-
-
+    /**
+     * @brief
+     *
+     */
     class LosFormatBase : public QObject
     {
         Q_OBJECT

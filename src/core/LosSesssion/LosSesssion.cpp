@@ -2,6 +2,7 @@
 
 #include "LosSesssion.h"
 #include "common/constants/ConstantsNum/LosSessionNum.h"
+#include "common/constants/ConstantsStr/LLVM_formatStyle.h"
 #include "core/LosLog/LosLog.h"
 #include <QDir>
 #include <QFile>
@@ -97,8 +98,9 @@ namespace LosCore
             conf->LOS_authConfig.L_token    = authConfig["token"].toString();
             conf->LOS_authConfig.L_username = authConfig["username"].toString();
         }
-        QJsonObject sizeConfig          = root["sizeConfig"].toObject();
-        conf->LOS_sizeConfig.L_fontSize = sizeConfig["fontSize"].toInt(LosCommon::LosSession_Constants::DEFAULT_FONT_SIZE);
+        QJsonObject formatConfig          = root["formatConfig"].toObject();
+        conf->LOS_formatConfig.L_fontSize = formatConfig["fontSize"].toInt(LosCommon::LosSession_Constants::DEFAULT_FONT_SIZE);
+        conf->LOS_formatConfig.L_clangFormat = formatConfig["clangFormat"].toString(LosCommon::LLVM_formatStyle::FORMAT_STYLE);
         return true;
     }
 
@@ -130,9 +132,10 @@ namespace LosCore
         authConfig["username"] = conf.LOS_authConfig.L_username;
         authConfig["token"]    = conf.LOS_authConfig.L_token;
         obj["authConfig"]      = authConfig;
-        QJsonObject sizeConfig;
-        sizeConfig["fontSize"] = conf.LOS_sizeConfig.L_fontSize;
-        obj["sizeConfig"]      = sizeConfig;
+        QJsonObject formatConfig;
+        formatConfig["fontSize"] = conf.LOS_formatConfig.L_fontSize;
+        formatConfig["clangformat"] = conf.LOS_formatConfig.L_clangFormat;
+        obj["formatConfig"]      = formatConfig;
         QJsonDocument doc(obj);
         QFile file(getDefaultConfigAbsoluteFilePath());
         if (!file.open(QIODevice::WriteOnly | QIODevice::Text))

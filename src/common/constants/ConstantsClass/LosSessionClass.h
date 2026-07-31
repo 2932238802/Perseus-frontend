@@ -3,6 +3,7 @@
 
 #pragma once
 #include "common/constants/ConstantsNum/LosSessionNum.h"
+#include "common/constants/ConstantsStr/LLVM_formatStyle.h"
 #include <QString>
 #include <QStringList>
 
@@ -21,9 +22,13 @@ namespace LosCommon
             QString L_token    = "";
         };
 
-        struct SizeConfig
+        /**
+         * @brief 项目 格式 参数
+         */
+        struct FormatConfig
         {
             int L_fontSize = DEFAULT_FONT_SIZE;
+            QString L_clangFormat{LosCommon::LLVM_formatStyle::FORMAT_STYLE} ;
         };
 
         struct Config
@@ -34,7 +39,7 @@ namespace LosCommon
             QString L_themeName       = "dracula";
             QString L_fontName        = "";
             AuthConfig LOS_authConfig = {};
-            SizeConfig LOS_sizeConfig = {};
+            FormatConfig LOS_formatConfig = {};
         };
 
     } /* namespace LosSession_Constants */

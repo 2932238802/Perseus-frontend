@@ -1521,6 +1521,8 @@ namespace LosView
     {
         if (L_ctrlBtnPresses)
         {
+            // 点击了 ctrl 
+            // 
             updateHoverUnderline(event->pos());
         }
         // 鼠标离开当前悬停的单词矩形则隐藏 hover 浮窗
