@@ -5,6 +5,8 @@
 #include <QLineEdit>
 #include <QWidget>
 
+class QKeyEvent;
+
 
 namespace LosView
 {
@@ -19,6 +21,9 @@ namespace LosView
       public: /* get */
         int getLineNumber() const;
         QLineEdit *getLineEdit() const;
+
+      protected:
+        void keyPressEvent(QKeyEvent *event) override;
 
       private:
         QLineEdit *L_lineEdit;

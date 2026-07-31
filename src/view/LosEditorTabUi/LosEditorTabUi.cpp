@@ -477,29 +477,7 @@ namespace LosView
      */
     void LosEditorTabUi::onGotoLineShortcut()
     {
-        auto widget = getCurEditor();
-        if (!widget)
-            return;
-        auto *editor                               = qobject_cast<LosEditorUi *>(widget);
-        int maxLines                               = editor->document()->blockCount();
-        LosView::LosGotoLinePopupUi *contentWidget = new LosView::LosGotoLinePopupUi();
-        LosView::LosFloatingPanelUi *dialog        = new LosView::LosFloatingPanelUi(contentWidget, true, this);
-        connect(contentWidget->getLineEdit(), &QLineEdit::returnPressed, dialog, &QDialog::accept);
-        dialog->showAtPosition(editor, LosCommon::LosFloatingPanelUi_Constants::PositionMode::TopRight);
-        contentWidget->getLineEdit()->setFocus();
-        if (dialog->exec() == QDialog::Accepted)
-        {
-            int line = contentWidget->getLineNumber();
-            if (line > 0)
-            {
-                if (line > maxLines)
-                {
-                    line = maxLines;
-                }
-                editor->gotoLine(line - 1);
-            }
-        }
-        dialog->deleteLater();
+        showFindPopup(LosCommon::LosEditorTableUi_Constants::PopupKind::GotoLine);
     }
 
 
@@ -510,56 +488,201 @@ namespace LosView
      */
     void LosEditorTabUi::onFindShortcut()
     {
+        showFindPopup(LosCommon::LosEditorTableUi_Constants::PopupKind::Find);
+    }
+
+
+
+    /**
+     * @brief onReplaceShortcut
+     * 替换的快捷键
+     */
+    void LosEditorTabUi::onReplaceShortcut()
+    {
+        showFindPopup(LosCommon::LosEditorTableUi_Constants::PopupKind::Replace);
+    }
+
+
+
+    /**
+     * @brief onFindNextShortcut
+     * F3 查找下一个（基于编辑器内保留的搜索状态）
+     */
+    void LosEditorTabUi::onFindNextShortcut()
+    {
         auto widget = getCurEditor();
         if (!widget)
         {
             return;
         }
-        auto *edit                             = qobject_cast<LosEditorUi *>(widget);
-        LosView::LosFindPopupUi *contentWidget = new LosView::LosFindPopupUi();
-        LosView::LosFloatingPanelUi *dialog    = new LosView::LosFloatingPanelUi(contentWidget, true, this);
-        dialog->showAtPosition(edit, LosCommon::LosFloatingPanelUi_Constants::PositionMode::TopRight);
-        contentWidget->getEdit()->setFocus();
+        qobject_cast<LosEditorUi *>(widget)->searchNext();
+    }
 
-        connect(contentWidget->getEdit(), &QLineEdit::textChanged, contentWidget,
-                [edit, contentWidget](const QString &text)
+
+
+    /**
+     * @brief onFindPreviousShortcut
+     * Shift+F3 查找上一个（基于编辑器内保留的搜索状态）
+     */
+    void LosEditorTabUi::onFindPreviousShortcut()
+    {
+        auto widget = getCurEditor();
+        if (!widget)
+        {
+            return;
+        }
+        qobject_cast<LosEditorUi *>(widget)->searchPrevious();
+    }
+
+
+
+    /**
+     * @brief showFindPopup
+     * 打开查找 / 替换 / 跳转行弹窗。
+     * 弹窗打开期间按 Ctrl+F / Ctrl+H / Ctrl+G 会在三种弹窗之间互相切换，
+     * 切换以循环方式完成（关闭当前弹窗后继续打开目标弹窗）
+     *
+     * @param kind 初始弹窗类型
+     */
+    void LosEditorTabUi::showFindPopup(LosCommon::LosEditorTableUi_Constants::PopupKind kind)
+    {
+        while (true)
+        {
+            if (kind == LosCommon::LosEditorTableUi_Constants::PopupKind::GotoLine)
+            {
+                auto widget = getCurEditor();
+                if (!widget)
                 {
+                    return;
+                }
+                auto *editor                               = qobject_cast<LosEditorUi *>(widget);
+                int maxLines                               = editor->document()->blockCount();
+                LosView::LosGotoLinePopupUi *contentWidget = new LosView::LosGotoLinePopupUi();
+                LosView::LosFloatingPanelUi *dialog        = new LosView::LosFloatingPanelUi(contentWidget, true, this);
+                connect(contentWidget->getLineEdit(), &QLineEdit::returnPressed, dialog, &QDialog::accept);
+                connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_findPopupSwitchRequested, contentWidget,
+                        [this, dialog](bool with_replace)
+                        {
+                            L_pendingPopupKind = with_replace ? LosCommon::LosEditorTableUi_Constants::PopupKind::Replace
+                                                              : LosCommon::LosEditorTableUi_Constants::PopupKind::Find;
+                            dialog->reject();
+                        });
+                dialog->showAtPosition(editor, LosCommon::LosFloatingPanelUi_Constants::PositionMode::TopRight);
+                contentWidget->getLineEdit()->setFocus();
+                const bool accepted = dialog->exec() == QDialog::Accepted;
+                dialog->deleteLater();
+                if (accepted)
+                {
+                    int line = contentWidget->getLineNumber();
+                    if (line > 0)
+                    {
+                        if (line > maxLines)
+                        {
+                            line = maxLines;
+                        }
+                        editor->gotoLine(line - 1);
+                    }
+                }
+            }
+            else
+            {
+                auto widget = getCurEditor();
+                if (!widget)
+                {
+                    return;
+                }
+                auto *edit                             = qobject_cast<LosEditorUi *>(widget);
+                LosView::LosFindPopupUi *contentWidget = new LosView::LosFindPopupUi();
+                LosView::LosFloatingPanelUi *dialog    = new LosView::LosFloatingPanelUi(contentWidget, true, this);
+                contentWidget->setReplaceVisible(kind == LosCommon::LosEditorTableUi_Constants::PopupKind::Replace);
+                dialog->showAtPosition(edit, LosCommon::LosFloatingPanelUi_Constants::PositionMode::TopRight);
+                contentWidget->getEdit()->setFocus();
+
+                auto refreshSearch = [edit, contentWidget]()
+                {
+                    const QString text = contentWidget->getInput();
                     if (text.isEmpty())
                     {
                         edit->clearSearch();
                         contentWidget->setMatchInfo(0, 0);
                         return;
                     }
-                    edit->updateSearch(text);
+                    edit->updateSearch(text, contentWidget->getFlags(), contentWidget->isRegex());
                     contentWidget->setMatchInfo(edit->searchCurrentIndex(), edit->searchMatchCount());
-                });
-        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_findNextRequested, contentWidget,
-                [edit, contentWidget]()
-                {
-                    if (edit->searchNext())
-                    {
-                        contentWidget->setMatchInfo(edit->searchCurrentIndex(), edit->searchMatchCount());
-                    }
-                });
-        connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_findPreviousRequested, contentWidget,
-                [edit, contentWidget]()
-                {
-                    if (edit->searchPrevious())
-                    {
-                        contentWidget->setMatchInfo(edit->searchCurrentIndex(), edit->searchMatchCount());
-                    }
-                });
+                };
 
-        const QString curWord = edit->getWordUnderCursor();
-        if (!curWord.isEmpty())
-        {
-            contentWidget->getEdit()->setText(curWord);
-            contentWidget->getEdit()->selectAll();
+                connect(contentWidget->getEdit(), &QLineEdit::textChanged, contentWidget, refreshSearch);
+                connect(contentWidget, &LosView::LosFindPopupUi::searchOptionsChanged, contentWidget, refreshSearch);
+                connect(contentWidget, &LosView::LosFindPopupUi::resizeRequested, dialog, &QWidget::adjustSize);
+                connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_findNextRequested, contentWidget,
+                        [edit, contentWidget]()
+                        {
+                            if (edit->searchNext())
+                            {
+                                contentWidget->setMatchInfo(edit->searchCurrentIndex(), edit->searchMatchCount());
+                            }
+                        });
+                connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_findPreviousRequested, contentWidget,
+                        [edit, contentWidget]()
+                        {
+                            if (edit->searchPrevious())
+                            {
+                                contentWidget->setMatchInfo(edit->searchCurrentIndex(), edit->searchMatchCount());
+                            }
+                        });
+                connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_findReplaceRequested, contentWidget,
+                        [edit, contentWidget]()
+                        {
+                            if (edit->replaceCurrent(contentWidget->getReplaceInput()))
+                            {
+                                contentWidget->setMatchInfo(edit->searchCurrentIndex(), edit->searchMatchCount());
+                            }
+                        });
+                connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_findReplaceAllRequested, contentWidget,
+                        [edit, contentWidget]()
+                        {
+                            edit->replaceAll(contentWidget->getReplaceInput());
+                            contentWidget->setMatchInfo(edit->searchCurrentIndex(), edit->searchMatchCount());
+                        });
+                connect(&LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_gotoLinePopupSwitchRequested, contentWidget,
+                        [this, dialog]()
+                        {
+                            L_pendingPopupKind = LosCommon::LosEditorTableUi_Constants::PopupKind::GotoLine;
+                            dialog->reject();
+                        });
+
+                QString prefill;
+                const QTextCursor cur = edit->textCursor();
+                if (cur.hasSelection())
+                {
+                    prefill = cur.selectedText();
+                }
+                else if (!edit->getLastSearchText().isEmpty())
+                {
+                    prefill = edit->getLastSearchText();
+                }
+                else
+                {
+                    prefill = edit->getWordUnderCursor();
+                }
+                if (!prefill.isEmpty())
+                {
+                    contentWidget->getEdit()->setText(prefill);
+                    contentWidget->getEdit()->selectAll();
+                }
+
+                dialog->exec();
+                dialog->deleteLater();
+            }
+
+            const LosCommon::LosEditorTableUi_Constants::PopupKind next = L_pendingPopupKind;
+            L_pendingPopupKind                                          = LosCommon::LosEditorTableUi_Constants::PopupKind::None;
+            if (next == LosCommon::LosEditorTableUi_Constants::PopupKind::None)
+            {
+                return;
+            }
+            kind = next;
         }
-
-        dialog->exec();
-        edit->clearSearch();
-        dialog->deleteLater();
     }
 
 
@@ -728,6 +851,9 @@ namespace LosView
                                                         this->onGotoLineShortcut();
                                                     });
         LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::SEARCH_FIND, this, [this]() { this->onFindShortcut(); });
+        LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::SEARCH_REPLACE, this, [this]() { this->onReplaceShortcut(); });
+        LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::SEARCH_NEXT, this, [this]() { this->onFindNextShortcut(); });
+        LosCore::LosShortcutManager::instance().reg(LosCommon::ShortCut::SEARCH_PREVIOUS, this, [this]() { this->onFindPreviousShortcut(); });
     }
 
 

@@ -50,6 +50,9 @@ namespace LosView
         void onFileRenamed(const QString &old_path, const QString &new_path);
         void onGotoLineShortcut();
         void onFindShortcut();
+        void onReplaceShortcut();
+        void onFindNextShortcut();
+        void onFindPreviousShortcut();
         void onTogglePreview(const QString &absolute_file_path); // 切换当前标签页的预览状态
 
       private: // init
@@ -60,11 +63,13 @@ namespace LosView
       private: // tool
         void checkLspAnsFormat(const QString &file_path);
         void installCloseButton(int index);
+        void showFindPopup(LosCommon::LosEditorTableUi_Constants::PopupKind kind);
 
       private: // params
         QSet<LosCommon::LosToolChain_Constants::LosLanguage> L_checkedLanguage;
         QTabWidget *L_tabWidget;
         QMap<QString, LosView::LosEditorUi *> LOS_pathToUi;     // 左侧是 absoluteFilePath 就是全路径
         QMap<QString, LosView::LosPreview *> LOS_pathToPreview; // 预览的逻辑
+        LosCommon::LosEditorTableUi_Constants::PopupKind L_pendingPopupKind = LosCommon::LosEditorTableUi_Constants::PopupKind::None;
     };
 } /* namespace LosView */

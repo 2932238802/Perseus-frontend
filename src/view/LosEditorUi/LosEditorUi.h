@@ -7,6 +7,7 @@
 #include <QEvent>
 #include <QJsonArray>
 #include <QLabel>
+#include <QRegularExpression>
 #include <QSharedPointer>
 #include <QTextCursor>
 #include <QTextDocument>
@@ -48,12 +49,15 @@ namespace LosView
         void showDiagnostic(const QString &file_path, const QList<LosCommon::LosLsp_Constants::LosDiagnostic> &);
         void gotoLine(int line);
         void format();
-        void updateSearch(const QString &text, QTextDocument::FindFlags flags = QTextDocument::FindFlags());
+        void updateSearch(const QString &text, QTextDocument::FindFlags flags = QTextDocument::FindFlags(), bool regex = false);
         bool searchNext();
         bool searchPrevious();
+        bool replaceCurrent(const QString &replacement);
+        int replaceAll(const QString &replacement);
         void clearSearch();
         int searchMatchCount() const;
         int searchCurrentIndex() const;
+        QString getLastSearchText() const;
 
       public: // get
         QString getWordUnderCursor() const;
@@ -77,6 +81,8 @@ namespace LosView
         void updateHoverUnderline(const QPoint &vpPos);
         bool updateAutoIndent(QKeyEvent *event);
         void highlightCurrentLine();
+        void rebuildSearchHighlights();
+        QRegularExpression makeSearchExpr() const;
         bool repositionCompletionPopup();
         void showHoverPopup(const QString &html);
         void hideHoverPopup();
@@ -127,6 +133,7 @@ namespace LosView
         QList<QTextEdit::ExtraSelection> L_searchSelections     = {};
         QString L_searchText                                    = "";
         QTextDocument::FindFlags L_searchFlags                  = {};
+        bool L_searchRegex                                      = false;
         QList<QTextCursor> L_searchMatches                      = {};
         LosView::LosCompleterUi *LOS_completer                  = nullptr;
         LosCore::LosHighlighter *LOS_highlighter                = nullptr;

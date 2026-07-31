@@ -182,19 +182,38 @@ namespace LosView
 
 
     /**
-     * @brief updateSearch 
+     * @brief updateSearch
      * 更新搜索 高亮全部匹配并定位到第一个
      *
      * @param text 搜索词
      * @param flags 搜索选项
+     * @param regex 是否正则模式
      */
-    void LosEditorUi::updateSearch(const QString &text, QTextDocument::FindFlags flags)
+    void LosEditorUi::updateSearch(const QString &text, QTextDocument::FindFlags flags, bool regex)
     {
-        L_searchText    = text;
-        L_searchFlags   = flags;
-        L_searchMatches = LosCore::LosFinder::findAll(document(), text, flags);
+        L_searchText  = text;
+        L_searchFlags = flags;
+        L_searchRegex = regex;
+        rebuildSearchHighlights();
+        if (!L_searchText.isEmpty() && !L_searchMatches.isEmpty())
+        {
+            setTextCursor(L_searchMatches.first());
+            centerCursor();
+        }
+    }
+
+
+
+    /**
+     * @brief rebuildSearchHighlights
+     * 重新计算匹配并重建高亮（不移动光标）
+     */
+    void LosEditorUi::rebuildSearchHighlights()
+    {
+        L_searchMatches = L_searchRegex ? LosCore::LosFinder::findAll(document(), makeSearchExpr())
+                                        : LosCore::LosFinder::findAll(document(), L_searchText, L_searchFlags);
         L_searchSelections.clear();
-        if (!text.isEmpty())
+        if (!L_searchText.isEmpty())
         {
             QTextCharFormat format;
             format.setBackground(QColor(LosCommon::LosEditorUi_Constants::SEARCH_HL_BG_COLOR));
@@ -205,13 +224,31 @@ namespace LosView
                 selection.format = format;
                 L_searchSelections.append(selection);
             }
-            if (!L_searchMatches.isEmpty())
-            {
-                setTextCursor(L_searchMatches.first());
-                centerCursor();
-            }
         }
         highlightCurrentLine();
+    }
+
+
+
+    /**
+     * @brief makeSearchExpr
+     * 根据搜索状态构造正则表达式
+     *
+     * @return QRegularExpression
+     */
+    QRegularExpression LosEditorUi::makeSearchExpr() const
+    {
+        QRegularExpression::PatternOptions options;
+        if (!(L_searchFlags & QTextDocument::FindCaseSensitively))
+        {
+            options |= QRegularExpression::CaseInsensitiveOption;
+        }
+        QString pattern = L_searchText;
+        if (L_searchFlags & QTextDocument::FindWholeWords)
+        {
+            pattern = QString("\\b(?:%1)\\b").arg(pattern);
+        }
+        return QRegularExpression(pattern, options);
     }
 
 
@@ -262,9 +299,100 @@ namespace LosView
     void LosEditorUi::clearSearch()
     {
         L_searchText.clear();
+        L_searchFlags = {};
+        L_searchRegex = false;
         L_searchMatches.clear();
         L_searchSelections.clear();
         highlightCurrentLine();
+    }
+
+
+
+    /**
+     * @brief replaceCurrent 替换当前选中的匹配，并跳到下一个匹配
+     *
+     * @param replacement 替换文本
+     * @return bool 是否替换成功
+     */
+    bool LosEditorUi::replaceCurrent(const QString &replacement)
+    {
+        if (L_searchText.isEmpty() || L_searchMatches.isEmpty())
+        {
+            return false;
+        }
+        const int current = searchCurrentIndex();
+        if (current <= 0)
+        {
+            return false;
+        }
+        const int oldPos = L_searchMatches.at(current - 1).selectionStart();
+        QTextCursor edit(L_searchMatches.at(current - 1));
+        edit.beginEditBlock();
+        edit.insertText(replacement);
+        edit.endEditBlock();
+        rebuildSearchHighlights();
+        if (L_searchMatches.isEmpty())
+        {
+            return true;
+        }
+        int nextIndex = 1;
+        for (int i = 0; i < L_searchMatches.size(); ++i)
+        {
+            if (L_searchMatches.at(i).selectionStart() > oldPos)
+            {
+                nextIndex = i + 1;
+                break;
+            }
+        }
+        setTextCursor(L_searchMatches.at(nextIndex - 1));
+        centerCursor();
+        return true;
+    }
+
+
+
+    /**
+     * @brief replaceAll 从后往前替换全部匹配
+     *
+     * @param replacement 替换文本
+     * @return int 替换数量
+     */
+    int LosEditorUi::replaceAll(const QString &replacement)
+    {
+        if (L_searchText.isEmpty() || L_searchMatches.isEmpty())
+        {
+            return 0;
+        }
+        const int count = L_searchMatches.size();
+        QTextCursor edit(document());
+        edit.beginEditBlock();
+        for (int i = L_searchMatches.size() - 1; i >= 0; --i)
+        {
+            const QTextCursor &match = L_searchMatches.at(i);
+            edit.setPosition(match.selectionStart());
+            edit.setPosition(match.selectionEnd(), QTextCursor::KeepAnchor);
+            edit.insertText(replacement);
+        }
+        edit.endEditBlock();
+        rebuildSearchHighlights();
+        if (!L_searchMatches.isEmpty())
+        {
+            setTextCursor(L_searchMatches.first());
+            centerCursor();
+        }
+        return count;
+    }
+
+
+
+    /**
+     * @brief getLastSearchText 获取上次搜索词（弹窗关闭后仍保留，用于重新打开时预填）
+     *
+     * @return QString
+     */
+    QString LosEditorUi::getLastSearchText() const
+    {
+        return L_searchText;
     }
 
 

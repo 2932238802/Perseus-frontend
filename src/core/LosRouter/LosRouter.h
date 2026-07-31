@@ -62,6 +62,12 @@ namespace LosCore
         // 查找 (Ctrl+F) 下一个 / 上一个 的请求
         void _cmd_findNextRequested();
         void _cmd_findPreviousRequested();
+        // 替换 (Ctrl+H) 当前匹配 / 全部匹配 的请求
+        void _cmd_findReplaceRequested();
+        void _cmd_findReplaceAllRequested();
+        // 查找 / 跳转行 弹窗之间互相切换的请求
+        void _cmd_findPopupSwitchRequested(bool with_replace); // goto-line 弹窗发出，切到查找(false)/替换(true)
+        void _cmd_gotoLinePopupSwitchRequested();              // 查找弹窗发出，切到跳转行
 
         // 对左侧 文件树的各种操作 复制 删除 粘贴 等等
         void _cmd_fileSystemChanged();

@@ -32,6 +32,8 @@ namespace LosCommon
         inline constexpr const char *LINE_MOVE_DOWN      = "Alt+Down";       /* 将当前行向下移动 */
         inline constexpr const char *SEARCH_FIND         = "Ctrl+F";         /* 呼出页内查找 */
         inline constexpr const char *SEARCH_REPLACE      = "Ctrl+H";         /* 呼出页内替换 */
+        inline constexpr const char *SEARCH_NEXT         = "F3";             /* 查找下一个 */
+        inline constexpr const char *SEARCH_PREVIOUS     = "Shift+F3";       /* 查找上一个 */
         inline constexpr const char *GOTO_LINE           = "Ctrl+G";         /* 跳转到指定行 */
         inline constexpr const char *GOTO_DEFINITION     = "F12";            /* 跳转到定义 */
         inline constexpr const char *TOGGLE_EXPLORER     = "Ctrl+Shift+E";   /* 显示/隐藏左侧文件树 */
