@@ -8,7 +8,7 @@
  *    @key@ 占位符替换成主题 JSON (resources/highlight/themes/*.json)
  *    中 ui 节定义的颜色字符串, 再通过 setStyleSheet 应用.
  *
- *    所有占位符列表 (与 ui 节字段一一对应):
+ * 所有占位符列表 (与 ui 节字段一一对应):
  *      @background@        @panelBg@           @borderStrong@
  *      @selection@         @muted@             @primary@
  *      @foreground@        @primaryHover@      @primaryPressed@
@@ -17,6 +17,7 @@
  *      @mutedAlpha50@      @mutedAlpha55@
  *      @primaryAlpha70@    @primaryAlpha75@
  *      @successAlpha26@    @successAlpha45@
+ *      @fontFamily@ (全局字体, 由 LosFontManager 注入, 非主题 json)
  * ============================================================ */
 
 
@@ -31,7 +32,7 @@ QMainWindow {
 
 * {
     outline: none;
-    font-family: "Microsoft YaHei", "Segoe UI", sans-serif;
+    font-family: @fontFamily@;
 }
 
 QWidget {

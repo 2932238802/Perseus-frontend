@@ -1,6 +1,7 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosSettingsUi.h"
+#include "core/LosFont/LosFontManager.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosTheme/LosThemeManager.h"
@@ -11,6 +12,7 @@
 #include <QDialogButtonBox>
 #include <QDir>
 #include <QFile>
+#include <QFont>
 #include <QJsonObject>
 #include <QPushButton>
 #include <QStringList>
@@ -30,6 +32,7 @@ namespace LosView
         ui->setupUi(this);
         initStyle();
         initThemePage();
+        initFontPage();
         initFormatPage();
         initConnect();
     }
@@ -75,6 +78,7 @@ namespace LosView
         connect(ui->btn_install_cmake, &QPushButton::clicked, this, &LosSettingsUi::onCMakeInstallBtnClicked);
         connect(&router, &LosCore::LosRouter::_cmd_findExePathAndSetSettingUi, this, &LosSettingsUi::onFindExePath);
         connect(ui->combo_theme, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LosSettingsUi::onThemeComboChanged);
+        connect(ui->combo_font, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &LosSettingsUi::onFontComboChanged);
         connect(ui->btn_format_reload, &QPushButton::clicked, this, &LosSettingsUi::onFormatReload);
         connect(ui->btn_format_save, &QPushButton::clicked, this, &LosSettingsUi::onFormatSave);
     }
@@ -292,6 +296,53 @@ namespace LosView
             return;
         }
         LosCore::LosThemeManager::instance().setTheme(themeName);
+    }
+
+
+
+    /**
+     * @brief initFontPage
+     * - 枚举本机字体填充下拉, 选中当前字体, 首项为 "System Default"
+     */
+    void LosSettingsUi::initFontPage()
+    {
+        if (!ui->combo_font)
+        {
+            return;
+        }
+        ui->combo_font->blockSignals(true);
+        ui->combo_font->clear();
+        ui->combo_font->addItem(QStringLiteral("System Default"), QString());
+        const QStringList all = LosCore::LosFontManager::instance().availableFonts();
+        for (const auto &family : all)
+        {
+            ui->combo_font->addItem(family, family);
+            ui->combo_font->setItemData(ui->combo_font->count() - 1, QFont(family), Qt::FontRole);
+        }
+        const QString cur  = LosCore::LosFontManager::instance().currentFontFamily();
+        const int curIndex = ui->combo_font->findData(cur);
+        if (curIndex >= 0)
+        {
+            ui->combo_font->setCurrentIndex(curIndex);
+        }
+        ui->combo_font->blockSignals(false);
+    }
+
+
+
+    /**
+     * @brief onFontComboChanged
+     * - 立即生效:
+     * - 通过 FontManager 切换全局字体
+     */
+    void LosSettingsUi::onFontComboChanged(int index)
+    {
+        if (index < 0 || !ui->combo_font)
+        {
+            return;
+        }
+        const QString family = ui->combo_font->itemData(index).toString();
+        LosCore::LosFontManager::instance().setFontFamily(family);
     }
 
 

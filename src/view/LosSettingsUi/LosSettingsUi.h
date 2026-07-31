@@ -30,12 +30,14 @@ namespace LosView
       private: // private tool
         void setInstalled(LosCommon::LosToolChain_Constants::LosTool tool);
         void initThemePage();
+        void initFontPage();
         void initFormatPage();
 
       private slots: // chs
         void onSaveSettings();
         void onFindExePath(const QString &file_path, LosCommon::LosToolChain_Constants::LosTool tool);
         void onThemeComboChanged(int index);
+        void onFontComboChanged(int index);
         void onFormatReload();
         void onFormatSave();
 

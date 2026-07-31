@@ -1129,16 +1129,16 @@
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QLabel" name="label_desc_theme">
-           <property name="text">
-            <string>Choose a color theme for the editor and UI. The change applies immediately.</string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
+          <item>
+           <widget class="QLabel" name="label_desc_theme">
+            <property name="text">
+             <string>Choose a color theme and UI font for the editor and UI. The changes apply immediately.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
          <item>
           <layout class="QHBoxLayout" name="hbox_theme_select">
            <item>
@@ -1179,8 +1179,48 @@
            </item>
           </layout>
          </item>
-         <item>
-          <spacer name="verticalSpacer_theme">
+          <item>
+           <layout class="QHBoxLayout" name="hbox_font_select">
+            <item>
+             <widget class="QLabel" name="label_font_select">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string>Font:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="combo_font">
+              <property name="minimumSize">
+               <size>
+                <width>240</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="hspacer_font_select">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_theme">
            <property name="orientation">
             <enum>Qt::Vertical</enum>
            </property>

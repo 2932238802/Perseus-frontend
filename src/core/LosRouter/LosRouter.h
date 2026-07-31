@@ -190,6 +190,9 @@ namespace LosCore
         // 主题切换部分
         void _cmd_themeChanged(const QString &themeName);
 
+        // 全局字体切换部分
+        void _cmd_fontChanged(const QString &fontFamily);
+
 
 
         // ----------------------------------------------------------------------------

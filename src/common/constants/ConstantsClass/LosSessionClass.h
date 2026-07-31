@@ -32,6 +32,7 @@ namespace LosCommon
             QString L_curProDir       = "";
             QString L_curActiveFile   = "";
             QString L_themeName       = "dracula";
+            QString L_fontName        = "";
             AuthConfig LOS_authConfig = {};
             SizeConfig LOS_sizeConfig = {};
         };

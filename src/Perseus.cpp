@@ -9,6 +9,7 @@
 #include "common/constants/ConstantsStr/ShortCut.h"
 #include "core/LosAgent/LosAgentManager/LosAgentManager.h"
 #include "core/LosConfig/LosConfigManager/LosConfigManager.h"
+#include "core/LosFont/LosFontManager.h"
 #include "core/LosGitManager/LosGitManager.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosLsp/LosLspManager/LosLspManager.h"
@@ -506,6 +507,8 @@ void Perseus::initConnect()
     connect(&router, &LosCore::LosRouter::_cmd_bottomTabVisibilityChanged, this, &Perseus::onBottomVisibilityChanged);
     connect(&router, &LosCore::LosRouter::_cmd_themeChanged, this,
             [this](const QString &name) { this->setStyleSheet(LosCore::LosThemeManager::instance().buildMainQss(name)); });
+    connect(&router, &LosCore::LosRouter::_cmd_fontChanged, this, [this](const QString &)
+            { this->setStyleSheet(LosCore::LosThemeManager::instance().buildMainQss(LosCore::LosThemeManager::instance().currentTheme())); });
     connect(ui->act_explorer_btn, &QPushButton::clicked, this, [this]() { ui->left_panel_stack->setCurrentIndex(0); });
     connect(ui->act_extensions_btn, &QPushButton::clicked, this,
             [this]()
@@ -670,6 +673,10 @@ void Perseus::initSession()
     {
         LosCore::LosThemeManager::instance().setTheme(conf.L_themeName);
     }
+    if (!conf.L_fontName.isEmpty())
+    {
+        LosCore::LosFontManager::instance().setFontFamily(conf.L_fontName);
+    }
     LosModel::LosFilePath file(conf.L_curProDir);
     bool isSuc = file.isExist();
     LosCore::LosState::instance().set<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR, file);
@@ -734,6 +741,7 @@ LosCommon::LosSession_Constants::Config Perseus::collectConfig()
     conf.L_curProDir     = LosCore::LosState::instance().get<LosModel::LosFilePath>(LosCommon::LosState_Constants::SG_STR::PROJECT_DIR).getFilePath();
     conf.L_curActiveFile = LOS_tabUi->getCurFilePath();
     conf.L_themeName     = LosCore::LosThemeManager::instance().currentTheme();
+    conf.L_fontName      = LosCore::LosFontManager::instance().currentFontFamily();
     LosCommon::LosSession_Constants::AuthConfig authConfig;
     authConfig.L_username = LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_USERNAME);
     authConfig.L_token    = LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN);

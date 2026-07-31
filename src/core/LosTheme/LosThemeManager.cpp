@@ -2,6 +2,7 @@
 
 #include "LosThemeManager.h"
 
+#include "core/LosFont/LosFontManager.h"
 #include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
 
@@ -176,7 +177,9 @@ namespace LosCore
             ERR("perseus_style.qss empty", "LosThemeManager");
             return QString();
         }
-        return applyTokens(tmpl, uiTokens(themeName));
+        QString qss = applyTokens(tmpl, uiTokens(themeName));
+        qss.replace(QStringLiteral("@fontFamily@"), LosFontManager::instance().qssFontDeclaration());
+        return qss;
     }
 
 

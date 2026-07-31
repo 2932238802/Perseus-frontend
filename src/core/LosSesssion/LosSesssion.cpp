@@ -68,19 +68,20 @@ namespace LosCore
             ERR("invalid config file format", "LosSession");
             return false;
         }
-        QJsonObject root = doc.object();
+        QJsonObject root  = doc.object();
         conf->L_curProDir = root["projectPath"].toString();
         if (!conf->L_curProDir.isEmpty() && !QDir(conf->L_curProDir).exists())
         {
             WAR("project path no longer exists: " + conf->L_curProDir, "LosSession");
             conf->L_curProDir = "";
         }
-        conf->L_curActiveFile = root["activeFile"].toString();
+        conf->L_curActiveFile   = root["activeFile"].toString();
         const QString themeName = root["themeName"].toString();
         if (!themeName.isEmpty())
         {
             conf->L_themeName = themeName;
         }
+        conf->L_fontName      = root["fontName"].toString();
         QJsonArray filesArray = root["openFiles"].toArray();
         for (const auto &fileVal : filesArray)
         {
@@ -91,12 +92,12 @@ namespace LosCore
             }
         }
         QJsonObject authConfig = root["authConfig"].toObject();
-        if(!authConfig.isEmpty())
+        if (!authConfig.isEmpty())
         {
-            conf->LOS_authConfig.L_token = authConfig["token"].toString();
+            conf->LOS_authConfig.L_token    = authConfig["token"].toString();
             conf->LOS_authConfig.L_username = authConfig["username"].toString();
         }
-        QJsonObject sizeConfig = root["sizeConfig"].toObject();
+        QJsonObject sizeConfig          = root["sizeConfig"].toObject();
         conf->LOS_sizeConfig.L_fontSize = sizeConfig["fontSize"].toInt(LosCommon::LosSession_Constants::DEFAULT_FONT_SIZE);
         return true;
     }
@@ -104,12 +105,12 @@ namespace LosCore
 
 
     /**
-     * @brief saveConfig 
+     * @brief saveConfig
      * 保存信息
-     * 
-     * @param conf 
-     * @return true 
-     * @return false 
+     *
+     * @param conf
+     * @return true
+     * @return false
      */
     bool LosSession::saveConfig(const LosCommon::LosSession_Constants::Config &conf)
     {
@@ -123,14 +124,15 @@ namespace LosCore
         }
         obj["openFiles"] = filesList;
         obj["themeName"] = conf.L_themeName;
+        obj["fontName"]  = conf.L_fontName;
         obj["version"]   = 1;
         QJsonObject authConfig;
         authConfig["username"] = conf.LOS_authConfig.L_username;
         authConfig["token"]    = conf.LOS_authConfig.L_token;
-        obj["authConfig"] = authConfig;
+        obj["authConfig"]      = authConfig;
         QJsonObject sizeConfig;
         sizeConfig["fontSize"] = conf.LOS_sizeConfig.L_fontSize;
-        obj["sizeConfig"] = sizeConfig;
+        obj["sizeConfig"]      = sizeConfig;
         QJsonDocument doc(obj);
         QFile file(getDefaultConfigAbsoluteFilePath());
         if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
