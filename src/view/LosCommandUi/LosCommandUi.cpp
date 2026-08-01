@@ -25,7 +25,11 @@
 
 namespace LosView
 {
-
+    /**
+     * @brief Construct a new Los Command Ui:: Los Command Ui object
+     *
+     * @param parent
+     */
     LosCommandUi::LosCommandUi(QWidget *parent) : QDialog(parent)
     {
         initStyle();
@@ -34,6 +38,13 @@ namespace LosView
     }
 
 
+
+    /**
+     * @brief regis
+     *
+     * @param display
+     * @param cmd_info
+     */
     void LosCommandUi::regis(const QString &display, const LosCommon::LosCommandUi_Constants::CommandsInfo &cmd_info)
     {
         L_commands.insert(display, cmd_info);
@@ -41,9 +52,12 @@ namespace LosView
     }
 
 
-    /*
-     * - 显示搜索的 框
-     * @param anchor 定位锚点（当前编辑器），面板居中于锚点；空则不做定位
+
+    /**
+     * @brief 显示搜索的 框
+     *
+     *
+     * @param anchor
      */
     void LosCommandUi::showPalette(QWidget *anchor)
     {
@@ -67,8 +81,8 @@ namespace LosView
 
 
 
-    /*
-     * - 初始化 央视
+    /**
+     * @brief 初始化
      */
     void LosCommandUi::initStyle()
     {
@@ -118,17 +132,15 @@ namespace LosView
                     this->setStyleSheet(qss);
                     applyZoomScale();
                 });
-        // Popup 窗口可能收不到 FontChange，显式跟随应用字体变化
-        connect(qApp, &QApplication::fontChanged, this, [this](const QFont &) { applyZoomScale(); });
     }
 
 
 
     /**
      * @brief applyZoomScale
-     * 按全局应用字体相对设计基准（DEFAULT_FONT_SIZE）等比缩放：
+     * 按全局应用字体相对设计基准 DEFAULT_FONT_SIZE 等比缩放
      * - 面板固定尺寸
-     * - 搜索框 / 列表字体（样式表不再写死 font-size，此处强制同步）
+     * - 搜索框 / 列表字体 样式表不再写死 font-size 此处强制同步
      */
     void LosCommandUi::applyZoomScale()
     {
@@ -156,6 +168,10 @@ namespace LosView
 
 
 
+    /**
+     * @brief initScanLocalPlugins
+     * 扫描 当地的插件
+     */
     void LosCommandUi::initScanLocalPlugins()
     {
         QString extDir = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/.perseus/extensions/";
@@ -172,8 +188,10 @@ namespace LosView
 
 
 
-    /*
-     * - 文本的 改动
+    /**
+     * @brief 文本修改
+     *
+     * @param text
      */
     void LosCommandUi::onSearchTextChanged(const QString &text)
     {
@@ -198,8 +216,8 @@ namespace LosView
 
 
 
-    /*
-     * - 执行 选中的 item
+    /**
+     * @brief  执行 选中的 item
      */
     void LosCommandUi::executeSelectedItem()
     {
@@ -363,8 +381,13 @@ namespace LosView
 
 
 
-    /*
-     * - 过滤掉 一些 按键
+    /**
+     * @brief 过滤 掉 一些 值
+     *
+     * @param watched
+     * @param event
+     * @return true
+     * @return false
      */
     bool LosCommandUi::eventFilter(QObject *watched, QEvent *event)
     {
@@ -434,6 +457,11 @@ namespace LosView
 
 
 
+    /**
+     * @brief focusOutEvent
+     *
+     * @param event
+     */
     void LosCommandUi::focusOutEvent(QFocusEvent *event)
     {
         hide();
@@ -442,6 +470,11 @@ namespace LosView
 
 
 
+    /**
+     * @brief changeEvent
+     *
+     * @param event
+     */
     void LosCommandUi::changeEvent(QEvent *event)
     {
         if (event->type() == QEvent::FontChange || event->type() == QEvent::ApplicationFontChange)
@@ -468,6 +501,4 @@ namespace LosView
         }
         return QDialog::event(event);
     }
-
-
 } /* namespace LosView */

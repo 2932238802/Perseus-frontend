@@ -9,11 +9,17 @@
 #include "common/constants/ConstantsStr/LosStateStr.h"
 #include "common/util/FindExePath.h"
 #include "core/LosLog/LosLog.h"
+#include "core/LosRouter/LosRouter.h"
 #include "core/LosState/LosState.h"
+
+#include <QObject>
 #include <QProcess>
 namespace LosCore
 {
-    LosFClangFormat::LosFClangFormat(QObject *parent) : LosFormatBase(parent) {}
+    LosFClangFormat::LosFClangFormat(QObject *parent) : LosFormatBase(parent)
+    {
+        initConnect();
+    }
 
 
 
@@ -37,10 +43,7 @@ namespace LosCore
 
         QStringList args;
         args << LosCommon::LosFormatManager_Constants::ASSUME_FILENAME_ASRS + file_path;
-        args << LosCommon::LosFormatManager_Constants::STYLE_ASRS + QString{"{"} +
-                    LosCore::LosState::instance().get(LosCommon::LosState_Constants::SG_STR::CLANG_FORMAT,
-                                                      LosCommon::LLVM_formatStyle::FORMAT_STYLE) +
-                    QString{"}"};
+        args << L_formatStyle;
         auto opt = LosCommon::FindExePath(LosCommon::LosFormatManager_Constants::CLANG_FORMAT);
         if (!opt)
             return false;
@@ -87,5 +90,29 @@ namespace LosCore
         SUC("Code formatt successfully", "LosFormatManager");
         return true;
     }
+
+
+
+    /**
+     * @brief chs 设置 clangformat
+     *
+     * @param str
+     */
+    void LosFClangFormat::setClangFormat(const QString &str) noexcept
+    {
+        L_formatStyle = QString{"{"} + (str.isEmpty() ? LosCommon::LLVM_formatStyle::FORMAT_STYLE : str) + QString{"}"};
+    }
+
+
+
+    /**
+     * @brief 初始化连接
+     */
+    void LosFClangFormat::initConnect() noexcept
+    {
+        auto &router = LosCore::LosRouter::instance();
+        connect(&router, &LosRouter::_cmd_clangFormatSet, this, &LosFClangFormat::setClangFormat);
+    }
+
 
 } /* namespace LosCore */

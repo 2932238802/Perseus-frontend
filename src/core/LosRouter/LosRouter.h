@@ -121,6 +121,7 @@ namespace LosCore
         // ----------------------------------------------------------------------------
         // 用户设定 信号 设置 要打开 设置窗口
         void _cmd_manuallySet(const LosCommon::LosToolChain_Constants::ToolChainConfig &config);
+        void _cmd_clangFormatSet(const QString &clang_format_str);
 
 
 

@@ -92,6 +92,14 @@ namespace LosView
         connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [this]() { accept(); });
         connect(ui->buttonBox, &QDialogButtonBox::rejected, this, [this]() { reject(); });
         connect(ui->category_list, &QListWidget::currentRowChanged, ui->pages_stack, &QStackedWidget::setCurrentIndex);
+        connect(ui->category_list, &QListWidget::currentRowChanged, this,
+                [this](int row)
+                {
+                    if (ui->pages_stack->widget(row) == ui->page_format)
+                    {
+                        onFormatReload();
+                    }
+                });
         QPushButton *applyBtn = ui->buttonBox->button(QDialogButtonBox::Apply);
         if (applyBtn)
         {
@@ -391,6 +399,7 @@ namespace LosView
     /**
      * @brief initFormatPage
      * - 打开设置时加载 .clang-format 内容到编辑区
+     * TODO: 这里可能要删除 因为 初始化顺序的问题 几乎没有什么用
      */
     void LosSettingsUi::initFormatPage()
     {
@@ -409,7 +418,9 @@ namespace LosView
         {
             return;
         }
-        ui->edit_clang_format->setPlainText(LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::CLANG_FORMAT));
+        QString format{LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::CLANG_FORMAT)};
+        ui->edit_clang_format->setPlainText(format);
+        emit LosCore::LosRouter::instance()._cmd_clangFormatSet(format); // 更新运行 器 里面的缓存
     }
 
 
@@ -423,7 +434,9 @@ namespace LosView
         {
             return;
         }
-        LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::CLANG_FORMAT, ui->edit_clang_format->toPlainText());
+        QString format{ui->edit_clang_format->toPlainText()};
+        LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::CLANG_FORMAT, format);
+        emit LosCore::LosRouter::instance()._cmd_clangFormatSet(format);
     }
 
 } /* namespace LosView */

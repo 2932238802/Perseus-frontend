@@ -11,10 +11,10 @@ namespace LosCore
     class LosFontManager : public QObject
     {
         Q_OBJECT
-      public:
+      public: // 单例模式
         static LosFontManager &instance();
 
-      public: // api 
+      public: // api
         QStringList availableFonts() const;
         QString currentFontFamily() const;
         bool setFontFamily(const QString &family, bool persist = true);

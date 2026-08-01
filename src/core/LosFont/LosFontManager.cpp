@@ -85,7 +85,7 @@ namespace LosCore
         emit LosCore::LosRouter::instance()._cmd_fontChanged(family);
         if (persist)
         {
-            // 持久化由 LosSession 
+            // 持久化由 LosSession
             // 在主窗口关闭时统一处理
         }
         SUC("font switched: " + (family.isEmpty() ? QStringLiteral("(system default)") : family), "LosFontManager");
