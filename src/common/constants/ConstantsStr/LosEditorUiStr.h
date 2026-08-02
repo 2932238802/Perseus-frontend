@@ -52,6 +52,7 @@ namespace LosCommon
         inline constexpr const char *MD_FENCE_CPP   = "```cpp\n";
         inline constexpr const char *MD_FENCE_C     = "```c\n";
         inline constexpr const char *MD_FENCE_RUST  = "```rust\n";
+        inline constexpr const char *MD_FENCE_CMAKE = "```cmake\n";
         inline constexpr const char *MD_FENCE_PLAIN = "```";
 
         inline constexpr const char *HOVER_CODE_BLOCK_OPEN     = "<pre style='color:#8be9fd; font-family:Consolas; margin: 5px 0;'>";

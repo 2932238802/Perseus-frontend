@@ -1,7 +1,8 @@
 # Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 cmake_minimum_required(VERSION 3.18)
-project(Perseus VERSION 0.1 LANGUAGES CXX)
+# 可以直接 再后面 加入 C 支持 C语言的编译
+project(Perseus VERSION 0.1 LANGUAGES CXX C)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_AUTOUIC ON)
@@ -37,6 +38,14 @@ file(GLOB_RECURSE CORE_SOURCES
 )
 
 add_library(PerseusCore STATIC ${CORE_SOURCES})
+add_library(tree_sitter STATIC
+    third_party/tree-sitter/lib/src/lib.c
+)
+add_library(tree_sitter_cpp STATIC
+    third_party/tree-sitter-cpp/src/parser.c
+    third_party/tree-sitter-cpp/src/scanner.c
+)
+
 
 # libgit2
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
@@ -50,14 +59,40 @@ set(USE_NSEC  OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(third_party/libgit2)
 
-target_link_libraries(PerseusCore PUBLIC libgit2package)
 
-# std::stacktrace (C++23) 的实现库
+target_link_libraries(PerseusCore PUBLIC libgit2package)
+target_link_libraries(PerseusCore PUBLIC tree_sitter tree_sitter_cpp)
 target_link_libraries(PerseusCore PUBLIC stdc++exp)
+
 
 target_include_directories(PerseusCore PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libgit2/include
 )
+target_include_directories(tree_sitter
+    PUBLIC  third_party/tree-sitter/lib/include
+    PRIVATE third_party/tree-sitter/lib/src
+)
+target_include_directories(tree_sitter_cpp
+    PRIVATE third_party/tree-sitter-cpp/src
+)
+
+set_target_properties(tree_sitter PROPERTIES
+    C_STANDARD 11
+    C_EXTENSIONS ON
+    POSITION_INDEPENDENT_CODE ON
+    AUTOMOC OFF
+    AUTOUIC OFF
+    AUTORCC OFF
+)
+set_target_properties(tree_sitter_cpp PROPERTIES
+    C_STANDARD 11
+    C_EXTENSIONS ON
+    POSITION_INDEPENDENT_CODE ON
+    AUTOMOC OFF
+    AUTOUIC OFF
+    AUTORCC OFF
+)
+
 target_include_directories(PerseusCore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 target_link_libraries(PerseusCore PUBLIC

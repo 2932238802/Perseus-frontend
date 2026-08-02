@@ -17,6 +17,7 @@
 #include "models/LosFilePath/LosFilePath.h"
 #include "view/LosCompleterUi/LosCompleterUi.h"
 #include "view/LosLineNumberUi/LosLineNumberUi.h"
+
 #include <QAbstractItemView>
 #include <QApplication>
 #include <QCompleter>
@@ -974,6 +975,36 @@ namespace LosView
 
 
     /**
+     * @brief onHover_CMake
+     * - 处理 neocmakelsp 返回的 hover Markdown
+     * - 与 Clangd/Rust 版本基本一致, 区别在代码块语言标记是 ```cmake
+     *
+     * @param markdownContent
+     */
+    void LosEditorUi::onHover_CMake(const QString &markdownContent)
+    {
+        if (markdownContent.isEmpty())
+        {
+            hideHoverPopup();
+            return;
+        }
+        QString html = markdownContent;
+        html.replace("&", "&amp;");
+        html.replace("<", "&lt;");
+        html.replace(">", "&gt;");
+        html.replace(LosCommon::LosEditorUi_Constants::MD_FENCE_CMAKE, LosCommon::LosEditorUi_Constants::HOVER_CODE_BLOCK_OPEN);
+        html.replace(LosCommon::LosEditorUi_Constants::MD_FENCE_PLAIN, LosCommon::LosEditorUi_Constants::HOVER_CODE_BLOCK_CLOSE);
+        QRegularExpression boldRegex(LosCommon::LosEditorUi_Constants::HOVER_BOLD_REGEX);
+        html.replace(boldRegex, LosCommon::LosEditorUi_Constants::HOVER_BOLD_REPLACE);
+        QRegularExpression inlineCodeRegex(LosCommon::LosEditorUi_Constants::HOVER_INLINE_CODE_REGEX);
+        html.replace(inlineCodeRegex, LosCommon::LosEditorUi_Constants::HOVER_INLINE_CODE_REPLACE);
+        html.replace("\n", LosCommon::LosEditorUi_Constants::HOVER_LINE_BREAK);
+        showHoverPopup(html);
+    }
+
+
+
+    /**
      * @brief hideCompletionPopup
      */
     void LosEditorUi::hideCompletionPopup()
@@ -1116,6 +1147,11 @@ namespace LosView
         case LosCommon::LosToolChain_Constants::LosLanguage::RUST:
         {
             onHover_Rust(markdownContent);
+            break;
+        }
+        case LosCommon::LosToolChain_Constants::LosLanguage::CMAKE:
+        {
+            onHover_CMake(markdownContent);
             break;
         }
         default:
@@ -1521,8 +1557,8 @@ namespace LosView
     {
         if (L_ctrlBtnPresses)
         {
-            // 点击了 ctrl 
-            // 
+            // 点击了 ctrl
+            //
             updateHoverUnderline(event->pos());
         }
         // 鼠标离开当前悬停的单词矩形则隐藏 hover 浮窗

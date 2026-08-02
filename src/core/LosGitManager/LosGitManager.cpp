@@ -23,7 +23,7 @@ namespace LosCore
       public:
         git_repository *L_repo = nullptr;
         QString L_lastErr;
-        QMap<QString, unsigned int> L_filesStatus; // 绝对路径 -> 文件状态
+        QMap<QString, unsigned int> L_filesStatus;
         QSet<QString> L_dirtyFolders;
     };
 
@@ -120,7 +120,8 @@ namespace LosCore
             return QString{};
         }
         QString res;
-        const char *name = git_reference_shorthand(head); // git_reference_shorthand 名字更短
+        // git_reference_shorthand 名字更短
+        const char *name = git_reference_shorthand(head);
         if (name != nullptr)
         {
             res = QString::fromUtf8(name);
@@ -239,8 +240,7 @@ namespace LosCore
 
 
     /**
-     * @brief
-     *
+     * @brief 初始化连接
      */
     void LosGitManager::initConnect()
     {

@@ -23,6 +23,7 @@ namespace LosCore
         void openFile(const QString &file_path, const QString &file_context);
         void changeFile(const QString &file_path, const QString &file_context);
         void requestCompletion(const QString &file_path, int line, int col);
+        void requestHover(const QString &file_path, int line, int col);
         void toDefineRequest(int line, int col, const QString &file_path);
         void didChangeWatchedFiles(const QString &file_path, int type);
 

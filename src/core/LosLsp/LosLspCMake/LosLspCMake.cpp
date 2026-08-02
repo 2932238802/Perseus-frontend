@@ -172,11 +172,11 @@ namespace LosCore
                     QJsonObject result   = obj["result"].toObject();
                     QJsonObject contents = result["contents"].toObject();
                     QString hoverText    = contents["value"].toString();
-                    emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath,hoverText);
+                    emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath, hoverText);
                 }
                 else
                 {
-                    emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath,"");
+                    emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath, "");
                 }
                 break;
             }
@@ -277,8 +277,6 @@ namespace LosCore
         connect(L_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this,
                 [this](int code, QProcess::ExitStatus status) { INF("QProcess finished, code: " + QString::number(code), "LosLspCMake"); });
         auto &router = LosCore::LosRouter::instance();
-        connect(&router, &LosRouter::_cmd_lsp_request_hover, this,
-                [this](const QString &filePath, int line, int col) { this->requestHover(filePath, line, col); });
     }
 
 

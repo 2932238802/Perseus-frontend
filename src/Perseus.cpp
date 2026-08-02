@@ -151,10 +151,8 @@ void Perseus::OnFileLoaded(bool isc, bool run_analysis)
                                          {
                                              QString dir     = it.next();
                                              QString dirName = QFileInfo(dir).fileName();
-                                             /* 跳过 build/ 及其所有子目录 */
                                              if (dir == buildDirPath || dir.startsWith(buildDirPath + QDir::separator()))
                                                  continue;
-                                             /* 跳过 .git 版本控制目录 */
                                              if (dirName == ".git")
                                                  continue;
                                              L_filesWatcher->addPath(dir);
@@ -749,9 +747,9 @@ LosCommon::LosSession_Constants::Config Perseus::collectConfig()
     authConfig.L_username = LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_USERNAME);
     authConfig.L_token    = LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN);
     LosCommon::LosSession_Constants::FormatConfig formatConfig;
-    formatConfig.L_fontSize = QApplication::font().pointSize();
+    formatConfig.L_fontSize    = QApplication::font().pointSize();
     formatConfig.L_clangFormat = LosCore::LosState::instance().get<QString>(LosCommon::LosState_Constants::SG_STR::CLANG_FORMAT);
-    conf.LOS_formatConfig   = formatConfig;
-    conf.LOS_authConfig     = authConfig;
+    conf.LOS_formatConfig      = formatConfig;
+    conf.LOS_authConfig        = authConfig;
     return conf;
 }

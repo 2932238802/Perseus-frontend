@@ -3,7 +3,6 @@
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="${SCRIPT_DIR}"
-LIBGIT2_DIR="${PROJECT_ROOT}/third_party/libgit2"
 cd "${PROJECT_ROOT}"
 
 set -euo pipefail
@@ -83,53 +82,92 @@ sudo apt-get install -y \
     x11-apps
 
 
-echo -e "${GREEN}[7/8] 正在准备 libgit2 源码...${NC}"
+echo -e "${GREEN}[7/8] 正在准备第三方依赖源码...${NC}"
 
 mkdir -p "${PROJECT_ROOT}/third_party"
 
-if [ -f "${PROJECT_ROOT}/.gitmodules" ] &&
-   git -C "${PROJECT_ROOT}" ls-files --stage -- third_party/libgit2 |
-   grep -q '^160000 '; then
+# 从 .gitmodules 读取全部子模块路径
+mapfile -t SUBMODULE_PATHS < <(git -C "${PROJECT_ROOT}" config -f "${PROJECT_ROOT}/.gitmodules" \
+    --get-regexp '^submodule\..*\.path$' 2>/dev/null | awk '{print $2}')
 
-    echo -e "${BLUE}检测到 libgit2 Git 子模块，正在初始化...${NC}"
+prepare_submodule() {
+    local sub_path="$1"
+    local sub_dir="${PROJECT_ROOT}/${sub_path}"
+    # 子模块名: third_party/libgit2 -> LIBGIT2, third_party/tree-sitter -> TREE_SITTER
+    local sub_key
+    sub_key="$(basename "${sub_path}" | tr '[:lower:]-' '[:upper:]_')"
 
-    git -C "${PROJECT_ROOT}" submodule update \
-        --init \
-        --recursive \
-        -- third_party/libgit2
+    # 支持环境变量覆盖: LIBGIT2_REF / LIBGIT2_URL / TREE_SITTER_REF ...
+    local sub_ref="${sub_key}_REF"
+    local sub_url="${sub_key}_URL"
+    local ref_value="${!sub_ref:-}"
+    local url_value="${!sub_url:-}"
 
-elif [ -f "${LIBGIT2_DIR}/CMakeLists.txt" ]; then
+    if [ -z "${url_value}" ]; then
+        url_value="$(git -C "${PROJECT_ROOT}" config -f "${PROJECT_ROOT}/.gitmodules" \
+            --get "submodule.${sub_path}.url" 2>/dev/null || true)"
+    fi
 
-    echo -e "${BLUE}检测到已有 libgit2 源码，跳过下载${NC}"
+    if git -C "${PROJECT_ROOT}" ls-files --stage -- "${sub_path}" |
+        grep -q '^160000 '; then
 
-elif [ -e "${LIBGIT2_DIR}" ]; then
+        echo -e "${BLUE}检测到 ${sub_path} Git 子模块，正在初始化...${NC}"
 
-    echo -e "${RED}错误：${NC}"
-    echo -e "  ${LIBGIT2_DIR} 已存在，但不是有效的 libgit2 源码目录。"
-    echo -e "  请清理该目录后重新执行，或者手动放入 libgit2 源码。"
-    exit 1
+        git -C "${PROJECT_ROOT}" submodule update \
+            --init \
+            --recursive \
+            -- "${sub_path}"
 
+    elif [ -f "${sub_dir}/CMakeLists.txt" ]; then
+
+        echo -e "${BLUE}检测到已有 ${sub_path} 源码，跳过下载${NC}"
+
+    elif [ -e "${sub_dir}" ]; then
+
+        echo -e "${RED}错误：${NC}"
+        echo -e "  ${sub_dir} 已存在，但不是有效的源码目录。"
+        echo -e "  请清理该目录后重新执行，或者手动放入源码。"
+        exit 1
+
+    else
+
+        if [ -z "${url_value}" ]; then
+            echo -e "${RED}错误：${sub_path} 缺少下载地址（.gitmodules 未配置）${NC}"
+            exit 1
+        fi
+
+        echo -e "${BLUE}未检测到 ${sub_path} 子模块，正在下载...${NC}"
+
+        if [ -n "${ref_value}" ]; then
+            git clone \
+                --depth 1 \
+                --branch "${ref_value}" \
+                "${url_value}" \
+                "${sub_dir}"
+        else
+            git clone \
+                --depth 1 \
+                "${url_value}" \
+                "${sub_dir}"
+        fi
+    fi
+
+    if [ ! -f "${sub_dir}/CMakeLists.txt" ]; then
+        echo -e "${RED}错误：${sub_path} 源码准备失败${NC}"
+        echo -e "缺少文件：${sub_dir}/CMakeLists.txt"
+        exit 1
+    fi
+
+    echo -e "${GREEN}${sub_path} 源码准备完成${NC}"
+}
+
+if [ "${#SUBMODULE_PATHS[@]}" -eq 0 ]; then
+    echo -e "${RED}警告：未在 .gitmodules 中发现任何子模块配置${NC}"
 else
-
-    LIBGIT2_REF="${LIBGIT2_REF:-v1.8.4}"
-    LIBGIT2_URL="${LIBGIT2_URL:-https://github.com/libgit2/libgit2.git}"
-
-    echo -e "${BLUE}未检测到 libgit2 子模块，正在下载 ${LIBGIT2_REF}...${NC}"
-
-    git clone \
-        --depth 1 \
-        --branch "${LIBGIT2_REF}" \
-        "${LIBGIT2_URL}" \
-        "${LIBGIT2_DIR}"
+    for sub_path in "${SUBMODULE_PATHS[@]}"; do
+        prepare_submodule "${sub_path}"
+    done
 fi
-
-if [ ! -f "${LIBGIT2_DIR}/CMakeLists.txt" ]; then
-    echo -e "${RED}错误：libgit2 源码准备失败${NC}"
-    echo -e "缺少文件：${LIBGIT2_DIR}/CMakeLists.txt"
-    exit 1
-fi
-
-echo -e "${GREEN}libgit2 源码准备完成${NC}"
 
 
 echo -e "${GREEN}[8/8] 正在验证开发环境...${NC}"
@@ -158,6 +196,24 @@ check_tool "GDB" gdb --version
 check_tool "Git" git --version
 check_tool "qmake5" qmake5 --version
 check_tool "qmake6" qmake6 --version
+
+echo
+check_submodule() {
+    local sub_path="$1"
+
+    printf "  %-20s" "${sub_path}"
+
+    if [ -f "${PROJECT_ROOT}/${sub_path}/CMakeLists.txt" ]; then
+        echo -e "${GREEN}已就绪${NC}"
+    else
+        echo -e "${RED}缺失${NC}"
+    fi
+}
+
+echo -e "${YELLOW}第三方依赖源码：${NC}"
+for sub_path in "${SUBMODULE_PATHS[@]}"; do
+    check_submodule "${sub_path}"
+done
 
 echo
 echo -e "${BLUE}========================================================${NC}"

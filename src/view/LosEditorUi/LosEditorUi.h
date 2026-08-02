@@ -13,10 +13,8 @@
 #include <QTextDocument>
 #include <QTimer>
 #include <QWidget>
-
-#include <qplaintextedit.h>
-
 #include <atomic>
+#include <qplaintextedit.h>
 
 namespace LosModel
 {
@@ -90,6 +88,7 @@ namespace LosView
         void clearHoverUnderline();
         void onHover_Clangd(const QString &markdownContent);
         void onHover_Rust(const QString &markdownContent);
+        void onHover_CMake(const QString &markdownContent);
 
       private slots: // chs
         void onContentsChange(int from, int charsRemoved, int charsAdded);

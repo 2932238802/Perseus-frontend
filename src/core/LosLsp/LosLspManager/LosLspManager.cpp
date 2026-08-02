@@ -3,11 +3,11 @@
 #include "LosLspManager.h"
 #include "common/util/CheckLang.h"
 #include "common/util/GetLangId.h"
+#include "core/LosLog/LosLog.h"
 #include "core/LosLsp/LosLspCMake/LosLspCMake.h"
 #include "core/LosLsp/LosLspClangd/LosLspClangd.h"
 #include "core/LosLsp/LosLspPython/LosLspPython.h"
 #include "core/LosLsp/LosLspRust/LosLspRust.h"
-#include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
 #include "models/LosFilePath/LosFilePath.h"
 
@@ -58,6 +58,16 @@ namespace LosCore
         if (auto client = getClient(file_path))
         {
             client->requestCompletion(file_path, line, col);
+        }
+    }
+
+
+
+    void LosLspManager::requestHover(const QString &file_path, int line, int col)
+    {
+        if (auto client = getClient(file_path))
+        {
+            client->requestHover(file_path, line, col);
         }
     }
 
@@ -114,6 +124,7 @@ namespace LosCore
         connect(&router, &LosRouter::_cmd_lsp_request_openFile, this, &LosLspManager::openFile);
         connect(&router, &LosRouter::_cmd_lsp_request_textChanged, this, &LosLspManager::changeFile);
         connect(&router, &LosRouter::_cmd_lsp_request_completeion, this, &LosLspManager::requestCompletion);
+        connect(&router, &LosRouter::_cmd_lsp_request_hover, this, &LosLspManager::requestHover);
         connect(&router, &LosRouter::_cmd_whereDefine, this, &LosLspManager::toDefineRequest);
         connect(&router, &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this, &LosLspManager::didChangeWatchedFiles);
         connect(&router, &LosRouter::_cmd_lspReady, this, &LosLspManager::onLspReady);
@@ -236,6 +247,7 @@ namespace LosCore
         }
         if (newClient)
         {
+            INF("111 -> " + newPath, "111");
             newClient->didChangeWatchedFiles(newPath, LosCommon::LosLsp_Constants::LspJson_didChangeWatchedFiles_changes_type::Created);
             QFile f(newPath);
             if (f.open(QIODevice::ReadOnly | QIODevice::Text))

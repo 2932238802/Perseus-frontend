@@ -47,8 +47,6 @@ namespace LosCore
                 [this](QProcess::ProcessError err) { INF("Clangd process error: " + QString::number(err), "LosLspClangd"); });
         connect(&router, &LosRouter::_cmd_lsp_msg_didChangeWatchedFiles, this,
                 [this](const QString &compile_commands_path, auto type) { this->didChangeWatchedFiles(compile_commands_path, type); });
-        connect(&router, &LosRouter::_cmd_lsp_request_hover, this,
-                [this](const QString &filePath, int line, int col) { this->requestHover(filePath, line, col); });
     }
 
 
@@ -66,9 +64,9 @@ namespace LosCore
         semanticTokens["dynamicRegistration"] = false;
         semanticTokens["requests"]            = QJsonObject{{"full", true}};
         capabilities["textDocument"]          = QJsonObject{{"semanticTokens", semanticTokens}};
-        capabilities["general"] = QJsonObject{{"positionEncodings", QJsonArray{"utf-16"}}};
-        capabilities["offsetEncoding"] = QJsonArray{"utf-16"};
-        params["capabilities"]         = capabilities;
+        capabilities["general"]               = QJsonObject{{"positionEncodings", QJsonArray{"utf-16"}}};
+        capabilities["offsetEncoding"]        = QJsonArray{"utf-16"};
+        params["capabilities"]                = capabilities;
         sendRequest("initialize", params, LosLspType::REQ_INITIALIZE);
     }
 
@@ -181,11 +179,11 @@ namespace LosCore
                     QJsonObject result   = obj["result"].toObject();
                     QJsonObject contents = result["contents"].toObject();
                     QString hoverText    = contents["value"].toString();
-                    emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath,hoverText);
+                    emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath, hoverText);
                 }
                 else
                 {
-                    emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath,"");
+                    emit LosRouter::instance()._cmd_lsp_result_hover(absoluteFilePath, "");
                 }
                 break;
             }
