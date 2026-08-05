@@ -1577,6 +1577,7 @@ namespace LosView
 
     /**
      * @brief leaveEvent
+     * 
      * @param event
      */
     void LosEditorUi::leaveEvent(QEvent *event)

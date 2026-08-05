@@ -32,9 +32,9 @@ file(GLOB_RECURSE CORE_SOURCES
     "src/common/*.cpp" "src/common/*.h"
     "src/core/*.cpp" "src/core/*.h"
     "src/models/*.cpp" "src/models/*.h"
-    "src/view/*.ui" "src/view/*.cpp" "src/view/*.h" 
+    "src/view/*.ui" "src/view/*.cpp" "src/view/*.h"
     "src/*.h" "src/*.cpp"
-     
+
 )
 
 add_library(PerseusCore STATIC ${CORE_SOURCES})
@@ -49,13 +49,13 @@ add_library(tree_sitter_cpp STATIC
 
 # libgit2
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
-set(BUILD_TESTS       OFF CACHE BOOL "" FORCE)
-set(BUILD_CLI         OFF CACHE BOOL "" FORCE)
-set(BUILD_EXAMPLES    OFF CACHE BOOL "" FORCE)
+set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(BUILD_CLI OFF CACHE BOOL "" FORCE)
+set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-set(USE_SSH   OFF CACHE STRING "" FORCE)
-set(USE_HTTPS ON  CACHE STRING "" FORCE)
-set(USE_NSEC  OFF CACHE BOOL "" FORCE)
+set(USE_SSH OFF CACHE STRING "" FORCE)
+set(USE_HTTPS ON CACHE STRING "" FORCE)
+set(USE_NSEC OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(third_party/libgit2)
 
@@ -69,10 +69,12 @@ target_include_directories(PerseusCore PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/third_party/libgit2/include
 )
 target_include_directories(tree_sitter
-    PUBLIC  third_party/tree-sitter/lib/include
+    PUBLIC third_party/tree-sitter/lib/include
     PRIVATE third_party/tree-sitter/lib/src
 )
 target_include_directories(tree_sitter_cpp
+    PUBLIC
+    third_party/tree-sitter-cpp/bindings/c
     PRIVATE third_party/tree-sitter-cpp/src
 )
 
@@ -118,16 +120,8 @@ endif()
 target_link_libraries(Perseus PRIVATE PerseusCore)
 
 
-
 enable_testing()
 add_subdirectory(test)
-
-
-
-
-
-
-
 
 
 if(${QT_VERSION} VERSION_LESS 6.1.0)

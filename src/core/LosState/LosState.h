@@ -36,7 +36,7 @@ namespace LosCore
         }
 
 
-        /**
+        /** 
          * @brief get 获取全局状态信息
          *
          * @tparam T

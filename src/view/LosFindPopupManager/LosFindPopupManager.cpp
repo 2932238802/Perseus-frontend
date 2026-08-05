@@ -82,7 +82,7 @@ namespace LosView
     /**
      * @brief showFindPopup
      * 打开查找 / 替换 / 跳转行弹窗
-     * 弹窗打开期间按 Ctrl+F / Ctrl+H / Ctrl+G 
+     * 弹窗打开期间按 Ctrl+F / Ctrl+H / Ctrl+G
      * 会在三种弹窗之间互相切换
      * 切换以循环方式完成（关闭当前弹窗后继续打开目标弹窗）
      *
