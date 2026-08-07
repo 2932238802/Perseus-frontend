@@ -3,6 +3,7 @@
 #pragma once
 
 #include "common/constants/ConstantsClass/LosLspClass.h"
+#include "models/LosCodeFoldingModel/LosCodeFoldingModel.h"
 
 #include <QEvent>
 #include <QJsonArray>
@@ -14,18 +15,22 @@
 #include <QTimer>
 #include <QWidget>
 #include <atomic>
+#include <memory>
 #include <qplaintextedit.h>
 
 namespace LosModel
 {
     class LosFileContext;
     class LosFilePath;
+    class LosCodeFoldingModel;
 } // namespace LosModel
 
 namespace LosCore
 {
     class LosHighlighter;
-}
+    class LosTreeSitterDocument;
+    class LosTreeSitterFoldingProvider;
+} // namespace LosCore
 
 namespace LosView
 {
@@ -80,6 +85,7 @@ namespace LosView
         bool updateAutoIndent(QKeyEvent *event);
         void highlightCurrentLine();
         void rebuildSearchHighlights();
+        void rebuildCodeFolding();
         QRegularExpression makeSearchExpr() const;
         bool repositionCompletionPopup();
         void showHoverPopup(const QString &html);
@@ -137,5 +143,8 @@ namespace LosView
         LosView::LosCompleterUi *LOS_completer                  = nullptr; // 语法 补全
         LosCore::LosHighlighter *LOS_highlighter                = nullptr; // 语法 高亮
         LosView::LosLineNumberUi *LOS_lineNumber                = nullptr; // 数字号
+        std::unique_ptr<LosCore::LosTreeSitterDocument> LOS_treeSitterDocument;
+        std::unique_ptr<LosCore::LosTreeSitterFoldingProvider> LOS_treeSitterFoldingProvider;
+        std::unique_ptr<LosModel::LosCodeFoldingModel> LOS_codeFoldingModel;
     };
 } /* namespace LosView */

@@ -12,7 +12,12 @@
 #include "core/LosFinder/LosFinder.h"
 #include "core/LosFormat/LosFormatManager/LosFormatManager.h"
 #include "core/LosHighlighter/LosHighlighter.h"
+#include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
+#include "core/LosTree/LosTreeSitterDocument/LosTreeSitterDocument.h"
+#include "core/LosTree/LosTreeSitterFoldRange/LosTreeSitterFoldRange.h"
+#include "core/LosTree/LosTreeSitterFoldingProvider/LosTreeSitterFoldingProvider.h"
+#include "models/LosCodeFoldingModel/LosCodeFoldingModel.h"
 #include "models/LosFileContext/LosFileContext.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include "view/LosCompleterUi/LosCompleterUi.h"
@@ -32,6 +37,7 @@
 #include <QToolTip>
 #include <algorithm>
 #include <cfloat>
+#include <memory>
 #include <qcursor.h>
 #include <qevent.h>
 #include <qfontmetrics.h>
@@ -51,7 +57,10 @@
 namespace LosView
 {
 
-    LosEditorUi::LosEditorUi(QWidget *parent) : QPlainTextEdit{parent}
+    LosEditorUi::LosEditorUi(QWidget *parent)
+        : QPlainTextEdit{parent}, LOS_treeSitterDocument(std::make_unique<LosCore::LosTreeSitterDocument>()),
+          LOS_treeSitterFoldingProvider(std::make_unique<LosCore::LosTreeSitterFoldingProvider>()),
+          LOS_codeFoldingModel(std::make_unique<LosModel::LosCodeFoldingModel>())
     {
         initConnect();
         initStyle();
@@ -227,6 +236,26 @@ namespace LosView
             }
         }
         highlightCurrentLine();
+    }
+
+
+
+    /**
+     * @brief 重绘
+     */
+    void LosEditorUi::rebuildCodeFolding()
+    {
+        if (!LOS_treeSitterFoldingProvider || !LOS_treeSitterDocument || !LOS_codeFoldingModel)
+        {
+            return;
+        }
+        if (!LOS_treeSitterDocument->parse(toPlainText()))
+        {
+            ERR("解析失败!", "LosEditorUi::rebuildCodeFolding");
+            return;
+        }
+        const QVector<LosCore::LosTreeSitterFoldRange> ranges = LOS_treeSitterFoldingProvider->collect(*LOS_treeSitterDocument);
+        LOS_codeFoldingModel->rebuild(ranges);
     }
 
 
@@ -513,6 +542,7 @@ namespace LosView
         this->document()->blockSignals(false);
         L_dirty          = false;
         QString filePath = LOS_filePath->getFilePath();
+        rebuildCodeFolding();
         emit LosCore::LosRouter::instance()._cmd_lsp_request_openFile(filePath, this -> toPlainText());
     }
 
@@ -1577,7 +1607,7 @@ namespace LosView
 
     /**
      * @brief leaveEvent
-     * 
+     *
      * @param event
      */
     void LosEditorUi::leaveEvent(QEvent *event)

@@ -1,5 +1,6 @@
 #include "LosTreeSitterDocument.h"
 #include "core/LosLog/LosLog.h"
+#include "core/LosTree/LosTreeSitterNodeInfo/LosTreeSitterNodeInfo.h"
 
 #include <qglobal.h>
 #include <tree-sitter-cpp.h>
@@ -51,6 +52,38 @@ namespace
         return static_cast<uint32_t>(text.left(positionModify).toUtf8().size());
     }
 
+
+
+    /**
+     * @brief
+        判断节点是否可折叠
+        隐藏文本
+        绘制 UI
+        保存折叠状态
+     *
+     * @param node
+     * @param visitor
+     */
+    void VisitTreeNode(TSNode node, const LosCore::LosTreeSitterDocument::NodeVisitor &visitor)
+    {
+        LosCore::LosTreeSitterNodeInfo info;
+        const TSPoint start = ts_node_start_point(node);
+        const TSPoint end   = ts_node_end_point(node);
+        info.L_type         = QString::fromUtf8(ts_node_type(node));
+        info.L_startLine    = static_cast<int>(start.row);
+        info.L_endLine      = static_cast<int>(end.row);
+        info.L_startColumn  = static_cast<int>(start.column);
+        info.L_endColumn    = static_cast<int>(end.column);
+        info.L_isNamed      = ts_node_is_named(node);
+        info.L_hasError     = ts_node_has_error(node);
+        visitor(info);
+        const uint32_t childCount = ts_node_child_count(node);
+        for (uint32_t index = 0; index < childCount; ++index)
+        {
+            const TSNode child = ts_node_child(node, index);
+            VisitTreeNode(child, visitor);
+        }
+    }
 } // namespace
 
 
@@ -118,7 +151,7 @@ namespace LosCore
 
 
     /**
-     * @brief
+     * @brief 解析一个文本 然后 转成本地的 tree text
      *
      * @param text
      * @return true
@@ -146,6 +179,26 @@ namespace LosCore
         const TSNode root        = ts_tree_root_node(L_impl->L_tree);
         L_impl->L_hasSyntaxError = ts_node_has_error(root);
         return true;
+    }
+
+
+
+    /**
+     * @brief 
+     * 
+     * @param visitor 
+     */
+    void LosTreeSitterDocument::visitNodes(const NodeVisitor &visitor) const
+    {
+        if (L_impl == nullptr || L_impl->L_tree == nullptr || !visitor)
+        {
+            return;
+        }
+        // ts_tree_root_node
+        // 接受一个 TSTree 的结构体的指针
+        // 然后 返回一个 TSNode 类型的值
+        const TSNode root = ts_tree_root_node(L_impl->L_tree);
+        VisitTreeNode(root, visitor);
     }
 
 
@@ -181,7 +234,7 @@ namespace LosCore
             ERR("更新失败：编辑范围超出旧文本", "LosTreeSitterDocument::update");
             return false;
         }
-        const QString oldText = L_impl->L_text;
+        const QString oldText    = L_impl->L_text;
         const int oldEndPosition = position + charsRemoved;
         const int newEndPosition = position + charsAdded;
         TSInputEdit edit{};
@@ -200,9 +253,9 @@ namespace LosCore
             return false;
         }
         ts_tree_delete(L_impl->L_tree);
-        L_impl->L_tree = newTree;
-        L_impl->L_text = text;
-        const TSNode root = ts_tree_root_node(L_impl->L_tree);
+        L_impl->L_tree           = newTree;
+        L_impl->L_text           = text;
+        const TSNode root        = ts_tree_root_node(L_impl->L_tree);
         L_impl->L_hasSyntaxError = ts_node_has_error(root);
         return true;
     }
