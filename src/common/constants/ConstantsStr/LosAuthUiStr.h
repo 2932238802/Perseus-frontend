@@ -36,11 +36,11 @@ namespace LosCommon
         inline constexpr const char *OBJ_LINK_BTN    = "authLinkBtn";
 
         // 主题 token key + fallback 色 (showTip 提示文字着色用)
-        inline const QString TOKEN_KEY_SUCCESS   = QStringLiteral("success");
-        inline const QString TOKEN_KEY_DANGER    = QStringLiteral("danger");
-        inline const QString FALLBACK_SUCCESS    = QStringLiteral("#4caf50");
-        inline const QString FALLBACK_DANGER     = QStringLiteral("#e53935");
-        inline const QString TIP_QSS_TEMPLATE    = QStringLiteral("#authTip { color: %1; }");
+        inline const QString TOKEN_KEY_SUCCESS = QStringLiteral("success");
+        inline const QString TOKEN_KEY_DANGER  = QStringLiteral("danger");
+        inline const QString FALLBACK_SUCCESS  = QStringLiteral("#4caf50");
+        inline const QString FALLBACK_DANGER   = QStringLiteral("#e53935");
+        inline const QString TIP_QSS_TEMPLATE  = QStringLiteral("#authTip { color: %1; }");
 
     } /* namespace LosAuthUi_Constants */
 } // namespace LosCommon

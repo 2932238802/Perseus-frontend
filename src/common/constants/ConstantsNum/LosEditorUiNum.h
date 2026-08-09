@@ -12,6 +12,7 @@ namespace LosCommon
         /* ---------------- 行号区 ---------------- */
         /* 行号数字与右边界的间距 (paintEvent 里 width - LINENUMBER_RIGHT_PADDING) */
         inline constexpr int LINENUMBER_RIGHT_PADDING = 5;
+        inline constexpr int FOLD_MARKER_WIDTH        = 16;
 
         /* ---------------- LSP 补全弹窗 ---------------- */
         inline constexpr int COMPLETION_POPUP_PADDING   = 25;
@@ -34,5 +35,5 @@ namespace LosCommon
         /* 拿不到 QScreen 时的可用区域回退尺寸 */
         inline constexpr int FALLBACK_SCREEN_W = 1920;
         inline constexpr int FALLBACK_SCREEN_H = 1080;
-    }
+    } // namespace LosEditorUi_Constants
 } // namespace LosCommon

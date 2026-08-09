@@ -1,6 +1,7 @@
 
 #include "LosCodeFoldingModel.h"
 
+#include "common/constants/ConstantsClass/LosCodeFoldingModelClass.h"
 #include "core/LosTree/LosTreeSitterFoldRange/LosTreeSitterFoldRange.h"
 
 namespace LosModel
@@ -126,4 +127,43 @@ namespace LosModel
         }
         return L_collapsedLines.contains(startLine);
     }
+
+
+
+    /**
+     * @brief 判断一下 当前行 是不是 可以折叠
+     *
+     * @param line
+     * @return true
+     * @return false
+     */
+    bool LosCodeFoldingModel::hasFoldRangeStartingAt(int line) const // 判断一下 当前行 是不是可折叠
+    {
+        for (const LosCore::LosTreeSitterFoldRange &range : L_ranges)
+        {
+            if (range.L_startLine == line)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    /**
+     * @brief Get the Line Folder State object
+     *
+     * @return LosCommon::LosCodeFoldingModel_Constants::FoldMarkerState
+     */
+    LosCommon::LosCodeFoldingModel_Constants::FoldMarkerState LosCodeFoldingModel::getLineFolderState(int line) const
+    {
+        if (!hasFoldRangeStartingAt(line))
+        {
+            return LosCommon::LosCodeFoldingModel_Constants::FoldMarkerState::NONE;
+        }
+        return isCollapsed(line) ? LosCommon::LosCodeFoldingModel_Constants::FoldMarkerState::COLLAPSED
+                                 : LosCommon::LosCodeFoldingModel_Constants::FoldMarkerState::EXPANDED;
+    }
+
 } // namespace LosModel

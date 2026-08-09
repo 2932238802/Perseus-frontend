@@ -3,7 +3,6 @@
 #pragma once
 
 #include "common/constants/ConstantsClass/LosLspClass.h"
-#include "models/LosCodeFoldingModel/LosCodeFoldingModel.h"
 
 #include <QEvent>
 #include <QJsonArray>
@@ -61,11 +60,13 @@ namespace LosView
         int searchMatchCount() const;
         int searchCurrentIndex() const;
         QString getLastSearchText() const;
+        void toggleFold(int startLine);
 
       public: // get
         QString getWordUnderCursor() const;
         bool isDirty() const;
         int getLineNumberWidth() const;
+        int getBlockNumberByY(int y) const;
 
       public: // set
         void loadContextAndPath(QSharedPointer<LosModel::LosFileContext> context, QSharedPointer<LosModel::LosFilePath> file_path);
@@ -77,15 +78,16 @@ namespace LosView
         void initConnect();
         void initStyle();
 
-      private: // tool
+      private:                         // tool
+        void applyFoldingVisibility(); // 读取 LosCodeFoldingModel 中的折叠状态，并把这个状态真正应用到 QTextDocument 的各个 QTextBlock 上
         void updateLineNumberArea(const QRect &rect, int dy);
         void updateLineNumberAreaWidth();
         void updateBrackHighlight();
         void updateHoverUnderline(const QPoint &vpPos);
         bool updateAutoIndent(QKeyEvent *event);
         void highlightCurrentLine();
-        void rebuildSearchHighlights();
         void rebuildCodeFolding();
+        void rebuildSearchHighlights();
         QRegularExpression makeSearchExpr() const;
         bool repositionCompletionPopup();
         void showHoverPopup(const QString &html);

@@ -1,6 +1,7 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosEditorUi.h"
+#include "common/constants/ConstantsClass/LosCodeFoldingModelClass.h"
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
 #include "common/constants/ConstantsNum/LosCompleterUiNum.h"
 #include "common/constants/ConstantsNum/LosEditorUiNum.h"
@@ -256,6 +257,7 @@ namespace LosView
         }
         const QVector<LosCore::LosTreeSitterFoldRange> ranges = LOS_treeSitterFoldingProvider->collect(*LOS_treeSitterDocument);
         LOS_codeFoldingModel->rebuild(ranges);
+        applyFoldingVisibility();
     }
 
 
@@ -428,6 +430,48 @@ namespace LosView
 
 
     /**
+     * @brief 折叠状态更新
+     *
+     * @param startLine
+     */
+    void LosEditorUi::toggleFold(int startLine)
+    {
+        if (!LOS_codeFoldingModel || !LOS_codeFoldingModel->hasFoldRangeStartingAt(startLine))
+        {
+            return;
+        }
+        const bool willCollapse = !LOS_codeFoldingModel->isCollapsed(startLine);
+        if (willCollapse)
+        {
+            const auto &ranges = LOS_codeFoldingModel->foldRanges();
+            for (const auto &range : ranges)
+            {
+                if (range.L_startLine != startLine)
+                {
+                    continue;
+                }
+                const int cursorLine = textCursor().blockNumber();
+                if (cursorLine > range.L_startLine && cursorLine <= range.L_endLine)
+                {
+                    const QTextBlock startBlock = document()->findBlockByNumber(startLine);
+                    if (!startBlock.isValid())
+                    {
+                        return;
+                    }
+                    QTextCursor cursor(document());
+                    cursor.setPosition(startBlock.position());
+                    setTextCursor(cursor);
+                }
+                break;
+            }
+        }
+        LOS_codeFoldingModel->toggleFold(startLine);
+        applyFoldingVisibility();
+    }
+
+
+
+    /**
      * @brief searchMatchCount 获取匹配总数
      *
      * @return int
@@ -581,37 +625,23 @@ namespace LosView
     void LosEditorUi::lineNumberAreaPaintEvent(QPaintEvent *event)
     {
         QPainter painter(LOS_lineNumber);
-        painter.fillRect(event->rect(), QColor(LosCommon::LosEditorUi_Constants::LINENUMBER_BG_COLOR));
-        QTextBlock block = firstVisibleBlock();
-        int blockNumber  = block.blockNumber();
 
-        /*
-         * qRound 是 四舍五入
-         * blockBoundingGeometry QTextBlock
-         * 获取 当前 textblock的边界框
-         */
+        painter.fillRect(event->rect(), QColor(LosCommon::LosEditorUi_Constants::LINENUMBER_BG_COLOR));
+        // 当前视口 中 显示的第一个文本块
+        QTextBlock block = firstVisibleBlock();
+
+        // blockBoundingGeometry 返回的坐标是相对于 QPlainTextEdit 的可视区域 即视口
+        // qRound 四舍五入
         int top    = qRound(blockBoundingGeometry(block).translated(contentOffset()).top());
         int bottom = top + qRound(blockBoundingRect(block).height());
 
-        /*
-         * event->rect().bottom()
-         * 当前要画的 矩形 的 最下边 如果算出来的比 top 要小
-         * 就不用画了
-         */
         while (block.isValid() && top <= event->rect().bottom())
         {
+            const int blockNumber = block.blockNumber();
+
             if (block.isVisible() && bottom >= event->rect().top())
             {
-                /*
-                 * 将内部从 0 开始的索引，
-                 * 转成人类习惯的从 1 开始的字符串
-                 */
-                QString number = QString::number(blockNumber + 1);
-
-                /*
-                 * 准备颜料（高亮当前行）
-                 * 就是 当前 这一行的数据
-                 */
+                const QString number = QString::number(blockNumber + 1);
                 if (textCursor().blockNumber() == blockNumber)
                 {
                     painter.setPen(QColor(LosCommon::LosEditorUi_Constants::LINENUMBER_CURLINE));
@@ -620,18 +650,39 @@ namespace LosView
                 {
                     painter.setPen(QColor(LosCommon::LosEditorUi_Constants::LINENUMBER_UNCURLINE));
                 }
+                painter.drawText(0, top,
+                                 LOS_lineNumber->width() - LosCommon::LosEditorUi_Constants::FOLD_MARKER_WIDTH -
+                                     LosCommon::LosEditorUi_Constants::LINENUMBER_RIGHT_PADDING,
+                                 bottom - top, Qt::AlignRight | Qt::AlignVCenter, number);
+                const auto foldState = LOS_codeFoldingModel ? LOS_codeFoldingModel->getLineFolderState(blockNumber)
+                                                            : LosCommon::LosCodeFoldingModel_Constants::FoldMarkerState::NONE;
+                if (foldState != LosCommon::LosCodeFoldingModel_Constants::FoldMarkerState::NONE)
+                {
+                    const int centerX = LOS_lineNumber->width() - LosCommon::LosEditorUi_Constants::FOLD_MARKER_WIDTH / 2;
+                    const int centerY = (top + bottom) / 2;
+                    QPolygon marker;
+                    if (foldState == LosCommon::LosCodeFoldingModel_Constants::FoldMarkerState::COLLAPSED)
+                    {
+                        marker << QPoint(centerX - 3, centerY - 5) << QPoint(centerX - 3, centerY + 5) << QPoint(centerX + 4, centerY);
+                    }
+                    else
+                    {
+                        marker << QPoint(centerX - 5, centerY - 3) << QPoint(centerX + 5, centerY - 3) << QPoint(centerX, centerY + 4);
+                    }
 
-                /*
-                 * x坐标, y坐标, 宽度, 高度,
-                 * 对齐方式, 要写的字
-                 */
-                painter.drawText(0, top, LOS_lineNumber->width() - LosCommon::LosEditorUi_Constants::LINENUMBER_RIGHT_PADDING, fontMetrics().height(),
-                                 Qt::AlignRight | Qt::AlignVCenter, number);
+                    painter.save();
+                    painter.setPen(Qt::NoPen);
+                    painter.setBrush(QColor(LosCommon::LosEditorUi_Constants::LINENUMBER_UNCURLINE));
+                    painter.drawPolygon(marker);
+                    painter.restore();
+                }
             }
-            block  = block.next();
-            top    = bottom;
-            bottom = top + qRound(blockBoundingRect(block).height());
-            ++blockNumber;
+            block = block.next();
+            top   = bottom;
+            if (block.isValid())
+            {
+                bottom = top + qRound(blockBoundingRect(block).height());
+            }
         }
     }
 
@@ -715,8 +766,37 @@ namespace LosView
             max /= 10;
             digit++;
         }
-        int space = LosCommon::LosLineNumberUi_Constants::BASE_LINEWIDTH + fontMetrics().horizontalAdvance(QLatin1Char('9')) * digit;
+        int space = LosCommon::LosEditorUi_Constants::FOLD_MARKER_WIDTH + LosCommon::LosLineNumberUi_Constants::BASE_LINEWIDTH +
+                    fontMetrics().horizontalAdvance(QLatin1Char('9')) * digit;
         return space;
+    }
+
+
+
+    /**
+     * @brief Get the Block Number By Y 距离
+     *
+     * @param y
+     * @return int
+     */
+    int LosEditorUi::getBlockNumberByY(int y) const
+    {
+        auto block = firstVisibleBlock();
+        while (block.isValid())
+        {
+            int top    = qRound(blockBoundingGeometry(block).translated(contentOffset()).top());
+            int bottom = top + qRound(blockBoundingRect(block).height());
+            if (block.isVisible() && y >= top && y < bottom)
+            {
+                return block.blockNumber();
+            }
+            if (top > y)
+            {
+                break;
+            }
+            block = block.next();
+        }
+        return -1;
     }
 
 
@@ -788,6 +868,66 @@ namespace LosView
         updateLineNumberAreaWidth();
         viewport()->setMouseTracking(true);
         setMouseTracking(true);
+    }
+
+
+
+    /**
+     * @brief 读取 LosCodeFoldingModel 中的折叠状态，并把这个状态真正应用到 QTextDocument 的各个 QTextBlock 上
+     *
+     */
+    void LosEditorUi::applyFoldingVisibility()
+    {
+        // 保护
+        if (!LOS_codeFoldingModel || !document())
+        {
+            return;
+        }
+
+        // 用户点击折叠按钮
+        //     ↓
+        // LosCodeFoldingModel::toggleFold(3)
+        //   修改状态
+        //     ↓
+        // LosEditorUi::applyFoldingVisibility()
+        //     修改 QTextBlock 的可见性
+
+        QTextBlock block = document()->firstBlock();
+        while (block.isValid())
+        {
+            block.setVisible(true);
+            block.setLineCount(1);
+            // 这里设置 1 的 原因?
+            //  setLineCount(1) 表示它重新在文档布局中占据正常的一行
+            block = block.next();
+        }
+
+        for (const auto &range : LOS_codeFoldingModel->foldRanges())
+        {
+            // 如果 没有 折叠 就跳过
+            if (!LOS_codeFoldingModel->isCollapsed(range.L_startLine))
+                continue;
+            // 这里 ange.L_startLine + 1 的原因是什么?
+            // 2 3 4 5 6
+            // 隐藏 3 4 5 6
+            // 所以 从 下一个 开始 找
+            QTextBlock block = document()->findBlockByNumber(range.L_startLine + 1);
+            while (block.isValid() && block.blockNumber() <= range.L_endLine)
+            {
+                block.setVisible(false);
+                // 这里设置 0 的原因是什么?
+                // 占据 0
+                block.setLineCount(0);
+                block = block.next();
+            }
+        }
+        // 主动 设置 脏 然后 全部 更新一下
+        document()->markContentsDirty(0, document()->characterCount());
+        viewport()->update();
+        if (LOS_lineNumber)
+        {
+            LOS_lineNumber->update();
+        }
     }
 
 
@@ -1133,7 +1273,8 @@ namespace LosView
     {
         if (!LOS_filePath)
             return;
-        QString filePath = LOS_filePath->getFilePath();
+        rebuildCodeFolding();
+        const QString filePath = LOS_filePath->getFilePath();
         emit LosCore::LosRouter::instance()._cmd_lsp_request_textChanged(filePath, this -> toPlainText());
         emit LosCore::LosRouter::instance()._cmd_lsp_request_semantic(filePath);
         QTextCursor cursor = this->textCursor();
@@ -1553,6 +1694,16 @@ namespace LosView
     /**
      * @brief mousePressEvent
      *
+     LosLineNumberUi::mousePressEvent()
+        ↓
+    判断是否点击折叠标记区域
+        ↓
+    LosEditorUi::toggleFold(line)
+        ↓
+    LosCodeFoldingModel::toggleFold(line)
+        ↓
+    applyFoldingVisibility()
+
      * @param event
      */
     void LosEditorUi::mousePressEvent(QMouseEvent *event)
@@ -1562,6 +1713,7 @@ namespace LosView
             return;
         hideCompletionPopup();
         hideHoverPopup();
+        // ctrl + 左键 的 效果
         if (event->button() == Qt::LeftButton && (QApplication::keyboardModifiers() & Qt::ControlModifier))
         {
             QTextCursor cur = this->cursorForPosition(event->pos());

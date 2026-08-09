@@ -2,6 +2,8 @@
 
 #include "LosLineNumberUi.h"
 
+#include "common/constants/ConstantsNum/LosEditorUiNum.h"
+#include "common/constants/ConstantsStr/LosEditorUiStr.h"
 #include "view/LosEditorUi/LosEditorUi.h"
 #include <qnamespace.h>
 #include <qpoint.h>
@@ -39,20 +41,35 @@ namespace LosView
 
     /**
      * @brief mousePressEvent
-     * 
+     *
      * @param event
      */
     void LosLineNumberUi::mousePressEvent(QMouseEvent *event)
     {
-        if (event->button() == Qt::LeftButton)
+        if (!LOS_editor || event->button() != Qt::LeftButton)
         {
-            int y              = event->pos().y();
-            QTextCursor cursor = LOS_editor->cursorForPosition(QPoint(0, y));
-            int line           = cursor.blockNumber();
-            LOS_editor->gotoLine(line);
+            QWidget::mousePressEvent(event);
+            return;
         }
-        QWidget::mousePressEvent(event);
+        const QPoint localPosition    = event->position().toPoint();
+        const QPoint viewportPosition = LOS_editor->viewport()->mapFrom(this, localPosition);
+        const int line                = LOS_editor->getBlockNumberByY(viewportPosition.y());
+        if (line < 0)
+        {
+            event->accept();
+            return;
+        }
+        const int markerLeft = width() - LosCommon::LosEditorUi_Constants::FOLD_MARKER_WIDTH;
+        if (localPosition.x() >= markerLeft)
+        {
+            LOS_editor->toggleFold(line);
+            event->accept();
+            return;
+        }
+        LOS_editor->gotoLine(line);
+        event->accept();
     }
+
 
 
 } /* namespace LosView */
