@@ -1,4 +1,4 @@
-// Copyright (c) 2026 LosAngelous (shengjie.lin)
+﻿// Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 
 
@@ -7,12 +7,12 @@
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosTheme/LosThemeManager.h"
 #include "models/LosFilePath/LosFilePath.h"
+#include "view/LosDialog/LosDialog.h"
 #include "view/style/LosCommandArgsUi_style.h"
 
 #include "ui_LosCommandArgsUi.h"
 
 #include <QDir>
-#include <QFileDialog>
 #include <QLabel>
 #include <QLayoutItem>
 #include <QLineEdit>
@@ -22,8 +22,7 @@ namespace LosView
 {
     /*
      * init
-     * 无边框
-     */
+     * 鏃犺竟妗?     */
     LosCommandArgsUi::LosCommandArgsUi(QWidget *parent) : QDialog(parent), ui(new Ui::LosCommandArgsUi)
     {
         ui->setupUi(this);
@@ -40,7 +39,7 @@ namespace LosView
 
     /**
      * onExeScript
-     * - 运行脚本
+     * - 杩愯鑴氭湰
      */
     void LosCommandArgsUi::onExeScript(const QString &script_path, const QStringList &params)
     {
@@ -89,7 +88,7 @@ namespace LosView
 
     /**
      * @brief onRunBtnClicked
-     * 运行按钮
+     * 杩愯鎸夐挳
      */
     void LosCommandArgsUi::onRunBtnClicked()
     {
@@ -123,13 +122,12 @@ namespace LosView
 
 
 
-    /*
-     *
+    /**
+     * @brief onBrowseBtnClicked
      */
     void LosCommandArgsUi::onBrowseBtnClicked()
     {
-        QString selectDir =
-            QFileDialog::getExistingDirectory(this, "select working dir", "", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+        QString selectDir = LosView::LosDialog::pickDir(this, "select working dir",QDir::homePath());
         if (!selectDir.isEmpty())
         {
             ui->L_dirEdit->setText(selectDir);
@@ -141,8 +139,7 @@ namespace LosView
    
     /**
      * @brief initStyle
-     * 初始化样式
-     */
+     * 鍒濆鍖栨牱寮?     */
     void LosCommandArgsUi::initStyle()
     {
         const QString qss = LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosCommandArgsUi_styleTemplate(),
@@ -153,8 +150,7 @@ namespace LosView
 
     
     /**
-     * @brief 初始化连接
-     */
+     * @brief 鍒濆鍖栬繛鎺?     */
     void LosCommandArgsUi::initConnect()
     {
         auto &router = LosCore::LosRouter::instance();

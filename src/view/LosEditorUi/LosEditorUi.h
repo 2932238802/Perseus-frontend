@@ -6,7 +6,6 @@
 
 #include <QEvent>
 #include <QJsonArray>
-#include <QLabel>
 #include <QRegularExpression>
 #include <QSharedPointer>
 #include <QTextCursor>
@@ -131,7 +130,6 @@ namespace LosView
         QPoint L_lastHoverGlobal                                = QPoint();
         QRect L_lastHoverWordRectGlobal                         = QRect();
         QString L_lastHoverWord                                 = "";
-        QLabel *L_hoverPopup                                    = nullptr;
         QSharedPointer<LosModel::LosFileContext> LOS_context    = {};
         QSharedPointer<LosModel::LosFilePath> LOS_filePath      = {};
         QList<QTextEdit::ExtraSelection> L_bracketSelections    = {};

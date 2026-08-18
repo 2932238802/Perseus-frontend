@@ -1,4 +1,4 @@
-// Copyright (c) 2026 LosAngelous (shengjie.lin)
+﻿// Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "Perseus.h"
 #include "./ui_Perseus.h"
@@ -27,6 +27,7 @@
 #include "models/LosFileTreeModel/LosFileTreeModel.h"
 #include "view/LosAuthUi/LosAuthUi.h"
 #include "view/LosCommandArgsUi/LosCommandArgsUi.h"
+#include "view/LosDialog/LosDialog.h"
 #include "view/LosEditorTabUi/LosEditorTabUi.h"
 #include "view/LosEditorUi/LosEditorUi.h"
 #include "view/LosSettingsUi/LosSettingsUi.h"
@@ -34,7 +35,6 @@
 #include <QApplication>
 #include <QDir>
 #include <QDirIterator>
-#include <QFileDialog>
 #include <QFileSystemWatcher>
 #include <QKeyEvent>
 #include <QMessageBox>
@@ -55,10 +55,9 @@ Perseus::Perseus(QWidget *parent) : QMainWindow(parent), ui(new Ui::Perseus)
     initStyle();
     initShotcut();
     /*
-     * 等待 100 毫秒后，
-     * 调用当前对象的 initSession () 函数
-     * 只执行一次执行完就结束
-     */
+     * 绛夊緟 100 姣鍚庯紝
+     * 璋冪敤褰撳墠瀵硅薄鐨?initSession () 鍑芥暟
+     * 鍙墽琛屼竴娆℃墽琛屽畬灏辩粨鏉?     */
     QTimer::singleShot(LosCommon::Perseus_Constants::WAIT_FOR_SESSION_TIME_MS, this, &Perseus::initSession);
 }
 
@@ -171,19 +170,15 @@ void Perseus::OnFileLoaded(bool isc, bool run_analysis)
 
 /**
  * @brief onFilesBtnClicked
- * - 文件按钮 被点击
- * - 支持导入文件和文件夹
- * - 以文件夹所在的绝对位置 作为 项目根目录
- * - 切换目录时关闭其它 Tab
- *
+ * - 鏂囦欢鎸夐挳 琚偣鍑? * - 鏀寔瀵煎叆鏂囦欢鍜屾枃浠跺す
+ * - 浠ユ枃浠跺す鎵€鍦ㄧ殑缁濆浣嶇疆 浣滀负 椤圭洰鏍圭洰褰? * - 鍒囨崲鐩綍鏃跺叧闂叾瀹?Tab
  */
 void Perseus::onFilesBtnClicked()
 {
-    QString pathChoose =
-        QFileDialog::getExistingDirectory(this, tr("Open Project Folder"), "", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    QString pathChoose = LosView::LosDialog::pickDir(this, tr("Open Project Folder"));
     if (pathChoose.isEmpty())
     {
-        QString filePath = QFileDialog::getOpenFileName(this, tr("Select a file to open its directory"));
+        QString filePath = LosView::LosDialog::pickFile(this, tr("Select a file to open its directory"));
         if (filePath.isEmpty())
             return;
         pathChoose = QFileInfo(filePath).absolutePath();
@@ -206,10 +201,8 @@ void Perseus::onFilesBtnClicked()
 
 /**
  * @brief onExplorerFileDoubleClicked
- * 双击文件
- * - 修复 展开的问题
- * - 默认已经有 展开的问题
- *
+ * 鍙屽嚮鏂囦欢
+ * - 淇 灞曞紑鐨勯棶棰? * - 榛樿宸茬粡鏈?灞曞紑鐨勯棶棰? *
  * @param index
  */
 void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
@@ -230,7 +223,7 @@ void Perseus::onExplorerFileDoubleClicked(const QModelIndex &index)
 
 /**
  * @brief onRunSingleFileBtnClicked
- * 单 文件选择
+ * 鍗?鏂囦欢閫夋嫨
  */
 void Perseus::onRunSingleFileBtnClicked()
 {
@@ -242,7 +235,6 @@ void Perseus::onRunSingleFileBtnClicked()
     }
     auto curPath = LOS_tabUi->getCurFilePath();
     LOS_tabUi->saveTab();
-    // 选择 一个 文件
     ui->bottom_tabwidget->setCurrentIndex(LosCommon::Perseus_Constants::BottomTabWidget::OUTPUT);
     ui->output_plaintextedit->clear();
     INF("starting compilation ...", "Perseus");
@@ -252,8 +244,7 @@ void Perseus::onRunSingleFileBtnClicked()
 
 
 /**
- * @brief 项目 按钮的点击
- *
+ * @brief 椤圭洰 鎸夐挳鐨勭偣鍑? *
  * @param checked
  */
 void Perseus::onProjectBtnClicked(bool checked)
@@ -265,7 +256,7 @@ void Perseus::onProjectBtnClicked(bool checked)
 
 /**
  * @brief onLog
- * 打印日志
+ * 鎵撳嵃鏃ュ織
  * @param log
  */
 void Perseus::onLog(const QString &log)
@@ -277,7 +268,7 @@ void Perseus::onLog(const QString &log)
 
 /**
  * @brief onZoomUi
- * 字体缩放实现
+ * 瀛椾綋缂╂斁瀹炵幇
  * @param delta
  */
 void Perseus::onZoomUi(int delta)
@@ -301,12 +292,8 @@ void Perseus::onZoomUi(int delta)
     ui->act_auth_btn->setFixedSize(buttonSize, buttonSize);
 
     ui->activity_bar_widget->setFixedWidth(activityBarWidth);
-
-    // 文件树语言图标 随字体缩放
     const int treeIconSize = qBound(LosCommon::Perseus_Constants::TREE_ICON_MIN, fontHeight, LosCommon::Perseus_Constants::TREE_ICON_MAX);
     ui->explorer_treeview->setIconSize(QSize(treeIconSize, treeIconSize));
-
-    // 局部更新布局
     auto refreshWidget = [](QWidget *widget)
     {
         if (widget == nullptr)
@@ -338,7 +325,7 @@ void Perseus::onZoomUi(int delta)
 
 /**
  * @brief onToolChainMissing
- * 工具 丢失 请求 安装
+ * 宸ュ叿 涓㈠け 璇锋眰 瀹夎
  *
  * @param config
  */
@@ -374,7 +361,7 @@ void Perseus::onDirectoryChanged()
 
 /**
  * @brief OnTogglePanelBtnClicked
- * Ctrl+J 切换 bottom_tabwidget 的显示/隐藏
+ * Ctrl+J 鍒囨崲 bottom_tabwidget 鐨勬樉绀?闅愯棌
  */
 void Perseus::OnTogglePanelBtnClicked()
 {
@@ -424,7 +411,7 @@ void Perseus::OnTogglePanelBtnClicked()
  */
 void Perseus::onFileChooseBtnClicked()
 {
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Select a file!"));
+    QString filePath = LosView::LosDialog::pickFile(this, tr("Select a file!"));
     if (filePath.isEmpty() || LOS_tabUi == nullptr)
         return;
     LOS_tabUi->closeAllTabs();
@@ -443,7 +430,7 @@ void Perseus::onFileChooseBtnClicked()
  */
 void Perseus::onDirChooseBtnClick()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Open a dir!", "", QFileDialog::ShowDirsOnly));
+    QString dir = LosView::LosDialog::pickDir(this, tr("Open a dir!"));
     if (dir.isEmpty() || LOS_tabUi == nullptr)
         return;
     LOS_tabUi->closeAllTabs();
@@ -468,8 +455,8 @@ void Perseus::onBottomVisibilityChanged(int index, bool visible)
 /**
  * @brief
  * initConnect
- * - 初始化连接
- * - 工具栏控件由 LosToolBarUi 自己管理, 这里只通过 LosRouter 信号订阅行为
+ * - 鍒濆鍖栬繛鎺? * - 宸ュ叿鏍忔帶浠剁敱 LosToolBarUi 鑷繁绠＄悊, 杩欓噷鍙€氳繃 LosRouter
+ * 淇″彿璁㈤槄琛屼负
  */
 void Perseus::initConnect()
 {
@@ -485,9 +472,9 @@ void Perseus::initConnect()
     LOS_setting      = new LosView::LosSettingsUi(this);
     LOS_auth         = new LosView::LosAuthUi(this);
     {
-        LosCore::LosGitManager::instance();   // 这边单独调用一下 初始化一下
-        LosCore::LosNet::instance();          // 初始化网络层 (注册/登录信号监听)
-        LosCore::LosAgentManager::instance(); // 初始化 Agent 业务层 (监听 _cmd_agent_sendMessage)
+        LosCore::LosGitManager::instance(); // 杩欒竟鍗曠嫭璋冪敤涓€涓?鍒濆鍖栦竴涓?        LosCore::LosNet::instance();          //
+                                            // 鍒濆鍖栫綉缁滃眰 (娉ㄥ唽/鐧诲綍淇″彿鐩戝惉)
+        LosCore::LosAgentManager::instance(); // 鍒濆鍖?Agent 涓氬姟灞?(鐩戝惉 _cmd_agent_sendMessage)
     }
     L_timer->setSingleShot(true);
     L_timer->setInterval(300);
@@ -525,8 +512,8 @@ void Perseus::initConnect()
                     LOS_auth->exec();
                     return;
                 }
-                auto ret = QMessageBox::question(this, QStringLiteral("账户"), QStringLiteral("确定要登出吗?"), QMessageBox::Yes | QMessageBox::No,
-                                                 QMessageBox::No);
+                auto ret = QMessageBox::question(this, QStringLiteral("璐︽埛"), QStringLiteral("纭畾瑕佺櫥鍑哄悧?"),
+                                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
                 if (ret == QMessageBox::Yes)
                 {
                     emit LosCore::LosRouter::instance()._cmd_auth_loginStateChanged(false);
@@ -547,8 +534,7 @@ void Perseus::initConnect()
 
 /**
  * @brief initStyle
- * - 初始化样式
- */
+ * - 鍒濆鍖栨牱寮? */
 void Perseus::initStyle()
 {
     this->setWindowIcon(QIcon(":/icons/theme.png"));
@@ -558,8 +544,8 @@ void Perseus::initStyle()
     ui->editor_tabwidget->setTabsClosable(false);
     ui->right_splitter->setSizes({8, 1});
     ui->main_splitter->setStretchFactor(0, 1); // left_panel_stack
-    ui->main_splitter->setStretchFactor(1, 4); // right_splitter (编辑器+底部)
-    ui->main_splitter->setStretchFactor(2, 1); // agent_panel (右侧 Agent 侧边栏)
+    ui->main_splitter->setStretchFactor(1, 4); // right_splitter (缂栬緫鍣?搴曢儴)
+    ui->main_splitter->setStretchFactor(2, 1); // agent_panel (鍙充晶 Agent 渚ц竟鏍?
     ui->main_splitter->setSizes({200, 760, 280});
     ui->main_splitter->setChildrenCollapsible(false);
     ui->right_splitter->setStretchFactor(0, 4);
@@ -575,8 +561,7 @@ void Perseus::initStyle()
 
 /**
  * @brief initShotcut
- * 绑定快捷键
- */
+ * 缁戝畾蹇嵎閿? */
 void Perseus::initShotcut()
 {
     LosCore::LosShortcutManager::instance().reg(
@@ -682,8 +667,8 @@ void Perseus::initSession()
     LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN, conf.LOS_authConfig.L_token);
     LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_USERNAME, conf.LOS_authConfig.L_username);
     LosCore::LosState::instance().set<QString>(LosCommon::LosState_Constants::SG_STR::CLANG_FORMAT, conf.LOS_formatConfig.L_clangFormat);
-    // 设置字体
-    // 定义
+    // 璁剧疆瀛椾綋
+    // 瀹氫箟
     const int fontSize = qBound(LosCommon::Perseus_Constants::ZOOM_MIN, conf.LOS_formatConfig.L_fontSize, LosCommon::Perseus_Constants::ZOOM_MAX);
     QFont font         = QApplication::font();
     font.setPointSize(fontSize);
@@ -697,7 +682,7 @@ void Perseus::initSession()
     if (!LOS_tabUi || !isSuc)
         return;
 
-    // 文件树 创建
+    // 鏂囦欢鏍?鍒涘缓
     connect(
         &LosCore::LosRouter::instance(), &LosCore::LosRouter::_cmd_fileTreeDone, this,
         [conf, this]()
@@ -728,7 +713,7 @@ void Perseus::initSession()
 
 /**
  * @brief collectConfig
- * - 收集当前的 信息
+ * - 鏀堕泦褰撳墠鐨?淇℃伅
  *
  * @return LosCommon::LosSession_Constants::Config
  */

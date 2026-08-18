@@ -5,9 +5,10 @@
 
 namespace LosStyle
 {
-    /*
-     * - 模板字符串, 占位符 @key@ 由 LosCore::LosThemeManager 替换
-     * - 替换后再 setStyleSheet 到目标控件
+    /**
+     * @brief 模板字符串, 占位符 @key@ 由 LosCore::LosThemeManager 替换
+     * 替换后再 setStyleSheet 到目标控件
+     * @return const QString 
      */
     inline const QString LosCommandUi_styleTemplate()
     {

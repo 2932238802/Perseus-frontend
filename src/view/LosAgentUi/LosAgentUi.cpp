@@ -279,15 +279,14 @@ namespace LosView
         const bool isUser    = (role == Role::User);
         const int viewW      = ui->chat_view->viewport()->width();
         const int maxBubbleW = qMax(120, static_cast<int>(viewW * 0.75));
-        const int padV       = 4;
-        // 横向余量必须与 LosAgent_style.h 中 #agentBubbleAgent 的 QSS 保持一致:
-        //   padding: 4px 10px  -> 左右各 10px;  border: 1px -> 左右各 1px
-        // 否则 document 的 textWidth 会比 QTextBrowser viewport 实际可视宽度大,
-        // 导致内容横向溢出被裁切 (即"内容被遮挡, 需右移光标框选才看得全")。
-        const int cssPadH   = 10;                        // QSS 左右内边距
-        const int cssBorder = 1;                         // QSS 左右边框
-        const int chromeH   = (cssPadH + cssBorder) * 2; // 单侧之和 *2 = 横向总占用
-        const int textW     = maxBubbleW - chromeH;
+        // 每种角色的内边距/边框必须与 LosAgent_style.h 的 QSS 完全一致, 否则测量的宽/高会与实际渲染不符, 导致长内容被裁切.
+        //   #agentBubbleUser   padding: 8px 12px (无边框) -> padH=12, padV=8,  border=0
+        //   #agentBubbleAgent  padding: 4px 10px, border:1px -> padH=10, padV=4,  border=1
+        const int padH    = isUser ? 12 : 10;      // QSS 左右内边距
+        const int padV    = isUser ? 8 : 4;        // QSS 上下内边距
+        const int border  = isUser ? 0 : 1;        // QSS 左右边框
+        const int chromeH = (padH + border) * 2;   // 单侧之和 *2 = 横向总占用
+        const int textW   = maxBubbleW - chromeH;
 
         QWidget *bubble       = nullptr; // 统一用基类指针, 便于后面放进布局
         QTextBrowser *browser = nullptr; // 仅 Agent 气泡使用, 用于返回
@@ -304,9 +303,17 @@ namespace LosView
             label->setTextInteractionFlags(Qt::TextSelectableByMouse);
             label->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
             label->setMaximumWidth(maxBubbleW);
-            int textH = label->heightForWidth(textW);
+            // 取最长行的自然宽度, 封顶到可用内容宽度, 再钉住宽度以得到精确行高 (避免长内容底部被裁切)
+            QFontMetrics fm       = label->fontMetrics();
+            int naturalW          = 0;
+            const QStringList lns = content.split(QLatin1Char('\n'));
+            for (const QString &l : lns)
+                naturalW = qMax(naturalW, fm.horizontalAdvance(l));
+            int contentW = qBound(0, naturalW, textW);
+            label->setFixedWidth(contentW);
+            int textH = label->heightForWidth(contentW);
             if (textH <= 0)
-                textH = label->fontMetrics().height();
+                textH = fm.height();
             bubbleH = textH + padV * 2;
             bubble  = label;
         }
@@ -319,6 +326,10 @@ namespace LosView
             browser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
             browser->setOpenExternalLinks(true);
             browser->setTextInteractionFlags(Qt::TextBrowserInteraction);
+            // 长的不换行 token(URL/代码) 也强制折行, 避免横向溢出被裁切
+            QTextOption opt = browser->document()->defaultTextOption();
+            opt.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+            browser->document()->setDefaultTextOption(opt);
             browser->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
             browser->document()->setDocumentMargin(0); // 内边距统一交给 QSS, 文档自身不再留白
             browser->document()->setMarkdown(content); // Qt6 原生 Markdown 渲染
@@ -378,6 +389,9 @@ namespace LosView
         const int cssBorder  = 1;
         const int chromeH    = (cssPadH + cssBorder) * 2;
         const int textW      = maxBubbleW - chromeH;
+        QTextOption ropt = L_streamingBubble->document()->defaultTextOption();
+        ropt.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+        L_streamingBubble->document()->setDefaultTextOption(ropt);
         L_streamingBubble->document()->setTextWidth(textW);
         const int idealW    = qCeil(L_streamingBubble->document()->idealWidth());
         const int finalTxtW = qBound(1, idealW, textW);

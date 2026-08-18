@@ -22,6 +22,7 @@
 #include "models/LosFileContext/LosFileContext.h"
 #include "models/LosFilePath/LosFilePath.h"
 #include "view/LosCompleterUi/LosCompleterUi.h"
+#include "view/LosHoverPopup/LosHoverPopup.h"
 #include "view/LosLineNumberUi/LosLineNumberUi.h"
 
 #include <QAbstractItemView>
@@ -66,14 +67,7 @@ namespace LosView
         initConnect();
         initStyle();
     }
-    LosEditorUi::~LosEditorUi()
-    {
-        if (L_hoverPopup)
-        {
-            L_hoverPopup->deleteLater();
-            L_hoverPopup = nullptr;
-        }
-    }
+    LosEditorUi::~LosEditorUi() = default;
 
 
 
@@ -1338,45 +1332,10 @@ namespace LosView
      */
     void LosEditorUi::showHoverPopup(const QString &html)
     {
-        // 用一个顶层 Tool 窗口做浮窗, 不继承 parent 的焦点语义,
-        // 也不被 Qt 的 QToolTip 管理器影响
-        if (!L_hoverPopup)
-        {
-            L_hoverPopup = new QLabel(nullptr, Qt::ToolTip | Qt::FramelessWindowHint);
-            L_hoverPopup->setTextFormat(Qt::RichText);
-            L_hoverPopup->setTextInteractionFlags(Qt::NoTextInteraction);
-            L_hoverPopup->setWordWrap(true);
-            L_hoverPopup->setMargin(LosCommon::LosEditorUi_Constants::HOVER_POPUP_MARGIN);
-            L_hoverPopup->setMaximumWidth(LosCommon::LosEditorUi_Constants::HOVER_POPUP_MAX_WIDTH);
-            L_hoverPopup->setAttribute(Qt::WA_ShowWithoutActivating, true);
-            L_hoverPopup->setFocusPolicy(Qt::NoFocus);
-            L_hoverPopup->setStyleSheet(LosCommon::LosEditorUi_Constants::HOVER_POP_STYLE);
-        }
-        L_hoverPopup->setText(html);
-        L_hoverPopup->adjustSize();
         QPoint anchor = L_lastHoverWordRectGlobal.isValid()
                             ? L_lastHoverWordRectGlobal.bottomLeft()
                             : L_lastHoverGlobal + QPoint(0, LosCommon::LosEditorUi_Constants::HOVER_ANCHOR_FALLBACK_Y);
-        anchor += QPoint(0, LosCommon::LosEditorUi_Constants::HOVER_SCREEN_MARGIN);
-        QScreen *screen = QGuiApplication::screenAt(anchor);
-        if (!screen)
-            screen = QGuiApplication::primaryScreen();
-        QRect available = screen
-                              ? screen->availableGeometry()
-                              : QRect(0, 0, LosCommon::LosEditorUi_Constants::FALLBACK_SCREEN_W, LosCommon::LosEditorUi_Constants::FALLBACK_SCREEN_H);
-        QSize popupSize = L_hoverPopup->sizeHint();
-        if (anchor.x() + popupSize.width() > available.right())
-            anchor.setX(available.right() - popupSize.width() - LosCommon::LosEditorUi_Constants::HOVER_SCREEN_MARGIN);
-        if (anchor.x() < available.left() + LosCommon::LosEditorUi_Constants::HOVER_SCREEN_MARGIN)
-            anchor.setX(available.left() + LosCommon::LosEditorUi_Constants::HOVER_SCREEN_MARGIN);
-        if (anchor.y() + popupSize.height() > available.bottom())
-        {
-            int above = L_lastHoverWordRectGlobal.top() - popupSize.height() - LosCommon::LosEditorUi_Constants::HOVER_SCREEN_MARGIN;
-            anchor.setY(qMax(above, available.top() + LosCommon::LosEditorUi_Constants::HOVER_SCREEN_MARGIN));
-        }
-        L_hoverPopup->move(anchor);
-        L_hoverPopup->show();
-        L_hoverPopup->raise();
+        LosHoverPopup::instance().showPopup(html, anchor, L_lastHoverWordRectGlobal);
     }
 
 
@@ -1386,8 +1345,7 @@ namespace LosView
      */
     void LosEditorUi::hideHoverPopup()
     {
-        if (L_hoverPopup && L_hoverPopup->isVisible())
-            L_hoverPopup->hide();
+        LosHoverPopup::instance().hidePopup();
         L_lastHoverWord.clear();
     }
 
@@ -1743,7 +1701,7 @@ namespace LosView
             updateHoverUnderline(event->pos());
         }
         // 鼠标离开当前悬停的单词矩形则隐藏 hover 浮窗
-        if (L_hoverPopup && L_hoverPopup->isVisible() && L_lastHoverWordRectGlobal.isValid())
+        if (LosHoverPopup::instance().isVisible() && L_lastHoverWordRectGlobal.isValid())
         {
             QPoint g = event->globalPosition().toPoint();
             if (!L_lastHoverWordRectGlobal.contains(g))
@@ -1835,7 +1793,7 @@ namespace LosView
             L_lastHoverWordRectGlobal = QRect(mapToGlobal(localRect.topLeft()), localRect.size());
             L_lastHoverGlobal         = help->globalPos();
 
-            if (word == L_lastHoverWord && L_hoverPopup && L_hoverPopup->isVisible())
+            if (word == L_lastHoverWord && LosHoverPopup::instance().isVisible())
             {
                 return QPlainTextEdit::event(event);
             }
