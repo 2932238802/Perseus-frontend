@@ -1,0 +1,38 @@
+﻿{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "wsl-linux",
+      "displayName": "WSL / Linux (Ninja + clang-21)",
+      "description": "用 Visual Studio 的 WSL/Linux 工具链配置，复用系统 Qt6 与 clang-21",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/_build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_COMPILER": "/usr/bin/clang-21",
+        "CMAKE_CXX_COMPILER": "/usr/bin/clang++-21",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "wsl-linux",
+      "configurePreset": "wsl-linux"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "wsl-linux",
+      "configurePreset": "wsl-linux",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
+  ]
+}

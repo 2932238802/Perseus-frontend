@@ -1,5 +1,5 @@
-{
-    "version": "1.0",
+﻿{
+    "version": "1.1",
     "description": "Los IDE ToolChain Configuration",
     "sharedTools": {
         "cmake": {
@@ -11,7 +11,7 @@
             "versionArgs": "--version",
             "downloadUrl": "https://cmake.org/download/",
             "validateKey": "cmake version",
-            "supportedLanguages": ["CXX", "CSHARP", "CUDA"],
+            "supportedLanguages": ["CXX", "CSHARP", "CMAKE"],
             "installScripts": {
                 "windows": "install_cmake.bat",
                 "linux": "install_cmake.sh"
@@ -26,7 +26,7 @@
             "versionArgs": "--version",
             "downloadUrl": "https://ninja-build.org/",
             "validateKey": "ninja",
-            "supportedLanguages": ["CXX", "RUST"],
+            "supportedLanguages": ["CXX", "RUST", "CSHARP", "CMAKE"],
             "installScripts": {
                 "windows": "install_ninja.bat",
                 "linux": "install_ninja.sh"
@@ -58,8 +58,8 @@
             "tools": {
                 "g++": {
                     "category": "Compiler",
-                    "name": "C++ (g++ / clang++)",
-                    "executables": ["g++.exe", "g++", "clang++.exe", "clang++"],
+                    "name": "C++ Compiler (g++ / clang++)",
+                    "executables": ["g++.exe", "g++", "clang++.exe", "clang++", "clang++-21", "clang++-18"],
                     "startupArgs": [],
                     "requireNodeJs": false,
                     "versionArgs": "--version",
@@ -73,7 +73,7 @@
                 "clangd": {
                     "category": "LSP",
                     "name": "clangd",
-                    "executables": ["clangd.exe", "clangd"],
+                    "executables": ["clangd.exe", "clangd", "clangd-21", "clangd-18"],
                     "startupArgs": ["--background-index", "--clang-tidy"],
                     "requireNodeJs": false,
                     "versionArgs": "--version",
@@ -87,7 +87,7 @@
                 "clang-format": {
                     "category": "Formatter",
                     "name": "clang-format",
-                    "executables": ["clang-format.exe", "clang-format"],
+                    "executables": ["clang-format.exe", "clang-format", "clang-format-21", "clang-format-18"],
                     "startupArgs": [],
                     "requireNodeJs": false,
                     "versionArgs": "--version",
@@ -185,59 +185,16 @@
                         "windows": "install_pyright.bat",
                         "linux": "install_pyright.sh"
                     }
-                },
-                "black": {
-                    "category": "Formatter",
-                    "name": "Black",
-                    "executables": ["black.exe", "black"],
-                    "startupArgs": [],
-                    "requireNodeJs": false,
-                    "versionArgs": "--version",
-                    "downloadUrl": "https://github.com/psf/black",
-                    "validateKey": "black",
-                    "installScripts": {
-                        "windows": "install_black.bat",
-                        "linux": "install_black.sh"
-                    }
                 }
             }
         },
         "CSHARP": {
             "defaults": {
-                "compiler": "csc",
-                "lsp": "omnisharp",
-                "buildTool": "cmake"
+                "compiler": "",
+                "lsp": "",
+                "buildTool": ""
             },
-            "tools": {
-                "csc": {
-                    "category": "Compiler",
-                    "name": "C# Compiler",
-                    "executables": ["csc.exe", "csc"],
-                    "startupArgs": [],
-                    "requireNodeJs": false,
-                    "versionArgs": "-version",
-                    "downloadUrl": "https://dotnet.microsoft.com/",
-                    "validateKey": "Microsoft",
-                    "installScripts": {
-                        "windows": "install_dotnet.bat",
-                        "linux": "install_dotnet.sh"
-                    }
-                },
-                "omnisharp": {
-                    "category": "LSP",
-                    "name": "OmniSharp",
-                    "executables": ["OmniSharp.exe", "omnisharp"],
-                    "startupArgs": ["--languageserver"],
-                    "requireNodeJs": false,
-                    "versionArgs": "--version",
-                    "downloadUrl": "https://github.com/OmniSharp/omnisharp-roslyn",
-                    "validateKey": "OmniSharp",
-                    "installScripts": {
-                        "windows": "install_omnisharp.bat",
-                        "linux": "install_omnisharp.sh"
-                    }
-                }
-            }
+            "tools": {}
         },
         "CMAKE": {
             "defaults": {

@@ -1,17 +1,14 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
-
-
 #include "core/LosLog/LosLog.h"
 #include <QDateTime>
+
 namespace LosCore
 {
-
     LosLog &LosLog::instance()
     {
         static LosLog log;
         return log;
     }
-
     void LosLog::inf(const QString &msg, const QString &comp)
     {
         log(LogType::INFO, msg, comp);
@@ -28,7 +25,6 @@ namespace LosCore
     {
         log(LogType::SUC, msg, comp);
     }
-
     void LosLog::log(LogType type, const QString &msg, const QString &comp)
     {
         QString timeStr   = QDateTime::currentDateTime().toString("HH:mm:ss");
@@ -48,9 +44,12 @@ namespace LosCore
     }
 
 
-    /*
-     * - 获取对应的 水平的颜色
-     * -
+
+    /**
+     * @brief  getColor
+     * 获取对应的 水平的颜色 
+     * @param level 
+     * @return QString 
      */
     QString LosLog::getColor(LogType level)
     {
@@ -70,8 +69,12 @@ namespace LosCore
     }
 
 
-    /*
-     * - 获取 打印的 前后缀
+  
+    /**
+     * @brief 获取 打印的 前后缀
+     * 
+     * @param level 
+     * @return QString 
      */
     QString LosLog::getPrefix(LogType level)
     {

@@ -1,0 +1,10 @@
+{
+  "ActiveTargetSystem": "WSL: Ubuntu-26.04",
+  "DevContainersInfoBarHidden": true,
+  "ExpandedNodes": [
+    "",
+    "\\src"
+  ],
+  "SelectedNode": "\\CMakeLists.txt",
+  "PreviewInSolutionExplorer": false
+}

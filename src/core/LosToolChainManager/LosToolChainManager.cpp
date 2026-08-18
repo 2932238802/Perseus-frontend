@@ -222,6 +222,9 @@ namespace LosCore
                 SUC("config.L_name: " + config.L_name + " find tool in " + *pathOpt, "LosToolChainManager");
                 return true;
             }
+            else{
+                WAR("LosToolChainManager::validateExecutable","can't find -> " + exeName);
+            }
         }
         return false;
     }

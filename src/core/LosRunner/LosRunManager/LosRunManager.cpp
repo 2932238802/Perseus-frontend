@@ -125,7 +125,7 @@ namespace LosCore
     void LosRunManager::onToolChainReady(LosCommon::LosToolChain_Constants::LosLanguage lan, LosCommon::LosToolChain_Constants::LosTool tool,
                                          const QString &exePath)
     {
-        INF("checking " + exePath + " ...", "onToolChainReady");
+        INF("checking " + exePath + " ...", "LosRunManager::onToolChainReady");
         switch (tool)
         {
         case LosCommon::LosToolChain_Constants::LosTool::G_PLUS_PLUS:

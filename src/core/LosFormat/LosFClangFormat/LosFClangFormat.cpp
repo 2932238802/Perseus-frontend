@@ -46,7 +46,10 @@ namespace LosCore
         args << L_formatStyle;
         auto opt = LosCommon::FindExePath(LosCommon::LosFormatManager_Constants::CLANG_FORMAT);
         if (!opt)
+        {
+            WAR("LosFClangFormat::format","未找到clang-format");
             return false;
+        }
         L_process.start(*opt, args);
 
         if (!L_process.waitForStarted(LosCommon::LosFormatManager_Constants::WAITFORSTARTED_TIME_MS))

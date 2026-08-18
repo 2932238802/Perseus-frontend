@@ -1,4 +1,4 @@
-// Copyright (c) 2026 LosAngelous (shengjie.lin)
+﻿// Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #pragma once
 #include "common/constants/ConstantsClass/LosToolChainClass.h"
@@ -8,11 +8,14 @@ namespace LosCommon
 {
     inline LosCommon::LosToolChain_Constants::LosLanguage CheckLang(const QString &file_path)
     {
-        if (file_path.endsWith(".cpp") || file_path.endsWith(".c") || file_path.endsWith(".h"))
+        // 与 GetFileType (LosFileType.h) 保持一致: 后缀统一转小写, 兼容 .CC/.CXX/.HPP
+        const QString lower = file_path.toLower();
+        if (lower.endsWith(".cpp") || lower.endsWith(".cc") || lower.endsWith(".cxx") || lower.endsWith(".c") ||
+            lower.endsWith(".h") || lower.endsWith(".hpp"))
         {
             return LosCommon::LosToolChain_Constants::LosLanguage::CXX;
         }
-        else if (file_path.endsWith(".py"))
+        else if (lower.endsWith(".py"))
         {
             return LosCommon::LosToolChain_Constants::LosLanguage::PYTHON;
         }
@@ -20,11 +23,11 @@ namespace LosCommon
         {
             return LosCommon::LosToolChain_Constants::LosLanguage::CMAKE;
         }
-        else if (file_path.endsWith(".rs"))
+        else if (lower.endsWith(".rs"))
         {
             return LosCommon::LosToolChain_Constants::LosLanguage::RUST;
         }
-        else if (file_path.endsWith(".md"))
+        else if (lower.endsWith(".md"))
         {
             return LosCommon::LosToolChain_Constants::LosLanguage::MARKDOWN;
         }

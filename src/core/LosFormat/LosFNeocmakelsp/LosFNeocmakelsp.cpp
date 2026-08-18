@@ -37,7 +37,6 @@ namespace LosCore
 
         QStringList args;
         args << "format" << tempFile.fileName();
-
         L_process.start(*opt, args);
         if (!L_process.waitForStarted(LosCommon::LosFormatManager_Constants::WAITFORSTARTED_TIME_MS))
         {

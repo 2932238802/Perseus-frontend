@@ -1,6 +1,6 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
-
 #pragma once
+
 #include <QObject>
 #include <QString>
 
