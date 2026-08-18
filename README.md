@@ -86,7 +86,7 @@
 | 类别 | 要求 |
 |------|------|
 | 操作系统 | Ubuntu 24.04 / WSL2 (推荐) |
-| 编译器 | Clang-18 (推荐) / GCC（需支持 C++23） |
+| 编译器 | Clang-21 (推荐) / GCC（需支持 C++23） |
 | Qt | Qt 6.x（含 WebEngine / WebChannel / Core5Compat） |
 | 构建工具 | CMake ≥ 3.18, Ninja |
 

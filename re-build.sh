@@ -9,6 +9,6 @@ NC='\033[0m'
 
 echo -e " ${GREEN} 开始编译 ... ${NC}"
 sudo rm -rf _build
-mkdir _build && cd _build && cmake .. -G Ninja -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/clang-18 -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/clang++-18
+mkdir _build && cd _build && cmake .. -G Ninja -DCMAKE_C_COMPILER:FILEPATH=/usr/bin/clang-21 -DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/clang++-21
 cmake --build . --config Release 
 "./${PROJECT_NAME}"

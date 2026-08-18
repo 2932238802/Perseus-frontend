@@ -1425,7 +1425,6 @@ namespace LosView
                 brackPos = pos;
                 bracket  = curChar;
             }
-            return;
         }
         int direction = LosCommon::IsLeftBrack(bracket) ? 1 : -1;
         int matchPos  = LosCommon::FindMatchingBracket(*document(), brackPos, bracket, direction);

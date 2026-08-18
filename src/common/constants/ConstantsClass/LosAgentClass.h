@@ -5,6 +5,10 @@ namespace LosCommon
 {
     namespace LosAgent_Constants
     {
+        /**
+         * @brief LosModelConfig
+         * 模型配置参数
+         */
         struct LosModelConfig
         {
             QString L_name;                 // 用户起的显示名    我的DeepSeek"
