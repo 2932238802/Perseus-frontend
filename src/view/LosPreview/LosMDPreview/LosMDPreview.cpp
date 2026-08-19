@@ -18,14 +18,8 @@ namespace LosView
      */
     LosMDPreview::LosMDPreview(QWidget *parent) : LosPreview(parent)
     {
-        L_browser = new QTextBrowser(this);
-        L_browser->setOpenLinks(false);
-        connect(L_browser, &QTextBrowser::anchorClicked, this, &LosMDPreview::onAnchorClicked);
-        auto *layout = new QVBoxLayout(this);
-        layout->setContentsMargins(0, 0, 0, 0);
-        layout->addWidget(L_browser);
-        const QString theme = LosCore::LosThemeManager::instance().currentTheme();
-        L_browser->setStyleSheet(LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosMDPreview_styleTemplate(), theme));
+        initStyle();
+        initConnect();
     }
 
 
@@ -56,6 +50,8 @@ namespace LosView
         L_browser->setStyleSheet(LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosMDPreview_styleTemplate(), theme));
         L_browser->document()->setDefaultStyleSheet(
             LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::LosMDPreview_docCssTemplate(), theme));
+        if (!L_content.isEmpty())
+            L_browser->setMarkdown(L_content);
     }
 
 
@@ -69,6 +65,22 @@ namespace LosView
         auto &router = LosCore::LosRouter::instance();
         connect(&router, &LosCore::LosRouter::_cmd_fontChanged, this, &LosMDPreview::applyStyleChange);
         connect(&router, &LosCore::LosRouter::_cmd_themeChanged, this, &LosMDPreview::applyStyleChange);
+    }
+
+
+
+    /**
+     * @brief initStyle
+     */
+    void LosMDPreview::initStyle() noexcept
+    {
+        L_browser = new QTextBrowser(this);
+        L_browser->setOpenLinks(false);
+        connect(L_browser, &QTextBrowser::anchorClicked, this, &LosMDPreview::onAnchorClicked);
+        auto *layout = new QVBoxLayout(this);
+        layout->setContentsMargins(0, 0, 0, 0);
+        layout->addWidget(L_browser);
+        applyStyleChange();
     }
 
 

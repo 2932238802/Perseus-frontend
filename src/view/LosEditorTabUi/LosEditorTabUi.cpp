@@ -527,6 +527,15 @@ namespace LosView
         connect(&router, &LosCore::LosRouter::_cmd_openPluginDetail, this, &LosEditorTabUi::onOpenPlugin);
         connect(&router, &LosCore::LosRouter::_cmd_fileRenamed, this, &LosEditorTabUi::onFileRenamed);
         connect(&router, &LosCore::LosRouter::LosRouter::_cmd_togglePreview, this, &LosEditorTabUi::onTogglePreview);
+        connect(&router, &LosCore::LosRouter::_cmd_lsp_request_textChanged, this,
+                [this](const QString &file_path, const QString &file_content)
+                {
+                    if (auto *preview = LOS_pathToPreview.value(file_path))
+                    {
+                        // 实时 预览
+                        preview->render(file_content);
+                    }
+                });
         if (L_tabWidget)
         {
             connect(L_tabWidget, &QTabWidget::currentChanged, this, &LosEditorTabUi::onTabClicked);

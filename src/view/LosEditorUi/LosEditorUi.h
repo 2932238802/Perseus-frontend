@@ -58,12 +58,12 @@ namespace LosView
         void clearSearch();
         int searchMatchCount() const;
         int searchCurrentIndex() const;
-        QString getLastSearchText() const;
         void toggleFold(int startLine);
 
       public: // get
-        QString getWordUnderCursor() const;
         bool isDirty() const;
+        QString getLastSearchText() const;
+        QString getWordUnderCursor() const;
         int getLineNumberWidth() const;
         int getBlockNumberByY(int y) const;
 
@@ -93,6 +93,8 @@ namespace LosView
         void hideHoverPopup();
         void hideCompletionPopup();
         void clearHoverUnderline();
+
+      private: // onhover
         void onHover_Clangd(const QString &markdownContent);
         void onHover_Rust(const QString &markdownContent);
         void onHover_CMake(const QString &markdownContent);

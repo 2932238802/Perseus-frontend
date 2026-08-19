@@ -15,7 +15,7 @@ namespace LosStyle
     {
         return QString(R"(
         QTextBrowser {
-            background-color: @background@;
+            background-color: @panelBg@;
             color: @foreground@;
             border: none;
             padding: 12px;
@@ -55,8 +55,9 @@ namespace LosStyle
         return QString(R"(
         body 
         { 
-            color: @foreground@; 
+            color: @panelBg@; 
             font-family: @fontFamily@; 
+            background-color: @background@;
         }
 
         h1, h2, h3, h4, h5, h6 

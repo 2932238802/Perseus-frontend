@@ -412,18 +412,6 @@ namespace LosView
 
 
     /**
-     * @brief getLastSearchText 获取上次搜索词（弹窗关闭后仍保留，用于重新打开时预填）
-     *
-     * @return QString
-     */
-    QString LosEditorUi::getLastSearchText() const
-    {
-        return L_searchText;
-    }
-
-
-
-    /**
      * @brief 折叠状态更新
      *
      * @param startLine
@@ -709,6 +697,30 @@ namespace LosView
 
 
     /**
+     * @brief isDirty 是否为脏文件
+     *
+     * @return true
+     * @return false
+     */
+    bool LosEditorUi::isDirty() const
+    {
+        return L_dirty;
+    }
+
+
+
+    /**
+     * @brief getLastSearchText 获取上次搜索词（弹窗关闭后仍保留，用于重新打开时预填）
+     *
+     * @return QString
+     */
+    QString LosEditorUi::getLastSearchText() const
+    {
+        return L_searchText;
+    }
+
+
+    /**
      * @brief getWordUnderCursor 获取当前光标下的单词
      *
      * @return QString
@@ -729,19 +741,6 @@ namespace LosView
             start--;
         }
         return text.mid(start, col - start);
-    }
-
-
-
-    /**
-     * @brief isDirty 是否为脏文件
-     *
-     * @return true
-     * @return false
-     */
-    bool LosEditorUi::isDirty() const
-    {
-        return L_dirty;
     }
 
 
@@ -1262,6 +1261,7 @@ namespace LosView
     /**
      * @brief onDebounceTimeout
      * 防抖语法补全
+     * 输入修改之后 开启的时间结束 触发的
      */
     void LosEditorUi::onDebounceTimeout()
     {

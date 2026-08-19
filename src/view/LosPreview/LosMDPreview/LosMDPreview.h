@@ -23,6 +23,7 @@ namespace LosView
 
       private:
         void initConnect() noexcept;
+        void initStyle() noexcept;
 
       private: // params
         QTextBrowser *L_browser = nullptr;
