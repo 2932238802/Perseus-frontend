@@ -13,14 +13,14 @@
  * 可用 token:
  *   @background@  @panelBg@  @borderStrong@  @selection@  @foreground@
  *   @primary@  @primaryHover@  @primaryPressed@  @highlightFg@
- *   @danger@  @success@
+ *   @danger@  @success@  @muted@
  *
  * objectName 约定:
  *   #LosAgentKeyUi      根容器
  *   #agentKeyTitle      标题
  *   #agentKeyTip        提示行
  *   #agentKeyPrimaryBtn 保存按钮
- *   #agentKeyGhostBtn   取消按钮
+ *   #agentKeyGhostBtn   取消/获取按钮
  */
 namespace LosStyle
 {
@@ -35,30 +35,65 @@ namespace LosStyle
             background-color: transparent;
         }
         #agentKeyTitle {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             color: @foreground@;
         }
         #agentKeyTip {
             font-size: 12px;
+            min-height: 18px;
+            padding: 4px 2px;
         }
         #LosAgentKeyUi QLineEdit {
             background-color: @panelBg@;
             color: @foreground@;
             border: 1px solid @borderStrong@;
             border-radius: 6px;
-            padding: 8px 10px;
+            padding: 9px 12px;
+            min-height: 18px;
             selection-background-color: @selection@;
         }
         #LosAgentKeyUi QLineEdit:focus {
             border: 1px solid @primary@;
+        }
+        #LosAgentKeyUi QComboBox {
+            background-color: @panelBg@;
+            color: @foreground@;
+            border: 1px solid @borderStrong@;
+            border-radius: 6px;
+            padding: 8px 12px;
+            min-height: 18px;
+        }
+        #LosAgentKeyUi QComboBox:hover {
+            border: 1px solid @primary@;
+        }
+        #LosAgentKeyUi QComboBox::drop-down {
+            border: none;
+            width: 26px;
+        }
+        #LosAgentKeyUi QComboBox::down-arrow {
+            image: none;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid @primary@;
+            margin-right: 10px;
+        }
+        #LosAgentKeyUi QComboBox QAbstractItemView {
+            background-color: @panelBg@;
+            color: @foreground@;
+            border: 1px solid @borderStrong@;
+            border-radius: 6px;
+            padding: 4px;
+            selection-background-color: @selection@;
+            outline: none;
         }
         #agentKeyPrimaryBtn {
             background-color: @primary@;
             color: @highlightFg@;
             border: none;
             border-radius: 6px;
-            padding: 8px 20px;
+            padding: 10px 24px;
+            min-height: 18px;
             font-weight: bold;
         }
         #agentKeyPrimaryBtn:hover {
@@ -72,7 +107,8 @@ namespace LosStyle
             color: @foreground@;
             border: 1px solid @borderStrong@;
             border-radius: 6px;
-            padding: 8px 20px;
+            padding: 10px 24px;
+            min-height: 18px;
         }
         #agentKeyGhostBtn:hover {
             border: 1px solid @primary@;

@@ -12,6 +12,10 @@
 
 namespace LosView
 {
+    /**
+     * @brief Agent 新增 key的弹窗
+     *
+     */
     class LosAgentKeyUi : public QDialog
     {
         Q_OBJECT

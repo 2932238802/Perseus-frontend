@@ -34,7 +34,9 @@ namespace LosView
         setObjectName(QStringLiteral("LosAgentKeyUi"));
         setWindowTitle(QStringLiteral("Add Agent"));
         setModal(true);
-        setFixedWidth(380);
+        setMinimumWidth(460);
+        setMinimumHeight(360);
+        resize(480, 400);
 
         auto *root = new QVBoxLayout(this);
         root->setContentsMargins(20, 20, 20, 20);
@@ -52,22 +54,28 @@ namespace LosView
 
         L_providerEdit = new QLineEdit(this);
         L_providerEdit->setPlaceholderText(QStringLiteral("for example deepseek"));
+        L_providerEdit->setMinimumHeight(36);
 
         L_baseUrlEdit = new QLineEdit(this);
         L_baseUrlEdit->setPlaceholderText(QStringLiteral("such https://api.deepseek.com/v1 ?"));
+        L_baseUrlEdit->setMinimumHeight(36);
 
         L_apiKeyEdit = new QLineEdit(this);
         L_apiKeyEdit->setPlaceholderText(QStringLiteral("sk-xxxxxx ?"));
         L_apiKeyEdit->setEchoMode(QLineEdit::Password);
+        L_apiKeyEdit->setMinimumHeight(36);
 
         L_modelsCombo = new QComboBox(this);
         L_modelsCombo->setEditable(false);
         L_modelsCombo->setInsertPolicy(QComboBox::NoInsert);
         L_modelsCombo->addItem(QStringLiteral("点击右侧获取"));
+        L_modelsCombo->setMinimumHeight(36);
 
         L_fetchBtn = new QPushButton(QStringLiteral("get models"), this);
         L_fetchBtn->setObjectName(QStringLiteral("agentKeyGhostBtn"));
         L_fetchBtn->setCursor(Qt::PointingHandCursor);
+        L_fetchBtn->setMinimumHeight(36);
+        L_fetchBtn->setMinimumWidth(96);
 
         auto *modelRow = new QHBoxLayout();
         modelRow->setSpacing(8);
@@ -93,9 +101,11 @@ namespace LosView
         L_cancelBtn = new QPushButton(QStringLiteral("取消"), this);
         L_cancelBtn->setObjectName(QStringLiteral("agentKeyGhostBtn"));
         L_cancelBtn->setCursor(Qt::PointingHandCursor);
+        L_cancelBtn->setMinimumHeight(38);
         L_saveBtn = new QPushButton(QStringLiteral("保存"), this);
         L_saveBtn->setObjectName(QStringLiteral("agentKeyPrimaryBtn"));
         L_saveBtn->setCursor(Qt::PointingHandCursor);
+        L_saveBtn->setMinimumHeight(38);
         btnRow->addStretch(1);
         btnRow->addWidget(L_cancelBtn);
         btnRow->addWidget(L_saveBtn);
@@ -181,7 +191,7 @@ namespace LosView
         }
         if (models.isEmpty())
         {
-            showTip(QStringLiteral("该厂商未返回任何模型"), true);
+            showTip(QStringLiteral("该厂商未返回任何模型, 请检查接口地址与密钥后重试"), true);
             return;
         }
         L_modelsCombo->clear();
@@ -206,27 +216,24 @@ namespace LosView
             showTip(QStringLiteral("请填写完整信息"), true);
             return;
         }
+        // 收集模型, 跳过默认占位项("点击右侧获取"), 避免把占位文字当成真实模型提交
         QStringList models;
         for (int i = 0; i < L_modelsCombo->count(); ++i)
         {
             const QString t = L_modelsCombo->itemText(i).trimmed();
-            if (!t.isEmpty() && !models.contains(t))
+            if (t.isEmpty() || t == QStringLiteral("点击右侧获取"))
+                continue;
+            if (!models.contains(t))
                 models.append(t);
         }
         if (models.isEmpty())
         {
-            const QString cur = L_modelsCombo->currentText().trimmed();
-            if (!cur.isEmpty())
-                models.append(cur);
-        }
-        if (models.isEmpty())
-        {
-            showTip(QStringLiteral("请先获取或手动填写模型"), true);
+            showTip(QStringLiteral("请先点击“get models”获取模型后再保存"), true);
             return;
         }
-        emit LosCore::LosRouter::instance()._cmd_agent_addProvider_request(provider, baseUrl, apiKey, models);
         L_saveBtn->setEnabled(false);
-        showTip(QStringLiteral("提交中..."), false);
+        showTip(QStringLiteral("正在保存..."), false);
+        emit LosCore::LosRouter::instance()._cmd_agent_addProvider_request(provider, baseUrl, apiKey, models);
     }
 
 
@@ -243,7 +250,7 @@ namespace LosView
             showTip(message.isEmpty() ? QStringLiteral("添加失败") : message, true);
             return;
         }
-        showTip(QStringLiteral("添加成功"), false);
+        showTip(QStringLiteral("已保存厂商: %1").arg(L_providerEdit->text().trimmed()), false);
         QTimer::singleShot(600, this, &QDialog::accept);
     }
 
