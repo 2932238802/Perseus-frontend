@@ -279,31 +279,23 @@ namespace LosView
         const bool isUser    = (role == Role::User);
         const int viewW      = ui->chat_view->viewport()->width();
         const int maxBubbleW = qMax(120, static_cast<int>(viewW * 0.75));
-        // 每种角色的内边距/边框必须与 LosAgent_style.h 的 QSS 完全一致, 否则测量的宽/高会与实际渲染不符, 导致长内容被裁切.
-        //   #agentBubbleUser   padding: 8px 12px (无边框) -> padH=12, padV=8,  border=0
-        //   #agentBubbleAgent  padding: 4px 10px, border:1px -> padH=10, padV=4,  border=1
         const int padH    = isUser ? 12 : 10;      // QSS 左右内边距
         const int padV    = isUser ? 8 : 4;        // QSS 上下内边距
         const int border  = isUser ? 0 : 1;        // QSS 左右边框
         const int chromeH = (padH + border) * 2;   // 单侧之和 *2 = 横向总占用
         const int textW   = maxBubbleW - chromeH;
-
         QWidget *bubble       = nullptr; // 统一用基类指针, 便于后面放进布局
         QTextBrowser *browser = nullptr; // 仅 Agent 气泡使用, 用于返回
         int bubbleH           = 0;
 
         if (isUser)
         {
-            // 用户气泡: 纯文本 QLabel (无需 Markdown)
-            // 内边距由 QSS #agentBubbleUser (padding: 8px 12px) 提供, 这里不再叠加 setContentsMargins,
-            // 避免双重内边距导致测量宽度与实际显示宽度不一致。
             QLabel *label = new QLabel(content);
             label->setObjectName(QStringLiteral("agentBubbleUser"));
             label->setWordWrap(true);
             label->setTextInteractionFlags(Qt::TextSelectableByMouse);
             label->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
             label->setMaximumWidth(maxBubbleW);
-            // 取最长行的自然宽度, 封顶到可用内容宽度, 再钉住宽度以得到精确行高 (避免长内容底部被裁切)
             QFontMetrics fm       = label->fontMetrics();
             int naturalW          = 0;
             const QStringList lns = content.split(QLatin1Char('\n'));

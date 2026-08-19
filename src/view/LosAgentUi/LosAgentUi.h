@@ -50,7 +50,9 @@ namespace LosView
         void initConnect();
 
       private: // tool
-        // 追加一个气泡。Agent 气泡返回其 QTextBrowser* (供流式追加)，User 气泡返回 nullptr
+        // 追加一个气泡
+        // Agent 气泡返回其 QTextBrowser* (供流式追加) 
+        // User 气泡返回 nullptr
         QTextBrowser *addBubble(Role role, const QString &content);
         // 重新计算流式气泡的高度并同步 QListWidgetItem 行高 (内容变长时调用)
         void relayoutStreamingBubble();

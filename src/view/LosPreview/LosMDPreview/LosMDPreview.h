@@ -19,8 +19,13 @@ namespace LosView
 
       private slots: // chs
         void onAnchorClicked(const QUrl &url);
+        void applyStyleChange();
+
+      private:
+        void initConnect() noexcept;
 
       private: // params
         QTextBrowser *L_browser = nullptr;
+        QString L_content       = {};
     };
 } // namespace LosView

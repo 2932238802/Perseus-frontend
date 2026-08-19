@@ -1,10 +1,6 @@
-// 
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
-
-
-// Copyright (c) 2026 LosAngelous (shengjie.lin)
-
 #pragma once
+
 #include <QString>
 
 namespace LosStyle
@@ -23,7 +19,7 @@ namespace LosStyle
             color: @foreground@;
             border: none;
             padding: 12px;
-            font-family: "JetBrains Mono", "Consolas", "Noto Sans Mono CJK SC", "Menlo", monospace;
+            font-family: @fontFamily@;
             font-size: 14px;
         }
         QScrollBar:vertical {
@@ -57,12 +53,37 @@ namespace LosStyle
     inline const QString LosMDPreview_docCssTemplate()
     {
         return QString(R"(
-        body { color: @foreground@; }
-        h1, h2, h3, h4, h5, h6 { color: @primary@; }
-        a { color: @success@; }
-        code { color: @success@; background-color: @selection@; }
-        pre { background-color: @panelBg@; }
-        blockquote { color: @muted@; }
+        body 
+        { 
+            color: @foreground@; 
+            font-family: @fontFamily@; 
+        }
+
+        h1, h2, h3, h4, h5, h6 
+        { 
+            color: @primary@; 
+        }
+
+        a 
+        { 
+            color: @success@; 
+        }
+
+        code 
+        { 
+            color: @success@; 
+            background-color: @selection@; 
+        }
+
+        pre
+        { 
+            background-color: @panelBg@; 
+        }
+
+        blockquote 
+        { 
+            color: @muted@; 
+        }
     )");
     }
 
