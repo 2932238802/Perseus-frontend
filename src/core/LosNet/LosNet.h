@@ -32,6 +32,7 @@ namespace LosCore
         void requestAgentChatStream(const QString &msg, const QString &provider_name, const QString &model);
         void requestAgentFetchModels(const QString &base_url, const QString &api_key);
         void requestAgentAddProvider(const QString &provider, const QString &baseUrl, const QString &apiKey, const QStringList &models);
+        void requestAgentDeleteProvider(const QString &provider, const QString &model);
         void requestListProviders();
         void dealPluginReply(const QByteArray &data);
         void dealRegisterReply(const QByteArray &data);
@@ -40,6 +41,7 @@ namespace LosCore
         void dealAgentChatReply(const QByteArray &data);
         void dealAgentFetchModelsReply(const QByteArray &data);
         void dealAgentAddProviderReply(const QByteArray &data);
+        void dealAgentDeleteProviderReply(const QByteArray &data);
         void dealListProvidersReply(const QByteArray &data);
 
       public: // tool hello

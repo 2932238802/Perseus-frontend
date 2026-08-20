@@ -19,6 +19,7 @@ namespace LosCommon
             inline constexpr const char *AGENT_ADD_API        = "LosAngelous/api/agent/add";
             inline constexpr const char *AGENT_LIST_MODELS    = "LosAngelous/api/agent/list_models";
             inline constexpr const char *AGENT_LIST_PROVIDERS = "LosAngelous/api/agent/list_providers";
+            inline constexpr const char *AGENT_DELETE_API     = "LosAngelous/api/agent/delete";
             inline constexpr const char *ROOT_API             = "";
         } /* namespace API */
 

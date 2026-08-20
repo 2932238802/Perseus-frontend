@@ -3,71 +3,81 @@
 #pragma once
 
 #include <QMap>
+#include <QObject>
 #include <QString>
 #include <QStringList>
 #include <QWidget>
 #include <qtmetamacros.h>
 
-QT_BEGIN_NAMESPACE
-namespace Ui
-{
-    class LosAgentUi;
-}
-class QTextBrowser;
-class QListWidgetItem;
-QT_END_NAMESPACE
+class QTimer;
+class QWebChannel;
+class QWebEngineView;
 
 namespace LosView
 {
+    class LosAgentUi;
+
+    class LosAgentBridge : public QObject
+    {
+        Q_OBJECT
+      public:
+        explicit LosAgentBridge(LosAgentUi *ui, QObject *parent = nullptr);
+        Q_INVOKABLE void sendMessage(const QString &text);
+        Q_INVOKABLE void providerChanged(const QString &name);
+        Q_INVOKABLE void addProvider();
+        Q_INVOKABLE void refreshProviders();
+        Q_INVOKABLE void deleteProvider();
+        Q_INVOKABLE void deleteModel();
+        Q_INVOKABLE void initState();
+      private:
+        LosAgentUi *L_ui;
+    };
+
     class LosAgentUi : public QWidget
     {
         Q_OBJECT
-      public: // construct
+      public:
         explicit LosAgentUi(QWidget *parent = nullptr);
         ~LosAgentUi();
 
-      private:
-        enum class Role
-        {
-            User,
-            Agent
-        };
-      private slots: // chs
-        void onSendClicked();
+        void onUserSend(const QString &text);
         void onAddClicked();
+        void onDeleteProvider();
+        void onDeleteModel();
+        void onProviderChanged(const QString &name);
+        void onRefreshProviders();
+        void onInitState();
+
+      private slots:
         void onProviderChanged(int index);
         void onProvidersReceived(bool ok, const QMap<QString, QStringList> &providerModels, const QString &msg);
         void onProviderAdded(bool success, const QString &message);
+        void onProviderDeleted(bool ok, const QString &message);
         void onAgentReply(const QString &message);
         void onAgentError(const QString &message);
-        void applyTheme(const QString &themeName);
         void onReplyChunk(const QString &data);
         void onReplyDone();
+        void flushChunks();
 
-      private: // init
+      private:
         void initUi();
-        void initStyle();
         void initConnect();
-
-      private: // tool
-        // 追加一个气泡
-        // Agent 气泡返回其 QTextBrowser* (供流式追加) 
-        // User 气泡返回 nullptr
-        QTextBrowser *addBubble(Role role, const QString &content);
-        // 重新计算流式气泡的高度并同步 QListWidgetItem 行高 (内容变长时调用)
-        void relayoutStreamingBubble();
         void loadProviders();
+        void setProviderModels(const QStringList &providers, const QStringList &models);
+        void applyThemeToWeb();
+        void runJs(const QString &js);
 
-      private: // widgets
-        Ui::LosAgentUi *ui;
+      private:
+        QWebEngineView *L_webView;
+        QWebChannel *L_channel;
+        QObject *L_bridge;
 
-      private:                                       // data
-        QMap<QString, QStringList> L_providerModels; // 厂商名 -> 模型列表 (来自后端 list_providers)
-
-      private: // streaming state (流式回复状态)
-        QTextBrowser *L_streamingBubble  = nullptr;  // 当前正在接收的 Agent 气泡; nullptr 表示当前无流
-        QListWidgetItem *L_streamingItem = nullptr;  // 该气泡对应的列表项 (用于动态更新行高)
-        QString L_streamingBuffer;                   // 累积收到的全部文字 (用于整段重渲染 Markdown)
+        QMap<QString, QStringList> L_providerModels;
+        QString L_currentProvider;
+        QString L_currentModel;
+        QString L_streamingBuffer;
+        QString L_pendingChunk;
+        QTimer *L_flushTimer = nullptr;
+        bool L_pageReady = false;
     };
-
 } /* namespace LosView */

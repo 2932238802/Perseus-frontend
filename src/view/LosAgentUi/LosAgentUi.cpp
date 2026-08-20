@@ -1,54 +1,197 @@
 // Copyright (c) 2026 LosAngelous (shengjie.lin)
 
 #include "LosAgentUi.h"
-#include "./ui_LosAgentUi.h"
-#include "core/LosLog/LosLog.h"
 #include "core/LosRouter/LosRouter.h"
 #include "core/LosTheme/LosThemeManager.h"
 #include "view/LosAgentKeyUi/LosAgentKeyUi.h"
-#include "view/style/LosAgent_style.h"
 
-#include <QHBoxLayout>
-#include <QLabel>
-#include <QListWidgetItem>
-#include <QTextBrowser>
-#include <QTextDocument>
-#include <QtMath>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QTimer>
+#include <QVBoxLayout>
+#include <QWebChannel>
+#include <QWebEngineView>
+
+namespace
+{
+    // 把文本编码成合法的 JS 字符串字面量 (JSON 转义 \n \r \" \\ 等).
+    // 之前直接拼进单引号字符串, 回复一旦含换行就产生 JS 语法错误,
+    // runJavaScript 静默失败, 表现为"发送消息没有回".
+    QString jsString(const QString &s)
+    {
+        // 注意: QJsonDocument::fromVariant(QString) 生成的是"标量文档", 对其 toJson() 会返回空字符串!
+        // 因此必须用数组包裹: toJson 得到 ["..."] 后再剥掉首尾方括号, 才是合法的 JS 字符串字面量.
+        QJsonArray arr;
+        arr.append(s);
+        const QByteArray json = QJsonDocument(arr).toJson(QJsonDocument::Compact);
+        return QString::fromUtf8(json).mid(1, json.size() - 2);
+    }
+} // namespace
 
 namespace LosView
 {
-    /**
-     * @brief 构造函数
-     * - 构建控件 -> 着色 -> 连接信号
-     */
-    LosAgentUi::LosAgentUi(QWidget *parent) : QWidget(parent), ui(new Ui::LosAgentUi)
+
+    LosAgentBridge::LosAgentBridge(LosAgentUi *ui, QObject *parent) : QObject(parent), L_ui(ui) {}
+
+    void LosAgentBridge::sendMessage(const QString &text)
+    {
+        if (L_ui)
+            L_ui->onUserSend(text);
+    }
+
+
+
+    void LosAgentBridge::providerChanged(const QString &name)
+    {
+        if (L_ui)
+            L_ui->onProviderChanged(name);
+    }
+
+
+
+    void LosAgentBridge::addProvider()
+    {
+        if (L_ui)
+            L_ui->onAddClicked();
+    }
+
+
+
+    void LosAgentBridge::refreshProviders()
+    {
+        if (L_ui)
+            L_ui->onRefreshProviders();
+    }
+
+
+
+    void LosAgentBridge::deleteProvider()
+    {
+        if (L_ui)
+            L_ui->onDeleteProvider();
+    }
+
+
+
+    void LosAgentBridge::deleteModel()
+    {
+        if (L_ui)
+            L_ui->onDeleteModel();
+    }
+
+
+
+    void LosAgentBridge::initState()
+    {
+        if (L_ui)
+            L_ui->onInitState();
+    }
+
+
+
+    LosAgentUi::LosAgentUi(QWidget *parent) : QWidget(parent)
     {
         initUi();
-        initStyle();
         initConnect();
     }
-    LosAgentUi::~LosAgentUi()
+
+
+
+    LosAgentUi::~LosAgentUi() {}
+
+    void LosAgentUi::runJs(const QString &js)
     {
-        delete ui;
+        if (L_webView)
+            L_webView->page()->runJavaScript(js);
     }
 
 
 
-    /**
-     * @brief   装载 .ui 表单
-     */
     void LosAgentUi::initUi()
     {
-        ui->setupUi(this);
+        auto *layout = new QVBoxLayout(this);
+        layout->setContentsMargins(0, 0, 0, 0);
+
+        L_webView = new QWebEngineView(this);
+        L_channel = new QWebChannel(this);
+        L_bridge  = new LosAgentBridge(this, this);
+
+        L_channel->registerObject(QStringLiteral("bridge"), L_bridge);
+        L_webView->page()->setWebChannel(L_channel);
+        L_webView->setUrl(QUrl(QStringLiteral("qrc:/web/web/losagent.html")));
+        layout->addWidget(L_webView);
+
+        // Streaming flush throttle timer: every 33ms (~30fps) pushes accumulated
+        // text to the Web view in one batch, avoiding per-chunk runJavaScript + DOM
+        // reflow that makes QWebEngineView laggy.
+        L_flushTimer = new QTimer(this);
+        L_flushTimer->setInterval(33);
+        L_flushTimer->setSingleShot(true);
+        connect(L_flushTimer, &QTimer::timeout, this, &LosAgentUi::flushChunks);
     }
 
 
 
-    /**
-     * @brief loadProviders
-     * - 向后端请求当前用户的厂商/模型配置 (list_providers)
-     * - 真正的填充在 onProvidersReceived 中完成
-     */
+    void LosAgentUi::initConnect()
+    {
+        auto &router = LosCore::LosRouter::instance();
+        connect(&router, &LosCore::LosRouter::_cmd_agent_listProviders_response, this, &LosAgentUi::onProvidersReceived);
+        connect(&router, &LosCore::LosRouter::_cmd_agent_addProvider_response, this, &LosAgentUi::onProviderAdded);
+        connect(&router, &LosCore::LosRouter::_cmd_agent_deleteProvider_response, this, &LosAgentUi::onProviderDeleted);
+        connect(&router, &LosCore::LosRouter::_cmd_agent_reply, this,
+                [this](bool ok, const QString &msg)
+                {
+                    if (ok)
+                        onAgentReply(msg);
+                    else
+                        onAgentError(msg);
+                });
+        connect(&router, &LosCore::LosRouter::_cmd_agent_replyChunk, this, &LosAgentUi::onReplyChunk);
+        connect(&router, &LosCore::LosRouter::_cmd_agent_replyDone, this, &LosAgentUi::onReplyDone);
+        connect(&router, &LosCore::LosRouter::_cmd_auth_loginStateChanged, this,
+                [this](bool loggedIn)
+                {
+                    if (loggedIn)
+                        loadProviders();
+                });
+        connect(&router, &LosCore::LosRouter::_cmd_themeChanged, this, [this](const QString &) { applyThemeToWeb(); });
+        connect(L_webView->page(), &QWebEnginePage::loadFinished, this,
+                [this](bool ok)
+                {
+                    if (ok)
+                    {
+                        L_pageReady = true;
+                        applyThemeToWeb(); // 页面就绪后再应用主题, 避免启动时序竞争
+                    }
+                });
+        loadProviders();
+    }
+
+
+
+    void LosAgentUi::applyThemeToWeb()
+    {
+        if (!L_pageReady)
+            return; // 页面脚本尚未加载, 避免 applyTheme is not defined; 加载完成后会重新调用
+        auto &theme           = LosCore::LosThemeManager::instance();
+        const QString name    = theme.currentTheme();
+        const auto tokens     = theme.uiTokens(name);
+        const QString bg      = tokens.value(QStringLiteral("background"), QStringLiteral("#282a36"));
+        const QString panel   = tokens.value(QStringLiteral("panelBg"), QStringLiteral("#21222c"));
+        const QString fg      = tokens.value(QStringLiteral("foreground"), QStringLiteral("#f8f8f2"));
+        const QString muted   = tokens.value(QStringLiteral("muted"), QStringLiteral("#6272a4"));
+        const QString prim    = tokens.value(QStringLiteral("primary"), QStringLiteral("#bd93f9"));
+        const QString border  = tokens.value(QStringLiteral("borderStrong"), QStringLiteral("#191a21"));
+        const QString sel     = tokens.value(QStringLiteral("selection"), QStringLiteral("#44475a"));
+        const QString hiFg    = tokens.value(QStringLiteral("highlightFg"), QStringLiteral("#ffffff"));
+        const QString success = tokens.value(QStringLiteral("success"), QStringLiteral("#50fa7b"));
+        runJs(QStringLiteral("applyTheme('%1','%2','%3','%4','%5','%6','%7','%8','%9')").arg(bg, panel, fg, muted, prim, border, sel, hiFg, success));
+    }
+
+
+
     void LosAgentUi::loadProviders()
     {
         emit LosCore::LosRouter::instance()._cmd_agent_listProviders_request();
@@ -57,59 +200,141 @@ namespace LosView
 
 
     /**
+     * @brief 
+     * 
+     */
+    void LosAgentUi::onInitState()
+    {
+        applyThemeToWeb();
+        loadProviders();
+    }
+
+
+
+    /**
      * @brief onProvidersReceived
-     * - 收到后端配置 -> 缓存映射 -> 填充厂商下拉 -> 联动模型下拉
+     * 
+     * @param ok 
+     * @param providerModels 
+     * @param msg 
      */
     void LosAgentUi::onProvidersReceived(bool ok, const QMap<QString, QStringList> &providerModels, const QString &msg)
     {
         Q_UNUSED(msg);
         if (!ok)
             return;
-        L_providerModels = providerModels;
-        ui->provider_combo->blockSignals(true);
-        ui->provider_combo->clear();
-        for (auto it = L_providerModels.constBegin(); it != L_providerModels.constEnd(); ++it)
-            ui->provider_combo->addItem(it.key());
-        ui->provider_combo->blockSignals(false);
-        onProviderChanged(ui->provider_combo->currentIndex());
+        L_providerModels      = providerModels;
+        QStringList providers = providerModels.keys();
+        if (providers.isEmpty())
+        {
+            // 厂商全部被删光:
+            // 复位当前选择并清空下拉框
+            L_currentProvider.clear();
+            L_currentModel.clear();
+            setProviderModels({}, {});
+            return;
+        }
+        if (L_currentProvider.isEmpty() || !providerModels.contains(L_currentProvider))
+            L_currentProvider = providers.first();
+        QStringList models = providerModels.value(L_currentProvider);
+        if (models.isEmpty())
+            return;
+        if (L_currentModel.isEmpty() || !models.contains(L_currentModel))
+            L_currentModel = models.first();
+        setProviderModels(providers, models);
     }
 
 
 
     /**
      * @brief onProviderChanged
-     * - 厂商切换 -> 从缓存映射取出该厂商模型, 刷新模型下拉
+     * 
+     * @param name 
+     */
+    void LosAgentUi::onProviderChanged(const QString &name)
+    {
+        if (name.isEmpty() || !L_providerModels.contains(name))
+            return;
+        L_currentProvider  = name;
+        QStringList models = L_providerModels.value(name);
+        if (-1 == models.indexOf(L_currentModel))
+            L_currentModel = models.isEmpty() ? QString() : models.first();
+        setProviderModels(L_providerModels.keys(), models);
+    }
+
+
+
+    /**
+     * @brief onProviderChanged
+     * 
+     * @param index 
      */
     void LosAgentUi::onProviderChanged(int index)
     {
         Q_UNUSED(index);
-        const QString provider = ui->provider_combo->currentText();
-        ui->model_combo->clear();
-        if (provider.isEmpty())
-            return;
-        const QStringList models = L_providerModels.value(provider);
-        for (const QString &m : models)
-            ui->model_combo->addItem(m);
     }
 
 
 
     /**
      * @brief onAddClicked
-     * - 弹出添加 AI 配置对话框
      */
     void LosAgentUi::onAddClicked()
     {
         LosAgentKeyUi dialog(this);
         dialog.exec();
+        loadProviders();
     }
 
 
 
     /**
-     * @brief onProviderAdded
-     * - 新增厂商配置成功后 -> 重新拉取一次, 刷新下拉
+     * @brief 
+     * 
      */
+    void LosAgentUi::onRefreshProviders()
+    {
+        loadProviders();
+    }
+
+
+
+    void LosAgentUi::onDeleteModel()
+    {
+        if (L_currentModel.isEmpty())
+        {
+            runJs(QStringLiteral("addMessage('left',%1)").arg(jsString(QStringLiteral("[错误] 当前没有可删除的模型"))));
+            return;
+        }
+        emit LosCore::LosRouter::instance()._cmd_agent_deleteProvider_request(L_currentProvider, L_currentModel);
+    }
+
+
+
+    void LosAgentUi::onDeleteProvider()
+    {
+        if (L_currentProvider.isEmpty())
+        {
+            runJs(QStringLiteral("addMessage('left',%1)").arg(jsString(QStringLiteral("[错误] 当前没有可删除的厂商"))));
+            return;
+        }
+        emit LosCore::LosRouter::instance()._cmd_agent_deleteProvider_request(L_currentProvider, QString());
+    }
+
+
+
+    void LosAgentUi::onProviderDeleted(bool ok, const QString &message)
+    {
+        if (ok)
+        {
+            loadProviders();
+            return;
+        }
+        runJs(QStringLiteral("addMessage('left',%1)").arg(jsString(QStringLiteral("[错误] ") + message)));
+    }
+
+
+
     void LosAgentUi::onProviderAdded(bool success, const QString &message)
     {
         Q_UNUSED(message);
@@ -119,281 +344,91 @@ namespace LosView
 
 
 
-    /**
-     * @brief initStyle
-     * - 用当前主题着色
-     */
-    void LosAgentUi::initStyle()
+    void LosAgentUi::setProviderModels(const QStringList &providers, const QStringList &models)
     {
-        applyTheme(LosCore::LosThemeManager::instance().currentTheme());
+        QJsonArray pa, ma;
+        for (const auto &p : providers)
+            pa.append(p);
+        for (const auto &m : models)
+            ma.append(m);
+        const QString js =
+            QStringLiteral("updateProviderModel(%1,%2,%3,%4)")
+                .arg(QString::fromUtf8(QJsonDocument(pa).toJson(QJsonDocument::Compact)),
+                     QString::fromUtf8(QJsonDocument(ma).toJson(QJsonDocument::Compact)), jsString(L_currentProvider), jsString(L_currentModel));
+        runJs(js);
     }
 
 
 
-    /**
-     * @brief applyTheme
-     * - 主题换肤回调 (与 LosAuthUi 约定一致)
-     * - 把 LosAgent_style.h 模板里的 @token@ 替换为当前主题色后应用
-     */
-    void LosAgentUi::applyTheme(const QString &themeName)
+    void LosAgentUi::onUserSend(const QString &text)
     {
-        const QString qss = LosCore::LosThemeManager::instance().buildExtraQss(LosStyle::losAgent_getStyleTemplate(), themeName);
-        setStyleSheet(qss);
-    }
-
-
-
-    /**
-     * @brief initConnect
-     * - 发送按钮 / 回车提交 / Agent 回包 / 主题换肤
-     */
-    void LosAgentUi::initConnect()
-    {
-        auto &router = LosCore::LosRouter::instance();
-        connect(ui->send_btn, &QPushButton::clicked, this, &LosAgentUi::onSendClicked);
-        connect(ui->input_edit, &QLineEdit::returnPressed, this, &LosAgentUi::onSendClicked);
-        connect(ui->add_btn, &QPushButton::clicked, this, &LosAgentUi::onAddClicked);
-        connect(ui->refresh_btn, &QPushButton::clicked, this, &LosAgentUi::loadProviders);
-        connect(ui->provider_combo, &QComboBox::currentIndexChanged, this, &LosAgentUi::onProviderChanged);
-        connect(&router, &LosCore::LosRouter::_cmd_agent_listProviders_response, this, &LosAgentUi::onProvidersReceived);
-        connect(&router, &LosCore::LosRouter::_cmd_agent_addProvider_response, this, &LosAgentUi::onProviderAdded);
-        connect(&router, &LosCore::LosRouter::_cmd_auth_loginStateChanged, this,
-                [this](bool loggedIn)
-                {
-                    if (loggedIn)
-                        loadProviders();
-                });
-        connect(&router, &LosCore::LosRouter::_cmd_themeChanged, this, [this](const QString &name) { applyTheme(name); });
-        connect(&router, &LosCore::LosRouter::_cmd_agent_reply, this,
-                [this](bool ok, const QString &msg)
-                {
-                    if (ok)
-                    {
-                        onAgentReply(msg);
-                    }
-                    else
-                    {
-                        onAgentError(msg);
-                    }
-                });
-        connect(&router, &LosCore::LosRouter::_cmd_agent_replyChunk, this, &LosAgentUi::onReplyChunk);
-        connect(&router, &LosCore::LosRouter::_cmd_agent_replyDone, this, &LosAgentUi::onReplyDone);
-        loadProviders();
-    }
-
-
-
-    /**
-     * @brief onSendClicked
-     * - 立刻显示用户气泡 -> 把消息抛给 core (LosAgentManager)
-     * - 随后建立一个空的 Agent 气泡作为流式容器, 后续 chunk 不断往里追加
-     */
-    void LosAgentUi::onSendClicked()
-    {
-        const QString text = ui->input_edit->text().trimmed();
-        if (text.isEmpty())
+        const QString t = text.trimmed();
+        if (t.isEmpty())
             return;
-        addBubble(Role::User, text);
-        emit LosCore::LosRouter::instance()._cmd_agent_sendMessage(text, ui -> provider_combo->currentText(), ui->model_combo->currentText());
-        ui->input_edit->clear();
+        if (L_currentProvider.isEmpty() || L_currentModel.isEmpty())
+        {
+            runJs(QStringLiteral("addMessage('left',%1)").arg(jsString(QStringLiteral("[错误] 尚未选择厂商/模型, 请先添加厂商或刷新模型列表"))));
+            return;
+        }
+        emit LosCore::LosRouter::instance()._cmd_agent_sendMessage(t, L_currentProvider, L_currentModel);
         L_streamingBuffer.clear();
-        addBubble(Role::Agent, QString()); // 内部会把 L_streamingBubble / L_streamingItem 指向它
+        L_pendingChunk.clear();
+        L_flushTimer->stop();
+        runJs(QStringLiteral("addMessage('left','')"));
     }
 
 
 
-    /**
-     * @brief onAgentReply
-     */
     void LosAgentUi::onAgentReply(const QString &message)
     {
-        INF("LosAgentUi", message);
-        addBubble(Role::Agent, message);
+        runJs(QStringLiteral("updateLastLeftText(%1)").arg(jsString(message)));
     }
 
 
 
-    /**
-     * @brief
-     */
     void LosAgentUi::onAgentError(const QString &message)
     {
-        ERR("onAgentError", message);
-        addBubble(Role::Agent, message);
+        runJs(QStringLiteral("updateLastLeftText(%1)").arg(jsString(QStringLiteral("[错误] ") + message)));
     }
 
 
 
-    /**
-     * @brief onReplyChunk
-     * - 收到流式回复的一个增量片段
-     * - 累积到 buffer, 整段重渲染当前 Agent 气泡的 Markdown, 并重算行高 (打字机效果)
-     *
-     * @param data 本次到达的文字片段
-     */
     void LosAgentUi::onReplyChunk(const QString &data)
     {
-        if (L_streamingBubble == nullptr) // 没有正在接收的气泡, 忽略 (防御)
-            return;
+        // Accumulate chunk and start throttle timer.
+        // Timer fires once and pushes the accumulated buffer to the Web view,
+        // avoiding per-chunk runJavaScript that blocks the UI thread.
         L_streamingBuffer += data;
-        L_streamingBubble->document()->setMarkdown(L_streamingBuffer);
-        relayoutStreamingBubble();
+        L_pendingChunk += data;
+        if (!L_flushTimer->isActive())
+            L_flushTimer->start();
     }
 
 
 
-    /**
-     * @brief onReplyDone
-     * - 流式回复结束: 给当前气泡"封口", 清理流式状态, 为下一轮做准备
-     * - 幂等: replyDone 可能被触发两次 ([DONE] + finished), 第二次进来直接返回
-     */
+    void LosAgentUi::flushChunks()
+    {
+        // Timer expired: push everything accumulated since last flush.
+        if (L_pendingChunk.isEmpty())
+            return;
+        runJs(QStringLiteral("updateLastLeftText(%1)").arg(jsString(L_streamingBuffer)));
+        L_pendingChunk.clear();
+    }
+
+
+
     void LosAgentUi::onReplyDone()
     {
-        if (L_streamingBubble == nullptr) // 已经收过尾, 直接返回 (幂等保护)
-            return;
-        // 收到的全是空内容 (如出错没产生任何片段) 时给个占位提示
-        if (L_streamingBuffer.isEmpty())
-            L_streamingBubble->document()->setMarkdown(QStringLiteral("_(无回复)_"));
-        relayoutStreamingBubble();
-
-        // 封口: 解除对当前气泡的引用, 下一轮 onSendClicked 会重新建立
-        L_streamingBubble = nullptr;
-        L_streamingItem   = nullptr;
+        // Stream ended: flush remaining content immediately, then reset buffers.
+        L_flushTimer->stop();
+        if (!L_pendingChunk.isEmpty())
+        {
+            runJs(QStringLiteral("updateLastLeftText(%1)").arg(jsString(L_streamingBuffer)));
+            L_pendingChunk.clear();
+        }
         L_streamingBuffer.clear();
     }
 
-
-
-    /**
-     * @brief addBubble
-     * - 向消息列表追加一个气泡
-     * - User 靠右, Agent 靠左; 配色由 objectName 在 LosAgent_style.h 控制
-     * - Agent 气泡返回内部 QTextBrowser* (供流式逐片追加), User 气泡返回 nullptr
-     *
-     * @param role     消息角色
-     * @param content  消息内容
-     * @return QTextBrowser* Agent 气泡的浏览器指针; User 气泡为 nullptr
-     */
-    QTextBrowser *LosAgentUi::addBubble(Role role, const QString &content)
-    {
-        const bool isUser    = (role == Role::User);
-        const int viewW      = ui->chat_view->viewport()->width();
-        const int maxBubbleW = qMax(120, static_cast<int>(viewW * 0.75));
-        const int padH    = isUser ? 12 : 10;      // QSS 左右内边距
-        const int padV    = isUser ? 8 : 4;        // QSS 上下内边距
-        const int border  = isUser ? 0 : 1;        // QSS 左右边框
-        const int chromeH = (padH + border) * 2;   // 单侧之和 *2 = 横向总占用
-        const int textW   = maxBubbleW - chromeH;
-        QWidget *bubble       = nullptr; // 统一用基类指针, 便于后面放进布局
-        QTextBrowser *browser = nullptr; // 仅 Agent 气泡使用, 用于返回
-        int bubbleH           = 0;
-
-        if (isUser)
-        {
-            QLabel *label = new QLabel(content);
-            label->setObjectName(QStringLiteral("agentBubbleUser"));
-            label->setWordWrap(true);
-            label->setTextInteractionFlags(Qt::TextSelectableByMouse);
-            label->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
-            label->setMaximumWidth(maxBubbleW);
-            QFontMetrics fm       = label->fontMetrics();
-            int naturalW          = 0;
-            const QStringList lns = content.split(QLatin1Char('\n'));
-            for (const QString &l : lns)
-                naturalW = qMax(naturalW, fm.horizontalAdvance(l));
-            int contentW = qBound(0, naturalW, textW);
-            label->setFixedWidth(contentW);
-            int textH = label->heightForWidth(contentW);
-            if (textH <= 0)
-                textH = fm.height();
-            bubbleH = textH + padV * 2;
-            bubble  = label;
-        }
-        else
-        {
-            browser = new QTextBrowser();
-            browser->setObjectName(QStringLiteral("agentBubbleAgent"));
-            browser->setFrameShape(QFrame::NoFrame);
-            browser->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-            browser->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-            browser->setOpenExternalLinks(true);
-            browser->setTextInteractionFlags(Qt::TextBrowserInteraction);
-            // 长的不换行 token(URL/代码) 也强制折行, 避免横向溢出被裁切
-            QTextOption opt = browser->document()->defaultTextOption();
-            opt.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
-            browser->document()->setDefaultTextOption(opt);
-            browser->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Minimum);
-            browser->document()->setDocumentMargin(0); // 内边距统一交给 QSS, 文档自身不再留白
-            browser->document()->setMarkdown(content); // Qt6 原生 Markdown 渲染
-            browser->document()->setTextWidth(textW);  // 先按最大可用宽度排版
-            const int idealW    = qCeil(browser->document()->idealWidth());
-            const int finalTxtW = qBound(1, idealW, textW);
-            browser->document()->setTextWidth(finalTxtW); // 用贴合后的宽度重新排版
-            const int bubbleW = finalTxtW + chromeH;
-            browser->setFixedWidth(bubbleW);
-            const qreal docH = browser->document()->size().height();
-            bubbleH          = qMax(static_cast<int>(docH) + padV * 2, browser->fontMetrics().height() + padV * 2);
-            browser->setFixedHeight(bubbleH);
-            bubble = browser;
-        }
-
-        QWidget *holder  = new QWidget();
-        QHBoxLayout *lay = new QHBoxLayout(holder);
-        lay->setContentsMargins(8, 4, 8, 4);
-        if (isUser)
-        {
-            lay->addStretch(1);
-            lay->addWidget(bubble);
-        }
-        else
-        {
-            lay->addWidget(bubble);
-            lay->addStretch(1);
-        }
-        const int itemH       = bubbleH + 8 + 6;
-        QListWidgetItem *item = new QListWidgetItem(ui->chat_view);
-        item->setSizeHint(QSize(viewW, itemH));
-        ui->chat_view->setItemWidget(item, holder);
-        ui->chat_view->scrollToBottom();
-        if (!isUser)
-        {
-            L_streamingBubble = browser;
-            L_streamingItem   = item;
-        }
-        return browser; 
-    }
-
-
-
-    /**
-     * @brief relayoutStreamingBubble
-     * - 流式内容变长后, 重新测量气泡高度并同步 QListWidgetItem 行高
-     * - 否则气泡高度被创建时 setFixedHeight 钉死, 新增文字会被裁掉看不见
-     */
-    void LosAgentUi::relayoutStreamingBubble()
-    {
-        if (L_streamingBubble == nullptr || L_streamingItem == nullptr)
-            return;
-        const int viewW      = ui->chat_view->viewport()->width();
-        const int maxBubbleW = qMax(120, static_cast<int>(viewW * 0.75));
-        const int padV       = 4;
-        const int cssPadH    = 10;
-        const int cssBorder  = 1;
-        const int chromeH    = (cssPadH + cssBorder) * 2;
-        const int textW      = maxBubbleW - chromeH;
-        QTextOption ropt = L_streamingBubble->document()->defaultTextOption();
-        ropt.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
-        L_streamingBubble->document()->setDefaultTextOption(ropt);
-        L_streamingBubble->document()->setTextWidth(textW);
-        const int idealW    = qCeil(L_streamingBubble->document()->idealWidth());
-        const int finalTxtW = qBound(1, idealW, textW);
-        L_streamingBubble->document()->setTextWidth(finalTxtW);
-        L_streamingBubble->setFixedWidth(finalTxtW + chromeH);
-        const qreal docH  = L_streamingBubble->document()->size().height();
-        const int bubbleH = qMax(static_cast<int>(docH) + padV * 2, L_streamingBubble->fontMetrics().height() + padV * 2);
-        L_streamingBubble->setFixedHeight(bubbleH);
-        const int itemH = bubbleH + 8 + 6;
-        L_streamingItem->setSizeHint(QSize(viewW, itemH));
-        ui->chat_view->scrollToBottom();
-    }
 } /* namespace LosView */
+
+#include "LosAgentUi.moc"

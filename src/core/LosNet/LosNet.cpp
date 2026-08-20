@@ -23,6 +23,42 @@
 #include <qurl.h>
 
 
+namespace
+{
+    // 解析 SSE 累积缓冲区里所有完整行 (每行以 \n 结尾), 消费掉已处理部分.
+    // 剩下的不足一行内容保留在 pending 中, 下次 readyRead / finished 继续拼.
+    void processAgentStreamLines(QByteArray &pending)
+    {
+        auto &router = LosCore::LosRouter::instance();
+        int nl       = -1;
+        while ((nl = pending.indexOf('\n')) >= 0)
+        {
+            QByteArray line = pending.left(nl);
+            pending.remove(0, nl + 1);
+            while (line.endsWith('\r'))
+                line.chop(1);
+            if (!line.startsWith("data:"))
+                continue;
+            QByteArray payload = line.mid(5);
+            if (payload.startsWith(' '))
+                payload.remove(0, 1);
+            if (payload == "[DONE]")
+            {
+                router._cmd_agent_replyDone();
+                continue;
+            }
+            QJsonParseError perr;
+            QJsonDocument pdoc = QJsonDocument::fromJson(payload, &perr);
+            if (perr.error != QJsonParseError::NoError || !pdoc.isObject())
+                continue;
+            const QString piece = pdoc.object().value("d").toString();
+            if (!piece.isEmpty())
+                router._cmd_agent_replyChunk(piece);
+        }
+    }
+} // namespace
+
+
 namespace LosCore
 {
     LosNet::LosNet(QObject *parent) : QObject{parent}
@@ -135,40 +171,66 @@ namespace LosCore
         req.setHeader(QNetworkRequest::ContentTypeHeader, LosCommon::LosNet_Constants::HEADER_TYPE::JSON_TYPE);
         req.setRawHeader("Authorization", ("Bearer " + token).toUtf8());
         QNetworkReply *rep = L_net->post(req, data);
+        auto *pending      = new QByteArray;
         connect(rep, &QNetworkReply::readyRead, this,
-                [this, rep]()
+                [this, rep, pending]()
                 {
-                    while (rep->canReadLine())
-                    {
-                        QByteArray line = rep->readLine();
-                        // 去掉行尾换行, 但保留内容里的空格 (不要对整行 trimmed)
-                        while (line.endsWith('\n') || line.endsWith('\r'))
-                            line.chop(1);
-                        if (!line.startsWith("data:"))
-                            continue;
-                        // 砍掉 "data:" 前缀; SSE 协议会在 data: 后加一个空格, 只去掉这一个
-                        QByteArray payload = line.mid(5);
-                        if (payload.startsWith(' '))
-                            payload.remove(0, 1);
-                        if (payload == "[DONE]")
-                        {
-                            emit LosRouter::instance()._cmd_agent_replyDone();
-                            return;
-                        }
-                        // payload 形如 {"d":" much"} —— 解析 JSON 取 d 字段, 空格完整保留
-                        QJsonParseError perr;
-                        QJsonDocument pdoc = QJsonDocument::fromJson(payload, &perr);
-                        if (perr.error != QJsonParseError::NoError || !pdoc.isObject())
-                            continue;
-                        const QString piece = pdoc.object().value("d").toString();
-                        if (!piece.isEmpty())
-                            emit LosRouter::instance()._cmd_agent_replyChunk(piece);
-                    }
+                    pending->append(rep->readAll());
+                    processAgentStreamLines(*pending);
                 });
         connect(rep, &QNetworkReply::finished, this,
-                [rep]()
+                [this, rep, pending]()
                 {
+                    pending->append(rep->readAll());
+                    if (!pending->isEmpty() && !pending->contains('\n'))
+                    {
+                        QByteArray line = *pending;
+                        if (line.startsWith("data:"))
+                        {
+                            QByteArray payload = line.mid(5);
+                            if (payload.startsWith(' '))
+                                payload.remove(0, 1);
+                            if (payload == "[DONE]")
+                            {
+                            }
+                            else
+                            {
+                                QJsonParseError perr2;
+                                QJsonDocument pdoc = QJsonDocument::fromJson(payload, &perr2);
+                                if (perr2.error == QJsonParseError::NoError && pdoc.isObject())
+                                {
+                                    const QString piece = pdoc.object().value("d").toString();
+                                    if (!piece.isEmpty())
+                                        emit LosRouter::instance()._cmd_agent_replyChunk(piece);
+                                }
+                            }
+                        }
+                        pending->clear();
+                    }
+                    else
+                    {
+                        processAgentStreamLines(*pending);
+                    }
+                    const int status = rep->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+                    if (status >= 400 && !pending->isEmpty() && !pending->trimmed().isEmpty())
+                    {
+                        const QString body = QString::fromUtf8(pending->trimmed());
+                        QString errMsg;
+                        QJsonParseError perr;
+                        const QJsonDocument edoc = QJsonDocument::fromJson(body.toUtf8(), &perr);
+                        if (perr.error == QJsonParseError::NoError && edoc.isObject())
+                        {
+                            const QJsonObject eobj = edoc.object();
+                            errMsg                 = eobj.value(QStringLiteral("message")).toString();
+                            if (errMsg.isEmpty())
+                                errMsg = eobj.value(QStringLiteral("error")).toObject().value(QStringLiteral("message")).toString();
+                        }
+                        if (errMsg.isEmpty())
+                            errMsg = body.left(200);
+                        emit LosRouter::instance()._cmd_agent_reply(false, errMsg);
+                    }
                     emit LosRouter::instance()._cmd_agent_replyDone();
+                    delete pending;
                     rep->deleteLater();
                 });
     }
@@ -233,7 +295,31 @@ namespace LosCore
         req.setHeader(QNetworkRequest::ContentTypeHeader, LosCommon::LosNet_Constants::HEADER_TYPE::JSON_TYPE);
         req.setRawHeader("Authorization", ("Bearer " + token).toUtf8());
         QNetworkReply *rep = L_net->post(req, data);
-        conn(rep, [this](const QByteArray &doc) { this->dealAgentFetchModelsReply(doc); });
+        conn(rep, [this](const QByteArray &doc) { this->dealAgentAddProviderReply(doc); });
+    }
+
+
+
+    /**
+     * @brief 删除厂商/模型
+     * @param provider 厂商名
+     * @param model    模型名; 为空则删除整个厂商(模型级联删除), 非空则只删除该模型
+     */
+    void LosNet::requestAgentDeleteProvider(const QString &provider, const QString &model)
+    {
+        auto &state   = LosState::instance();
+        QString token = state.get<QString>(LosCommon::LosState_Constants::SG_STR::AUTH_TOKEN);
+        QJsonObject body;
+        body["provider_name"] = provider;
+        if (!model.isEmpty())
+            body["model"] = model;
+        QByteArray data = QJsonDocument(body).toJson(QJsonDocument::Compact);
+        QUrl url(LosCommon::LosNet_Constants::BASE_URL + QString(LosCommon::LosNet_Constants::API::AGENT_DELETE_API));
+        QNetworkRequest req(url);
+        req.setHeader(QNetworkRequest::ContentTypeHeader, LosCommon::LosNet_Constants::HEADER_TYPE::JSON_TYPE);
+        req.setRawHeader("Authorization", ("Bearer " + token).toUtf8());
+        QNetworkReply *rep = L_net->post(req, data);
+        conn(rep, [this](const QByteArray &doc) { this->dealAgentDeleteProviderReply(doc); });
     }
 
 
@@ -467,6 +553,27 @@ namespace LosCore
 
 
     /**
+     * @brief 处理删除厂商/模型的结果
+     */
+    void LosNet::dealAgentDeleteProviderReply(const QByteArray &data)
+    {
+        QJsonParseError err;
+        QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+        if (err.error != QJsonParseError::NoError)
+        {
+            ERR("解析失败", "LosNet");
+            emit LosRouter::instance()._cmd_agent_deleteProvider_response(false, QStringLiteral("响应解析失败"));
+            return;
+        }
+        QJsonObject obj(doc.object());
+        const bool ok     = obj["success"].toBool();
+        const QString msg = obj["message"].toString();
+        emit LosRouter::instance()._cmd_agent_deleteProvider_response(ok, msg);
+    }
+
+
+
+    /**
      * @brief
      *
      * @param data
@@ -674,6 +781,8 @@ namespace LosCore
                 [this](const QString &baseUrl, const QString &apiKey) { this->requestAgentFetchModels(baseUrl, apiKey); });
         connect(&router, &LosRouter::_cmd_agent_addProvider_request, this,
                 [this](const QString &p, const QString &b, const QString &k, const QStringList &m) { this->requestAgentAddProvider(p, b, k, m); });
+        connect(&router, &LosRouter::_cmd_agent_deleteProvider_request, this,
+                [this](const QString &p, const QString &m) { this->requestAgentDeleteProvider(p, m); });
         connect(&router, &LosRouter::_cmd_agent_listProviders_request, this, [this]() { this->requestListProviders(); });
     }
 

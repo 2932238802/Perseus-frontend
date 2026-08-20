@@ -194,6 +194,8 @@ namespace LosCore
         void _cmd_agent_listModels_response(bool ok, const QStringList &models, const QString &msg);
         void _cmd_agent_listProviders_request();                                                                               // 厂商 - 模型
         void _cmd_agent_listProviders_response(bool ok, const QMap<QString, QStringList> &providerModels, const QString &msg); // 服务器的答复
+        void _cmd_agent_deleteProvider_request(const QString &provider, const QString &model);
+        void _cmd_agent_deleteProvider_response(bool ok, const QString &message);
         void _cmd_agent_reply(bool suc, const QString &reply);
         void _cmd_agent_replyDone();
         void _cmd_agent_replyChunk(const QString &data);

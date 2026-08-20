@@ -56,6 +56,7 @@
         <file>web/xterm/xterm.css</file>
         <file>web/xterm/xterm.js</file>
         <file>web/terminal.html</file>
+        <file>web/losagent.html</file>
     </qresource>
     <qresource prefix="/style">
         <file alias="perseus_style.qss">../src/view/style/perseus_style.qss</file>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LosAgent · Chat</title>
+<script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+<style>
+  :root {
+    --bg: #282a36;
+    --panel: #21222c;
+    --fg: #f8f8f2;
+    --muted: #6272a4;
+    --primary: #bd93f9;
+    --border: #191a21;
+    --selection: #44475a;
+    --hiFg: #ffffff;
+    --success: #50fa7b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+    color: var(--fg);
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .app { position: relative; height: 100%; display: flex; flex-direction: column; }
+
+  .topbar {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 22px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--primary);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--hiFg); font-weight: 700; font-size: 16px;
+    flex-shrink: 0;
+  }
+  .title-box { display: flex; flex-direction: column; line-height: 1.25; }
+  .title { font-size: 15px; font-weight: 600; color: var(--fg); }
+  .subtitle { font-size: 12px; color: var(--muted); }
+  .status { margin-left: auto; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); }
+
+  .chat {
+    flex: 1; overflow-y: auto;
+    padding: 22px 20px 8px;
+    scroll-behavior: smooth;
+    background: var(--bg);
+  }
+  .chat::-webkit-scrollbar { width: 8px; }
+  .chat::-webkit-scrollbar-thumb { background: var(--selection); border-radius: 4px; }
+  .chat::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+  .row { display: flex; width: 100%; margin-bottom: 16px; animation: rise .3s ease-out both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  .row.right { justify-content: flex-end; }
+  .row.left  { justify-content: flex-start; }
+
+  .bubble {
+    max-width: 76%; padding: 12px 16px;
+    font-size: 14px; line-height: 1.7;
+    word-break: break-word; position: relative;
+    display: flex; flex-direction: column;
+  }
+  .bubble .txt { white-space: pre-wrap; }
+
+  .row.right .bubble {
+    background: var(--primary);
+    color: var(--hiFg);
+    border-top-left-radius: 20px; border-top-right-radius: 6px;
+    border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
+  }
+  .row.left .bubble {
+    background: var(--panel);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    border-top-left-radius: 6px; border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
+  }
+
+  .time { font-size: 11px; color: var(--muted); margin-top: 5px; }
+  .row.right .time { text-align: right; color: var(--hiFg); opacity: .75; }
+
+  .inputbar {
+    display: flex; align-items: flex-end; gap: 12px;
+    padding: 14px 20px 16px;
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .inputbox {
+    flex: 1; min-width: 0; background: var(--bg);
+    border: 1px solid var(--selection);
+    border-radius: 20px; padding: 12px 18px;
+    font-size: 14px; font-family: inherit; color: var(--fg); line-height: 1.5;
+    outline: none; resize: none; transition: border-color .2s, box-shadow .2s;
+  }
+  .inputbox::placeholder { color: var(--muted); }
+  .inputbox:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--selection); }
+  .send {
+    width: 46px; height: 46px; border: none; border-radius: 50%;
+    background: var(--primary);
+    color: var(--hiFg); font-size: 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s, transform .15s; flex-shrink: 0;
+  }
+  .send:hover { background: var(--selection); transform: translateY(-1px); }
+  .send:active { transform: translateY(0); }
+
+  .qtbar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 20px; flex-shrink: 0;
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+  }
+  .qtbar select {
+    flex: 1 1 0; min-width: 0; width: 0;
+    background: var(--bg);
+    border: 1px solid var(--selection);
+    border-radius: 14px; padding: 8px 12px;
+    font-size: 13px; font-family: inherit; color: var(--fg);
+    outline: none; appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cpath d='M2 4l4 4 4-4' fill='none' stroke='%239aa0a9' stroke-width='1.8'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 10px center;
+    padding-right: 30px; cursor: pointer;
+  }
+  .qtbar select:hover { border-color: var(--muted); }
+  .qtbar select:focus { border-color: var(--primary); box-shadow: 0 0 0 2px var(--selection); }
+  .qtbar button {
+    padding: 8px 14px; border: 1px solid var(--selection); border-radius: 14px;
+    background: var(--bg); color: var(--fg);
+    font-size: 13px; font-family: inherit; cursor: pointer; white-space: nowrap;
+    flex-shrink: 0;
+    transition: border-color .15s, background .15s, color .15s;
+  }
+  .qtbar button:hover { border-color: var(--primary); background: var(--selection); color: var(--hiFg); }
+  .qtbar button.add { font-weight: 700; font-size: 16px; padding: 6px 12px; }
+
+  @media (max-width: 520px) { .bubble { max-width: 88%; } }
+</style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="avatar">L</div>
+      <div class="title-box">
+        <div class="title">LosAgent</div>
+        <div class="subtitle">AI 助手 · 在线</div>
+      </div>
+      <div class="status"><span class="dot"></span>对话中</div>
+    </div>
+
+    <div class="chat" id="chat"></div>
+
+    <div class="inputbar">
+      <textarea class="inputbox" id="input" rows="1" placeholder="输入消息…"></textarea>
+      <button class="send" id="send">➤</button>
+    </div>
+
+    <div class="qtbar">
+      <select id="provider_combo"></select>
+      <select id="model_combo"></select>
+      <button class="add" id="add_btn" title="添加厂商">+</button>
+      <button id="refresh_btn" title="刷新厂商/模型">⟳</button>
+      <button id="del_model_btn" title="删除当前模型">🗑</button>
+      <button id="del_provider_btn" title="删除当前厂商">删厂商</button>
+    </div>
+  </div>
+
+<script>
+  var bridge = null;
+  var chat = document.getElementById('chat');
+  var input = document.getElementById('input');
+  var send = document.getElementById('send');
+  var providerCombo = document.getElementById('provider_combo');
+  var modelCombo = document.getElementById('model_combo');
+  var addBtn = document.getElementById('add_btn');
+  var refreshBtn = document.getElementById('refresh_btn');
+  var delModelBtn = document.getElementById('del_model_btn');
+  var delProviderBtn = document.getElementById('del_provider_btn');
+
+  function now() {
+    var d = new Date();
+    return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  }
+
+  function addMessage(side, text) {
+    var row = document.createElement('div');
+    row.className = 'row ' + side;
+    var b = document.createElement('div');
+    b.className = 'bubble';
+    var t = document.createElement('span');
+    t.className = 'txt';
+    t.textContent = text;
+    var time = document.createElement('div');
+    time.className = 'time';
+    time.textContent = now();
+    b.appendChild(t);
+    b.appendChild(time);
+    row.appendChild(b);
+    chat.appendChild(row);
+    chat.scrollTop = chat.scrollHeight;
+    return row;
+  }
+
+  // RAF-throttled DOM update: batches rapid text changes into a single
+  // paint frame, avoiding layout thrashing that makes QWebEngineView laggy.
+  var _rafPending = false;
+  var _rafText = '';
+  function _flushLastLeft() {
+    var rows = chat.querySelectorAll('.row.left');
+    if (!rows.length) { addMessage('left', _rafText); _rafPending = false; return; }
+    var last = rows[rows.length - 1];
+    var txt = last.querySelector('.bubble .txt');
+    if (!txt) { addMessage('left', _rafText); _rafPending = false; return; }
+    txt.textContent = _rafText;
+    chat.scrollTop = chat.scrollHeight;
+    _rafPending = false;
+  }
+  function updateLastLeftText(text) {
+    _rafText = text;
+    if (!_rafPending) {
+      _rafPending = true;
+      requestAnimationFrame(_flushLastLeft);
+    }
+  }
+
+  function sendMsg() {
+    var v = input.value.trim();
+    if (!v) return;
+    addMessage('right', v);
+    if (bridge && bridge.sendMessage) bridge.sendMessage(v);
+    input.value = '';
+    input.style.height = 'auto';
+  }
+
+  function updateProviderList(list) {
+    var opts = '';
+    if (list && list.length) list.forEach(function(p){ opts += '<option value="'+p.replace(/"/g,'&quot;')+'">'+p+'</option>'; });
+    providerCombo.innerHTML = opts;
+  }
+  function updateModelList(list) {
+    var opts = '';
+    if (list && list.length) list.forEach(function(m){ opts += '<option value="'+m.replace(/"/g,'&quot;')+'">'+m+'</option>'; });
+    modelCombo.innerHTML = opts;
+  }
+  function updateProviderModel(providers, models, curProvider, curModel) {
+    updateProviderList(providers);
+    updateModelList(models);
+    // 重建 <option> 会把 select 重置到第一项, 这里恢复当前厂商/模型选中
+    if (curProvider) providerCombo.value = curProvider;
+    if (curModel) modelCombo.value = curModel;
+  }
+  function applyTheme(bg, panel, fg, muted, primary, border, selection, hiFg, success) {
+    var root = document.documentElement.style;
+    function set(n, v) { if (v && v.indexOf('#') === 0) root.setProperty(n, v); }
+    set('--bg', bg);
+    set('--panel', panel);
+    set('--fg', fg);
+    set('--muted', muted);
+    set('--primary', primary);
+    set('--border', border);
+    set('--selection', selection);
+    set('--hiFg', hiFg);
+    set('--success', success);
+  }
+
+  send.addEventListener('click', sendMsg);
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+  });
+  input.addEventListener('input', function() {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 140) + 'px';
+  });
+  providerCombo.addEventListener('change', function() {
+    if (bridge && bridge.providerChanged) bridge.providerChanged(providerCombo.value);
+  });
+  addBtn.addEventListener('click', function() {
+    if (bridge && bridge.addProvider) bridge.addProvider();
+  });
+  refreshBtn.addEventListener('click', function() {
+    if (bridge && bridge.refreshProviders) bridge.refreshProviders();
+  });
+  delModelBtn.addEventListener('click', function() {
+    if (bridge && bridge.deleteModel) bridge.deleteModel();
+  });
+  delProviderBtn.addEventListener('click', function() {
+    if (bridge && bridge.deleteProvider) bridge.deleteProvider();
+  });
+
+  new QWebChannel(qt.webChannelTransport, function(channel) {
+    bridge = channel.objects.bridge;
+    if (bridge && bridge.initState) bridge.initState();
+  });
+</script>
+</body>
+</html>
